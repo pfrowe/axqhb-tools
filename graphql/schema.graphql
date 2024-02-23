@@ -3,39 +3,139 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 
 "Indicates what fields are available at the top level of a query operation."
 type Query {
-    "Find a single user by an identifying attribute."
-    user(
-      "Search by primary key."
-      id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"])
+  singer(
+    id: ID @eq @rules(apply: ["prohibits:email", "prohibits:unique_id", "required_without_all:email,unique_id"])
 
-      "Search by email address."
-      email: String @eq @rules(apply: ["prohibits:id", "required_without:id", "email"])
-    ): User @find
+    email: ID @eq @rules(apply: ["prohibits:id", "prohibits:unique_id", "required_without_all:id,unique_id"])
 
-    "List multiple users."
-    users(
-      "Filters by name. Accepts SQL LIKE wildcards `%` and `_`."
-      name: String @where(operator: "like")
-    ): [User!]! @paginate(defaultCount: 10)
+    unique_id: String @eq @rules(apply: ["prohibits:id", "prohibits:email", "required_without_all:id,email"])
+  ): Singer @find
+
+  singers: [Singer!]! @all
+
+  "Find a single user by an identifying attribute."
+  user(
+    "Search by primary key."
+    id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"])
+
+    "Search by email address."
+    email: String @eq @rules(apply: ["prohibits:id", "required_without:id", "email"])
+  ): User @find
+
+  "List multiple users."
+  users(
+    "Filters by name. Accepts SQL LIKE wildcards `%` and `_`."
+    name: String @where(operator: "like")
+  ): [User!]! @paginate(defaultCount: 10)
+}
+
+"Singer at a rally."
+type Singer {
+  "Unique primary key."
+  id: ID!
+  
+  "GUID for this singer."
+  unique_id: String!
+  
+  "Unique primary key for associated user account."
+  user_id: ID
+
+  "User account associated with this singer."
+  user: User
+  
+  "Given name, e.g. first name, for this singer."
+  given_name: String!
+  
+  "Family name, e.g. last name, for this singer."
+  family_name: String!
+  
+  "Email address for this singer."
+  email: String!
+  
+  "Phone number for this singer."
+  phone: String!
+  
+  "Voice part for this singer."
+  voice_part: String!
+  
+  "Can this singer receive text messages at the phone number provided?"
+  can_receive_texts: Boolean!
+  
+  "URL of the profile picture for this singer."
+  image: String
+  
+  "First line of the street portion of the mailing address for this singer."
+  street_line_1: String
+  
+  "Second line of the street portion of the mailing address for this singer."
+  street_line_2: String
+  
+  "City portion of the mailing address for this singer."
+  city: String
+  
+  "First geographic division, e.g. state or province, of the mailing address for this singer."
+  geo_division_1: String
+  
+  "Postal code, e.g. ZIP code, of the mailing address for this singer."
+  postal_code: String
+  
+  "Country of the mailing address for this singer."
+  country: String
+
+  "Stickers sent to this singer."
+  stickers_received: [Sticker!] @hasMany(relation: "stickers_received")
+
+  "Stickers sent by this singer."
+  stickers_sent: [Sticker!] @hasMany(relation: "stickers_sent")
+}
+
+"Sticker sent from one singer to another to indicate they have sung together."
+type Sticker {
+  "Unique primary key."
+  id: ID!
+
+  "When the sticker was sent."
+  created_at: DateTime!
+
+  "Recipient singer."
+  recipient: Singer! @hasOne(relation: "recipient")
+
+  "Unique id of recipient singer."
+  recipient_id: ID!
+
+  "Sender singer."
+  sender: Singer! @hasOne(relation: "sender")
+
+  "Unique id of sender singer."
+  sender_id: ID!
+
+  "Both singers."
+  singers: [Singer!] @hasMany(defaultCount: 2, maxCount: 2, relation: "singers")
+
+  "Status of the sticker: pending, accepted, denied."
+  status: String!
+
+  "When the sticker was sent (if same as created_at) or received (if later)."
+  updated_at: DateTime!
 }
 
 "Account of a person who utilizes this application."
 type User {
-    "Unique primary key."
-    id: ID!
+  "Unique primary key."
+  id: ID!
 
-    "Non-unique name."
-    name: String!
+  "Non-unique name."
+  name: String!
 
-    "Unique email address."
-    email: String!
+  "Unique email address."
+  email: String!
 
-    "When the email was verified."
-    email_verified_at: DateTime
+  "When the email was verified."
+  email_verified_at: DateTime
 
-    "When the account was created."
-    created_at: DateTime!
+  "When the account was created."
+  created_at: DateTime!
 
-    "When the account was last updated."
-    updated_at: DateTime!
+  "When the account was last updated."
+  updated_at: DateTime!
 }
