@@ -20,7 +20,7 @@ const HomepageRouter = () => {
         <ThemeProvider applyTo="body" theme={theme}>
           <I18nContext.Provider value={i18nContextValue}>
             <a className="accessibility" href="#main">{t("app:skipToContent")}</a>
-            <header className="div--columns justify--end" style={{ marginRight: "1rem" }}>
+            <header className="div--columns flex-justify--end" style={{ marginRight: "1rem" }}>
               <ThemePicker onChange={setTheme} theme={theme} />
             </header>
             <Router>

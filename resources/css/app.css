@@ -5,6 +5,11 @@
   --color-background-red: hsla(0, 100%, 50%, 0.25);
   --color-error-background: rgb(255, 192, 192);
   --color-error-text: rgb(164, 38, 44);
+  --color-voice-background--bari: hsla(120, 100%, 50%, 0.25);
+  --color-voice-background--bass: hsla(240, 100%, 50%, 0.25);
+  --color-voice-background--guest: hsla(300, 100%, 50%, 0.25);
+  --color-voice-background--lead: hsla(0, 100%, 50%, 0.25);
+  --color-voice-background--tenor: hsla(60, 100%, 50%, 0.25);
 }
 
 .accessibility {
@@ -36,6 +41,20 @@
   margin-right: auto;
 }
 
-.justify--end {
-  justify-content: flex-end;
+.flex--horizontal {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 2em;
+}
+
+.flex-align--center {
+  align-items: center;
+}
+
+.flex-justify--center {
+  justify-content: center;
+}
+
+.flex-justify--end {
+  justify-content: end;
 }
