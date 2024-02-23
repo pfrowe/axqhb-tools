@@ -1,0 +1,88 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "standard"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "arrow-body-style": [
+      "error",
+      "as-needed"
+    ],
+    "brace-style": [
+      "error",
+      "allman"
+    ],
+    "camelcase": [
+      "error",
+      {
+        "allow": [
+          "^(on|promise_)",
+          "_(done|fail|finally)$"
+        ]
+      }
+    ],
+    "comma-dangle": "off",
+    "import/export": "off",
+    "linebreak-style": "off",
+    "max-len": [
+      "warn",
+      120
+    ],
+    "no-prototype-builtins": "off",
+    "no-void": "off",
+    "object-curly-newline": "off",
+    "quotes": [
+      "error",
+      "double",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": "arrow-function"
+      }
+    ],
+    "react/jsx-indent": [
+      "error",
+      2
+    ],
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "semi": [
+      "error",
+      "always"
+    ],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "named": "never"
+      }
+    ],
+    "spaced-comment": [
+      "error",
+      "always",
+      {
+        "markers": [
+          "#"
+        ]
+      }
+    ]
+  }
+}

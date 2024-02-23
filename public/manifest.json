@@ -1,0 +1,9 @@
+{
+  "name": "Association of eXtreme Quartetting Harmony Brigades",
+  "short_name": "AXQHB",
+  "theme_color": "#ad9727",
+  "background_color": "#111111",
+  "display": "browser",
+  "scope": "/",
+  "start_url": "/"
+}

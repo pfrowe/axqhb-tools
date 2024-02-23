@@ -1,0 +1,25 @@
+{
+  "changeLanguage": {
+    "en": "Change to English"
+  },
+  "homepage": {
+    "cards": {
+      "preview": {
+        "singers": {
+          "name": "Singers"
+        }
+      },
+      "title": {
+        "singers": {
+          "name": "Singers"
+        }
+      }
+    },
+    "theme": {
+      "dark": "Dark theme",
+      "light": "Light theme"
+    },
+    "welcome": "Welcome to the LSHB Tramp Card App"
+  },
+  "skipToContent": "Skip to Content"
+}
