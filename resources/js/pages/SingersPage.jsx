@@ -9,8 +9,7 @@ const SingersPage = () => {
   const getSingers = () => {
     const fetchSingers = async () => {
       const sortSingers = (left, right) => {
-        const parts = ["tenor", "lead", "bari", "bass", "guest"];
-        return (parts.indexOf(left.voice_part) - parts.indexOf(right.voice_part)) ||
+        return (CONSTANTS.parts.indexOf(left.voice_part) - CONSTANTS.parts.indexOf(right.voice_part)) ||
           left.family_name.localeCompare(right.family_name) ||
           left.given_name.localeCompare(right.given_name);
       };
@@ -52,7 +51,7 @@ const SingersPage = () => {
         key={`singer-card--${unique_id}`} />
     );
   };
-  return (<main id="main" style={{ width: "1280px" }}>
+  return (<main id="main">
     <h1 style={{ textAlign: "center" }}>{t("title")}</h1>
     <h2 style={{ textAlign: "center" }}>{t("subtitle")}</h2>
     <div className="display--flex flex--horizontal flex-align--center" style={{ marginTop: "2em", paddingLeft: "1em" }}>

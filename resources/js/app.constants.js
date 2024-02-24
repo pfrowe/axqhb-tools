@@ -1,4 +1,5 @@
 const CONSTANTS = {
+  parts: ["tenor", "lead", "bari", "bass", "guest"],
   urlGraphQL: "/graphql"
 };
 

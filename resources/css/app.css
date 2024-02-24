@@ -12,6 +12,12 @@
   --color-voice-background--tenor: hsla(60, 100%, 50%, 0.25);
 }
 
+main {
+  max-width: 100vw;
+  padding: 1em;
+  width: 1280px;
+}
+
 .accessibility {
   position: absolute;
   left: -1000px;
