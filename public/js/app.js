@@ -1,5 +1,296 @@
 (self["webpackChunklshb_dance_card"] = self["webpackChunklshb_dance_card"] || []).push([["/js/app"],{
 
+/***/ "./node_modules/@fluentui/dom-utilities/lib/elementContains.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@fluentui/dom-utilities/lib/elementContains.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   elementContains: () => (/* binding */ elementContains)
+/* harmony export */ });
+/* harmony import */ var _getParent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getParent */ "./node_modules/@fluentui/dom-utilities/lib/getParent.js");
+
+/**
+ * Determines whether or not a parent element contains a given child element.
+ * If `allowVirtualParents` is true, this method may return `true` if the child
+ * has the parent in its virtual element hierarchy.
+ *
+ * @public
+ */
+function elementContains(parent, child, allowVirtualParents) {
+    if (allowVirtualParents === void 0) { allowVirtualParents = true; }
+    var isContained = false;
+    if (parent && child) {
+        if (allowVirtualParents) {
+            if (parent === child) {
+                isContained = true;
+            }
+            else {
+                isContained = false;
+                while (child) {
+                    var nextParent = (0,_getParent__WEBPACK_IMPORTED_MODULE_0__.getParent)(child);
+                    if (nextParent === parent) {
+                        isContained = true;
+                        break;
+                    }
+                    child = nextParent;
+                }
+            }
+        }
+        else if (parent.contains) {
+            isContained = parent.contains(child);
+        }
+    }
+    return isContained;
+}
+//# sourceMappingURL=elementContains.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/dom-utilities/lib/elementContainsAttribute.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@fluentui/dom-utilities/lib/elementContainsAttribute.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   elementContainsAttribute: () => (/* binding */ elementContainsAttribute)
+/* harmony export */ });
+/* harmony import */ var _findElementRecursive__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./findElementRecursive */ "./node_modules/@fluentui/dom-utilities/lib/findElementRecursive.js");
+
+/**
+ * Determines if an element, or any of its ancestors, contain the given attribute
+ * @param element - element to start searching at
+ * @param attribute - the attribute to search for
+ * @returns the value of the first instance found
+ */
+function elementContainsAttribute(element, attribute, doc) {
+    var elementMatch = (0,_findElementRecursive__WEBPACK_IMPORTED_MODULE_0__.findElementRecursive)(element, function (testElement) { return testElement.hasAttribute(attribute); }, doc);
+    return elementMatch && elementMatch.getAttribute(attribute);
+}
+//# sourceMappingURL=elementContainsAttribute.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/dom-utilities/lib/findElementRecursive.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@fluentui/dom-utilities/lib/findElementRecursive.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   findElementRecursive: () => (/* binding */ findElementRecursive)
+/* harmony export */ });
+/* harmony import */ var _getParent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getParent */ "./node_modules/@fluentui/dom-utilities/lib/getParent.js");
+
+/**
+ * Finds the first parent element where the matchFunction returns true
+ * @param element - element to start searching at
+ * @param matchFunction - the function that determines if the element is a match
+ * @returns the matched element or null no match was found
+ */
+function findElementRecursive(element, matchFunction, doc) {
+    // eslint-disable-next-line no-restricted-globals
+    doc !== null && doc !== void 0 ? doc : (doc = document);
+    if (!element || element === doc.body) {
+        return null;
+    }
+    return matchFunction(element) ? element : findElementRecursive((0,_getParent__WEBPACK_IMPORTED_MODULE_0__.getParent)(element), matchFunction);
+}
+//# sourceMappingURL=findElementRecursive.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/dom-utilities/lib/getParent.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@fluentui/dom-utilities/lib/getParent.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getParent: () => (/* binding */ getParent)
+/* harmony export */ });
+/* harmony import */ var _getVirtualParent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getVirtualParent */ "./node_modules/@fluentui/dom-utilities/lib/getVirtualParent.js");
+
+/**
+ * Gets the element which is the parent of a given element.
+ * If `allowVirtuaParents` is `true`, this method prefers the virtual parent over
+ * real DOM parent when present.
+ *
+ * @public
+ */
+function getParent(child, allowVirtualParents) {
+    if (allowVirtualParents === void 0) { allowVirtualParents = true; }
+    return (child &&
+        ((allowVirtualParents && (0,_getVirtualParent__WEBPACK_IMPORTED_MODULE_0__.getVirtualParent)(child)) || (child.parentNode && child.parentNode)));
+}
+//# sourceMappingURL=getParent.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/dom-utilities/lib/getVirtualParent.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@fluentui/dom-utilities/lib/getVirtualParent.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getVirtualParent: () => (/* binding */ getVirtualParent)
+/* harmony export */ });
+/* harmony import */ var _isVirtualElement__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isVirtualElement */ "./node_modules/@fluentui/dom-utilities/lib/isVirtualElement.js");
+
+/**
+ * Gets the virtual parent given the child element, if it exists.
+ *
+ * @public
+ */
+function getVirtualParent(child) {
+    var parent;
+    if (child && (0,_isVirtualElement__WEBPACK_IMPORTED_MODULE_0__.isVirtualElement)(child)) {
+        parent = child._virtual.parent;
+    }
+    return parent;
+}
+//# sourceMappingURL=getVirtualParent.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/dom-utilities/lib/isVirtualElement.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@fluentui/dom-utilities/lib/isVirtualElement.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   isVirtualElement: () => (/* binding */ isVirtualElement)
+/* harmony export */ });
+/**
+ * Determines whether or not an element has the virtual hierarchy extension.
+ *
+ * @public
+ */
+function isVirtualElement(element) {
+    return element && !!element._virtual;
+}
+//# sourceMappingURL=isVirtualElement.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/dom-utilities/lib/portalContainsElement.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/@fluentui/dom-utilities/lib/portalContainsElement.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   portalContainsElement: () => (/* binding */ portalContainsElement)
+/* harmony export */ });
+/* harmony import */ var _findElementRecursive__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./findElementRecursive */ "./node_modules/@fluentui/dom-utilities/lib/findElementRecursive.js");
+/* harmony import */ var _setPortalAttribute__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setPortalAttribute */ "./node_modules/@fluentui/dom-utilities/lib/setPortalAttribute.js");
+
+
+/**
+ * Determine whether a target is within a portal from perspective of root or optional parent.
+ * This function only works against portal components that use the setPortalAttribute function.
+ * If both parent and child are within the same portal this function will return false.
+ * @param target - Element to query portal containment status of.
+ * @param parent - Optional parent perspective. Search for containing portal stops at parent
+ * (or root if parent is undefined or invalid.)
+ */
+function portalContainsElement(target, parent, doc) {
+    var elementMatch = (0,_findElementRecursive__WEBPACK_IMPORTED_MODULE_0__.findElementRecursive)(target, function (testElement) { return parent === testElement || testElement.hasAttribute(_setPortalAttribute__WEBPACK_IMPORTED_MODULE_1__.DATA_PORTAL_ATTRIBUTE); }, doc);
+    return elementMatch !== null && elementMatch.hasAttribute(_setPortalAttribute__WEBPACK_IMPORTED_MODULE_1__.DATA_PORTAL_ATTRIBUTE);
+}
+//# sourceMappingURL=portalContainsElement.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/dom-utilities/lib/setPortalAttribute.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/@fluentui/dom-utilities/lib/setPortalAttribute.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DATA_PORTAL_ATTRIBUTE: () => (/* binding */ DATA_PORTAL_ATTRIBUTE),
+/* harmony export */   setPortalAttribute: () => (/* binding */ setPortalAttribute)
+/* harmony export */ });
+var DATA_PORTAL_ATTRIBUTE = 'data-portal-element';
+/**
+ * Identify element as a portal by setting an attribute.
+ * @param element - Element to mark as a portal.
+ */
+function setPortalAttribute(element) {
+    element.setAttribute(DATA_PORTAL_ATTRIBUTE, 'true');
+}
+//# sourceMappingURL=setPortalAttribute.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/dom-utilities/lib/setVirtualParent.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@fluentui/dom-utilities/lib/setVirtualParent.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   setVirtualParent: () => (/* binding */ setVirtualParent)
+/* harmony export */ });
+/**
+ * Sets the virtual parent of an element.
+ * Pass `undefined` as the `parent` to clear the virtual parent.
+ *
+ * @public
+ */
+function setVirtualParent(child, parent) {
+    var virtualChild = child;
+    var virtualParent = parent;
+    if (!virtualChild._virtual) {
+        virtualChild._virtual = {
+            children: [],
+        };
+    }
+    var oldParent = virtualChild._virtual.parent;
+    if (oldParent && oldParent !== parent) {
+        // Remove the child from its old parent.
+        var index = oldParent._virtual.children.indexOf(virtualChild);
+        if (index > -1) {
+            oldParent._virtual.children.splice(index, 1);
+        }
+    }
+    virtualChild._virtual.parent = virtualParent || undefined;
+    if (virtualParent) {
+        if (!virtualParent._virtual) {
+            virtualParent._virtual = {
+                children: [],
+            };
+        }
+        virtualParent._virtual.children.push(virtualChild);
+    }
+}
+//# sourceMappingURL=setVirtualParent.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/font-icons-mdl2/lib/fabric-icons-0.js":
 /*!**********************************************************************!*\
   !*** ./node_modules/@fluentui/font-icons-mdl2/lib/fabric-icons-0.js ***!
@@ -3972,6 +4263,1281 @@ function flipQuad(value) {
 
 /***/ }),
 
+/***/ "./node_modules/@fluentui/react-focus/lib/components/FocusZone/FocusZone.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/@fluentui/react-focus/lib/components/FocusZone/FocusZone.js ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FocusZone: () => (/* binding */ FocusZone)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _FocusZone_types__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./FocusZone.types */ "./node_modules/@fluentui/react-focus/lib/components/FocusZone/FocusZone.types.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/createMergedRef.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/focus.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/dom-utilities/lib/getParent.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/KeyCodes.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/rtl.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/initializeComponentRef.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/warn/warnDeprecations.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/getId.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/dom-utilities/lib/elementContains.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/properties.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/css.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/scroll.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/dom-utilities/lib/portalContainsElement.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/dom/getDocument.js");
+/* harmony import */ var _fluentui_merge_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fluentui/merge-styles */ "./node_modules/@fluentui/merge-styles/lib/mergeStyles.js");
+/* harmony import */ var _fluentui_style_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fluentui/style-utilities */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+
+
+
+
+
+
+var IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable';
+var IS_ENTER_DISABLED_ATTRIBUTE = 'data-disable-click-on-enter';
+var FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id';
+var TABINDEX = 'tabindex';
+var NO_VERTICAL_WRAP = 'data-no-vertical-wrap';
+var NO_HORIZONTAL_WRAP = 'data-no-horizontal-wrap';
+var LARGE_DISTANCE_FROM_CENTER = 999999999;
+var LARGE_NEGATIVE_DISTANCE_FROM_CENTER = -999999999;
+var focusZoneStyles;
+var focusZoneClass = 'ms-FocusZone';
+/**
+ * Raises a click on a target element based on a keyboard event.
+ */
+function raiseClickFromKeyboardEvent(target, ev) {
+    var event;
+    if (typeof MouseEvent === 'function') {
+        event = new MouseEvent('click', {
+            ctrlKey: ev === null || ev === void 0 ? void 0 : ev.ctrlKey,
+            metaKey: ev === null || ev === void 0 ? void 0 : ev.metaKey,
+            shiftKey: ev === null || ev === void 0 ? void 0 : ev.shiftKey,
+            altKey: ev === null || ev === void 0 ? void 0 : ev.altKey,
+            bubbles: ev === null || ev === void 0 ? void 0 : ev.bubbles,
+            cancelable: ev === null || ev === void 0 ? void 0 : ev.cancelable,
+        });
+    }
+    else {
+        // eslint-disable-next-line no-restricted-globals
+        event = document.createEvent('MouseEvents');
+        // eslint-disable-next-line deprecation/deprecation
+        event.initMouseEvent('click', ev ? ev.bubbles : false, ev ? ev.cancelable : false, 
+        // eslint-disable-next-line no-restricted-globals
+        window, // not using getWindow() since this can only be run client side
+        0, // detail
+        0, // screen x
+        0, // screen y
+        0, // client x
+        0, // client y
+        ev ? ev.ctrlKey : false, ev ? ev.altKey : false, ev ? ev.shiftKey : false, ev ? ev.metaKey : false, 0, // button
+        null);
+    }
+    target.dispatchEvent(event);
+}
+// Helper function that will return a class for when the root is focused
+function getRootClass() {
+    if (!focusZoneStyles) {
+        focusZoneStyles = (0,_fluentui_merge_styles__WEBPACK_IMPORTED_MODULE_2__.mergeStyles)({
+            selectors: {
+                ':focus': {
+                    outline: 'none',
+                },
+            },
+        }, focusZoneClass);
+    }
+    return focusZoneStyles;
+}
+var _allInstances = {};
+var _outerZones = new Set();
+var ALLOWED_INPUT_TYPES = ['text', 'number', 'password', 'email', 'tel', 'url', 'search', 'textarea'];
+var ALLOW_VIRTUAL_ELEMENTS = false;
+var FocusZone = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__extends)(FocusZone, _super);
+    function FocusZone(props) {
+        var _this = this;
+        var _a, _b, _c, _d;
+        _this = _super.call(this, props) || this;
+        _this._root = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
+        _this._mergedRef = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_4__.createMergedRef)();
+        _this._onFocus = function (ev) {
+            if (_this._portalContainsElement(ev.target)) {
+                // If the event target is inside a portal do not process the event.
+                return;
+            }
+            var _a = _this.props, onActiveElementChanged = _a.onActiveElementChanged, 
+            // eslint-disable-next-line deprecation/deprecation
+            doNotAllowFocusEventToPropagate = _a.doNotAllowFocusEventToPropagate, stopFocusPropagation = _a.stopFocusPropagation, 
+            // eslint-disable-next-line deprecation/deprecation
+            onFocusNotification = _a.onFocusNotification, onFocus = _a.onFocus, shouldFocusInnerElementWhenReceivedFocus = _a.shouldFocusInnerElementWhenReceivedFocus, defaultTabbableElement = _a.defaultTabbableElement;
+            var isImmediateDescendant = _this._isImmediateDescendantOfZone(ev.target);
+            var newActiveElement;
+            if (isImmediateDescendant) {
+                newActiveElement = ev.target;
+            }
+            else {
+                var parentElement = ev.target;
+                while (parentElement && parentElement !== _this._root.current) {
+                    if ((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementTabbable)(parentElement) && _this._isImmediateDescendantOfZone(parentElement)) {
+                        newActiveElement = parentElement;
+                        break;
+                    }
+                    parentElement = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_6__.getParent)(parentElement, ALLOW_VIRTUAL_ELEMENTS);
+                }
+            }
+            // If an inner focusable element should be focused when FocusZone container receives focus
+            if (shouldFocusInnerElementWhenReceivedFocus && ev.target === _this._root.current) {
+                var maybeElementToFocus = defaultTabbableElement &&
+                    typeof defaultTabbableElement === 'function' &&
+                    _this._root.current &&
+                    defaultTabbableElement(_this._root.current);
+                // try to focus defaultTabbable element
+                if (maybeElementToFocus && (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementTabbable)(maybeElementToFocus)) {
+                    newActiveElement = maybeElementToFocus;
+                    maybeElementToFocus.focus();
+                }
+                else {
+                    // force focus on first focusable element
+                    _this.focus(true);
+                    if (_this._activeElement) {
+                        // set to null as new active element was handled in method above
+                        newActiveElement = null;
+                    }
+                }
+            }
+            var initialElementFocused = !_this._activeElement;
+            // If the new active element is a child of this zone and received focus,
+            // update alignment an immediate descendant
+            if (newActiveElement && newActiveElement !== _this._activeElement) {
+                if (isImmediateDescendant || initialElementFocused) {
+                    _this._setFocusAlignment(newActiveElement, true, true);
+                }
+                _this._activeElement = newActiveElement;
+                if (initialElementFocused) {
+                    _this._updateTabIndexes();
+                }
+            }
+            if (onActiveElementChanged) {
+                onActiveElementChanged(_this._activeElement, ev);
+            }
+            if (stopFocusPropagation || doNotAllowFocusEventToPropagate) {
+                ev.stopPropagation();
+            }
+            if (onFocus) {
+                onFocus(ev);
+            }
+            else if (onFocusNotification) {
+                onFocusNotification();
+            }
+        };
+        _this._onBlur = function () {
+            _this._setParkedFocus(false);
+        };
+        _this._onMouseDown = function (ev) {
+            if (_this._portalContainsElement(ev.target)) {
+                // If the event target is inside a portal do not process the event.
+                return;
+            }
+            var disabled = _this.props.disabled;
+            if (disabled) {
+                return;
+            }
+            var target = ev.target;
+            var path = [];
+            while (target && target !== _this._root.current) {
+                path.push(target);
+                target = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_6__.getParent)(target, ALLOW_VIRTUAL_ELEMENTS);
+            }
+            while (path.length) {
+                target = path.pop();
+                if (target && (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementTabbable)(target)) {
+                    _this._setActiveElement(target, true);
+                }
+                if ((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementFocusZone)(target)) {
+                    // Stop here since the focus zone will take care of its own children.
+                    break;
+                }
+            }
+        };
+        /**
+         * Handle the keystrokes.
+         */
+        _this._onKeyDown = function (ev, theme) {
+            if (_this._portalContainsElement(ev.target)) {
+                // If the event target is inside a portal do not process the event.
+                return;
+            }
+            // eslint-disable-next-line deprecation/deprecation
+            var _a = _this.props, direction = _a.direction, disabled = _a.disabled, isInnerZoneKeystroke = _a.isInnerZoneKeystroke, pagingSupportDisabled = _a.pagingSupportDisabled, shouldEnterInnerZone = _a.shouldEnterInnerZone;
+            if (disabled) {
+                return;
+            }
+            if (_this.props.onKeyDown) {
+                _this.props.onKeyDown(ev);
+            }
+            // If the default has been prevented, do not process keyboard events.
+            if (ev.isDefaultPrevented()) {
+                return;
+            }
+            if (_this._getDocument().activeElement === _this._root.current && _this._isInnerZone) {
+                // If this element has focus, it is being controlled by a parent.
+                // Ignore the keystroke.
+                return;
+            }
+            if (((shouldEnterInnerZone && shouldEnterInnerZone(ev)) || (isInnerZoneKeystroke && isInnerZoneKeystroke(ev))) &&
+                _this._isImmediateDescendantOfZone(ev.target)) {
+                // Try to focus
+                var innerZone = _this._getFirstInnerZone();
+                if (innerZone) {
+                    if (!innerZone.focus(true)) {
+                        return;
+                    }
+                }
+                else if ((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementFocusSubZone)(ev.target)) {
+                    if (!_this.focusElement((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getNextElement)(ev.target, ev.target.firstChild, true))) {
+                        return;
+                    }
+                }
+                else {
+                    return;
+                }
+            }
+            else if (ev.altKey) {
+                return;
+            }
+            else {
+                // eslint-disable-next-line @fluentui/deprecated-keyboard-event-props, deprecation/deprecation
+                switch (ev.which) {
+                    case _fluentui_utilities__WEBPACK_IMPORTED_MODULE_7__.KeyCodes.space:
+                        if (_this._shouldRaiseClicksOnSpace && _this._tryInvokeClickForFocusable(ev.target, ev)) {
+                            break;
+                        }
+                        return;
+                    case _fluentui_utilities__WEBPACK_IMPORTED_MODULE_7__.KeyCodes.left:
+                        if (direction !== _FocusZone_types__WEBPACK_IMPORTED_MODULE_8__.FocusZoneDirection.vertical) {
+                            _this._preventDefaultWhenHandled(ev);
+                            if (_this._moveFocusLeft(theme)) {
+                                break;
+                            }
+                        }
+                        return;
+                    case _fluentui_utilities__WEBPACK_IMPORTED_MODULE_7__.KeyCodes.right:
+                        if (direction !== _FocusZone_types__WEBPACK_IMPORTED_MODULE_8__.FocusZoneDirection.vertical) {
+                            _this._preventDefaultWhenHandled(ev);
+                            if (_this._moveFocusRight(theme)) {
+                                break;
+                            }
+                        }
+                        return;
+                    case _fluentui_utilities__WEBPACK_IMPORTED_MODULE_7__.KeyCodes.up:
+                        if (direction !== _FocusZone_types__WEBPACK_IMPORTED_MODULE_8__.FocusZoneDirection.horizontal) {
+                            _this._preventDefaultWhenHandled(ev);
+                            if (_this._moveFocusUp()) {
+                                break;
+                            }
+                        }
+                        return;
+                    case _fluentui_utilities__WEBPACK_IMPORTED_MODULE_7__.KeyCodes.down:
+                        if (direction !== _FocusZone_types__WEBPACK_IMPORTED_MODULE_8__.FocusZoneDirection.horizontal) {
+                            _this._preventDefaultWhenHandled(ev);
+                            if (_this._moveFocusDown()) {
+                                break;
+                            }
+                        }
+                        return;
+                    case _fluentui_utilities__WEBPACK_IMPORTED_MODULE_7__.KeyCodes.pageDown:
+                        if (!pagingSupportDisabled && _this._moveFocusPaging(true)) {
+                            break;
+                        }
+                        return;
+                    case _fluentui_utilities__WEBPACK_IMPORTED_MODULE_7__.KeyCodes.pageUp:
+                        if (!pagingSupportDisabled && _this._moveFocusPaging(false)) {
+                            break;
+                        }
+                        return;
+                    case _fluentui_utilities__WEBPACK_IMPORTED_MODULE_7__.KeyCodes.tab:
+                        if (
+                        // eslint-disable-next-line deprecation/deprecation
+                        _this.props.allowTabKey ||
+                            _this.props.handleTabKey === _FocusZone_types__WEBPACK_IMPORTED_MODULE_8__.FocusZoneTabbableElements.all ||
+                            (_this.props.handleTabKey === _FocusZone_types__WEBPACK_IMPORTED_MODULE_8__.FocusZoneTabbableElements.inputOnly &&
+                                _this._isElementInput(ev.target))) {
+                            var focusChanged = false;
+                            _this._processingTabKey = true;
+                            if (direction === _FocusZone_types__WEBPACK_IMPORTED_MODULE_8__.FocusZoneDirection.vertical ||
+                                !_this._shouldWrapFocus(_this._activeElement, NO_HORIZONTAL_WRAP)) {
+                                focusChanged = ev.shiftKey ? _this._moveFocusUp() : _this._moveFocusDown();
+                            }
+                            else {
+                                var tabWithDirection = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_9__.getRTL)(theme) ? !ev.shiftKey : ev.shiftKey;
+                                focusChanged = tabWithDirection ? _this._moveFocusLeft(theme) : _this._moveFocusRight(theme);
+                            }
+                            _this._processingTabKey = false;
+                            if (focusChanged) {
+                                break;
+                            }
+                            else if (_this.props.shouldResetActiveElementWhenTabFromZone) {
+                                _this._activeElement = null;
+                            }
+                        }
+                        return;
+                    case _fluentui_utilities__WEBPACK_IMPORTED_MODULE_7__.KeyCodes.home:
+                        if (_this._isContentEditableElement(ev.target) ||
+                            (_this._isElementInput(ev.target) &&
+                                !_this._shouldInputLoseFocus(ev.target, false))) {
+                            return false;
+                        }
+                        var firstChild = _this._root.current && _this._root.current.firstChild;
+                        if (_this._root.current &&
+                            firstChild &&
+                            _this.focusElement((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getNextElement)(_this._root.current, firstChild, true))) {
+                            break;
+                        }
+                        return;
+                    case _fluentui_utilities__WEBPACK_IMPORTED_MODULE_7__.KeyCodes.end:
+                        if (_this._isContentEditableElement(ev.target) ||
+                            (_this._isElementInput(ev.target) &&
+                                !_this._shouldInputLoseFocus(ev.target, true))) {
+                            return false;
+                        }
+                        var lastChild = _this._root.current && _this._root.current.lastChild;
+                        if (_this._root.current &&
+                            _this.focusElement((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getPreviousElement)(_this._root.current, lastChild, true, true, true))) {
+                            break;
+                        }
+                        return;
+                    case _fluentui_utilities__WEBPACK_IMPORTED_MODULE_7__.KeyCodes.enter:
+                        if (_this._shouldRaiseClicksOnEnter && _this._tryInvokeClickForFocusable(ev.target, ev)) {
+                            break;
+                        }
+                        return;
+                    default:
+                        return;
+                }
+            }
+            ev.preventDefault();
+            ev.stopPropagation();
+        };
+        _this._getHorizontalDistanceFromCenter = function (isForward, 
+        // eslint-disable-next-line deprecation/deprecation
+        activeRect, 
+        // eslint-disable-next-line deprecation/deprecation
+        targetRect) {
+            // eslint-disable-next-line deprecation/deprecation
+            var leftAlignment = _this._focusAlignment.left || _this._focusAlignment.x || 0;
+            // ClientRect values can be floats that differ by very small fractions of a decimal.
+            // If the difference between top and bottom are within a pixel then we should treat
+            // them as equivalent by using Math.floor. For instance 5.2222 and 5.222221 should be equivalent,
+            // but without Math.Floor they will be handled incorrectly.
+            var targetRectTop = Math.floor(targetRect.top);
+            var activeRectBottom = Math.floor(activeRect.bottom);
+            var targetRectBottom = Math.floor(targetRect.bottom);
+            var activeRectTop = Math.floor(activeRect.top);
+            var isValidCandidateOnpagingDown = isForward && targetRectTop > activeRectBottom;
+            var isValidCandidateOnpagingUp = !isForward && targetRectBottom < activeRectTop;
+            if (isValidCandidateOnpagingDown || isValidCandidateOnpagingUp) {
+                if (leftAlignment >= targetRect.left && leftAlignment <= targetRect.left + targetRect.width) {
+                    return 0;
+                }
+                return Math.abs(targetRect.left + targetRect.width / 2 - leftAlignment);
+            }
+            if (!_this._shouldWrapFocus(_this._activeElement, NO_VERTICAL_WRAP)) {
+                return LARGE_NEGATIVE_DISTANCE_FROM_CENTER;
+            }
+            return LARGE_DISTANCE_FROM_CENTER;
+        };
+        // Manage componentRef resolution.
+        (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_10__.initializeComponentRef)(_this);
+        if (true) {
+            (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_11__.warnDeprecations)('FocusZone', props, {
+                rootProps: undefined,
+                allowTabKey: 'handleTabKey',
+                elementType: 'as',
+                ariaDescribedBy: 'aria-describedby',
+                ariaLabelledBy: 'aria-labelledby',
+            });
+        }
+        _this._id = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_12__.getId)('FocusZone');
+        _this._focusAlignment = {
+            left: 0,
+            top: 0,
+        };
+        _this._processingTabKey = false;
+        var shouldRaiseClicksFallback = (_b = (_a = props.shouldRaiseClicks) !== null && _a !== void 0 ? _a : FocusZone.defaultProps.shouldRaiseClicks) !== null && _b !== void 0 ? _b : true;
+        _this._shouldRaiseClicksOnEnter = (_c = props.shouldRaiseClicksOnEnter) !== null && _c !== void 0 ? _c : shouldRaiseClicksFallback;
+        _this._shouldRaiseClicksOnSpace = (_d = props.shouldRaiseClicksOnSpace) !== null && _d !== void 0 ? _d : shouldRaiseClicksFallback;
+        return _this;
+    }
+    /** Used for testing purposes only. */
+    FocusZone.getOuterZones = function () {
+        return _outerZones.size;
+    };
+    /**
+     * Handle global tab presses so that we can patch tabindexes on the fly.
+     * HEADS UP: This must not be an arrow function in order to be referentially equal among instances
+     * for ref counting to work correctly!
+     */
+    FocusZone._onKeyDownCapture = function (ev) {
+        // eslint-disable-next-line deprecation/deprecation, @fluentui/deprecated-keyboard-event-props
+        if (ev.which === _fluentui_utilities__WEBPACK_IMPORTED_MODULE_7__.KeyCodes.tab) {
+            _outerZones.forEach(function (zone) { return zone._updateTabIndexes(); });
+        }
+    };
+    FocusZone.prototype.componentDidMount = function () {
+        var root = this._root.current;
+        _allInstances[this._id] = this;
+        if (root) {
+            var parentElement = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_6__.getParent)(root, ALLOW_VIRTUAL_ELEMENTS);
+            while (parentElement && parentElement !== this._getDocument().body && parentElement.nodeType === 1) {
+                if ((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementFocusZone)(parentElement)) {
+                    this._isInnerZone = true;
+                    break;
+                }
+                parentElement = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_6__.getParent)(parentElement, ALLOW_VIRTUAL_ELEMENTS);
+            }
+            if (!this._isInnerZone) {
+                _outerZones.add(this);
+                this._root.current && this._root.current.addEventListener('keydown', FocusZone._onKeyDownCapture, true);
+            }
+            this._root.current && this._root.current.addEventListener('blur', this._onBlur, true);
+            // Assign initial tab indexes so that we can set initial focus as appropriate.
+            this._updateTabIndexes();
+            if (this.props.defaultTabbableElement && typeof this.props.defaultTabbableElement === 'string') {
+                this._activeElement = this._getDocument().querySelector(this.props.defaultTabbableElement);
+                // eslint-disable-next-line deprecation/deprecation
+            }
+            else if (this.props.defaultActiveElement) {
+                // eslint-disable-next-line deprecation/deprecation
+                this._activeElement = this._getDocument().querySelector(this.props.defaultActiveElement);
+            }
+            if (this.props.shouldFocusOnMount) {
+                this.focus();
+            }
+        }
+    };
+    FocusZone.prototype.componentDidUpdate = function () {
+        var root = this._root.current;
+        var doc = this._getDocument();
+        // If either _activeElement or _defaultFocusElement are no longer contained by _root,
+        // reset those variables (and update tab indexes) to avoid memory leaks
+        if ((this._activeElement && !(0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_13__.elementContains)(this._root.current, this._activeElement, ALLOW_VIRTUAL_ELEMENTS)) ||
+            (this._defaultFocusElement &&
+                !(0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_13__.elementContains)(this._root.current, this._defaultFocusElement, ALLOW_VIRTUAL_ELEMENTS))) {
+            this._activeElement = null;
+            this._defaultFocusElement = null;
+            this._updateTabIndexes();
+        }
+        if (!this.props.preventFocusRestoration &&
+            doc &&
+            this._lastIndexPath &&
+            (doc.activeElement === doc.body || doc.activeElement === null || doc.activeElement === root)) {
+            // The element has been removed after the render, attempt to restore focus.
+            var elementToFocus = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getFocusableByIndexPath)(root, this._lastIndexPath);
+            if (elementToFocus) {
+                this._setActiveElement(elementToFocus, true);
+                elementToFocus.focus();
+                this._setParkedFocus(false);
+            }
+            else {
+                // We had a focus path to restore, but now that path is unresolvable. Park focus
+                // on the container until we can try again.
+                this._setParkedFocus(true);
+            }
+        }
+    };
+    FocusZone.prototype.componentWillUnmount = function () {
+        delete _allInstances[this._id];
+        if (!this._isInnerZone) {
+            _outerZones.delete(this);
+            this._root.current && this._root.current.removeEventListener('keydown', FocusZone._onKeyDownCapture, true);
+        }
+        if (this._root.current) {
+            this._root.current.removeEventListener('blur', this._onBlur, true);
+        }
+        this._activeElement = null;
+        this._defaultFocusElement = null;
+    };
+    FocusZone.prototype.render = function () {
+        var _this = this;
+        // eslint-disable-next-line deprecation/deprecation
+        var _a = this.props, tag = _a.as, elementType = _a.elementType, rootProps = _a.rootProps, ariaDescribedBy = _a.ariaDescribedBy, ariaLabelledBy = _a.ariaLabelledBy, className = _a.className;
+        var divProps = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_14__.getNativeProps)(this.props, _fluentui_utilities__WEBPACK_IMPORTED_MODULE_14__.htmlElementProperties);
+        var Tag = tag || elementType || 'div';
+        // Note, right before rendering/reconciling proceeds, we need to record if focus
+        // was in the zone before the update. This helper will track this and, if focus
+        // was actually in the zone, what the index path to the element is at this time.
+        // Then, later in componentDidUpdate, we can evaluate if we need to restore it in
+        // the case the element was removed.
+        this._evaluateFocusBeforeRender();
+        // Only support RTL defined in global theme, not contextual theme/RTL.
+        var theme = (0,_fluentui_style_utilities__WEBPACK_IMPORTED_MODULE_1__.getTheme)();
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(Tag, (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)({ "aria-labelledby": ariaLabelledBy, "aria-describedby": ariaDescribedBy }, divProps, rootProps, { 
+            // Once the getClassName correctly memoizes inputs this should
+            // be replaced so that className is passed to getRootClass and is included there so
+            // the class names will always be in the same order.
+            className: (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_15__.css)(getRootClass(), className), 
+            // eslint-disable-next-line deprecation/deprecation
+            ref: this._mergedRef(this.props.elementRef, this._root), "data-focuszone-id": this._id, 
+            // eslint-disable-next-line react/jsx-no-bind
+            onKeyDown: function (ev) { return _this._onKeyDown(ev, theme); }, onFocus: this._onFocus, onMouseDownCapture: this._onMouseDown }), this.props.children));
+    };
+    /**
+     * Sets focus to the first tabbable item in the zone.
+     * @param forceIntoFirstElement - If true, focus will be forced into the first element, even
+     * if focus is already in the focus zone.
+     * @param bypassHiddenElements - If true, focus will be not be set on hidden elements.
+     * @returns True if focus could be set to an active element, false if no operation was taken.
+     */
+    FocusZone.prototype.focus = function (forceIntoFirstElement, bypassHiddenElements) {
+        if (forceIntoFirstElement === void 0) { forceIntoFirstElement = false; }
+        if (bypassHiddenElements === void 0) { bypassHiddenElements = false; }
+        if (this._root.current) {
+            if (!forceIntoFirstElement &&
+                this._root.current.getAttribute(IS_FOCUSABLE_ATTRIBUTE) === 'true' &&
+                this._isInnerZone) {
+                var ownerZoneElement = this._getOwnerZone(this._root.current);
+                if (ownerZoneElement !== this._root.current) {
+                    var ownerZone = _allInstances[ownerZoneElement.getAttribute(FOCUSZONE_ID_ATTRIBUTE)];
+                    return !!ownerZone && ownerZone.focusElement(this._root.current);
+                }
+                return false;
+            }
+            else if (!forceIntoFirstElement &&
+                this._activeElement &&
+                (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_13__.elementContains)(this._root.current, this._activeElement) &&
+                (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementTabbable)(this._activeElement) &&
+                (!bypassHiddenElements || (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementVisibleAndNotHidden)(this._activeElement))) {
+                this._activeElement.focus();
+                return true;
+            }
+            else {
+                var firstChild = this._root.current.firstChild;
+                return this.focusElement((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getNextElement)(this._root.current, firstChild, true, undefined, undefined, undefined, undefined, undefined, bypassHiddenElements));
+            }
+        }
+        return false;
+    };
+    /**
+     * Sets focus to the last tabbable item in the zone.
+     * @returns True if focus could be set to an active element, false if no operation was taken.
+     */
+    FocusZone.prototype.focusLast = function () {
+        if (this._root.current) {
+            var lastChild = this._root.current && this._root.current.lastChild;
+            return this.focusElement((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getPreviousElement)(this._root.current, lastChild, true, true, true));
+        }
+        return false;
+    };
+    /**
+     * Sets focus to a specific child element within the zone. This can be used in conjunction with
+     * shouldReceiveFocus to create delayed focus scenarios (like animate the scroll position to the correct
+     * location and then focus.)
+     * @param element - The child element within the zone to focus.
+     * @param forceAlignment - If true, focus alignment will be set according to the element provided.
+     * @returns True if focus could be set to an active element, false if no operation was taken.
+     */
+    FocusZone.prototype.focusElement = function (element, forceAlignment) {
+        // eslint-disable-next-line deprecation/deprecation
+        var _a = this.props, onBeforeFocus = _a.onBeforeFocus, shouldReceiveFocus = _a.shouldReceiveFocus;
+        if ((shouldReceiveFocus && !shouldReceiveFocus(element)) || (onBeforeFocus && !onBeforeFocus(element))) {
+            return false;
+        }
+        if (element) {
+            // when we set focus to a specific child, we should recalculate the alignment depending on its position.
+            this._setActiveElement(element, forceAlignment);
+            if (this._activeElement) {
+                this._activeElement.focus();
+            }
+            return true;
+        }
+        return false;
+    };
+    /**
+     * Forces horizontal alignment in the context of vertical arrowing to use specific point as the reference,
+     * rather than a center based on the last horizontal motion.
+     * @param point - the new reference point.
+     */
+    FocusZone.prototype.setFocusAlignment = function (point) {
+        this._focusAlignment = point;
+    };
+    Object.defineProperty(FocusZone.prototype, "defaultFocusElement", {
+        get: function () {
+            return this._defaultFocusElement;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(FocusZone.prototype, "activeElement", {
+        get: function () {
+            return this._activeElement;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    FocusZone.prototype._evaluateFocusBeforeRender = function () {
+        var root = this._root.current;
+        var doc = this._getDocument();
+        if (doc) {
+            var focusedElement = doc.activeElement;
+            // Only update the index path if we are not parked on the root.
+            if (focusedElement !== root) {
+                var shouldRestoreFocus = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_13__.elementContains)(root, focusedElement, false);
+                this._lastIndexPath = shouldRestoreFocus ? (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getElementIndexPath)(root, focusedElement) : undefined;
+            }
+        }
+    };
+    /**
+     * When focus is in the zone at render time but then all focusable elements are removed,
+     * we "park" focus temporarily on the root. Once we update with focusable children, we restore
+     * focus to the closest path from previous. If the user tabs away from the parked container,
+     * we restore focusability to the pre-parked state.
+     */
+    FocusZone.prototype._setParkedFocus = function (isParked) {
+        var root = this._root.current;
+        if (root && this._isParked !== isParked) {
+            this._isParked = isParked;
+            if (isParked) {
+                if (!this.props.allowFocusRoot) {
+                    this._parkedTabIndex = root.getAttribute('tabindex');
+                    root.setAttribute('tabindex', '-1');
+                }
+                root.focus();
+            }
+            else if (!this.props.allowFocusRoot) {
+                if (this._parkedTabIndex) {
+                    root.setAttribute('tabindex', this._parkedTabIndex);
+                    this._parkedTabIndex = undefined;
+                }
+                else {
+                    root.removeAttribute('tabindex');
+                }
+            }
+        }
+    };
+    FocusZone.prototype._setActiveElement = function (element, forceAlignment) {
+        var previousActiveElement = this._activeElement;
+        this._activeElement = element;
+        if (previousActiveElement) {
+            if ((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementFocusZone)(previousActiveElement)) {
+                this._updateTabIndexes(previousActiveElement);
+            }
+            previousActiveElement.tabIndex = -1;
+        }
+        if (this._activeElement) {
+            if (!this._focusAlignment || forceAlignment) {
+                this._setFocusAlignment(element, true, true);
+            }
+            this._activeElement.tabIndex = 0;
+        }
+    };
+    FocusZone.prototype._preventDefaultWhenHandled = function (ev) {
+        this.props.preventDefaultWhenHandled && ev.preventDefault();
+    };
+    /**
+     * Walk up the dom try to find a focusable element.
+     */
+    FocusZone.prototype._tryInvokeClickForFocusable = function (targetElement, ev) {
+        var target = targetElement;
+        if (target === this._root.current) {
+            return false;
+        }
+        do {
+            if (target.tagName === 'BUTTON' ||
+                target.tagName === 'A' ||
+                target.tagName === 'INPUT' ||
+                target.tagName === 'TEXTAREA' ||
+                target.tagName === 'SUMMARY') {
+                return false;
+            }
+            if (this._isImmediateDescendantOfZone(target) &&
+                target.getAttribute(IS_FOCUSABLE_ATTRIBUTE) === 'true' &&
+                target.getAttribute(IS_ENTER_DISABLED_ATTRIBUTE) !== 'true') {
+                raiseClickFromKeyboardEvent(target, ev);
+                return true;
+            }
+            target = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_6__.getParent)(target, ALLOW_VIRTUAL_ELEMENTS);
+        } while (target !== this._root.current);
+        return false;
+    };
+    /**
+     * Traverse to find first child zone.
+     */
+    FocusZone.prototype._getFirstInnerZone = function (rootElement) {
+        rootElement = rootElement || this._activeElement || this._root.current;
+        if (!rootElement) {
+            return null;
+        }
+        if ((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementFocusZone)(rootElement)) {
+            return _allInstances[rootElement.getAttribute(FOCUSZONE_ID_ATTRIBUTE)];
+        }
+        var child = rootElement.firstElementChild;
+        while (child) {
+            if ((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementFocusZone)(child)) {
+                return _allInstances[child.getAttribute(FOCUSZONE_ID_ATTRIBUTE)];
+            }
+            var match = this._getFirstInnerZone(child);
+            if (match) {
+                return match;
+            }
+            child = child.nextElementSibling;
+        }
+        return null;
+    };
+    FocusZone.prototype._moveFocus = function (isForward, 
+    // eslint-disable-next-line deprecation/deprecation
+    getDistanceFromCenter, ev, useDefaultWrap) {
+        if (useDefaultWrap === void 0) { useDefaultWrap = true; }
+        var element = this._activeElement;
+        var candidateDistance = -1;
+        var candidateElement = undefined;
+        var changedFocus = false;
+        var isBidirectional = this.props.direction === _FocusZone_types__WEBPACK_IMPORTED_MODULE_8__.FocusZoneDirection.bidirectional;
+        if (!element || !this._root.current) {
+            return false;
+        }
+        if (this._isElementInput(element)) {
+            if (!this._shouldInputLoseFocus(element, isForward)) {
+                return false;
+            }
+        }
+        var activeRect = isBidirectional ? element.getBoundingClientRect() : null;
+        do {
+            element = (isForward ? (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getNextElement)(this._root.current, element) : (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getPreviousElement)(this._root.current, element));
+            if (isBidirectional) {
+                if (element) {
+                    var targetRect = element.getBoundingClientRect();
+                    // eslint-disable-next-line deprecation/deprecation
+                    var elementDistance = getDistanceFromCenter(activeRect, targetRect);
+                    if (elementDistance === -1 && candidateDistance === -1) {
+                        candidateElement = element;
+                        break;
+                    }
+                    if (elementDistance > -1 && (candidateDistance === -1 || elementDistance < candidateDistance)) {
+                        candidateDistance = elementDistance;
+                        candidateElement = element;
+                    }
+                    if (candidateDistance >= 0 && elementDistance < 0) {
+                        break;
+                    }
+                }
+            }
+            else {
+                candidateElement = element;
+                break;
+            }
+        } while (element);
+        // Focus the closest candidate
+        if (candidateElement && candidateElement !== this._activeElement) {
+            changedFocus = true;
+            this.focusElement(candidateElement);
+        }
+        else if (this.props.isCircularNavigation && useDefaultWrap) {
+            if (isForward) {
+                return this.focusElement((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getNextElement)(this._root.current, this._root.current.firstElementChild, true));
+            }
+            else {
+                return this.focusElement((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getPreviousElement)(this._root.current, this._root.current.lastElementChild, true, true, true));
+            }
+        }
+        return changedFocus;
+    };
+    FocusZone.prototype._moveFocusDown = function () {
+        var _this = this;
+        var targetTop = -1;
+        // eslint-disable-next-line deprecation/deprecation
+        var leftAlignment = this._focusAlignment.left || this._focusAlignment.x || 0;
+        if (
+        // eslint-disable-next-line deprecation/deprecation
+        this._moveFocus(true, function (activeRect, targetRect) {
+            var distance = -1;
+            // ClientRect values can be floats that differ by very small fractions of a decimal.
+            // If the difference between top and bottom are within a pixel then we should treat
+            // them as equivalent by using Math.floor. For instance 5.2222 and 5.222221 should be equivalent,
+            // but without Math.Floor they will be handled incorrectly.
+            var targetRectTop = Math.floor(targetRect.top);
+            var activeRectBottom = Math.floor(activeRect.bottom);
+            if (targetRectTop < activeRectBottom) {
+                if (!_this._shouldWrapFocus(_this._activeElement, NO_VERTICAL_WRAP)) {
+                    return LARGE_NEGATIVE_DISTANCE_FROM_CENTER;
+                }
+                return LARGE_DISTANCE_FROM_CENTER;
+            }
+            if ((targetTop === -1 && targetRectTop >= activeRectBottom) || targetRectTop === targetTop) {
+                targetTop = targetRectTop;
+                if (leftAlignment >= targetRect.left && leftAlignment <= targetRect.left + targetRect.width) {
+                    distance = 0;
+                }
+                else {
+                    distance = Math.abs(targetRect.left + targetRect.width / 2 - leftAlignment);
+                }
+            }
+            return distance;
+        })) {
+            this._setFocusAlignment(this._activeElement, false, true);
+            return true;
+        }
+        return false;
+    };
+    FocusZone.prototype._moveFocusUp = function () {
+        var _this = this;
+        var targetTop = -1;
+        // eslint-disable-next-line deprecation/deprecation
+        var leftAlignment = this._focusAlignment.left || this._focusAlignment.x || 0;
+        if (
+        // eslint-disable-next-line deprecation/deprecation
+        this._moveFocus(false, function (activeRect, targetRect) {
+            var distance = -1;
+            // ClientRect values can be floats that differ by very small fractions of a decimal.
+            // If the difference between top and bottom are within a pixel then we should treat
+            // them as equivalent by using Math.floor. For instance 5.2222 and 5.222221 should be equivalent,
+            // but without Math.Floor they will be handled incorrectly.
+            var targetRectBottom = Math.floor(targetRect.bottom);
+            var targetRectTop = Math.floor(targetRect.top);
+            var activeRectTop = Math.floor(activeRect.top);
+            if (targetRectBottom > activeRectTop) {
+                if (!_this._shouldWrapFocus(_this._activeElement, NO_VERTICAL_WRAP)) {
+                    return LARGE_NEGATIVE_DISTANCE_FROM_CENTER;
+                }
+                return LARGE_DISTANCE_FROM_CENTER;
+            }
+            if ((targetTop === -1 && targetRectBottom <= activeRectTop) || targetRectTop === targetTop) {
+                targetTop = targetRectTop;
+                if (leftAlignment >= targetRect.left && leftAlignment <= targetRect.left + targetRect.width) {
+                    distance = 0;
+                }
+                else {
+                    distance = Math.abs(targetRect.left + targetRect.width / 2 - leftAlignment);
+                }
+            }
+            return distance;
+        })) {
+            this._setFocusAlignment(this._activeElement, false, true);
+            return true;
+        }
+        return false;
+    };
+    FocusZone.prototype._moveFocusLeft = function (theme) {
+        var _this = this;
+        var shouldWrap = this._shouldWrapFocus(this._activeElement, NO_HORIZONTAL_WRAP);
+        if (this._moveFocus((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_9__.getRTL)(theme), 
+        // eslint-disable-next-line deprecation/deprecation
+        function (activeRect, targetRect) {
+            var distance = -1;
+            var topBottomComparison;
+            if ((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_9__.getRTL)(theme)) {
+                // When in RTL, this comparison should be the same as the one in _moveFocusRight for LTR.
+                // Going left at a leftmost rectangle will go down a line instead of up a line like in LTR.
+                // This is important, because we want to be comparing the top of the target rect
+                // with the bottom of the active rect.
+                topBottomComparison = parseFloat(targetRect.top.toFixed(3)) < parseFloat(activeRect.bottom.toFixed(3));
+            }
+            else {
+                topBottomComparison = parseFloat(targetRect.bottom.toFixed(3)) > parseFloat(activeRect.top.toFixed(3));
+            }
+            if (topBottomComparison &&
+                targetRect.right <= activeRect.right &&
+                _this.props.direction !== _FocusZone_types__WEBPACK_IMPORTED_MODULE_8__.FocusZoneDirection.vertical) {
+                distance = activeRect.right - targetRect.right;
+            }
+            else if (!shouldWrap) {
+                distance = LARGE_NEGATIVE_DISTANCE_FROM_CENTER;
+            }
+            return distance;
+        }, undefined /*ev*/, shouldWrap)) {
+            this._setFocusAlignment(this._activeElement, true, false);
+            return true;
+        }
+        return false;
+    };
+    FocusZone.prototype._moveFocusRight = function (theme) {
+        var _this = this;
+        var shouldWrap = this._shouldWrapFocus(this._activeElement, NO_HORIZONTAL_WRAP);
+        if (this._moveFocus(!(0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_9__.getRTL)(theme), 
+        // eslint-disable-next-line deprecation/deprecation
+        function (activeRect, targetRect) {
+            var distance = -1;
+            var topBottomComparison;
+            if ((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_9__.getRTL)(theme)) {
+                // When in RTL, this comparison should be the same as the one in _moveFocusLeft for LTR.
+                // Going right at a rightmost rectangle will go up a line instead of down a line like in LTR.
+                // This is important, because we want to be comparing the bottom of the target rect
+                // with the top of the active rect.
+                topBottomComparison = parseFloat(targetRect.bottom.toFixed(3)) > parseFloat(activeRect.top.toFixed(3));
+            }
+            else {
+                topBottomComparison = parseFloat(targetRect.top.toFixed(3)) < parseFloat(activeRect.bottom.toFixed(3));
+            }
+            if (topBottomComparison &&
+                targetRect.left >= activeRect.left &&
+                _this.props.direction !== _FocusZone_types__WEBPACK_IMPORTED_MODULE_8__.FocusZoneDirection.vertical) {
+                distance = targetRect.left - activeRect.left;
+            }
+            else if (!shouldWrap) {
+                distance = LARGE_NEGATIVE_DISTANCE_FROM_CENTER;
+            }
+            return distance;
+        }, undefined /*ev*/, shouldWrap)) {
+            this._setFocusAlignment(this._activeElement, true, false);
+            return true;
+        }
+        return false;
+    };
+    FocusZone.prototype._moveFocusPaging = function (isForward, useDefaultWrap) {
+        if (useDefaultWrap === void 0) { useDefaultWrap = true; }
+        var element = this._activeElement;
+        if (!element || !this._root.current) {
+            return false;
+        }
+        if (this._isElementInput(element)) {
+            if (!this._shouldInputLoseFocus(element, isForward)) {
+                return false;
+            }
+        }
+        var scrollableParent = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_16__.findScrollableParent)(element);
+        if (!scrollableParent) {
+            return false;
+        }
+        var candidateDistance = -1;
+        var candidateElement = undefined;
+        var targetTop = -1;
+        var targetBottom = -1;
+        var pagesize = scrollableParent.clientHeight;
+        var activeRect = element.getBoundingClientRect();
+        do {
+            element = isForward
+                ? (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getNextElement)(this._root.current, element)
+                : (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getPreviousElement)(this._root.current, element);
+            if (element) {
+                var targetRect = element.getBoundingClientRect();
+                var targetRectTop = Math.floor(targetRect.top);
+                var activeRectBottom = Math.floor(activeRect.bottom);
+                var targetRectBottom = Math.floor(targetRect.bottom);
+                var activeRectTop = Math.floor(activeRect.top);
+                var elementDistance = this._getHorizontalDistanceFromCenter(isForward, activeRect, targetRect);
+                var isElementPassedPageSizeOnPagingDown = isForward && targetRectTop > activeRectBottom + pagesize;
+                var isElementPassedPageSizeOnPagingUp = !isForward && targetRectBottom < activeRectTop - pagesize;
+                if (isElementPassedPageSizeOnPagingDown || isElementPassedPageSizeOnPagingUp) {
+                    break;
+                }
+                if (elementDistance > -1) {
+                    // for paging down
+                    if (isForward && targetRectTop > targetTop) {
+                        targetTop = targetRectTop;
+                        candidateDistance = elementDistance;
+                        candidateElement = element;
+                    }
+                    else if (!isForward && targetRectBottom < targetBottom) {
+                        // for paging up
+                        targetBottom = targetRectBottom;
+                        candidateDistance = elementDistance;
+                        candidateElement = element;
+                    }
+                    else if (candidateDistance === -1 || elementDistance <= candidateDistance) {
+                        candidateDistance = elementDistance;
+                        candidateElement = element;
+                    }
+                }
+            }
+        } while (element);
+        var changedFocus = false;
+        // Focus the closest candidate
+        if (candidateElement && candidateElement !== this._activeElement) {
+            changedFocus = true;
+            this.focusElement(candidateElement);
+            this._setFocusAlignment(candidateElement, false, true);
+        }
+        else if (this.props.isCircularNavigation && useDefaultWrap) {
+            if (isForward) {
+                return this.focusElement((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getNextElement)(this._root.current, this._root.current.firstElementChild, true));
+            }
+            return this.focusElement((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.getPreviousElement)(this._root.current, this._root.current.lastElementChild, true, true, true));
+        }
+        return changedFocus;
+    };
+    FocusZone.prototype._setFocusAlignment = function (element, isHorizontal, isVertical) {
+        if (this.props.direction === _FocusZone_types__WEBPACK_IMPORTED_MODULE_8__.FocusZoneDirection.bidirectional &&
+            (!this._focusAlignment || isHorizontal || isVertical)) {
+            var rect = element.getBoundingClientRect();
+            var left = rect.left + rect.width / 2;
+            var top_1 = rect.top + rect.height / 2;
+            if (!this._focusAlignment) {
+                this._focusAlignment = { left: left, top: top_1 };
+            }
+            if (isHorizontal) {
+                this._focusAlignment.left = left;
+            }
+            if (isVertical) {
+                this._focusAlignment.top = top_1;
+            }
+        }
+    };
+    FocusZone.prototype._isImmediateDescendantOfZone = function (element) {
+        return this._getOwnerZone(element) === this._root.current;
+    };
+    FocusZone.prototype._getOwnerZone = function (element) {
+        var parentElement = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_6__.getParent)(element, ALLOW_VIRTUAL_ELEMENTS);
+        while (parentElement && parentElement !== this._root.current && parentElement !== this._getDocument().body) {
+            if ((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementFocusZone)(parentElement)) {
+                return parentElement;
+            }
+            parentElement = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_6__.getParent)(parentElement, ALLOW_VIRTUAL_ELEMENTS);
+        }
+        return parentElement;
+    };
+    FocusZone.prototype._updateTabIndexes = function (element) {
+        if (!this._activeElement &&
+            this.props.defaultTabbableElement &&
+            typeof this.props.defaultTabbableElement === 'function') {
+            this._activeElement = this.props.defaultTabbableElement(this._root.current);
+        }
+        if (!element && this._root.current) {
+            this._defaultFocusElement = null;
+            element = this._root.current;
+            if (this._activeElement && !(0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_13__.elementContains)(element, this._activeElement)) {
+                this._activeElement = null;
+            }
+        }
+        // If active element changes state to disabled, set it to null.
+        // Otherwise, we lose keyboard accessibility to other elements in focus zone.
+        if (this._activeElement && !(0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementTabbable)(this._activeElement)) {
+            this._activeElement = null;
+        }
+        var childNodes = element && element.children;
+        for (var childIndex = 0; childNodes && childIndex < childNodes.length; childIndex++) {
+            var child = childNodes[childIndex];
+            if (!(0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementFocusZone)(child)) {
+                // If the item is explicitly set to not be focusable then TABINDEX needs to be set to -1.
+                if (child.getAttribute && child.getAttribute(IS_FOCUSABLE_ATTRIBUTE) === 'false') {
+                    child.setAttribute(TABINDEX, '-1');
+                }
+                if ((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.isElementTabbable)(child)) {
+                    if (this.props.disabled) {
+                        child.setAttribute(TABINDEX, '-1');
+                    }
+                    else if (!this._isInnerZone &&
+                        ((!this._activeElement && !this._defaultFocusElement) || this._activeElement === child)) {
+                        this._defaultFocusElement = child;
+                        if (child.getAttribute(TABINDEX) !== '0') {
+                            child.setAttribute(TABINDEX, '0');
+                        }
+                    }
+                    else if (child.getAttribute(TABINDEX) !== '-1') {
+                        child.setAttribute(TABINDEX, '-1');
+                    }
+                }
+                else if (child.tagName === 'svg' && child.getAttribute('focusable') !== 'false') {
+                    // Disgusting IE hack. Sad face.
+                    child.setAttribute('focusable', 'false');
+                }
+            }
+            else if (child.getAttribute(IS_FOCUSABLE_ATTRIBUTE) === 'true') {
+                if (!this._isInnerZone &&
+                    ((!this._activeElement && !this._defaultFocusElement) || this._activeElement === child)) {
+                    this._defaultFocusElement = child;
+                    if (child.getAttribute(TABINDEX) !== '0') {
+                        child.setAttribute(TABINDEX, '0');
+                    }
+                }
+                else if (child.getAttribute(TABINDEX) !== '-1') {
+                    child.setAttribute(TABINDEX, '-1');
+                }
+            }
+            this._updateTabIndexes(child);
+        }
+    };
+    FocusZone.prototype._isContentEditableElement = function (element) {
+        return element && element.getAttribute('contenteditable') === 'true';
+    };
+    FocusZone.prototype._isElementInput = function (element) {
+        if (element &&
+            element.tagName &&
+            (element.tagName.toLowerCase() === 'input' || element.tagName.toLowerCase() === 'textarea')) {
+            return true;
+        }
+        return false;
+    };
+    FocusZone.prototype._shouldInputLoseFocus = function (element, isForward) {
+        // If a tab was used, we want to focus on the next element.
+        if (!this._processingTabKey &&
+            element &&
+            element.type &&
+            ALLOWED_INPUT_TYPES.indexOf(element.type.toLowerCase()) > -1) {
+            var selectionStart = element.selectionStart;
+            var selectionEnd = element.selectionEnd;
+            var isRangeSelected = selectionStart !== selectionEnd;
+            var inputValue = element.value;
+            var isReadonly = element.readOnly;
+            // We shouldn't lose focus in the following cases:
+            // 1. There is range selected.
+            // 2. When selection start is larger than 0 and it is backward and not readOnly.
+            // 3. when selection start is not the end of length, it is forward and not readOnly.
+            // 4. We press any of the arrow keys when our handleTabKey isn't none or undefined (only losing focus if we hit
+            // tab) and if shouldInputLoseFocusOnArrowKey is defined, if scenario prefers to not loose the focus which is
+            // determined by calling the callback shouldInputLoseFocusOnArrowKey
+            if (isRangeSelected ||
+                (selectionStart > 0 && !isForward && !isReadonly) ||
+                (selectionStart !== inputValue.length && isForward && !isReadonly) ||
+                (!!this.props.handleTabKey &&
+                    !(this.props.shouldInputLoseFocusOnArrowKey && this.props.shouldInputLoseFocusOnArrowKey(element)))) {
+                return false;
+            }
+        }
+        return true;
+    };
+    FocusZone.prototype._shouldWrapFocus = function (element, noWrapDataAttribute) {
+        return this.props.checkForNoWrap ? (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_5__.shouldWrapFocus)(element, noWrapDataAttribute) : true;
+    };
+    /**
+     * Returns true if the element is a descendant of the FocusZone through a React portal.
+     */
+    FocusZone.prototype._portalContainsElement = function (element) {
+        return element && !!this._root.current && (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_17__.portalContainsElement)(element, this._root.current);
+    };
+    FocusZone.prototype._getDocument = function () {
+        return (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_18__.getDocument)(this._root.current);
+    };
+    FocusZone.defaultProps = {
+        isCircularNavigation: false,
+        direction: _FocusZone_types__WEBPACK_IMPORTED_MODULE_8__.FocusZoneDirection.bidirectional,
+        shouldRaiseClicks: true,
+        // Hardcoding uncontrolled flag for proper interop with FluentUI V9.
+        'data-tabster': '{"uncontrolled": {}}',
+    };
+    return FocusZone;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+//# sourceMappingURL=FocusZone.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react-focus/lib/components/FocusZone/FocusZone.types.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react-focus/lib/components/FocusZone/FocusZone.types.js ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FocusZoneDirection: () => (/* binding */ FocusZoneDirection),
+/* harmony export */   FocusZoneTabbableElements: () => (/* binding */ FocusZoneTabbableElements)
+/* harmony export */ });
+/**
+ * {@docCategory FocusZone}
+ */
+var FocusZoneTabbableElements = {
+    /** Tabbing is not allowed */
+    none: 0,
+    /** All tabbing action is allowed */
+    all: 1,
+    /** Tabbing is allowed only on input elements */
+    inputOnly: 2,
+};
+/**
+ * {@docCategory FocusZone}
+ */
+var FocusZoneDirection;
+(function (FocusZoneDirection) {
+    /** Only react to up/down arrows. */
+    FocusZoneDirection[FocusZoneDirection["vertical"] = 0] = "vertical";
+    /** Only react to left/right arrows. */
+    FocusZoneDirection[FocusZoneDirection["horizontal"] = 1] = "horizontal";
+    /** React to all arrows. */
+    FocusZoneDirection[FocusZoneDirection["bidirectional"] = 2] = "bidirectional";
+    /**
+     * React to all arrows. Navigate next item in DOM on right/down arrow keys and previous - left/up arrow keys.
+     * Right and Left arrow keys are swapped in RTL mode.
+     */
+    FocusZoneDirection[FocusZoneDirection["domOrder"] = 3] = "domOrder";
+})(FocusZoneDirection || (FocusZoneDirection = {}));
+//# sourceMappingURL=FocusZone.types.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react-hooks/lib/useAsync.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@fluentui/react-hooks/lib/useAsync.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useAsync: () => (/* binding */ useAsync)
+/* harmony export */ });
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/Async.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/**
+ * Hook to provide an Async instance that is automatically cleaned up on dismount.
+ */
+function useAsync() {
+    var asyncRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
+    if (!asyncRef.current) {
+        asyncRef.current = new _fluentui_utilities__WEBPACK_IMPORTED_MODULE_1__.Async();
+    }
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        return function () {
+            var _a;
+            (_a = asyncRef.current) === null || _a === void 0 ? void 0 : _a.dispose();
+            asyncRef.current = undefined;
+        };
+    }, []);
+    return asyncRef.current;
+}
+//# sourceMappingURL=useAsync.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react-hooks/lib/useBoolean.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@fluentui/react-hooks/lib/useBoolean.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useBoolean: () => (/* binding */ useBoolean)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _useConst__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./useConst */ "./node_modules/@fluentui/react-hooks/lib/useConst.js");
+
+
+/**
+ * Hook to store a value and generate callbacks for setting the value to true or false.
+ * The identity of the callbacks will always stay the same.
+ *
+ * @param initialState - Initial value
+ * @returns Array with the current value and an object containing the updater callbacks.
+ */
+function useBoolean(initialState) {
+    var _a = react__WEBPACK_IMPORTED_MODULE_0__.useState(initialState), value = _a[0], setValue = _a[1];
+    var setTrue = (0,_useConst__WEBPACK_IMPORTED_MODULE_1__.useConst)(function () { return function () {
+        setValue(true);
+    }; });
+    var setFalse = (0,_useConst__WEBPACK_IMPORTED_MODULE_1__.useConst)(function () { return function () {
+        setValue(false);
+    }; });
+    var toggle = (0,_useConst__WEBPACK_IMPORTED_MODULE_1__.useConst)(function () { return function () {
+        setValue(function (currentValue) { return !currentValue; });
+    }; });
+    return [value, { setTrue: setTrue, setFalse: setFalse, toggle: toggle }];
+}
+//# sourceMappingURL=useBoolean.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/react-hooks/lib/useConst.js":
 /*!************************************************************!*\
   !*** ./node_modules/@fluentui/react-hooks/lib/useConst.js ***!
@@ -4062,6 +5628,61 @@ function useControllableValue(controlledValue, defaultUncontrolledValue, onChang
 
 /***/ }),
 
+/***/ "./node_modules/@fluentui/react-hooks/lib/useEventCallback.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@fluentui/react-hooks/lib/useEventCallback.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useEventCallback: () => (/* binding */ useEventCallback)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _useConst__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./useConst */ "./node_modules/@fluentui/react-hooks/lib/useConst.js");
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/useIsomorphicLayoutEffect.js");
+
+
+
+/**
+ * Modified `useCallback` that returns the same function reference every time, but internally calls
+ * the most-recently passed callback implementation. Can be useful in situations such as:
+ * - Event handler dependencies change too frequently, such as user props which might change on
+ *   every render, or volatile values such as useState/useDispatch
+ * - Callback must be referenced in a captured context (such as a window event handler or unmount
+ *   handler that's registered once) but needs access to the latest props
+ *
+ * In general, prefer `useCallback` unless you've encountered one of the problems above.
+ *
+ * https://reactjs.org/docs/hooks-faq.html#how-to-read-an-often-changing-value-from-usecallback
+ *
+ * @param fn - The callback function that will be used
+ * @returns A function which is referentially stable but internally calls the most recently passed callback
+ */
+function useEventCallback(fn) {
+    var callbackRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(function () {
+        throw new Error('Cannot call an event handler while rendering');
+    });
+    (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_1__.useIsomorphicLayoutEffect)(function () {
+        callbackRef.current = fn;
+    }, [fn]);
+    // useConst rather than useCallback to ensure the reference is always stable
+    // (useCallback's deps list is an optimization, not a guarantee)
+    return (0,_useConst__WEBPACK_IMPORTED_MODULE_2__.useConst)(function () { return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var callback = callbackRef.current;
+        return callback.apply(void 0, args);
+    }; });
+}
+//# sourceMappingURL=useEventCallback.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/react-hooks/lib/useId.js":
 /*!*********************************************************!*\
   !*** ./node_modules/@fluentui/react-hooks/lib/useId.js ***!
@@ -4146,6 +5767,46 @@ function useMergedRefs() {
 
 /***/ }),
 
+/***/ "./node_modules/@fluentui/react-hooks/lib/useOnEvent.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@fluentui/react-hooks/lib/useOnEvent.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useOnEvent: () => (/* binding */ useOnEvent)
+/* harmony export */ });
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/dom/on.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/**
+ * Hook to attach an event handler on mount and handle cleanup.
+ * @param element - Element (or ref to an element) to attach the event handler to
+ * @param eventName - The event to attach a handler for
+ * @param callback - The handler for the event
+ * @param useCapture - Whether or not to attach the handler for the capture phase
+ */
+function useOnEvent(element, eventName, callback, useCapture) {
+    // Use a ref for the callback to prevent repeatedly attaching/unattaching callbacks that are unstable across renders
+    var callbackRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(callback);
+    callbackRef.current = callback;
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        var actualElement = element && 'current' in element ? element.current : element;
+        if (!actualElement || !actualElement.addEventListener) {
+            return;
+        }
+        var dispose = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_1__.on)(actualElement, eventName, function (ev) { return callbackRef.current(ev); }, useCapture);
+        return dispose;
+    }, [element, eventName, useCapture]);
+}
+//# sourceMappingURL=useOnEvent.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/react-hooks/lib/usePrevious.js":
 /*!***************************************************************!*\
   !*** ./node_modules/@fluentui/react-hooks/lib/usePrevious.js ***!
@@ -4173,6 +5834,149 @@ function usePrevious(value) {
     return ref.current;
 }
 //# sourceMappingURL=usePrevious.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react-hooks/lib/useSetTimeout.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@fluentui/react-hooks/lib/useSetTimeout.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useSetTimeout: () => (/* binding */ useSetTimeout)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _useConst__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./useConst */ "./node_modules/@fluentui/react-hooks/lib/useConst.js");
+
+
+/**
+ *  Returns a wrapper function for `setTimeout` which automatically handles disposal.
+ */
+var useSetTimeout = function () {
+    var timeoutIds = (0,_useConst__WEBPACK_IMPORTED_MODULE_1__.useConst)({});
+    // Cleanup function.
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () { return function () {
+        for (var _i = 0, _a = Object.keys(timeoutIds); _i < _a.length; _i++) {
+            var id = _a[_i];
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            clearTimeout(id);
+        }
+    }; }, 
+    // useConst ensures this will never change, but react-hooks/exhaustive-deps doesn't know that
+    [timeoutIds]);
+    // Return wrapper which will auto cleanup.
+    return (0,_useConst__WEBPACK_IMPORTED_MODULE_1__.useConst)({
+        setTimeout: function (func, duration) {
+            var id = setTimeout(func, duration);
+            timeoutIds[id] = 1;
+            return id;
+        },
+        clearTimeout: function (id) {
+            delete timeoutIds[id];
+            clearTimeout(id);
+        },
+    });
+};
+//# sourceMappingURL=useSetTimeout.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react-hooks/lib/useTarget.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@fluentui/react-hooks/lib/useTarget.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useTarget: () => (/* binding */ useTarget)
+/* harmony export */ });
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/dom/getDocument.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fluentui_react_window_provider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fluentui/react-window-provider */ "./node_modules/@fluentui/react-window-provider/lib/WindowProvider.js");
+
+
+
+/**
+ * Hook to calculate and cache the target element specified by the given target attribute,
+ * as well as the target element's (or host element's) parent window
+ * @param target- Target selector passed to the component as a property, describing the element that
+ * the callout should target
+ * @param hostElement- The callout's host element, used for determining the parent window.
+ */
+function useTarget(target, hostElement) {
+    var previousTargetProp = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
+    var targetRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+    /**
+     * Stores an instance of Window, used to check
+     * for server side rendering and if focus was lost.
+     */
+    var targetWindow = (0,_fluentui_react_window_provider__WEBPACK_IMPORTED_MODULE_1__.useWindow)();
+    // If the target element changed, find the new one. If we are tracking
+    // target with class name, always find element because we do not know if
+    // fabric has rendered a new element and disposed the old element.
+    if (!target || target !== previousTargetProp.current || typeof target === 'string') {
+        var currentElement = hostElement === null || hostElement === void 0 ? void 0 : hostElement.current;
+        if (target) {
+            if (typeof target === 'string') {
+                var currentDoc = (0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_2__.getDocument)(currentElement);
+                targetRef.current = currentDoc ? currentDoc.querySelector(target) : null;
+            }
+            else if ('stopPropagation' in target) {
+                targetRef.current = target;
+            }
+            else if ('getBoundingClientRect' in target) {
+                targetRef.current = target;
+            }
+            else if ('current' in target) {
+                targetRef.current = target.current;
+            }
+            else {
+                targetRef.current = target;
+            }
+        }
+        previousTargetProp.current = target;
+    }
+    return [targetRef, targetWindow];
+}
+//# sourceMappingURL=useTarget.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react-hooks/lib/useUnmount.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@fluentui/react-hooks/lib/useUnmount.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useUnmount: () => (/* binding */ useUnmount)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+/**
+ * Hook which synchronously executes a callback when the component is about to unmount.
+ *
+ * @param callback - Function to call during unmount.
+ */
+var useUnmount = function (callback) {
+    var unmountRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(callback);
+    unmountRef.current = callback;
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () { return function () {
+        var _a;
+        (_a = unmountRef.current) === null || _a === void 0 ? void 0 : _a.call(unmountRef);
+    }; }, []);
+};
+//# sourceMappingURL=useUnmount.js.map
 
 /***/ }),
 
@@ -4243,6 +6047,36 @@ function useWarnings(options) {
 
 /***/ }),
 
+/***/ "./node_modules/@fluentui/react-portal-compat-context/lib/PortalCompatContext.js":
+/*!***************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react-portal-compat-context/lib/PortalCompatContext.js ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PortalCompatContextProvider: () => (/* binding */ PortalCompatContextProvider),
+/* harmony export */   usePortalCompat: () => (/* binding */ usePortalCompat)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+var PortalCompatContext = react__WEBPACK_IMPORTED_MODULE_0__.createContext(undefined);
+var portalCompatContextDefaultValue = function() {
+    return function() {
+        return undefined;
+    };
+};
+var PortalCompatContextProvider = PortalCompatContext.Provider;
+function usePortalCompat() {
+    var _React_useContext;
+    return (_React_useContext = react__WEBPACK_IMPORTED_MODULE_0__.useContext(PortalCompatContext)) !== null && _React_useContext !== void 0 ? _React_useContext : portalCompatContextDefaultValue;
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/react-window-provider/lib/WindowProvider.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/@fluentui/react-window-provider/lib/WindowProvider.js ***!
@@ -4285,6 +6119,5475 @@ var WindowProvider = function (props) {
     return react__WEBPACK_IMPORTED_MODULE_0__.createElement(WindowContext.Provider, { value: props }, props.children);
 };
 //# sourceMappingURL=WindowProvider.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/common/DirectionalHint.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/common/DirectionalHint.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DirectionalHint: () => (/* binding */ DirectionalHint)
+/* harmony export */ });
+var DirectionalHint = {
+    /**
+     * Appear above the target element, with the left edges of the callout and target aligning.
+     */
+    topLeftEdge: 0,
+    /**
+     * Appear above the target element, with the centers of the callout and target aligning.
+     */
+    topCenter: 1,
+    /**
+     * Appear above the target element, with the right edges of the callout and target aligning.
+     */
+    topRightEdge: 2,
+    /**
+     * Appear above the target element, aligning with the target element such that the callout tends toward
+     * the center of the screen.
+     */
+    topAutoEdge: 3,
+    /**
+     * Appear below the target element, with the left edges of the callout and target aligning.
+     */
+    bottomLeftEdge: 4,
+    /**
+     * Appear below the target element, with the centers of the callout and target aligning.
+     */
+    bottomCenter: 5,
+    /**
+     * Appear below the target element, with the right edges of the callout and target aligning.
+     */
+    bottomRightEdge: 6,
+    /**
+     * Appear below the target element, aligning with the target element such that the callout tends toward
+     * the center of the screen.
+     */
+    bottomAutoEdge: 7,
+    /**
+     * Appear to the left of the target element, with the top edges of the callout and target aligning.
+     */
+    leftTopEdge: 8,
+    /**
+     * Appear to the left of the target element, with the centers of the callout and target aligning.
+     */
+    leftCenter: 9,
+    /**
+     * Appear to the left of the target element, with the bottom edges of the callout and target aligning.
+     */
+    leftBottomEdge: 10,
+    /**
+     * Appear to the right of the target element, with the top edges of the callout and target aligning.
+     */
+    rightTopEdge: 11,
+    /**
+     * Appear to the right of the target element, with the centers of the callout and target aligning.
+     */
+    rightCenter: 12,
+    /**
+     * Appear to the right of the target element, with the bottom edges of the callout and target aligning.
+     */
+    rightBottomEdge: 13,
+};
+//# sourceMappingURL=DirectionalHint.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Button/BaseButton.classNames.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Button/BaseButton.classNames.js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ButtonGlobalClassNames: () => (/* binding */ ButtonGlobalClassNames),
+/* harmony export */   getBaseButtonClassNames: () => (/* binding */ getBaseButtonClassNames)
+/* harmony export */ });
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+
+
+var ButtonGlobalClassNames = {
+    msButton: 'ms-Button',
+    msButtonHasMenu: 'ms-Button--hasMenu',
+    msButtonIcon: 'ms-Button-icon',
+    msButtonMenuIcon: 'ms-Button-menuIcon',
+    msButtonLabel: 'ms-Button-label',
+    msButtonDescription: 'ms-Button-description',
+    msButtonScreenReaderText: 'ms-Button-screenReaderText',
+    msButtonFlexContainer: 'ms-Button-flexContainer',
+    msButtonTextContainer: 'ms-Button-textContainer',
+};
+var getBaseButtonClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.memoizeFunction)(function (theme, styles, className, variantClassName, iconClassName, menuIconClassName, disabled, hasMenu, checked, expanded, isSplit) {
+    var _a, _b;
+    var classNames = (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.getGlobalClassNames)(ButtonGlobalClassNames, theme || {});
+    var isExpanded = expanded && !isSplit;
+    return (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.mergeStyleSets)({
+        root: [
+            classNames.msButton,
+            styles.root,
+            variantClassName,
+            checked && ['is-checked', styles.rootChecked],
+            isExpanded && [
+                'is-expanded',
+                styles.rootExpanded,
+                {
+                    selectors: (_a = {},
+                        _a[":hover .".concat(classNames.msButtonIcon)] = styles.iconExpandedHovered,
+                        // menuIcon falls back to rootExpandedHovered to support original behavior
+                        _a[":hover .".concat(classNames.msButtonMenuIcon)] = styles.menuIconExpandedHovered || styles.rootExpandedHovered,
+                        _a[':hover'] = styles.rootExpandedHovered,
+                        _a),
+                },
+            ],
+            hasMenu && [ButtonGlobalClassNames.msButtonHasMenu, styles.rootHasMenu],
+            disabled && ['is-disabled', styles.rootDisabled],
+            !disabled &&
+                !isExpanded &&
+                !checked && {
+                selectors: (_b = {
+                        ':hover': styles.rootHovered
+                    },
+                    _b[":hover .".concat(classNames.msButtonLabel)] = styles.labelHovered,
+                    _b[":hover .".concat(classNames.msButtonIcon)] = styles.iconHovered,
+                    _b[":hover .".concat(classNames.msButtonDescription)] = styles.descriptionHovered,
+                    _b[":hover .".concat(classNames.msButtonMenuIcon)] = styles.menuIconHovered,
+                    _b[':focus'] = styles.rootFocused,
+                    _b[':active'] = styles.rootPressed,
+                    _b[":active .".concat(classNames.msButtonIcon)] = styles.iconPressed,
+                    _b[":active .".concat(classNames.msButtonDescription)] = styles.descriptionPressed,
+                    _b[":active .".concat(classNames.msButtonMenuIcon)] = styles.menuIconPressed,
+                    _b),
+            },
+            disabled && checked && [styles.rootCheckedDisabled],
+            !disabled &&
+                checked && {
+                selectors: {
+                    ':hover': styles.rootCheckedHovered,
+                    ':active': styles.rootCheckedPressed,
+                },
+            },
+            className,
+        ],
+        flexContainer: [classNames.msButtonFlexContainer, styles.flexContainer],
+        textContainer: [classNames.msButtonTextContainer, styles.textContainer],
+        icon: [
+            classNames.msButtonIcon,
+            iconClassName,
+            styles.icon,
+            isExpanded && styles.iconExpanded,
+            checked && styles.iconChecked,
+            disabled && styles.iconDisabled,
+        ],
+        label: [classNames.msButtonLabel, styles.label, checked && styles.labelChecked, disabled && styles.labelDisabled],
+        menuIcon: [
+            classNames.msButtonMenuIcon,
+            menuIconClassName,
+            styles.menuIcon,
+            checked && styles.menuIconChecked,
+            disabled && !isSplit && styles.menuIconDisabled,
+            !disabled &&
+                !isExpanded &&
+                !checked && {
+                selectors: {
+                    ':hover': styles.menuIconHovered,
+                    ':active': styles.menuIconPressed,
+                },
+            },
+            isExpanded && ['is-expanded', styles.menuIconExpanded],
+        ],
+        description: [
+            classNames.msButtonDescription,
+            styles.description,
+            checked && styles.descriptionChecked,
+            disabled && styles.descriptionDisabled,
+        ],
+        screenReaderText: [classNames.msButtonScreenReaderText, styles.screenReaderText],
+    });
+});
+//# sourceMappingURL=BaseButton.classNames.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Button/BaseButton.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Button/BaseButton.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BaseButton: () => (/* binding */ BaseButton)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/createMergedRef.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/css.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/dom-utilities/lib/portalContainsElement.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/KeyCodes.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/setFocusVisibility.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/initializeComponentRef.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/Async.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/EventGroup.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/warn/warnConditionallyRequiredProps.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/warn/warnDeprecations.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/getId.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/properties.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/object.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/BaseComponent.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/useFocusRects.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/aria.js");
+/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Icon */ "./node_modules/@fluentui/react/lib/components/Icon/Icon.js");
+/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Icon */ "./node_modules/@fluentui/react/lib/components/Icon/FontIcon.js");
+/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../Icon */ "./node_modules/@fluentui/react/lib/components/Icon/ImageIcon.js");
+/* harmony import */ var _common_DirectionalHint__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../../common/DirectionalHint */ "./node_modules/@fluentui/react/lib/common/DirectionalHint.js");
+/* harmony import */ var _ContextualMenu__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../ContextualMenu */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.js");
+/* harmony import */ var _BaseButton_classNames__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./BaseButton.classNames */ "./node_modules/@fluentui/react/lib/components/Button/BaseButton.classNames.js");
+/* harmony import */ var _SplitButton_SplitButton_classNames__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./SplitButton/SplitButton.classNames */ "./node_modules/@fluentui/react/lib/components/Button/SplitButton/SplitButton.classNames.js");
+/* harmony import */ var _KeytipData__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../KeytipData */ "./node_modules/@fluentui/react/lib/components/KeytipData/KeytipData.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/componentAs/composeComponentAs.js");
+
+
+
+
+
+
+
+
+
+
+var TouchIdleDelay = 500; /* ms */
+var COMPONENT_NAME = 'BaseButton';
+/**
+ * {@docCategory Button}
+ */
+var BaseButton = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(BaseButton, _super);
+    function BaseButton(props) {
+        var _this = _super.call(this, props) || this;
+        _this._buttonElement = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
+        _this._splitButtonContainer = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
+        _this._mergedRef = (0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.createMergedRef)();
+        _this._renderedVisibleMenu = false;
+        _this._getMemoizedMenuButtonKeytipProps = (0,_Utilities__WEBPACK_IMPORTED_MODULE_3__.memoizeFunction)(function (keytipProps) {
+            return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, keytipProps), { hasMenu: true });
+        });
+        _this._onRenderIcon = function (buttonProps, defaultRender) {
+            var iconProps = _this.props.iconProps;
+            if (iconProps && (iconProps.iconName !== undefined || iconProps.imageProps)) {
+                var className = iconProps.className, imageProps = iconProps.imageProps, rest = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__rest)(iconProps, ["className", "imageProps"]);
+                // If the styles prop is specified as part of iconProps, fall back to regular Icon as FontIcon and ImageIcon
+                // do not have this prop.
+                if (iconProps.styles) {
+                    return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Icon__WEBPACK_IMPORTED_MODULE_4__.Icon, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({ className: (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.css)(_this._classNames.icon, className), imageProps: imageProps }, rest));
+                }
+                if (iconProps.iconName) {
+                    return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Icon__WEBPACK_IMPORTED_MODULE_6__.FontIcon, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({ className: (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.css)(_this._classNames.icon, className) }, rest));
+                }
+                if (imageProps) {
+                    return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Icon__WEBPACK_IMPORTED_MODULE_7__.ImageIcon, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({ className: (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.css)(_this._classNames.icon, className), imageProps: imageProps }, rest));
+                }
+            }
+            return null;
+        };
+        _this._onRenderTextContents = function () {
+            var _a = _this.props, text = _a.text, children = _a.children, 
+            // eslint-disable-next-line deprecation/deprecation
+            _b = _a.secondaryText, 
+            // eslint-disable-next-line deprecation/deprecation
+            secondaryText = _b === void 0 ? _this.props.description : _b, _c = _a.onRenderText, onRenderText = _c === void 0 ? _this._onRenderText : _c, _d = _a.onRenderDescription, onRenderDescription = _d === void 0 ? _this._onRenderDescription : _d;
+            if (text || typeof children === 'string' || secondaryText) {
+                return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { className: _this._classNames.textContainer },
+                    onRenderText(_this.props, _this._onRenderText),
+                    onRenderDescription(_this.props, _this._onRenderDescription)));
+            }
+            return [onRenderText(_this.props, _this._onRenderText), onRenderDescription(_this.props, _this._onRenderDescription)];
+        };
+        _this._onRenderText = function () {
+            var text = _this.props.text;
+            var children = _this.props.children;
+            // For backwards compat, we should continue to take in the text content from children.
+            if (text === undefined && typeof children === 'string') {
+                text = children;
+            }
+            if (_this._hasText()) {
+                return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { key: _this._labelId, className: _this._classNames.label, id: _this._labelId }, text));
+            }
+            return null;
+        };
+        _this._onRenderChildren = function () {
+            var children = _this.props.children;
+            // If children is just a string, either it or the text will be rendered via onRenderLabel
+            // If children is another component, it will be rendered after text
+            if (typeof children === 'string') {
+                return null;
+            }
+            return children;
+        };
+        _this._onRenderDescription = function (props) {
+            // eslint-disable-next-line deprecation/deprecation
+            var _a = props.secondaryText, secondaryText = _a === void 0 ? _this.props.description : _a;
+            // ms-Button-description is only shown when the button type is compound.
+            // In other cases it will not be displayed.
+            return secondaryText ? (react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { key: _this._descriptionId, className: _this._classNames.description, id: _this._descriptionId }, secondaryText)) : null;
+        };
+        _this._onRenderAriaDescription = function () {
+            var ariaDescription = _this.props.ariaDescription;
+            // If ariaDescription is given, descriptionId will be assigned to ariaDescriptionSpan,
+            // otherwise it will be assigned to descriptionSpan.
+            return ariaDescription ? (react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { className: _this._classNames.screenReaderText, id: _this._ariaDescriptionId }, ariaDescription)) : null;
+        };
+        _this._onRenderMenuIcon = function (props) {
+            var menuIconProps = _this.props.menuIconProps;
+            return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Icon__WEBPACK_IMPORTED_MODULE_6__.FontIcon, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({ iconName: "ChevronDown" }, menuIconProps, { className: _this._classNames.menuIcon }));
+        };
+        _this._onRenderMenu = function (menuProps) {
+            var MenuType = _this.props.menuAs ? (0,_Utilities__WEBPACK_IMPORTED_MODULE_8__.composeComponentAs)(_this.props.menuAs, _ContextualMenu__WEBPACK_IMPORTED_MODULE_9__.ContextualMenu) : _ContextualMenu__WEBPACK_IMPORTED_MODULE_9__.ContextualMenu;
+            return react__WEBPACK_IMPORTED_MODULE_0__.createElement(MenuType, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, menuProps));
+        };
+        _this._onDismissMenu = function (ev) {
+            var menuProps = _this.props.menuProps;
+            if (menuProps && menuProps.onDismiss) {
+                menuProps.onDismiss(ev);
+            }
+            if (!ev || !ev.defaultPrevented) {
+                _this._dismissMenu();
+            }
+        };
+        _this._dismissMenu = function () {
+            _this._menuShouldFocusOnMount = undefined;
+            _this._menuShouldFocusOnContainer = undefined;
+            _this.setState({ menuHidden: true });
+        };
+        _this._openMenu = function (shouldFocusOnContainer, shouldFocusOnMount) {
+            if (shouldFocusOnMount === void 0) { shouldFocusOnMount = true; }
+            if (_this.props.menuProps) {
+                _this._menuShouldFocusOnContainer = shouldFocusOnContainer;
+                _this._menuShouldFocusOnMount = shouldFocusOnMount;
+                _this._renderedVisibleMenu = true;
+                _this.setState({ menuHidden: false });
+            }
+        };
+        _this._onToggleMenu = function (shouldFocusOnContainer) {
+            var shouldFocusOnMount = true;
+            if (_this.props.menuProps && _this.props.menuProps.shouldFocusOnMount === false) {
+                shouldFocusOnMount = false;
+            }
+            _this.state.menuHidden ? _this._openMenu(shouldFocusOnContainer, shouldFocusOnMount) : _this._dismissMenu();
+        };
+        _this._onSplitContainerFocusCapture = function (ev) {
+            var container = _this._splitButtonContainer.current;
+            // If the target is coming from the portal we do not need to set focus on the container.
+            if (!container || (ev.target && (0,_Utilities__WEBPACK_IMPORTED_MODULE_10__.portalContainsElement)(ev.target, container))) {
+                return;
+            }
+            // We should never be able to focus the individual buttons in a split button. Focus
+            // should always remain on the container.
+            container.focus();
+        };
+        _this._onSplitButtonPrimaryClick = function (ev) {
+            if (!_this.state.menuHidden) {
+                _this._dismissMenu();
+            }
+            // toggle split buttons need two separate targets, even for touch
+            var singleTouchTarget = _this._processingTouch && !_this.props.toggle;
+            if (!singleTouchTarget && _this.props.onClick) {
+                _this.props.onClick(ev);
+            }
+            else if (singleTouchTarget) {
+                _this._onMenuClick(ev);
+            }
+        };
+        _this._onKeyDown = function (ev) {
+            // explicity cancelling event so click won't fire after this
+            // eslint-disable-next-line deprecation/deprecation
+            if (_this.props.disabled && (ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_11__.KeyCodes.enter || ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_11__.KeyCodes.space)) {
+                ev.preventDefault();
+                ev.stopPropagation();
+            }
+            else if (!_this.props.disabled) {
+                if (_this.props.menuProps) {
+                    _this._onMenuKeyDown(ev);
+                }
+                else if (_this.props.onKeyDown !== undefined) {
+                    _this.props.onKeyDown(ev); // not cancelling event because it's not disabled
+                }
+            }
+        };
+        _this._onKeyUp = function (ev) {
+            if (!_this.props.disabled && _this.props.onKeyUp !== undefined) {
+                _this.props.onKeyUp(ev); // not cancelling event because it's not disabled
+            }
+        };
+        _this._onKeyPress = function (ev) {
+            // eslint-disable-next-line deprecation/deprecation
+            if (!_this.props.disabled && _this.props.onKeyPress !== undefined) {
+                // eslint-disable-next-line deprecation/deprecation
+                _this.props.onKeyPress(ev); // not cancelling event because it's not disabled
+            }
+        };
+        _this._onMouseUp = function (ev) {
+            if (!_this.props.disabled && _this.props.onMouseUp !== undefined) {
+                _this.props.onMouseUp(ev); // not cancelling event because it's not disabled
+            }
+        };
+        _this._onMouseDown = function (ev) {
+            if (!_this.props.disabled && _this.props.onMouseDown !== undefined) {
+                _this.props.onMouseDown(ev); // not cancelling event because it's not disabled
+            }
+        };
+        _this._onClick = function (ev) {
+            if (!_this.props.disabled) {
+                if (_this.props.menuProps) {
+                    _this._onMenuClick(ev);
+                }
+                else if (_this.props.onClick !== undefined) {
+                    _this.props.onClick(ev); // not cancelling event because it's not disabled
+                }
+            }
+        };
+        _this._onSplitButtonContainerKeyDown = function (ev) {
+            // eslint-disable-next-line deprecation/deprecation
+            if (ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_11__.KeyCodes.enter || ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_11__.KeyCodes.space) {
+                if (_this._buttonElement.current) {
+                    _this._buttonElement.current.click();
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                }
+            }
+            else {
+                _this._onMenuKeyDown(ev);
+            }
+        };
+        _this._onMenuKeyDown = function (ev) {
+            var _a;
+            if (_this.props.disabled) {
+                return;
+            }
+            if (_this.props.onKeyDown) {
+                _this.props.onKeyDown(ev);
+            }
+            // eslint-disable-next-line deprecation/deprecation
+            var isUp = ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_11__.KeyCodes.up;
+            // eslint-disable-next-line deprecation/deprecation
+            var isDown = ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_11__.KeyCodes.down;
+            if (!ev.defaultPrevented && _this._isValidMenuOpenKey(ev)) {
+                var onMenuClick = _this.props.onMenuClick;
+                if (onMenuClick) {
+                    onMenuClick(ev, _this.props);
+                }
+                _this._onToggleMenu(false);
+                ev.preventDefault();
+                ev.stopPropagation();
+            }
+            // eslint-disable-next-line deprecation/deprecation
+            if (ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_11__.KeyCodes.enter || ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_11__.KeyCodes.space) {
+                // We manually set the focus visibility to true if opening via Enter or Space to account for the scenario where
+                // a user clicks on the button, closes the menu and then opens it via keyboard. In this scenario our default logic
+                // for setting focus visibility is not triggered since there is no keyboard navigation present beforehand.
+                (0,_Utilities__WEBPACK_IMPORTED_MODULE_12__.setFocusVisibility)(true, ev.target, (_a = _this.context) === null || _a === void 0 ? void 0 : _a.registeredProviders);
+            }
+            if (!(ev.altKey || ev.metaKey) && (isUp || isDown)) {
+                // Suppose a menu, with shouldFocusOnMount: false, is open, and user wants to keyboard to the menu items
+                // We need to re-render the menu with shouldFocusOnMount as true.
+                if (!_this.state.menuHidden && _this.props.menuProps) {
+                    var currentShouldFocusOnMount = _this._menuShouldFocusOnMount !== undefined
+                        ? _this._menuShouldFocusOnMount
+                        : _this.props.menuProps.shouldFocusOnMount;
+                    if (!currentShouldFocusOnMount) {
+                        ev.preventDefault();
+                        ev.stopPropagation();
+                        _this._menuShouldFocusOnMount = true;
+                        _this.forceUpdate();
+                    }
+                }
+            }
+        };
+        _this._onTouchStart = function () {
+            if (_this._isSplitButton &&
+                _this._splitButtonContainer.current &&
+                !('onpointerdown' in _this._splitButtonContainer.current)) {
+                _this._handleTouchAndPointerEvent();
+            }
+        };
+        _this._onMenuClick = function (ev) {
+            var _a = _this.props, onMenuClick = _a.onMenuClick, menuProps = _a.menuProps;
+            if (onMenuClick) {
+                onMenuClick(ev, _this.props);
+            }
+            // focus on the container by default when the menu is opened with a click event
+            // this differentiates from a keyboard interaction triggering the click event
+            var shouldFocusOnContainer = typeof (menuProps === null || menuProps === void 0 ? void 0 : menuProps.shouldFocusOnContainer) === 'boolean'
+                ? menuProps.shouldFocusOnContainer
+                : ev.nativeEvent.pointerType === 'mouse';
+            if (!ev.defaultPrevented) {
+                _this._onToggleMenu(shouldFocusOnContainer);
+                ev.preventDefault();
+                ev.stopPropagation();
+            }
+        };
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_13__.initializeComponentRef)(_this);
+        _this._async = new _Utilities__WEBPACK_IMPORTED_MODULE_14__.Async(_this);
+        _this._events = new _Utilities__WEBPACK_IMPORTED_MODULE_15__.EventGroup(_this);
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_16__.warnConditionallyRequiredProps)(COMPONENT_NAME, props, ['menuProps', 'onClick'], 'split', _this.props.split);
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_17__.warnDeprecations)(COMPONENT_NAME, props, {
+            rootProps: undefined,
+            description: 'secondaryText',
+            toggled: 'checked',
+        });
+        _this._labelId = (0,_Utilities__WEBPACK_IMPORTED_MODULE_18__.getId)();
+        _this._descriptionId = (0,_Utilities__WEBPACK_IMPORTED_MODULE_18__.getId)();
+        _this._ariaDescriptionId = (0,_Utilities__WEBPACK_IMPORTED_MODULE_18__.getId)();
+        _this.state = {
+            menuHidden: true,
+        };
+        return _this;
+    }
+    Object.defineProperty(BaseButton.prototype, "_isSplitButton", {
+        get: function () {
+            return !!this.props.menuProps && !!this.props.onClick && this.props.split === true;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    BaseButton.prototype.render = function () {
+        var _a;
+        var _b = this.props, ariaDescription = _b.ariaDescription, ariaLabel = _b.ariaLabel, ariaHidden = _b.ariaHidden, className = _b.className, disabled = _b.disabled, allowDisabledFocus = _b.allowDisabledFocus, primaryDisabled = _b.primaryDisabled, 
+        // eslint-disable-next-line deprecation/deprecation
+        _c = _b.secondaryText, 
+        // eslint-disable-next-line deprecation/deprecation
+        secondaryText = _c === void 0 ? this.props.description : _c, href = _b.href, iconProps = _b.iconProps, menuIconProps = _b.menuIconProps, styles = _b.styles, checked = _b.checked, variantClassName = _b.variantClassName, theme = _b.theme, toggle = _b.toggle, getClassNames = _b.getClassNames, role = _b.role;
+        var menuHidden = this.state.menuHidden;
+        // Button is disabled if the whole button (in case of splitButton is disabled) or if the primary action is disabled
+        var isPrimaryButtonDisabled = disabled || primaryDisabled;
+        this._classNames = getClassNames
+            ? getClassNames(theme, className, variantClassName, iconProps && iconProps.className, menuIconProps && menuIconProps.className, isPrimaryButtonDisabled, checked, !menuHidden, !!this.props.menuProps, this.props.split, !!allowDisabledFocus)
+            : (0,_BaseButton_classNames__WEBPACK_IMPORTED_MODULE_19__.getBaseButtonClassNames)(theme, styles, className, variantClassName, iconProps && iconProps.className, menuIconProps && menuIconProps.className, isPrimaryButtonDisabled, !!this.props.menuProps, checked, !menuHidden, this.props.split);
+        var _d = this, _ariaDescriptionId = _d._ariaDescriptionId, _labelId = _d._labelId, _descriptionId = _d._descriptionId;
+        // Anchor tag cannot be disabled hence in disabled state rendering
+        // anchor button as normal button
+        var renderAsAnchor = !isPrimaryButtonDisabled && !!href;
+        var tag = renderAsAnchor ? 'a' : 'button';
+        var nativeProps = (0,_Utilities__WEBPACK_IMPORTED_MODULE_20__.getNativeProps)(
+        // eslint-disable-next-line deprecation/deprecation
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_21__.assign)(renderAsAnchor ? {} : { type: 'button' }, this.props.rootProps, this.props), renderAsAnchor ? _Utilities__WEBPACK_IMPORTED_MODULE_20__.anchorProperties : _Utilities__WEBPACK_IMPORTED_MODULE_20__.buttonProperties, [
+            'disabled', // let disabled buttons be focused and styled as disabled.
+        ]);
+        // Check for ariaLabel passed in via Button props, and fall back to aria-label passed in via native props
+        var resolvedAriaLabel = ariaLabel || nativeProps['aria-label'];
+        // Check for ariaDescription, secondaryText or aria-describedby in the native props to determine source of
+        // aria-describedby. Otherwise default to undefined so property does not appear in output.
+        var ariaDescribedBy = undefined;
+        if (ariaDescription) {
+            ariaDescribedBy = _ariaDescriptionId;
+        }
+        else if (secondaryText && this.props.onRenderDescription !== _Utilities__WEBPACK_IMPORTED_MODULE_22__.nullRender) {
+            // for buttons like CompoundButton with a valid onRenderDescription, we need to set an ariaDescribedBy
+            // for buttons that do not render anything (via nullRender), we should not set an ariaDescribedBy
+            ariaDescribedBy = _descriptionId;
+        }
+        else if (nativeProps['aria-describedby']) {
+            ariaDescribedBy = nativeProps['aria-describedby'];
+        }
+        // If an explicit aria-labelledby is given, use that and we're done.
+        // If any kind of description is given (which will end up as an aria-describedby attribute)
+        // and no ariaLabel is specified, set the labelledby element.
+        // Otherwise, the button is labeled implicitly by the descendent text on the button (if it exists).
+        var ariaLabelledBy = undefined;
+        if (nativeProps['aria-labelledby']) {
+            ariaLabelledBy = nativeProps['aria-labelledby'];
+        }
+        else if (ariaDescribedBy && !resolvedAriaLabel) {
+            ariaLabelledBy = this._hasText() ? _labelId : undefined;
+        }
+        var dataIsFocusable = this.props['data-is-focusable'] === false || (disabled && !allowDisabledFocus) || this._isSplitButton
+            ? false
+            : true;
+        var isCheckboxTypeRole = role === 'menuitemcheckbox' || role === 'checkbox';
+        // if isCheckboxTypeRole, always return a checked value.
+        // Otherwise only return checked value if toggle is set to true.
+        // This is because role="checkbox" always needs to have an aria-checked value
+        // but our checked prop only sets aria-pressed if we mark the button as a toggle="true"
+        var checkedOrPressedValue = isCheckboxTypeRole ? !!checked : toggle === true ? !!checked : undefined;
+        var buttonProps = (0,_Utilities__WEBPACK_IMPORTED_MODULE_21__.assign)(nativeProps, (_a = {
+                className: this._classNames.root,
+                // eslint-disable-next-line deprecation/deprecation
+                ref: this._mergedRef(this.props.elementRef, this._buttonElement),
+                disabled: isPrimaryButtonDisabled && !allowDisabledFocus,
+                onKeyDown: this._onKeyDown,
+                onKeyPress: this._onKeyPress,
+                onKeyUp: this._onKeyUp,
+                onMouseDown: this._onMouseDown,
+                onMouseUp: this._onMouseUp,
+                onClick: this._onClick,
+                'aria-label': resolvedAriaLabel,
+                'aria-labelledby': ariaLabelledBy,
+                'aria-describedby': ariaDescribedBy,
+                'aria-disabled': isPrimaryButtonDisabled,
+                'data-is-focusable': dataIsFocusable
+            },
+            // aria-pressed attribute should only be present for toggle buttons
+            // aria-checked attribute should only be present for toggle buttons with checkbox type role
+            _a[isCheckboxTypeRole ? 'aria-checked' : 'aria-pressed'] = checkedOrPressedValue,
+            _a));
+        if (ariaHidden) {
+            buttonProps['aria-hidden'] = true;
+        }
+        if (this._isSplitButton) {
+            return this._onRenderSplitButtonContent(tag, buttonProps);
+        }
+        else if (this.props.menuProps) {
+            var _e = this.props.menuProps.id, id = _e === void 0 ? "".concat(this._labelId, "-menu") : _e;
+            (0,_Utilities__WEBPACK_IMPORTED_MODULE_21__.assign)(buttonProps, {
+                'aria-expanded': !menuHidden,
+                'aria-controls': !menuHidden ? id : null,
+                'aria-haspopup': true,
+            });
+        }
+        return this._onRenderContent(tag, buttonProps);
+    };
+    BaseButton.prototype.componentDidMount = function () {
+        // For split buttons, touching anywhere in the button should drop the dropdown, which should contain the
+        // primary action. This gives more hit target space for touch environments. We're setting the onpointerdown here,
+        // because React does not support Pointer events yet.
+        if (this._isSplitButton && this._splitButtonContainer.current) {
+            if ('onpointerdown' in this._splitButtonContainer.current) {
+                this._events.on(this._splitButtonContainer.current, 'pointerdown', this._onPointerDown, true);
+            }
+            if ('onpointerup' in this._splitButtonContainer.current && this.props.onPointerUp) {
+                this._events.on(this._splitButtonContainer.current, 'pointerup', this.props.onPointerUp, true);
+            }
+        }
+    };
+    BaseButton.prototype.componentDidUpdate = function (prevProps, prevState) {
+        // If Button's menu was closed, run onAfterMenuDismiss.
+        if (this.props.onAfterMenuDismiss && !prevState.menuHidden && this.state.menuHidden) {
+            this.props.onAfterMenuDismiss();
+        }
+    };
+    BaseButton.prototype.componentWillUnmount = function () {
+        this._async.dispose();
+        this._events.dispose();
+    };
+    BaseButton.prototype.focus = function () {
+        var _a, _b;
+        if (this._isSplitButton && this._splitButtonContainer.current) {
+            (0,_Utilities__WEBPACK_IMPORTED_MODULE_12__.setFocusVisibility)(true, undefined, (_a = this.context) === null || _a === void 0 ? void 0 : _a.registeredProviders);
+            this._splitButtonContainer.current.focus();
+        }
+        else if (this._buttonElement.current) {
+            (0,_Utilities__WEBPACK_IMPORTED_MODULE_12__.setFocusVisibility)(true, undefined, (_b = this.context) === null || _b === void 0 ? void 0 : _b.registeredProviders);
+            this._buttonElement.current.focus();
+        }
+    };
+    BaseButton.prototype.dismissMenu = function () {
+        this._dismissMenu();
+    };
+    BaseButton.prototype.openMenu = function (shouldFocusOnContainer, shouldFocusOnMount) {
+        this._openMenu(shouldFocusOnContainer, shouldFocusOnMount);
+    };
+    BaseButton.prototype._onRenderContent = function (tag, buttonProps) {
+        var _this = this;
+        var props = this.props;
+        var Tag = tag;
+        var menuIconProps = props.menuIconProps, menuProps = props.menuProps, _a = props.onRenderIcon, onRenderIcon = _a === void 0 ? this._onRenderIcon : _a, _b = props.onRenderAriaDescription, onRenderAriaDescription = _b === void 0 ? this._onRenderAriaDescription : _b, _c = props.onRenderChildren, onRenderChildren = _c === void 0 ? this._onRenderChildren : _c, 
+        // eslint-disable-next-line deprecation/deprecation
+        _d = props.onRenderMenu, 
+        // eslint-disable-next-line deprecation/deprecation
+        onRenderMenu = _d === void 0 ? this._onRenderMenu : _d, _e = props.onRenderMenuIcon, onRenderMenuIcon = _e === void 0 ? this._onRenderMenuIcon : _e, disabled = props.disabled;
+        var keytipProps = props.keytipProps;
+        if (keytipProps && menuProps) {
+            keytipProps = this._getMemoizedMenuButtonKeytipProps(keytipProps);
+        }
+        var Button = function (keytipAttributes) { return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(Tag, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, buttonProps, keytipAttributes),
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { className: _this._classNames.flexContainer, "data-automationid": "splitbuttonprimary" },
+                onRenderIcon(props, _this._onRenderIcon),
+                _this._onRenderTextContents(),
+                onRenderAriaDescription(props, _this._onRenderAriaDescription),
+                onRenderChildren(props, _this._onRenderChildren),
+                !_this._isSplitButton &&
+                    (menuProps || menuIconProps || _this.props.onRenderMenuIcon) &&
+                    onRenderMenuIcon(_this.props, _this._onRenderMenuIcon),
+                menuProps &&
+                    !menuProps.doNotLayer &&
+                    _this._shouldRenderMenu() &&
+                    onRenderMenu(_this._getMenuProps(menuProps), _this._onRenderMenu)))); };
+        var Content = keytipProps ? (
+        // If we're making a split button, we won't put the keytip here
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_KeytipData__WEBPACK_IMPORTED_MODULE_23__.KeytipData, { keytipProps: !this._isSplitButton ? keytipProps : undefined, ariaDescribedBy: buttonProps['aria-describedby'], disabled: disabled }, function (keytipAttributes) { return Button(keytipAttributes); })) : (Button());
+        if (menuProps && menuProps.doNotLayer) {
+            return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,
+                Content,
+                this._shouldRenderMenu() && onRenderMenu(this._getMenuProps(menuProps), this._onRenderMenu)));
+        }
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,
+            Content,
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Utilities__WEBPACK_IMPORTED_MODULE_24__.FocusRects, null)));
+    };
+    /**
+     * Method to help determine if the menu's component tree should
+     * be rendered. It takes into account whether the menu is expanded,
+     * whether it is a persisted menu and whether it has been shown to the user.
+     */
+    BaseButton.prototype._shouldRenderMenu = function () {
+        var menuHidden = this.state.menuHidden;
+        // eslint-disable-next-line deprecation/deprecation
+        var _a = this.props, persistMenu = _a.persistMenu, renderPersistedMenuHiddenOnMount = _a.renderPersistedMenuHiddenOnMount;
+        if (!menuHidden) {
+            // Always should render a menu when it is expanded
+            return true;
+        }
+        else if (persistMenu && (this._renderedVisibleMenu || renderPersistedMenuHiddenOnMount)) {
+            // _renderedVisibleMenu ensures that the first rendering of
+            // the menu happens on-screen, as edge's scrollbar calculations are off if done while hidden.
+            return true;
+        }
+        return false;
+    };
+    BaseButton.prototype._hasText = function () {
+        // _onRenderTextContents and _onRenderText do not perform the same checks. Below is parity with what _onRenderText
+        // used to have before the refactor that introduced this function. _onRenderTextContents does not require props.
+        // text to be undefined in order for props.children to be used as a fallback.
+        // Purely a code maintainability/reuse issue, but logged as Issue #4979.
+        return this.props.text !== null && (this.props.text !== undefined || typeof this.props.children === 'string');
+    };
+    BaseButton.prototype._getMenuProps = function (menuProps) {
+        var persistMenu = this.props.persistMenu;
+        var menuHidden = this.state.menuHidden;
+        // the accessible menu label (accessible name) has a relationship to the button.
+        // If the menu props do not specify an explicit value for aria-label or aria-labelledBy,
+        // AND the button has text, we'll set the menu aria-labelledBy to the text element id.
+        if (!menuProps.ariaLabel && !menuProps.labelElementId && this._hasText()) {
+            menuProps = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, menuProps), { labelElementId: this._labelId });
+        }
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({ id: this._labelId + '-menu', directionalHint: _common_DirectionalHint__WEBPACK_IMPORTED_MODULE_25__.DirectionalHint.bottomLeftEdge }, menuProps), { shouldFocusOnContainer: this._menuShouldFocusOnContainer, shouldFocusOnMount: this._menuShouldFocusOnMount, hidden: persistMenu ? menuHidden : undefined, className: (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.css)('ms-BaseButton-menuhost', menuProps.className), target: this._isSplitButton ? this._splitButtonContainer.current : this._buttonElement.current, onDismiss: this._onDismissMenu });
+    };
+    BaseButton.prototype._onRenderSplitButtonContent = function (tag, buttonProps) {
+        var _this = this;
+        var _a = this.props, _b = _a.styles, styles = _b === void 0 ? {} : _b, disabled = _a.disabled, allowDisabledFocus = _a.allowDisabledFocus, checked = _a.checked, getSplitButtonClassNames = _a.getSplitButtonClassNames, primaryDisabled = _a.primaryDisabled, menuProps = _a.menuProps, toggle = _a.toggle, role = _a.role, primaryActionButtonProps = _a.primaryActionButtonProps;
+        var keytipProps = this.props.keytipProps;
+        var menuHidden = this.state.menuHidden;
+        var classNames = getSplitButtonClassNames
+            ? getSplitButtonClassNames(!!disabled, !menuHidden, !!checked, !!allowDisabledFocus)
+            : styles && (0,_SplitButton_SplitButton_classNames__WEBPACK_IMPORTED_MODULE_26__.getSplitButtonClassNames)(styles, !!disabled, !menuHidden, !!checked, !!primaryDisabled);
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_21__.assign)(buttonProps, {
+            onClick: undefined,
+            onPointerDown: undefined,
+            onPointerUp: undefined,
+            tabIndex: -1,
+            'data-is-focusable': false,
+        });
+        if (keytipProps && menuProps) {
+            keytipProps = this._getMemoizedMenuButtonKeytipProps(keytipProps);
+        }
+        var containerProps = (0,_Utilities__WEBPACK_IMPORTED_MODULE_20__.getNativeProps)(buttonProps, [], ['disabled']);
+        // Add additional props to apply on primary action button
+        if (primaryActionButtonProps) {
+            (0,_Utilities__WEBPACK_IMPORTED_MODULE_21__.assign)(buttonProps, primaryActionButtonProps);
+        }
+        var SplitButton = function (keytipAttributes) { return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, containerProps, { "data-ktp-target": keytipAttributes ? keytipAttributes['data-ktp-target'] : undefined, role: role ? role : 'button', "aria-disabled": disabled, "aria-haspopup": true, "aria-expanded": !menuHidden, "aria-pressed": toggle ? !!checked : undefined, "aria-describedby": (0,_Utilities__WEBPACK_IMPORTED_MODULE_27__.mergeAriaAttributeValues)(buttonProps['aria-describedby'], keytipAttributes ? keytipAttributes['aria-describedby'] : undefined), className: classNames && classNames.splitButtonContainer, onKeyDown: _this._onSplitButtonContainerKeyDown, onTouchStart: _this._onTouchStart, ref: _this._splitButtonContainer, "data-is-focusable": true, onClick: !disabled && !primaryDisabled ? _this._onSplitButtonPrimaryClick : undefined, tabIndex: (!disabled && !primaryDisabled) || allowDisabledFocus ? 0 : undefined, "aria-roledescription": buttonProps['aria-roledescription'], onFocusCapture: _this._onSplitContainerFocusCapture }),
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { style: { display: 'flex', width: '100%' } },
+                _this._onRenderContent(tag, buttonProps),
+                _this._onRenderSplitButtonMenuButton(classNames, keytipAttributes),
+                _this._onRenderSplitButtonDivider(classNames)))); };
+        return keytipProps ? (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_KeytipData__WEBPACK_IMPORTED_MODULE_23__.KeytipData, { keytipProps: keytipProps, disabled: disabled }, function (keytipAttributes) { return SplitButton(keytipAttributes); })) : (SplitButton());
+    };
+    BaseButton.prototype._onRenderSplitButtonDivider = function (classNames) {
+        if (classNames && classNames.divider) {
+            var onClick = function (ev) {
+                ev.stopPropagation();
+            };
+            return react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { className: classNames.divider, "aria-hidden": true, onClick: onClick });
+        }
+        return null;
+    };
+    BaseButton.prototype._onRenderSplitButtonMenuButton = function (classNames, keytipAttributes) {
+        var _a = this.props, allowDisabledFocus = _a.allowDisabledFocus, checked = _a.checked, disabled = _a.disabled, splitButtonMenuProps = _a.splitButtonMenuProps, splitButtonAriaLabel = _a.splitButtonAriaLabel, primaryDisabled = _a.primaryDisabled;
+        var menuHidden = this.state.menuHidden;
+        var menuIconProps = this.props.menuIconProps;
+        if (menuIconProps === undefined) {
+            menuIconProps = {
+                iconName: 'ChevronDown',
+            };
+        }
+        var splitButtonProps = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, splitButtonMenuProps), { styles: classNames, checked: checked, disabled: disabled, allowDisabledFocus: allowDisabledFocus, onClick: this._onMenuClick, menuProps: undefined, iconProps: (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, menuIconProps), { className: this._classNames.menuIcon }), ariaLabel: splitButtonAriaLabel, 'aria-haspopup': true, 'aria-expanded': !menuHidden, 'data-is-focusable': false });
+        // Add data-ktp-execute-target to the split button if the keytip is defined
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(BaseButton, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, splitButtonProps, { "data-ktp-execute-target": keytipAttributes ? keytipAttributes['data-ktp-execute-target'] : keytipAttributes, onMouseDown: this._onMouseDown, tabIndex: primaryDisabled && !allowDisabledFocus ? 0 : -1 })));
+    };
+    BaseButton.prototype._onPointerDown = function (ev) {
+        var onPointerDown = this.props.onPointerDown;
+        if (onPointerDown) {
+            onPointerDown(ev);
+        }
+        if (ev.pointerType === 'touch') {
+            this._handleTouchAndPointerEvent();
+            ev.preventDefault();
+            ev.stopImmediatePropagation();
+        }
+    };
+    BaseButton.prototype._handleTouchAndPointerEvent = function () {
+        var _this = this;
+        // If we already have an existing timeout from a previous touch and pointer event
+        // cancel that timeout so we can set a new one.
+        if (this._lastTouchTimeoutId !== undefined) {
+            this._async.clearTimeout(this._lastTouchTimeoutId);
+            this._lastTouchTimeoutId = undefined;
+        }
+        this._processingTouch = true;
+        this._lastTouchTimeoutId = this._async.setTimeout(function () {
+            _this._processingTouch = false;
+            _this._lastTouchTimeoutId = undefined;
+            // Touch and pointer events don't focus the button naturally,
+            // so adding an imperative focus call to guarantee this behavior.
+            // Only focus the button if a splitbutton menu is not open
+            if (_this.state.menuHidden) {
+                _this.focus();
+            }
+        }, TouchIdleDelay);
+    };
+    /**
+     * Returns if the user hits a valid keyboard key to open the menu
+     * @param ev - the keyboard event
+     * @returns True if user clicks on custom trigger key if enabled or alt + down arrow if not. False otherwise.
+     */
+    BaseButton.prototype._isValidMenuOpenKey = function (ev) {
+        if (this.props.menuTriggerKeyCode) {
+            // eslint-disable-next-line deprecation/deprecation
+            return ev.which === this.props.menuTriggerKeyCode;
+        }
+        else if (this.props.menuProps) {
+            // eslint-disable-next-line deprecation/deprecation
+            return ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_11__.KeyCodes.down && (ev.altKey || ev.metaKey);
+        }
+        // Note: When enter is pressed, we will let the event continue to propagate
+        // to trigger the onClick event on the button
+        return false;
+    };
+    BaseButton.defaultProps = {
+        baseClassName: 'ms-Button',
+        styles: {},
+        split: false,
+    };
+    // needed to access registeredProviders when manually setting focus visibility
+    BaseButton.contextType = _Utilities__WEBPACK_IMPORTED_MODULE_24__.FocusRectsContext;
+    return BaseButton;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+//# sourceMappingURL=BaseButton.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Button/BaseButton.styles.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Button/BaseButton.styles.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getStyles: () => (/* binding */ getStyles)
+/* harmony export */ });
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+
+
+var noOutline = {
+    outline: 0,
+};
+var iconStyle = function (fontSize) {
+    return {
+        fontSize: fontSize,
+        margin: '0 4px',
+        height: '16px',
+        lineHeight: '16px',
+        textAlign: 'center',
+        flexShrink: 0,
+    };
+};
+/**
+ * Gets the base button styles. Note: because it is a base class to be used with the `mergeRules`
+ * helper, it should have values for all class names in the interface. This let `mergeRules` optimize
+ * mixing class names together.
+ */
+var getStyles = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.memoizeFunction)(function (theme) {
+    var _a, _b;
+    var semanticColors = theme.semanticColors, effects = theme.effects, fonts = theme.fonts;
+    var border = semanticColors.buttonBorder;
+    var disabledBackground = semanticColors.disabledBackground;
+    var disabledText = semanticColors.disabledText;
+    var buttonHighContrastFocus = {
+        left: -2,
+        top: -2,
+        bottom: -2,
+        right: -2,
+        outlineColor: 'ButtonText',
+    };
+    return {
+        root: [
+            (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.getFocusStyle)(theme, { inset: 1, highContrastStyle: buttonHighContrastFocus, borderColor: 'transparent' }),
+            theme.fonts.medium,
+            {
+                border: '1px solid ' + border,
+                borderRadius: effects.roundedCorner2,
+                boxSizing: 'border-box',
+                cursor: 'pointer',
+                display: 'inline-block',
+                padding: '0 16px',
+                textDecoration: 'none',
+                textAlign: 'center',
+                userSelect: 'none',
+                selectors: {
+                    // IE11 workaround for preventing shift of child elements of a button when active.
+                    ':active > span': {
+                        position: 'relative',
+                        left: 0,
+                        top: 0,
+                    },
+                },
+            },
+        ],
+        rootDisabled: [
+            (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.getFocusStyle)(theme, { inset: 1, highContrastStyle: buttonHighContrastFocus, borderColor: 'transparent' }),
+            {
+                backgroundColor: disabledBackground,
+                borderColor: disabledBackground,
+                color: disabledText,
+                cursor: 'default',
+                selectors: {
+                    ':hover': noOutline,
+                    ':focus': noOutline,
+                },
+            },
+        ],
+        iconDisabled: {
+            color: disabledText,
+            selectors: (_a = {},
+                _a[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = {
+                    color: 'GrayText',
+                },
+                _a),
+        },
+        menuIconDisabled: {
+            color: disabledText,
+            selectors: (_b = {},
+                _b[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = {
+                    color: 'GrayText',
+                },
+                _b),
+        },
+        flexContainer: {
+            display: 'flex',
+            height: '100%',
+            flexWrap: 'nowrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        description: {
+            display: 'block',
+        },
+        textContainer: {
+            flexGrow: 1,
+            display: 'block',
+        },
+        icon: iconStyle(fonts.mediumPlus.fontSize),
+        menuIcon: iconStyle(fonts.small.fontSize),
+        label: {
+            margin: '0 4px',
+            lineHeight: '100%',
+            display: 'block',
+        },
+        screenReaderText: _Styling__WEBPACK_IMPORTED_MODULE_1__.hiddenContentStyle,
+    };
+});
+//# sourceMappingURL=BaseButton.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Button/ButtonThemes.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Button/ButtonThemes.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   primaryStyles: () => (/* binding */ primaryStyles),
+/* harmony export */   standardStyles: () => (/* binding */ standardStyles)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/setFocusVisibility.js");
+
+
+
+var splitButtonDividerBaseStyles = function () {
+    return {
+        position: 'absolute',
+        width: 1,
+        right: 31,
+        top: 8,
+        bottom: 8,
+    };
+};
+function standardStyles(theme) {
+    var _a, _b, _c, _d, _e;
+    var s = theme.semanticColors, p = theme.palette;
+    var buttonBackground = s.buttonBackground;
+    var buttonBackgroundPressed = s.buttonBackgroundPressed;
+    var buttonBackgroundHovered = s.buttonBackgroundHovered;
+    var buttonBackgroundDisabled = s.buttonBackgroundDisabled;
+    var buttonText = s.buttonText;
+    var buttonTextHovered = s.buttonTextHovered;
+    var buttonTextDisabled = s.buttonTextDisabled;
+    var buttonTextChecked = s.buttonTextChecked;
+    var buttonTextCheckedHovered = s.buttonTextCheckedHovered;
+    return {
+        root: {
+            backgroundColor: buttonBackground,
+            color: buttonText,
+        },
+        rootHovered: {
+            backgroundColor: buttonBackgroundHovered,
+            color: buttonTextHovered,
+            selectors: (_a = {},
+                _a[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                    borderColor: 'Highlight',
+                    color: 'Highlight',
+                },
+                _a),
+        },
+        rootPressed: {
+            backgroundColor: buttonBackgroundPressed,
+            color: buttonTextChecked,
+        },
+        rootExpanded: {
+            backgroundColor: buttonBackgroundPressed,
+            color: buttonTextChecked,
+        },
+        rootChecked: {
+            backgroundColor: buttonBackgroundPressed,
+            color: buttonTextChecked,
+        },
+        rootCheckedHovered: {
+            backgroundColor: buttonBackgroundPressed,
+            color: buttonTextCheckedHovered,
+        },
+        rootDisabled: {
+            color: buttonTextDisabled,
+            backgroundColor: buttonBackgroundDisabled,
+            selectors: (_b = {},
+                _b[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                    color: 'GrayText',
+                    borderColor: 'GrayText',
+                    backgroundColor: 'Window',
+                },
+                _b),
+        },
+        // Split button styles
+        splitButtonContainer: {
+            selectors: (_c = {},
+                _c[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                    border: 'none',
+                },
+                _c),
+        },
+        splitButtonMenuButton: {
+            color: p.white,
+            backgroundColor: 'transparent',
+            selectors: {
+                ':hover': {
+                    backgroundColor: p.neutralLight,
+                    selectors: (_d = {},
+                        _d[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                            color: 'Highlight',
+                        },
+                        _d),
+                },
+            },
+        },
+        splitButtonMenuButtonDisabled: {
+            backgroundColor: s.buttonBackgroundDisabled,
+            selectors: {
+                ':hover': {
+                    backgroundColor: s.buttonBackgroundDisabled,
+                },
+            },
+        },
+        splitButtonDivider: (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, splitButtonDividerBaseStyles()), { backgroundColor: p.neutralTertiaryAlt, selectors: (_e = {},
+                _e[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                    backgroundColor: 'WindowText',
+                },
+                _e) }),
+        splitButtonDividerDisabled: {
+            backgroundColor: theme.palette.neutralTertiaryAlt,
+        },
+        splitButtonMenuButtonChecked: {
+            backgroundColor: p.neutralQuaternaryAlt,
+            selectors: {
+                ':hover': {
+                    backgroundColor: p.neutralQuaternaryAlt,
+                },
+            },
+        },
+        splitButtonMenuButtonExpanded: {
+            backgroundColor: p.neutralQuaternaryAlt,
+            selectors: {
+                ':hover': {
+                    backgroundColor: p.neutralQuaternaryAlt,
+                },
+            },
+        },
+        splitButtonMenuIcon: {
+            color: s.buttonText,
+        },
+        splitButtonMenuIconDisabled: {
+            color: s.buttonTextDisabled,
+        },
+    };
+}
+function primaryStyles(theme) {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+    var p = theme.palette, s = theme.semanticColors;
+    return {
+        root: {
+            backgroundColor: s.primaryButtonBackground,
+            border: "1px solid ".concat(s.primaryButtonBackground),
+            color: s.primaryButtonText,
+            selectors: (_a = {},
+                _a[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({ color: 'Window', backgroundColor: 'WindowText', borderColor: 'WindowText' }, (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getHighContrastNoAdjustStyle)()),
+                _a[".".concat(_Utilities__WEBPACK_IMPORTED_MODULE_2__.IsFocusVisibleClassName, " &:focus")] = {
+                    selectors: {
+                        ':after': {
+                            border: "none",
+                            outlineColor: p.white,
+                        },
+                    },
+                },
+                _a),
+        },
+        rootHovered: {
+            backgroundColor: s.primaryButtonBackgroundHovered,
+            border: "1px solid ".concat(s.primaryButtonBackgroundHovered),
+            color: s.primaryButtonTextHovered,
+            selectors: (_b = {},
+                _b[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                    color: 'Window',
+                    backgroundColor: 'Highlight',
+                    borderColor: 'Highlight',
+                },
+                _b),
+        },
+        rootPressed: {
+            backgroundColor: s.primaryButtonBackgroundPressed,
+            border: "1px solid ".concat(s.primaryButtonBackgroundPressed),
+            color: s.primaryButtonTextPressed,
+            selectors: (_c = {},
+                _c[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({ color: 'Window', backgroundColor: 'WindowText', borderColor: 'WindowText' }, (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getHighContrastNoAdjustStyle)()),
+                _c),
+        },
+        rootExpanded: {
+            backgroundColor: s.primaryButtonBackgroundPressed,
+            color: s.primaryButtonTextPressed,
+        },
+        rootChecked: {
+            backgroundColor: s.primaryButtonBackgroundPressed,
+            color: s.primaryButtonTextPressed,
+        },
+        rootCheckedHovered: {
+            backgroundColor: s.primaryButtonBackgroundPressed,
+            color: s.primaryButtonTextPressed,
+        },
+        rootDisabled: {
+            color: s.primaryButtonTextDisabled,
+            backgroundColor: s.primaryButtonBackgroundDisabled,
+            selectors: (_d = {},
+                _d[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                    color: 'GrayText',
+                    borderColor: 'GrayText',
+                    backgroundColor: 'Window',
+                },
+                _d),
+        },
+        // Split button styles
+        splitButtonContainer: {
+            selectors: (_e = {},
+                _e[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                    border: 'none',
+                },
+                _e),
+        },
+        splitButtonDivider: (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, splitButtonDividerBaseStyles()), { backgroundColor: p.white, selectors: (_f = {},
+                _f[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                    backgroundColor: 'Window',
+                },
+                _f) }),
+        splitButtonMenuButton: {
+            backgroundColor: s.primaryButtonBackground,
+            color: s.primaryButtonText,
+            selectors: (_g = {},
+                _g[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                    backgroundColor: 'Canvas',
+                },
+                _g[':hover'] = {
+                    backgroundColor: s.primaryButtonBackgroundHovered,
+                    selectors: (_h = {},
+                        _h[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                            color: 'Highlight',
+                        },
+                        _h),
+                },
+                _g),
+        },
+        splitButtonMenuButtonDisabled: {
+            backgroundColor: s.primaryButtonBackgroundDisabled,
+            selectors: {
+                ':hover': {
+                    backgroundColor: s.primaryButtonBackgroundDisabled,
+                },
+            },
+        },
+        splitButtonMenuButtonChecked: {
+            backgroundColor: s.primaryButtonBackgroundPressed,
+            selectors: {
+                ':hover': {
+                    backgroundColor: s.primaryButtonBackgroundPressed,
+                },
+            },
+        },
+        splitButtonMenuButtonExpanded: {
+            backgroundColor: s.primaryButtonBackgroundPressed,
+            selectors: {
+                ':hover': {
+                    backgroundColor: s.primaryButtonBackgroundPressed,
+                },
+            },
+        },
+        splitButtonMenuIcon: {
+            color: s.primaryButtonText,
+        },
+        splitButtonMenuIconDisabled: {
+            color: p.neutralTertiary,
+            selectors: (_j = {},
+                _j[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                    color: 'GrayText',
+                },
+                _j),
+        },
+    };
+}
+//# sourceMappingURL=ButtonThemes.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Button/DefaultButton/DefaultButton.js":
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Button/DefaultButton/DefaultButton.js ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DefaultButton: () => (/* binding */ DefaultButton)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _BaseButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../BaseButton */ "./node_modules/@fluentui/react/lib/components/Button/BaseButton.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/BaseComponent.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/customizations/customizable.js");
+/* harmony import */ var _DefaultButton_styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DefaultButton.styles */ "./node_modules/@fluentui/react/lib/components/Button/DefaultButton/DefaultButton.styles.js");
+
+
+
+
+
+/**
+ * {@docCategory Button}
+ */
+var DefaultButton = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(DefaultButton, _super);
+    function DefaultButton() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    DefaultButton.prototype.render = function () {
+        var _a = this.props, _b = _a.primary, primary = _b === void 0 ? false : _b, styles = _a.styles, theme = _a.theme;
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_BaseButton__WEBPACK_IMPORTED_MODULE_2__.BaseButton, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, this.props, { variantClassName: primary ? 'ms-Button--primary' : 'ms-Button--default', styles: (0,_DefaultButton_styles__WEBPACK_IMPORTED_MODULE_3__.getStyles)(theme, styles, primary), onRenderDescription: _Utilities__WEBPACK_IMPORTED_MODULE_4__.nullRender })));
+    };
+    DefaultButton = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.customizable)('DefaultButton', ['theme', 'styles'], true)
+    ], DefaultButton);
+    return DefaultButton;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+//# sourceMappingURL=DefaultButton.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Button/DefaultButton/DefaultButton.styles.js":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Button/DefaultButton/DefaultButton.styles.js ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getStyles: () => (/* binding */ getStyles)
+/* harmony export */ });
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+/* harmony import */ var _BaseButton_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../BaseButton.styles */ "./node_modules/@fluentui/react/lib/components/Button/BaseButton.styles.js");
+/* harmony import */ var _SplitButton_SplitButton_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SplitButton/SplitButton.styles */ "./node_modules/@fluentui/react/lib/components/Button/SplitButton/SplitButton.styles.js");
+/* harmony import */ var _ButtonThemes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ButtonThemes */ "./node_modules/@fluentui/react/lib/components/Button/ButtonThemes.js");
+
+
+
+
+
+var DEFAULT_BUTTON_HEIGHT = '32px';
+var DEFAULT_BUTTON_MIN_WIDTH = '80px';
+var getStyles = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.memoizeFunction)(function (theme, customStyles, primary) {
+    var baseButtonStyles = (0,_BaseButton_styles__WEBPACK_IMPORTED_MODULE_1__.getStyles)(theme);
+    var splitButtonStyles = (0,_SplitButton_SplitButton_styles__WEBPACK_IMPORTED_MODULE_2__.getStyles)(theme);
+    var defaultButtonStyles = {
+        root: {
+            minWidth: DEFAULT_BUTTON_MIN_WIDTH,
+            height: DEFAULT_BUTTON_HEIGHT,
+        },
+        label: {
+            fontWeight: _Styling__WEBPACK_IMPORTED_MODULE_3__.FontWeights.semibold,
+        },
+    };
+    return (0,_Styling__WEBPACK_IMPORTED_MODULE_3__.concatStyleSets)(baseButtonStyles, defaultButtonStyles, primary ? (0,_ButtonThemes__WEBPACK_IMPORTED_MODULE_4__.primaryStyles)(theme) : (0,_ButtonThemes__WEBPACK_IMPORTED_MODULE_4__.standardStyles)(theme), splitButtonStyles, customStyles);
+});
+//# sourceMappingURL=DefaultButton.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Button/IconButton/IconButton.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Button/IconButton/IconButton.js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   IconButton: () => (/* binding */ IconButton)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _BaseButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../BaseButton */ "./node_modules/@fluentui/react/lib/components/Button/BaseButton.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/BaseComponent.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/customizations/customizable.js");
+/* harmony import */ var _IconButton_styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./IconButton.styles */ "./node_modules/@fluentui/react/lib/components/Button/IconButton/IconButton.styles.js");
+
+
+
+
+
+/**
+ * {@docCategory Button}
+ */
+var IconButton = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(IconButton, _super);
+    function IconButton() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    IconButton.prototype.render = function () {
+        var _a = this.props, styles = _a.styles, theme = _a.theme;
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_BaseButton__WEBPACK_IMPORTED_MODULE_2__.BaseButton, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, this.props, { variantClassName: "ms-Button--icon", styles: (0,_IconButton_styles__WEBPACK_IMPORTED_MODULE_3__.getStyles)(theme, styles), onRenderText: _Utilities__WEBPACK_IMPORTED_MODULE_4__.nullRender, onRenderDescription: _Utilities__WEBPACK_IMPORTED_MODULE_4__.nullRender })));
+    };
+    IconButton = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.customizable)('IconButton', ['theme', 'styles'], true)
+    ], IconButton);
+    return IconButton;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+//# sourceMappingURL=IconButton.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Button/IconButton/IconButton.styles.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Button/IconButton/IconButton.styles.js ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getStyles: () => (/* binding */ getStyles)
+/* harmony export */ });
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+/* harmony import */ var _BaseButton_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../BaseButton.styles */ "./node_modules/@fluentui/react/lib/components/Button/BaseButton.styles.js");
+/* harmony import */ var _SplitButton_SplitButton_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SplitButton/SplitButton.styles */ "./node_modules/@fluentui/react/lib/components/Button/SplitButton/SplitButton.styles.js");
+
+
+
+
+var getStyles = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.memoizeFunction)(function (theme, customStyles) {
+    var _a;
+    var baseButtonStyles = (0,_BaseButton_styles__WEBPACK_IMPORTED_MODULE_1__.getStyles)(theme);
+    var splitButtonStyles = (0,_SplitButton_SplitButton_styles__WEBPACK_IMPORTED_MODULE_2__.getStyles)(theme);
+    var palette = theme.palette, semanticColors = theme.semanticColors;
+    var iconButtonStyles = {
+        root: {
+            padding: '0 4px',
+            width: '32px',
+            height: '32px',
+            backgroundColor: 'transparent',
+            border: 'none',
+            color: semanticColors.link,
+        },
+        rootHovered: {
+            color: palette.themeDarkAlt,
+            backgroundColor: palette.neutralLighter,
+            selectors: (_a = {},
+                _a[_Styling__WEBPACK_IMPORTED_MODULE_3__.HighContrastSelector] = {
+                    borderColor: 'Highlight',
+                    color: 'Highlight',
+                },
+                _a),
+        },
+        rootHasMenu: {
+            width: 'auto',
+        },
+        rootPressed: {
+            color: palette.themeDark,
+            backgroundColor: palette.neutralLight,
+        },
+        rootExpanded: {
+            color: palette.themeDark,
+            backgroundColor: palette.neutralLight,
+        },
+        rootChecked: {
+            color: palette.themeDark,
+            backgroundColor: palette.neutralLight,
+        },
+        rootCheckedHovered: {
+            color: palette.themeDark,
+            backgroundColor: palette.neutralQuaternaryAlt,
+        },
+        rootDisabled: {
+            color: palette.neutralTertiaryAlt,
+        },
+    };
+    return (0,_Styling__WEBPACK_IMPORTED_MODULE_3__.concatStyleSets)(baseButtonStyles, iconButtonStyles, splitButtonStyles, customStyles);
+});
+//# sourceMappingURL=IconButton.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Button/PrimaryButton/PrimaryButton.js":
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Button/PrimaryButton/PrimaryButton.js ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PrimaryButton: () => (/* binding */ PrimaryButton)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/BaseComponent.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/customizations/customizable.js");
+/* harmony import */ var _DefaultButton_DefaultButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../DefaultButton/DefaultButton */ "./node_modules/@fluentui/react/lib/components/Button/DefaultButton/DefaultButton.js");
+
+
+
+
+/**
+ * {@docCategory Button}
+ */
+var PrimaryButton = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(PrimaryButton, _super);
+    function PrimaryButton() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    PrimaryButton.prototype.render = function () {
+        return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_DefaultButton_DefaultButton__WEBPACK_IMPORTED_MODULE_2__.DefaultButton, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, this.props, { primary: true, onRenderDescription: _Utilities__WEBPACK_IMPORTED_MODULE_3__.nullRender }));
+    };
+    PrimaryButton = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_4__.customizable)('PrimaryButton', ['theme', 'styles'], true)
+    ], PrimaryButton);
+    return PrimaryButton;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+//# sourceMappingURL=PrimaryButton.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Button/SplitButton/SplitButton.classNames.js":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Button/SplitButton/SplitButton.classNames.js ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getSplitButtonClassNames: () => (/* binding */ getSplitButtonClassNames)
+/* harmony export */ });
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+
+
+var getSplitButtonClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.memoizeFunction)(function (styles, disabled, expanded, checked, primaryDisabled) {
+    return {
+        root: (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.mergeStyles)(styles.splitButtonMenuButton, expanded && [styles.splitButtonMenuButtonExpanded], disabled && [styles.splitButtonMenuButtonDisabled], checked && !disabled && [styles.splitButtonMenuButtonChecked], primaryDisabled &&
+            !disabled && [
+            {
+                selectors: {
+                    ':focus': styles.splitButtonMenuFocused,
+                },
+            },
+        ]),
+        splitButtonContainer: (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.mergeStyles)(styles.splitButtonContainer, !disabled &&
+            checked && [
+            styles.splitButtonContainerChecked,
+            {
+                selectors: {
+                    ':hover': styles.splitButtonContainerCheckedHovered,
+                },
+            },
+        ], !disabled &&
+            !checked && [
+            {
+                selectors: {
+                    ':hover': styles.splitButtonContainerHovered,
+                    ':focus': styles.splitButtonContainerFocused,
+                },
+            },
+        ], disabled && styles.splitButtonContainerDisabled),
+        icon: (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.mergeStyles)(styles.splitButtonMenuIcon, disabled && styles.splitButtonMenuIconDisabled, !disabled && primaryDisabled && styles.splitButtonMenuIcon),
+        flexContainer: (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.mergeStyles)(styles.splitButtonFlexContainer),
+        divider: (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.mergeStyles)(styles.splitButtonDivider, (primaryDisabled || disabled) && styles.splitButtonDividerDisabled),
+    };
+});
+//# sourceMappingURL=SplitButton.classNames.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Button/SplitButton/SplitButton.styles.js":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Button/SplitButton/SplitButton.styles.js ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getStyles: () => (/* binding */ getStyles)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+
+
+
+var getStyles = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.memoizeFunction)(function (theme, customStyles) {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+    var effects = theme.effects, palette = theme.palette, semanticColors = theme.semanticColors;
+    var buttonHighContrastFocus = {
+        left: -2,
+        top: -2,
+        bottom: -2,
+        right: -2,
+        border: 'none',
+    };
+    var splitButtonDividerBaseStyles = {
+        position: 'absolute',
+        width: 1,
+        right: 31,
+        top: 8,
+        bottom: 8,
+    };
+    var splitButtonStyles = {
+        splitButtonContainer: [
+            (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.getFocusStyle)(theme, { highContrastStyle: buttonHighContrastFocus, inset: 2, pointerEvents: 'none' }),
+            {
+                display: 'inline-flex',
+                selectors: {
+                    '.ms-Button--default': {
+                        borderTopRightRadius: '0',
+                        borderBottomRightRadius: '0',
+                        borderRight: 'none',
+                        flexGrow: '1',
+                    },
+                    '.ms-Button--primary': {
+                        borderTopRightRadius: '0',
+                        borderBottomRightRadius: '0',
+                        border: 'none',
+                        flexGrow: '1',
+                        selectors: (_a = {},
+                            _a[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({ color: 'WindowText', backgroundColor: 'Window', border: '1px solid WindowText', borderRightWidth: '0' }, (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.getHighContrastNoAdjustStyle)()),
+                            _a[':hover'] = {
+                                border: 'none',
+                            },
+                            _a[':active'] = {
+                                border: 'none',
+                            },
+                            _a),
+                    },
+                    '.ms-Button--primary + .ms-Button': {
+                        border: 'none',
+                        selectors: (_b = {},
+                            _b[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = {
+                                border: '1px solid WindowText',
+                                borderLeftWidth: '0',
+                            },
+                            _b),
+                    },
+                },
+            },
+        ],
+        splitButtonContainerHovered: {
+            selectors: {
+                '.ms-Button--primary': {
+                    selectors: (_c = {},
+                        _c[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = {
+                            color: 'Window',
+                            backgroundColor: 'Highlight',
+                        },
+                        _c),
+                },
+                '.ms-Button.is-disabled': {
+                    color: semanticColors.buttonTextDisabled,
+                    selectors: (_d = {},
+                        _d[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = {
+                            color: 'GrayText',
+                            borderColor: 'GrayText',
+                            backgroundColor: 'Window',
+                        },
+                        _d),
+                },
+            },
+        },
+        splitButtonContainerChecked: {
+            selectors: {
+                '.ms-Button--primary': {
+                    selectors: (_e = {},
+                        _e[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({ color: 'Window', backgroundColor: 'WindowText' }, (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.getHighContrastNoAdjustStyle)()),
+                        _e),
+                },
+            },
+        },
+        splitButtonContainerCheckedHovered: {
+            selectors: {
+                '.ms-Button--primary': {
+                    selectors: (_f = {},
+                        _f[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({ color: 'Window', backgroundColor: 'WindowText' }, (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.getHighContrastNoAdjustStyle)()),
+                        _f),
+                },
+            },
+        },
+        splitButtonContainerFocused: {
+            outline: 'none!important',
+        },
+        splitButtonMenuButton: (_g = {
+                padding: 6,
+                height: 'auto',
+                boxSizing: 'border-box',
+                borderRadius: 0,
+                borderTopRightRadius: effects.roundedCorner2,
+                borderBottomRightRadius: effects.roundedCorner2,
+                border: "1px solid ".concat(palette.neutralSecondaryAlt),
+                borderLeft: 'none',
+                outline: 'transparent',
+                userSelect: 'none',
+                display: 'inline-block',
+                textDecoration: 'none',
+                textAlign: 'center',
+                cursor: 'pointer',
+                verticalAlign: 'top',
+                width: 32,
+                marginLeft: -1,
+                marginTop: 0,
+                marginRight: 0,
+                marginBottom: 0
+            },
+            _g[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = {
+                '.ms-Button-menuIcon': {
+                    color: 'WindowText',
+                },
+            },
+            _g),
+        splitButtonDivider: (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({}, splitButtonDividerBaseStyles), { selectors: (_h = {},
+                _h[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = {
+                    backgroundColor: 'WindowText',
+                },
+                _h) }),
+        splitButtonDividerDisabled: (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({}, splitButtonDividerBaseStyles), { selectors: (_j = {},
+                _j[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = {
+                    backgroundColor: 'GrayText',
+                },
+                _j) }),
+        splitButtonMenuButtonDisabled: {
+            pointerEvents: 'none',
+            border: 'none',
+            selectors: (_k = {
+                    ':hover': {
+                        cursor: 'default',
+                    },
+                    '.ms-Button--primary': {
+                        selectors: (_l = {},
+                            _l[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = {
+                                color: 'GrayText',
+                                borderColor: 'GrayText',
+                                backgroundColor: 'Window',
+                            },
+                            _l),
+                    },
+                    '.ms-Button-menuIcon': {
+                        selectors: (_m = {},
+                            _m[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = {
+                                color: 'GrayText',
+                            },
+                            _m),
+                    }
+                },
+                _k[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = {
+                    color: 'GrayText',
+                    border: '1px solid GrayText',
+                    backgroundColor: 'Window',
+                },
+                _k),
+        },
+        splitButtonFlexContainer: {
+            display: 'flex',
+            height: '100%',
+            flexWrap: 'nowrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        splitButtonContainerDisabled: {
+            outline: 'none',
+            border: 'none',
+            selectors: (_o = {},
+                _o[_Styling__WEBPACK_IMPORTED_MODULE_1__.HighContrastSelector] = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({ color: 'GrayText', borderColor: 'GrayText', backgroundColor: 'Window' }, (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.getHighContrastNoAdjustStyle)()),
+                _o),
+        },
+        splitButtonMenuFocused: (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({}, (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.getFocusStyle)(theme, { highContrastStyle: buttonHighContrastFocus, inset: 2 })),
+    };
+    return (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.concatStyleSets)(splitButtonStyles, customStyles);
+});
+//# sourceMappingURL=SplitButton.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Callout/Callout.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Callout/Callout.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Callout: () => (/* binding */ Callout)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _CalloutContent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CalloutContent */ "./node_modules/@fluentui/react/lib/components/Callout/CalloutContent.js");
+/* harmony import */ var _Layer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Layer */ "./node_modules/@fluentui/react/lib/components/Layer/Layer.js");
+
+
+
+
+var Callout = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (_a, forwardedRef) {
+    var layerProps = _a.layerProps, doNotLayer = _a.doNotLayer, rest = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__rest)(_a, ["layerProps", "doNotLayer"]);
+    var content = react__WEBPACK_IMPORTED_MODULE_0__.createElement(_CalloutContent__WEBPACK_IMPORTED_MODULE_2__.CalloutContent, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, rest, { doNotLayer: doNotLayer, ref: forwardedRef }));
+    return doNotLayer ? content : react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Layer__WEBPACK_IMPORTED_MODULE_3__.Layer, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, layerProps), content);
+});
+Callout.displayName = 'Callout';
+//# sourceMappingURL=Callout.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Callout/CalloutContent.base.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Callout/CalloutContent.base.js ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CalloutContentBase: () => (/* binding */ CalloutContentBase)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _common_DirectionalHint__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../common/DirectionalHint */ "./node_modules/@fluentui/react/lib/common/DirectionalHint.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/focus.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/dom-utilities/lib/elementContains.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/dom/on.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/getPropsWithDefaults.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/properties.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/css.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/object.js");
+/* harmony import */ var _Positioning__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Positioning */ "./node_modules/@fluentui/react/lib/utilities/positioning/positioning.js");
+/* harmony import */ var _Positioning__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Positioning */ "./node_modules/@fluentui/react/lib/utilities/positioning/positioning.types.js");
+/* harmony import */ var _Popup__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../Popup */ "./node_modules/@fluentui/react/lib/components/Popup/Popup.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/classNamesFunction.js");
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useAsync.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useOnEvent.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useConst.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useMergedRefs.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useTarget.js");
+/* harmony import */ var _utilities_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utilities/dom */ "./node_modules/@fluentui/react/lib/utilities/dom.js");
+var _a;
+
+
+
+
+
+
+
+
+
+
+
+var COMPONENT_NAME = 'CalloutContentBase';
+var ANIMATIONS = (_a = {},
+    _a[_Positioning__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top] = _Styling__WEBPACK_IMPORTED_MODULE_2__.AnimationClassNames.slideUpIn10,
+    _a[_Positioning__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.bottom] = _Styling__WEBPACK_IMPORTED_MODULE_2__.AnimationClassNames.slideDownIn10,
+    _a[_Positioning__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.left] = _Styling__WEBPACK_IMPORTED_MODULE_2__.AnimationClassNames.slideLeftIn10,
+    _a[_Positioning__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.right] = _Styling__WEBPACK_IMPORTED_MODULE_2__.AnimationClassNames.slideRightIn10,
+    _a);
+var BEAK_ORIGIN_POSITION = { top: 0, left: 0 };
+// Microsoft Edge will overwrite inline styles if there is an animation pertaining to that style.
+// To help ensure that edge will respect the offscreen style opacity
+// filter needs to be added as an additional way to set opacity.
+// Also set pointer-events: none so that the callout will not occlude the element it is
+// going to be positioned against
+var OFF_SCREEN_STYLE = {
+    opacity: 0,
+    filter: 'opacity(0)',
+    pointerEvents: 'none',
+};
+// role and role description go hand-in-hand. Both would be included by spreading getNativeProps for a basic element
+// This constant array can be used to filter these out of native props spread on callout root and apply them together on
+// calloutMain (the Popup component within the callout)
+var ARIA_ROLE_ATTRIBUTES = ['role', 'aria-roledescription'];
+var DEFAULT_PROPS = {
+    preventDismissOnLostFocus: false,
+    preventDismissOnScroll: false,
+    preventDismissOnResize: false,
+    isBeakVisible: true,
+    beakWidth: 16,
+    gapSpace: 0,
+    minPagePadding: 8,
+    directionalHint: _common_DirectionalHint__WEBPACK_IMPORTED_MODULE_3__.DirectionalHint.bottomAutoEdge,
+};
+var getClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_4__.classNamesFunction)({
+    disableCaching: true, // disabling caching because stylesProp.position mutates often
+});
+/**
+ * (Hook) to return a function to lazily fetch the bounds of the target element for the callout.
+ */
+function useBounds(_a, targetRef, targetWindow) {
+    var bounds = _a.bounds, _b = _a.minPagePadding, minPagePadding = _b === void 0 ? DEFAULT_PROPS.minPagePadding : _b, target = _a.target;
+    var _c = react__WEBPACK_IMPORTED_MODULE_0__.useState(false), targetWindowResized = _c[0], setTargetWindowResized = _c[1];
+    var cachedBounds = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
+    var getBounds = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function () {
+        if (!cachedBounds.current || targetWindowResized) {
+            var currentBounds = typeof bounds === 'function' ? (targetWindow ? bounds(target, targetWindow) : undefined) : bounds;
+            if (!currentBounds && targetWindow) {
+                currentBounds = (0,_Positioning__WEBPACK_IMPORTED_MODULE_5__.getBoundsFromTargetWindow)(targetRef.current, targetWindow);
+                currentBounds = {
+                    top: currentBounds.top + minPagePadding,
+                    left: currentBounds.left + minPagePadding,
+                    right: currentBounds.right - minPagePadding,
+                    bottom: currentBounds.bottom - minPagePadding,
+                    width: currentBounds.width - minPagePadding * 2,
+                    height: currentBounds.height - minPagePadding * 2,
+                };
+            }
+            cachedBounds.current = currentBounds;
+            targetWindowResized && setTargetWindowResized(false);
+        }
+        return cachedBounds.current;
+    }, [bounds, minPagePadding, target, targetRef, targetWindow, targetWindowResized]);
+    var async = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_6__.useAsync)();
+    (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_7__.useOnEvent)(targetWindow, 'resize', async.debounce(function () {
+        setTargetWindowResized(true);
+    }, 500, { leading: true }));
+    return getBounds;
+}
+/**
+ * (Hook) to return the maximum available height for the Callout to render into.
+ */
+function useMaxHeight(_a, getBounds, targetRef, positions) {
+    var _b;
+    var calloutMaxHeight = _a.calloutMaxHeight, finalHeight = _a.finalHeight, directionalHint = _a.directionalHint, directionalHintFixed = _a.directionalHintFixed, hidden = _a.hidden, gapSpace = _a.gapSpace, beakWidth = _a.beakWidth, isBeakVisible = _a.isBeakVisible, coverTarget = _a.coverTarget;
+    var _c = react__WEBPACK_IMPORTED_MODULE_0__.useState(), maxHeight = _c[0], setMaxHeight = _c[1];
+    var _d = (_b = positions === null || positions === void 0 ? void 0 : positions.elementPosition) !== null && _b !== void 0 ? _b : {}, top = _d.top, bottom = _d.bottom;
+    var targetRect = (targetRef === null || targetRef === void 0 ? void 0 : targetRef.current) ? (0,_Positioning__WEBPACK_IMPORTED_MODULE_5__.getRectangleFromTarget)(targetRef.current) : undefined;
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        var _a;
+        var bounds = (_a = getBounds()) !== null && _a !== void 0 ? _a : {};
+        var topBounds = bounds.top;
+        var bottomBounds = bounds.bottom;
+        var calculatedHeight;
+        // If aligned to top edge of target and not covering target, update bottom bounds to the
+        // top of the target (accounting for gap space and beak)
+        if ((positions === null || positions === void 0 ? void 0 : positions.targetEdge) === _Positioning__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top && (targetRect === null || targetRect === void 0 ? void 0 : targetRect.top) && !coverTarget) {
+            bottomBounds = targetRect.top - (0,_Positioning__WEBPACK_IMPORTED_MODULE_5__.calculateGapSpace)(isBeakVisible, beakWidth, gapSpace);
+        }
+        if (typeof top === 'number' && bottomBounds) {
+            calculatedHeight = bottomBounds - top;
+        }
+        else if (typeof bottom === 'number' && typeof topBounds === 'number' && bottomBounds) {
+            calculatedHeight = bottomBounds - topBounds - bottom;
+        }
+        if ((!calloutMaxHeight && !hidden) ||
+            (calloutMaxHeight && calculatedHeight && calloutMaxHeight > calculatedHeight)) {
+            setMaxHeight(calculatedHeight);
+        }
+        else if (calloutMaxHeight) {
+            setMaxHeight(calloutMaxHeight);
+        }
+        else {
+            setMaxHeight(undefined);
+        }
+    }, [
+        bottom,
+        calloutMaxHeight,
+        finalHeight,
+        directionalHint,
+        directionalHintFixed,
+        getBounds,
+        hidden,
+        positions,
+        top,
+        gapSpace,
+        beakWidth,
+        isBeakVisible,
+        targetRect,
+        coverTarget,
+    ]);
+    return maxHeight;
+}
+/**
+ * (Hook) to find the current position of Callout. If Callout is resized then a new position is calculated.
+ */
+function usePositions(props, hostElement, calloutElement, targetRef, getBounds, popupRef) {
+    var _a = react__WEBPACK_IMPORTED_MODULE_0__.useState(), positions = _a[0], setPositions = _a[1];
+    var positionAttempts = react__WEBPACK_IMPORTED_MODULE_0__.useRef(0);
+    var previousTarget = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
+    var async = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_6__.useAsync)();
+    var hidden = props.hidden, target = props.target, finalHeight = props.finalHeight, calloutMaxHeight = props.calloutMaxHeight, onPositioned = props.onPositioned, directionalHint = props.directionalHint, hideOverflow = props.hideOverflow, preferScrollResizePositioning = props.preferScrollResizePositioning;
+    var win = (0,_utilities_dom__WEBPACK_IMPORTED_MODULE_8__.useWindowEx)();
+    var localRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
+    var popupStyles;
+    if (localRef.current !== popupRef.current) {
+        localRef.current = popupRef.current;
+        popupStyles = popupRef.current ? win === null || win === void 0 ? void 0 : win.getComputedStyle(popupRef.current) : undefined;
+    }
+    var popupOverflowY = popupStyles === null || popupStyles === void 0 ? void 0 : popupStyles.overflowY;
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        if (!hidden) {
+            var timerId_1 = async.requestAnimationFrame(function () {
+                var _a, _b;
+                if (hostElement.current && calloutElement) {
+                    var currentProps = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_9__.__assign)({}, props), { target: targetRef.current, bounds: getBounds() });
+                    // duplicate calloutElement & remove useMaxHeight's maxHeight for position calc
+                    var dupeCalloutElement = calloutElement.cloneNode(true);
+                    dupeCalloutElement.style.maxHeight = calloutMaxHeight ? "".concat(calloutMaxHeight) : '';
+                    dupeCalloutElement.style.visibility = 'hidden';
+                    (_a = calloutElement.parentElement) === null || _a === void 0 ? void 0 : _a.appendChild(dupeCalloutElement);
+                    var previousPositions = previousTarget.current === target ? positions : undefined;
+                    // only account for scroll resizing if styles allow callout to scroll
+                    // (popup styles determine if callout will scroll)
+                    var isOverflowYHidden = hideOverflow || popupOverflowY === 'clip' || popupOverflowY === 'hidden';
+                    var shouldScroll = preferScrollResizePositioning && !isOverflowYHidden;
+                    // If there is a finalHeight given then we assume that the user knows and will handle
+                    // additional positioning adjustments so we should call positionCard
+                    var newPositions = finalHeight
+                        ? (0,_Positioning__WEBPACK_IMPORTED_MODULE_5__.positionCard)(currentProps, hostElement.current, dupeCalloutElement, previousPositions, win)
+                        : (0,_Positioning__WEBPACK_IMPORTED_MODULE_5__.positionCallout)(currentProps, hostElement.current, dupeCalloutElement, previousPositions, shouldScroll, undefined, win);
+                    // clean up duplicate calloutElement
+                    (_b = calloutElement.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(dupeCalloutElement);
+                    // Set the new position only when the positions do not exist or one of the new callout positions
+                    // is different. The position should not change if the position is within 2 decimal places.
+                    if ((!positions && newPositions) ||
+                        (positions && newPositions && !arePositionsEqual(positions, newPositions) && positionAttempts.current < 5)) {
+                        // We should not reposition the callout more than a few times, if it is then the content is likely resizing
+                        // and we should stop trying to reposition to prevent a stack overflow.
+                        positionAttempts.current++;
+                        setPositions(newPositions);
+                    }
+                    else if (positionAttempts.current > 0) {
+                        // Only call the onPositioned callback if the callout has been re-positioned at least once.
+                        positionAttempts.current = 0;
+                        onPositioned === null || onPositioned === void 0 ? void 0 : onPositioned(positions);
+                    }
+                }
+            }, calloutElement);
+            previousTarget.current = target;
+            return function () {
+                async.cancelAnimationFrame(timerId_1);
+                previousTarget.current = undefined;
+            };
+        }
+        else {
+            // When the callout is hidden, clear position state so that it is not accidentally used next render.
+            setPositions(undefined);
+            positionAttempts.current = 0;
+        }
+    }, [
+        hidden,
+        directionalHint,
+        async,
+        calloutElement,
+        calloutMaxHeight,
+        hostElement,
+        targetRef,
+        finalHeight,
+        getBounds,
+        onPositioned,
+        positions,
+        props,
+        target,
+        hideOverflow,
+        preferScrollResizePositioning,
+        popupOverflowY,
+        win,
+    ]);
+    return positions;
+}
+/**
+ * (Hook) to set up behavior to automatically focus the callout when it appears, if indicated by props.
+ */
+function useAutoFocus(_a, positions, calloutElement) {
+    var hidden = _a.hidden, setInitialFocus = _a.setInitialFocus;
+    var async = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_6__.useAsync)();
+    var hasPositions = !!positions;
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        if (!hidden && setInitialFocus && hasPositions && calloutElement) {
+            var timerId_2 = async.requestAnimationFrame(function () { return (0,_Utilities__WEBPACK_IMPORTED_MODULE_10__.focusFirstChild)(calloutElement); }, calloutElement);
+            return function () { return async.cancelAnimationFrame(timerId_2); };
+        }
+    }, [hidden, hasPositions, async, calloutElement, setInitialFocus]);
+}
+/**
+ * (Hook) to set up various handlers to dismiss the popup when it loses focus or the window scrolls or similar cases.
+ */
+function useDismissHandlers(_a, positions, hostElement, targetRef, targetWindow) {
+    var hidden = _a.hidden, onDismiss = _a.onDismiss, 
+    // eslint-disable-next-line deprecation/deprecation
+    preventDismissOnScroll = _a.preventDismissOnScroll, 
+    // eslint-disable-next-line deprecation/deprecation
+    preventDismissOnResize = _a.preventDismissOnResize, 
+    // eslint-disable-next-line deprecation/deprecation
+    preventDismissOnLostFocus = _a.preventDismissOnLostFocus, dismissOnTargetClick = _a.dismissOnTargetClick, shouldDismissOnWindowFocus = _a.shouldDismissOnWindowFocus, preventDismissOnEvent = _a.preventDismissOnEvent;
+    var isMouseDownOnPopup = react__WEBPACK_IMPORTED_MODULE_0__.useRef(false);
+    var async = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_6__.useAsync)();
+    var mouseDownHandlers = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_11__.useConst)([
+        function () {
+            isMouseDownOnPopup.current = true;
+        },
+        function () {
+            isMouseDownOnPopup.current = false;
+        },
+    ]);
+    var positionsExists = !!positions;
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        var dismissOnScroll = function (ev) {
+            if (positionsExists && !preventDismissOnScroll) {
+                dismissOnClickOrScroll(ev);
+            }
+        };
+        var dismissOnResize = function (ev) {
+            if (!preventDismissOnResize && !(preventDismissOnEvent && preventDismissOnEvent(ev))) {
+                onDismiss === null || onDismiss === void 0 ? void 0 : onDismiss(ev);
+            }
+        };
+        var dismissOnLostFocus = function (ev) {
+            if (!preventDismissOnLostFocus) {
+                dismissOnClickOrScroll(ev);
+            }
+        };
+        var dismissOnClickOrScroll = function (ev) {
+            var eventPaths = ev.composedPath ? ev.composedPath() : [];
+            var target = eventPaths.length > 0 ? eventPaths[0] : ev.target;
+            var isEventTargetOutsideCallout = hostElement.current && !(0,_Utilities__WEBPACK_IMPORTED_MODULE_12__.elementContains)(hostElement.current, target);
+            // If mouse is pressed down on callout but moved outside then released, don't dismiss the callout.
+            if (isEventTargetOutsideCallout && isMouseDownOnPopup.current) {
+                isMouseDownOnPopup.current = false;
+                return;
+            }
+            if ((!targetRef.current && isEventTargetOutsideCallout) ||
+                (ev.target !== targetWindow &&
+                    isEventTargetOutsideCallout &&
+                    (!targetRef.current ||
+                        'stopPropagation' in targetRef.current ||
+                        dismissOnTargetClick ||
+                        (target !== targetRef.current && !(0,_Utilities__WEBPACK_IMPORTED_MODULE_12__.elementContains)(targetRef.current, target))))) {
+                if (preventDismissOnEvent && preventDismissOnEvent(ev)) {
+                    return;
+                }
+                onDismiss === null || onDismiss === void 0 ? void 0 : onDismiss(ev);
+            }
+        };
+        var dismissOnTargetWindowBlur = function (ev) {
+            // Do nothing
+            if (!shouldDismissOnWindowFocus) {
+                return;
+            }
+            if (((preventDismissOnEvent && !preventDismissOnEvent(ev)) ||
+                (!preventDismissOnEvent && !preventDismissOnLostFocus)) &&
+                !(targetWindow === null || targetWindow === void 0 ? void 0 : targetWindow.document.hasFocus()) &&
+                ev.relatedTarget === null) {
+                onDismiss === null || onDismiss === void 0 ? void 0 : onDismiss(ev);
+            }
+        };
+        // This is added so the callout will dismiss when the window is scrolled
+        // but not when something inside the callout is scrolled. The delay seems
+        // to be required to avoid React firing an async focus event in IE from
+        // the target changing focus quickly prior to rendering the callout.
+        var disposablesPromise = new Promise(function (resolve) {
+            async.setTimeout(function () {
+                if (!hidden && targetWindow) {
+                    var disposables_1 = [
+                        (0,_Utilities__WEBPACK_IMPORTED_MODULE_13__.on)(targetWindow, 'scroll', dismissOnScroll, true),
+                        (0,_Utilities__WEBPACK_IMPORTED_MODULE_13__.on)(targetWindow, 'resize', dismissOnResize, true),
+                        (0,_Utilities__WEBPACK_IMPORTED_MODULE_13__.on)(targetWindow.document.documentElement, 'focus', dismissOnLostFocus, true),
+                        (0,_Utilities__WEBPACK_IMPORTED_MODULE_13__.on)(targetWindow.document.documentElement, 'click', dismissOnLostFocus, true),
+                        (0,_Utilities__WEBPACK_IMPORTED_MODULE_13__.on)(targetWindow, 'blur', dismissOnTargetWindowBlur, true),
+                    ];
+                    resolve(function () {
+                        disposables_1.forEach(function (dispose) { return dispose(); });
+                    });
+                }
+            }, 0);
+        });
+        return function () {
+            disposablesPromise.then(function (dispose) { return dispose(); });
+        };
+    }, [
+        hidden,
+        async,
+        hostElement,
+        targetRef,
+        targetWindow,
+        onDismiss,
+        shouldDismissOnWindowFocus,
+        dismissOnTargetClick,
+        preventDismissOnLostFocus,
+        preventDismissOnResize,
+        preventDismissOnScroll,
+        positionsExists,
+        preventDismissOnEvent,
+    ]);
+    return mouseDownHandlers;
+}
+var CalloutContentBase = react__WEBPACK_IMPORTED_MODULE_0__.memo(react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (propsWithoutDefaults, forwardedRef) {
+    var props = (0,_Utilities__WEBPACK_IMPORTED_MODULE_14__.getPropsWithDefaults)(DEFAULT_PROPS, propsWithoutDefaults);
+    var styles = props.styles, style = props.style, ariaLabel = props.ariaLabel, ariaDescribedBy = props.ariaDescribedBy, ariaLabelledBy = props.ariaLabelledBy, className = props.className, isBeakVisible = props.isBeakVisible, children = props.children, beakWidth = props.beakWidth, calloutWidth = props.calloutWidth, calloutMaxWidth = props.calloutMaxWidth, calloutMinWidth = props.calloutMinWidth, doNotLayer = props.doNotLayer, finalHeight = props.finalHeight, _a = props.hideOverflow, hideOverflow = _a === void 0 ? !!finalHeight : _a, backgroundColor = props.backgroundColor, calloutMaxHeight = props.calloutMaxHeight, onScroll = props.onScroll, 
+    // eslint-disable-next-line deprecation/deprecation
+    _b = props.shouldRestoreFocus, 
+    // eslint-disable-next-line deprecation/deprecation
+    shouldRestoreFocus = _b === void 0 ? true : _b, target = props.target, hidden = props.hidden, onLayerMounted = props.onLayerMounted, popupProps = props.popupProps;
+    var hostElement = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+    var popupRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+    var mergedPopupRefs = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_15__.useMergedRefs)(popupRef, popupProps === null || popupProps === void 0 ? void 0 : popupProps.ref);
+    var _c = react__WEBPACK_IMPORTED_MODULE_0__.useState(null), calloutElement = _c[0], setCalloutElement = _c[1];
+    var calloutCallback = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function (calloutEl) {
+        setCalloutElement(calloutEl);
+    }, []);
+    var rootRef = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_15__.useMergedRefs)(hostElement, forwardedRef);
+    var _d = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_16__.useTarget)(props.target, {
+        current: calloutElement,
+    }), targetRef = _d[0], targetWindow = _d[1];
+    var getBounds = useBounds(props, targetRef, targetWindow);
+    var positions = usePositions(props, hostElement, calloutElement, targetRef, getBounds, mergedPopupRefs);
+    var maxHeight = useMaxHeight(props, getBounds, targetRef, positions);
+    var _e = useDismissHandlers(props, positions, hostElement, targetRef, targetWindow), mouseDownOnPopup = _e[0], mouseUpOnPopup = _e[1];
+    // do not set both top and bottom css props from positions
+    // instead, use maxHeight
+    var isForcedInBounds = (positions === null || positions === void 0 ? void 0 : positions.elementPosition.top) && (positions === null || positions === void 0 ? void 0 : positions.elementPosition.bottom);
+    var cssPositions = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_9__.__assign)({}, positions === null || positions === void 0 ? void 0 : positions.elementPosition), { maxHeight: maxHeight });
+    if (isForcedInBounds) {
+        cssPositions.bottom = undefined;
+    }
+    useAutoFocus(props, positions, calloutElement);
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        if (!hidden) {
+            onLayerMounted === null || onLayerMounted === void 0 ? void 0 : onLayerMounted();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- should only run if hidden changes
+    }, [hidden]);
+    // If there is no target window then we are likely in server side rendering and we should not render anything.
+    if (!targetWindow) {
+        return null;
+    }
+    var overflowYHidden = hideOverflow;
+    var beakVisible = isBeakVisible && !!target;
+    var classNames = getClassNames(styles, {
+        theme: props.theme,
+        className: className,
+        overflowYHidden: overflowYHidden,
+        calloutWidth: calloutWidth,
+        positions: positions,
+        beakWidth: beakWidth,
+        backgroundColor: backgroundColor,
+        calloutMaxWidth: calloutMaxWidth,
+        calloutMinWidth: calloutMinWidth,
+        doNotLayer: doNotLayer,
+    });
+    var overflowStyle = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_9__.__assign)({ maxHeight: calloutMaxHeight ? calloutMaxHeight : '100%' }, style), (overflowYHidden && { overflowY: 'hidden' }));
+    var visibilityStyle = props.hidden ? { visibility: 'hidden' } : undefined;
+    // React.CSSProperties does not understand IRawStyle, so the inline animations will need to be cast as any for now.
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: rootRef, className: classNames.container, style: visibilityStyle },
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__assign)({}, (0,_Utilities__WEBPACK_IMPORTED_MODULE_17__.getNativeProps)(props, _Utilities__WEBPACK_IMPORTED_MODULE_17__.divProperties, ARIA_ROLE_ATTRIBUTES), { className: (0,_Utilities__WEBPACK_IMPORTED_MODULE_18__.css)(classNames.root, positions && positions.targetEdge && ANIMATIONS[positions.targetEdge]), style: positions ? (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__assign)({}, cssPositions) : OFF_SCREEN_STYLE, 
+            // Safari and Firefox on Mac OS requires this to back-stop click events so focus remains in the Callout.
+            // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#Clicking_and_focus
+            tabIndex: -1, ref: calloutCallback }),
+            beakVisible && react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: classNames.beak, style: getBeakPosition(positions) }),
+            beakVisible && react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: classNames.beakCurtain }),
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Popup__WEBPACK_IMPORTED_MODULE_19__.Popup
+            // don't use getNativeElementProps for role and roledescription because it will also
+            // pass through data-* props (resulting in them being used in two places)
+            , (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__assign)({ 
+                // don't use getNativeElementProps for role and roledescription because it will also
+                // pass through data-* props (resulting in them being used in two places)
+                role: props.role, "aria-roledescription": props['aria-roledescription'], ariaDescribedBy: ariaDescribedBy, ariaLabel: ariaLabel, ariaLabelledBy: ariaLabelledBy, className: classNames.calloutMain, onDismiss: props.onDismiss, onMouseDown: mouseDownOnPopup, onMouseUp: mouseUpOnPopup, onRestoreFocus: props.onRestoreFocus, onScroll: onScroll, shouldRestoreFocus: shouldRestoreFocus, style: overflowStyle }, popupProps, { ref: mergedPopupRefs }), children))));
+}), function (previousProps, nextProps) {
+    if (!nextProps.shouldUpdateWhenHidden && previousProps.hidden && nextProps.hidden) {
+        // Do not update when hidden.
+        return true;
+    }
+    return (0,_Utilities__WEBPACK_IMPORTED_MODULE_20__.shallowCompare)(previousProps, nextProps);
+});
+/**
+ * (Utility) to find and return the current `Callout` Beak position.
+ *
+ * @param positions
+ */
+function getBeakPosition(positions) {
+    var _a, _b;
+    var beakPositionStyle = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_9__.__assign)({}, (_a = positions === null || positions === void 0 ? void 0 : positions.beakPosition) === null || _a === void 0 ? void 0 : _a.elementPosition), { display: ((_b = positions === null || positions === void 0 ? void 0 : positions.beakPosition) === null || _b === void 0 ? void 0 : _b.hideBeak) ? 'none' : undefined });
+    if (!beakPositionStyle.top && !beakPositionStyle.bottom && !beakPositionStyle.left && !beakPositionStyle.right) {
+        beakPositionStyle.left = BEAK_ORIGIN_POSITION.left;
+        beakPositionStyle.top = BEAK_ORIGIN_POSITION.top;
+    }
+    return beakPositionStyle;
+}
+/**
+ * (Utility) used to compare two different elementPositions to determine whether they are equal.
+ *
+ * @param prevElementPositions
+ * @param newElementPosition
+ */
+function arePositionsEqual(prevElementPositions, newElementPosition) {
+    return (comparePositions(prevElementPositions.elementPosition, newElementPosition.elementPosition) &&
+        comparePositions(prevElementPositions.beakPosition.elementPosition, newElementPosition.beakPosition.elementPosition));
+}
+/**
+ * (Utility) used in **arePositionsEqual** to compare two different elementPositions.
+ *
+ * @param prevElementPositions
+ * @param newElementPositions
+ */
+function comparePositions(prevElementPositions, newElementPositions) {
+    for (var key in newElementPositions) {
+        if (newElementPositions.hasOwnProperty(key)) {
+            var oldPositionEdge = prevElementPositions[key];
+            var newPositionEdge = newElementPositions[key];
+            if (oldPositionEdge !== undefined && newPositionEdge !== undefined) {
+                if (oldPositionEdge.toFixed(2) !== newPositionEdge.toFixed(2)) {
+                    return false;
+                }
+            }
+            else {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+CalloutContentBase.displayName = COMPONENT_NAME;
+//# sourceMappingURL=CalloutContent.base.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Callout/CalloutContent.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Callout/CalloutContent.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CalloutContent: () => (/* binding */ CalloutContent)
+/* harmony export */ });
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/styled.js");
+/* harmony import */ var _CalloutContent_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CalloutContent.base */ "./node_modules/@fluentui/react/lib/components/Callout/CalloutContent.base.js");
+/* harmony import */ var _CalloutContent_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CalloutContent.styles */ "./node_modules/@fluentui/react/lib/components/Callout/CalloutContent.styles.js");
+
+
+
+var CalloutContent = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.styled)(_CalloutContent_base__WEBPACK_IMPORTED_MODULE_1__.CalloutContentBase, _CalloutContent_styles__WEBPACK_IMPORTED_MODULE_2__.getStyles, undefined, {
+    scope: 'CalloutContent',
+});
+//# sourceMappingURL=CalloutContent.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Callout/CalloutContent.styles.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Callout/CalloutContent.styles.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getStyles: () => (/* binding */ getStyles)
+/* harmony export */ });
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+
+function getBeakStyle(beakWidth) {
+    return {
+        height: beakWidth,
+        width: beakWidth,
+    };
+}
+var GlobalClassNames = {
+    container: 'ms-Callout-container',
+    root: 'ms-Callout',
+    beak: 'ms-Callout-beak',
+    beakCurtain: 'ms-Callout-beakCurtain',
+    calloutMain: 'ms-Callout-main',
+};
+var getStyles = function (props) {
+    var _a;
+    var theme = props.theme, className = props.className, overflowYHidden = props.overflowYHidden, calloutWidth = props.calloutWidth, beakWidth = props.beakWidth, backgroundColor = props.backgroundColor, calloutMaxWidth = props.calloutMaxWidth, calloutMinWidth = props.calloutMinWidth, doNotLayer = props.doNotLayer;
+    var classNames = (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getGlobalClassNames)(GlobalClassNames, theme);
+    var semanticColors = theme.semanticColors, effects = theme.effects;
+    return {
+        container: [
+            classNames.container,
+            {
+                position: 'relative',
+            },
+        ],
+        root: [
+            classNames.root,
+            theme.fonts.medium,
+            {
+                position: 'absolute',
+                display: 'flex',
+                zIndex: doNotLayer ? _Styling__WEBPACK_IMPORTED_MODULE_0__.ZIndexes.Layer : undefined,
+                boxSizing: 'border-box',
+                borderRadius: effects.roundedCorner2,
+                boxShadow: effects.elevation16,
+                selectors: (_a = {},
+                    _a[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                        borderWidth: 1,
+                        borderStyle: 'solid',
+                        borderColor: 'WindowText',
+                    },
+                    _a),
+            },
+            (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.focusClear)(),
+            className,
+            !!calloutWidth && { width: calloutWidth },
+            !!calloutMaxWidth && { maxWidth: calloutMaxWidth },
+            !!calloutMinWidth && { minWidth: calloutMinWidth },
+        ],
+        beak: [
+            classNames.beak,
+            {
+                position: 'absolute',
+                backgroundColor: semanticColors.menuBackground,
+                boxShadow: 'inherit',
+                border: 'inherit',
+                boxSizing: 'border-box',
+                transform: 'rotate(45deg)',
+            },
+            getBeakStyle(beakWidth),
+            backgroundColor && {
+                backgroundColor: backgroundColor,
+            },
+        ],
+        beakCurtain: [
+            classNames.beakCurtain,
+            {
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0,
+                backgroundColor: semanticColors.menuBackground,
+                borderRadius: effects.roundedCorner2,
+            },
+        ],
+        calloutMain: [
+            classNames.calloutMain,
+            {
+                backgroundColor: semanticColors.menuBackground,
+                overflowX: 'hidden',
+                overflowY: 'auto',
+                position: 'relative',
+                width: '100%',
+                borderRadius: effects.roundedCorner2,
+            },
+            overflowYHidden && {
+                overflowY: 'hidden',
+            },
+            backgroundColor && {
+                backgroundColor: backgroundColor,
+            },
+        ],
+    };
+};
+//# sourceMappingURL=CalloutContent.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.base.js":
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.base.js ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ContextualMenuBase: () => (/* binding */ ContextualMenuBase),
+/* harmony export */   canAnyMenuItemsCheck: () => (/* binding */ canAnyMenuItemsCheck),
+/* harmony export */   getSubmenuItems: () => (/* binding */ getSubmenuItems)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ContextualMenu.types */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.types.js");
+/* harmony import */ var _common_DirectionalHint__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../common/DirectionalHint */ "./node_modules/@fluentui/react/lib/common/DirectionalHint.js");
+/* harmony import */ var _FocusZone__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../FocusZone */ "./node_modules/@fluentui/react-focus/lib/components/FocusZone/FocusZone.types.js");
+/* harmony import */ var _FocusZone__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../../FocusZone */ "./node_modules/@fluentui/react-focus/lib/components/FocusZone/FocusZone.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/classNamesFunction.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/rtl.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/object.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/dom/getDocument.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/KeyCodes.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/focus.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/osDetector.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/mobileDetector.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/getPropsWithDefaults.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/componentAs/composeComponentAs.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/properties.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/css.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/useFocusRects.js");
+/* harmony import */ var _utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utilities/contextualMenu/index */ "./node_modules/@fluentui/react/lib/utilities/contextualMenu/contextualMenuUtility.js");
+/* harmony import */ var _Callout__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ../../Callout */ "./node_modules/@fluentui/react/lib/components/Callout/Callout.js");
+/* harmony import */ var _ContextualMenuItem__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./ContextualMenuItem */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItem.js");
+/* harmony import */ var _ContextualMenuItemWrapper_index__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./ContextualMenuItemWrapper/index */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItemWrapper/ContextualMenuAnchor.js");
+/* harmony import */ var _ContextualMenuItemWrapper_index__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./ContextualMenuItemWrapper/index */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItemWrapper/ContextualMenuSplitButton.js");
+/* harmony import */ var _ContextualMenuItemWrapper_index__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./ContextualMenuItemWrapper/index */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItemWrapper/ContextualMenuButton.js");
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+/* harmony import */ var _ContextualMenu_classNames__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ContextualMenu.classNames */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.classNames.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/usePrevious.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useId.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/utilities/lib/useIsomorphicLayoutEffect.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useAsync.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useWarnings.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useTarget.js");
+/* harmony import */ var _ResponsiveMode__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../ResponsiveMode */ "./node_modules/@fluentui/react/lib/utilities/hooks/useResponsiveMode.js");
+/* harmony import */ var _ResponsiveMode__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../../ResponsiveMode */ "./node_modules/@fluentui/react/lib/utilities/decorators/withResponsiveMode.js");
+/* harmony import */ var _utilities_MenuContext_index__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../../utilities/MenuContext/index */ "./node_modules/@fluentui/react/lib/utilities/MenuContext/MenuContext.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var getClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_1__.classNamesFunction)();
+var getContextualMenuItemClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_1__.classNamesFunction)();
+// The default ContextualMenu properties have no items and beak, the default submenu direction is right and top.
+var DEFAULT_PROPS = {
+    items: [],
+    shouldFocusOnMount: true,
+    gapSpace: 0,
+    directionalHint: _common_DirectionalHint__WEBPACK_IMPORTED_MODULE_2__.DirectionalHint.bottomAutoEdge,
+    beakWidth: 16,
+};
+/* return number of menu items, excluding headers and dividers */
+function getItemCount(items) {
+    var totalItemCount = 0;
+    for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
+        var item = items_1[_i];
+        if (item.itemType !== _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItemType.Divider && item.itemType !== _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItemType.Header) {
+            var itemCount = item.customOnRenderListLength ? item.customOnRenderListLength : 1;
+            totalItemCount += itemCount;
+        }
+    }
+    return totalItemCount;
+}
+function getSubmenuItems(item, options) {
+    var target = options === null || options === void 0 ? void 0 : options.target;
+    // eslint-disable-next-line deprecation/deprecation
+    var items = item.subMenuProps ? item.subMenuProps.items : item.items;
+    if (items) {
+        var overrideItems = [];
+        for (var _i = 0, items_2 = items; _i < items_2.length; _i++) {
+            var subItem = items_2[_i];
+            if (subItem.preferMenuTargetAsEventTarget) {
+                // For sub-items which need an overridden target, intercept `onClick`
+                var onClick = subItem.onClick, contextItem = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__rest)(subItem, ["onClick"]);
+                overrideItems.push((0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({}, contextItem), { onClick: getOnClickWithOverrideTarget(onClick, target) }));
+            }
+            else {
+                overrideItems.push(subItem);
+            }
+        }
+        return overrideItems;
+    }
+}
+/**
+ * Returns true if a list of menu items can contain a checkbox
+ */
+function canAnyMenuItemsCheck(items) {
+    return items.some(function (item) {
+        if (item.canCheck) {
+            return true;
+        }
+        // If the item is a section, check if any of the items in the section can check.
+        if (item.sectionProps && item.sectionProps.items.some(function (submenuItem) { return submenuItem.canCheck === true; })) {
+            return true;
+        }
+        return false;
+    });
+}
+var NavigationIdleDelay = 250; /* ms */
+var COMPONENT_NAME = 'ContextualMenu';
+var _getMenuItemStylesFunction = (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.memoizeFunction)(function () {
+    var styles = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        styles[_i] = arguments[_i];
+    }
+    return function (styleProps) {
+        return _Styling__WEBPACK_IMPORTED_MODULE_6__.concatStyleSetsWithProps.apply(void 0, (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__spreadArray)([styleProps, _ContextualMenu_classNames__WEBPACK_IMPORTED_MODULE_7__.getItemStyles], styles, false));
+    };
+});
+//#region Custom hooks
+function useVisibility(props, targetWindow) {
+    var _a = props.hidden, hidden = _a === void 0 ? false : _a, onMenuDismissed = props.onMenuDismissed, onMenuOpened = props.onMenuOpened;
+    var previousHidden = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_8__.usePrevious)(hidden);
+    var onMenuOpenedRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(onMenuOpened);
+    var onMenuClosedRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(onMenuDismissed);
+    var propsRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(props);
+    onMenuOpenedRef.current = onMenuOpened;
+    onMenuClosedRef.current = onMenuDismissed;
+    propsRef.current = props;
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        var _a, _b;
+        // Don't issue dismissed callbacks on initial mount
+        if (hidden && previousHidden === false) {
+            (_a = onMenuClosedRef.current) === null || _a === void 0 ? void 0 : _a.call(onMenuClosedRef, propsRef.current);
+        }
+        else if (!hidden && previousHidden !== false) {
+            (_b = onMenuOpenedRef.current) === null || _b === void 0 ? void 0 : _b.call(onMenuOpenedRef, propsRef.current);
+        }
+    }, [hidden, previousHidden]);
+    // Issue onDismissedCallback on unmount
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () { return function () { var _a; return (_a = onMenuClosedRef.current) === null || _a === void 0 ? void 0 : _a.call(onMenuClosedRef, propsRef.current); }; }, []);
+}
+function useSubMenuState(_a, dismiss) {
+    var hidden = _a.hidden, items = _a.items, theme = _a.theme, className = _a.className, id = _a.id, menuTarget = _a.target;
+    var _b = react__WEBPACK_IMPORTED_MODULE_0__.useState(), expandedMenuItemKey = _b[0], setExpandedMenuItemKey = _b[1];
+    var _c = react__WEBPACK_IMPORTED_MODULE_0__.useState(), submenuTarget = _c[0], setSubmenuTarget = _c[1];
+    /** True if the menu was expanded by mouse click OR hover (as opposed to by keyboard) */
+    var _d = react__WEBPACK_IMPORTED_MODULE_0__.useState(), shouldFocusOnContainer = _d[0], setShouldFocusOnContainer = _d[1];
+    var subMenuId = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_9__.useId)(COMPONENT_NAME, id);
+    var closeSubMenu = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function () {
+        setShouldFocusOnContainer(undefined);
+        setExpandedMenuItemKey(undefined);
+        setSubmenuTarget(undefined);
+    }, []);
+    var openSubMenu = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function (_a, target, focusContainer) {
+        var submenuItemKey = _a.key;
+        if (expandedMenuItemKey === submenuItemKey) {
+            return;
+        }
+        target.focus();
+        setShouldFocusOnContainer(focusContainer);
+        setExpandedMenuItemKey(submenuItemKey);
+        setSubmenuTarget(target);
+    }, [expandedMenuItemKey]);
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        if (hidden) {
+            closeSubMenu();
+        }
+    }, [hidden, closeSubMenu]);
+    var onSubMenuDismiss = useOnSubmenuDismiss(dismiss, closeSubMenu);
+    var getSubmenuProps = function () {
+        var item = findItemByKeyFromItems(expandedMenuItemKey, items);
+        var submenuProps = null;
+        if (item) {
+            submenuProps = {
+                items: getSubmenuItems(item, { target: menuTarget }),
+                target: submenuTarget,
+                onDismiss: onSubMenuDismiss,
+                isSubMenu: true,
+                id: subMenuId,
+                shouldFocusOnMount: true,
+                shouldFocusOnContainer: shouldFocusOnContainer,
+                directionalHint: (0,_Utilities__WEBPACK_IMPORTED_MODULE_10__.getRTL)(theme) ? _common_DirectionalHint__WEBPACK_IMPORTED_MODULE_2__.DirectionalHint.leftTopEdge : _common_DirectionalHint__WEBPACK_IMPORTED_MODULE_2__.DirectionalHint.rightTopEdge,
+                className: className,
+                gapSpace: 0,
+                isBeakVisible: false,
+            };
+            if (item.subMenuProps) {
+                (0,_Utilities__WEBPACK_IMPORTED_MODULE_11__.assign)(submenuProps, item.subMenuProps);
+            }
+            if (item.preferMenuTargetAsEventTarget) {
+                var onItemClick = item.onItemClick;
+                submenuProps.onItemClick = getOnClickWithOverrideTarget(onItemClick, menuTarget);
+            }
+        }
+        return submenuProps;
+    };
+    return [expandedMenuItemKey, openSubMenu, getSubmenuProps, onSubMenuDismiss];
+}
+function useShouldUpdateFocusOnMouseMove(_a) {
+    var delayUpdateFocusOnHover = _a.delayUpdateFocusOnHover, hidden = _a.hidden;
+    var shouldUpdateFocusOnMouseEvent = react__WEBPACK_IMPORTED_MODULE_0__.useRef(!delayUpdateFocusOnHover);
+    var gotMouseMove = react__WEBPACK_IMPORTED_MODULE_0__.useRef(false);
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        shouldUpdateFocusOnMouseEvent.current = !delayUpdateFocusOnHover;
+        gotMouseMove.current = hidden ? false : !delayUpdateFocusOnHover && gotMouseMove.current;
+    }, [delayUpdateFocusOnHover, hidden]);
+    var onMenuFocusCapture = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function () {
+        if (delayUpdateFocusOnHover) {
+            shouldUpdateFocusOnMouseEvent.current = false;
+        }
+    }, [delayUpdateFocusOnHover]);
+    return [shouldUpdateFocusOnMouseEvent, gotMouseMove, onMenuFocusCapture];
+}
+function usePreviousActiveElement(_a, targetWindow, hostElement) {
+    var hidden = _a.hidden, onRestoreFocus = _a.onRestoreFocus;
+    var previousActiveElement = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
+    var tryFocusPreviousActiveElement = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function (options) {
+        var _a, _b;
+        if (onRestoreFocus) {
+            onRestoreFocus(options);
+        }
+        else if (options === null || options === void 0 ? void 0 : options.documentContainsFocus) {
+            // Make sure that the focus method actually exists
+            // In some cases the object might exist but not be a real element.
+            // This is primarily for IE 11 and should be removed once IE 11 is no longer in use.
+            (_b = (_a = previousActiveElement.current) === null || _a === void 0 ? void 0 : _a.focus) === null || _b === void 0 ? void 0 : _b.call(_a);
+        }
+    }, [onRestoreFocus]);
+    (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_12__.useIsomorphicLayoutEffect)(function () {
+        var _a, _b;
+        if (!hidden) {
+            var newElement = targetWindow === null || targetWindow === void 0 ? void 0 : targetWindow.document.activeElement;
+            if (!((_a = hostElement.current) === null || _a === void 0 ? void 0 : _a.contains(newElement)) && newElement.tagName !== 'BODY') {
+                previousActiveElement.current = newElement;
+            }
+        }
+        else if (previousActiveElement.current) {
+            tryFocusPreviousActiveElement({
+                originalElement: previousActiveElement.current,
+                containsFocus: true,
+                documentContainsFocus: ((_b = (0,_Utilities__WEBPACK_IMPORTED_MODULE_13__.getDocument)()) === null || _b === void 0 ? void 0 : _b.hasFocus()) || false,
+            });
+            previousActiveElement.current = undefined;
+        }
+    }, [hidden, targetWindow === null || targetWindow === void 0 ? void 0 : targetWindow.document.activeElement, tryFocusPreviousActiveElement, hostElement]);
+    return [tryFocusPreviousActiveElement];
+}
+function useKeyHandlers(_a, dismiss, hostElement, openSubMenu) {
+    var theme = _a.theme, isSubMenu = _a.isSubMenu, _b = _a.focusZoneProps, _c = _b === void 0 ? {} : _b, checkForNoWrap = _c.checkForNoWrap, _d = _c.direction, focusZoneDirection = _d === void 0 ? _FocusZone__WEBPACK_IMPORTED_MODULE_14__.FocusZoneDirection.vertical : _d;
+    /** True if the most recent keydown event was for alt (option) or meta (command). */
+    var lastKeyDownWasAltOrMeta = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
+    /**
+     * Calls `shouldHandleKey` to determine whether the keyboard event should be handled;
+     * if so, stops event propagation and dismisses menu(s).
+     * @param ev - The keyboard event.
+     * @param shouldHandleKey - Returns whether we should handle this keyboard event.
+     * @param dismissAllMenus - If true, dismiss all menus. Otherwise, dismiss only the current menu.
+     * Only does anything if `shouldHandleKey` returns true.
+     * @returns Whether the event was handled.
+     */
+    var keyHandler = function (ev, shouldHandleKey, dismissAllMenus) {
+        var handled = false;
+        if (shouldHandleKey(ev)) {
+            dismiss(ev, dismissAllMenus);
+            ev.preventDefault();
+            ev.stopPropagation();
+            handled = true;
+        }
+        return handled;
+    };
+    /**
+     * Checks if the submenu should be closed
+     */
+    var shouldCloseSubMenu = function (ev) {
+        var submenuCloseKey = (0,_Utilities__WEBPACK_IMPORTED_MODULE_10__.getRTL)(theme) ? _Utilities__WEBPACK_IMPORTED_MODULE_15__.KeyCodes.right : _Utilities__WEBPACK_IMPORTED_MODULE_15__.KeyCodes.left;
+        // eslint-disable-next-line deprecation/deprecation
+        if (ev.which !== submenuCloseKey || !isSubMenu) {
+            return false;
+        }
+        return !!(focusZoneDirection === _FocusZone__WEBPACK_IMPORTED_MODULE_14__.FocusZoneDirection.vertical ||
+            (checkForNoWrap && !(0,_Utilities__WEBPACK_IMPORTED_MODULE_16__.shouldWrapFocus)(ev.target, 'data-no-horizontal-wrap')));
+    };
+    var shouldHandleKeyDown = function (ev) {
+        return (
+        // eslint-disable-next-line deprecation/deprecation
+        ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_15__.KeyCodes.escape ||
+            shouldCloseSubMenu(ev) ||
+            // eslint-disable-next-line deprecation/deprecation
+            (ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_15__.KeyCodes.up && (ev.altKey || ev.metaKey)));
+    };
+    var onKeyDown = function (ev) {
+        // Take note if we are processing an alt (option) or meta (command) keydown.
+        // See comment in shouldHandleKeyUp for reasoning.
+        lastKeyDownWasAltOrMeta.current = isAltOrMeta(ev);
+        // On Mac, pressing escape dismisses all levels of native context menus
+        // eslint-disable-next-line deprecation/deprecation
+        var dismissAllMenus = ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_15__.KeyCodes.escape && ((0,_Utilities__WEBPACK_IMPORTED_MODULE_17__.isMac)() || (0,_Utilities__WEBPACK_IMPORTED_MODULE_18__.isIOS)());
+        return keyHandler(ev, shouldHandleKeyDown, dismissAllMenus);
+    };
+    /**
+     * We close the menu on key up only if ALL of the following are true:
+     * - Most recent key down was alt or meta (command)
+     * - The alt/meta key down was NOT followed by some other key (such as down/up arrow to
+     *   expand/collapse the menu)
+     * - We're not on a Mac (or iOS)
+     *
+     * This is because on Windows, pressing alt moves focus to the application menu bar or similar,
+     * closing any open context menus. There is not a similar behavior on Macs.
+     */
+    var shouldHandleKeyUp = function (ev) {
+        var keyPressIsAltOrMetaAlone = lastKeyDownWasAltOrMeta.current && isAltOrMeta(ev);
+        lastKeyDownWasAltOrMeta.current = false;
+        return !!keyPressIsAltOrMetaAlone && !((0,_Utilities__WEBPACK_IMPORTED_MODULE_18__.isIOS)() || (0,_Utilities__WEBPACK_IMPORTED_MODULE_17__.isMac)());
+    };
+    var onKeyUp = function (ev) {
+        return keyHandler(ev, shouldHandleKeyUp, true /* dismissAllMenus */);
+    };
+    var onMenuKeyDown = function (ev) {
+        // Mark as handled if onKeyDown returns true (for handling collapse cases)
+        // or if we are attempting to expand a submenu
+        var handled = onKeyDown(ev);
+        if (handled || !hostElement.current) {
+            return;
+        }
+        // If we have a modifier key being pressed, we do not want to move focus.
+        // Otherwise, handle up and down keys.
+        var hasModifier = !!(ev.altKey || ev.metaKey);
+        // eslint-disable-next-line deprecation/deprecation
+        var isUp = ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_15__.KeyCodes.up;
+        // eslint-disable-next-line deprecation/deprecation
+        var isDown = ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_15__.KeyCodes.down;
+        if (!hasModifier && (isUp || isDown)) {
+            var elementToFocus = isUp
+                ? (0,_Utilities__WEBPACK_IMPORTED_MODULE_16__.getLastFocusable)(hostElement.current, hostElement.current.lastChild, true)
+                : (0,_Utilities__WEBPACK_IMPORTED_MODULE_16__.getFirstFocusable)(hostElement.current, hostElement.current.firstChild, true);
+            if (elementToFocus) {
+                elementToFocus.focus();
+                ev.preventDefault();
+                ev.stopPropagation();
+            }
+        }
+    };
+    var onItemKeyDown = function (item, ev) {
+        var openKey = (0,_Utilities__WEBPACK_IMPORTED_MODULE_10__.getRTL)(theme) ? _Utilities__WEBPACK_IMPORTED_MODULE_15__.KeyCodes.left : _Utilities__WEBPACK_IMPORTED_MODULE_15__.KeyCodes.right;
+        if (!item.disabled &&
+            // eslint-disable-next-line deprecation/deprecation
+            (ev.which === openKey || ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_15__.KeyCodes.enter || (ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_15__.KeyCodes.down && (ev.altKey || ev.metaKey)))) {
+            openSubMenu(item, ev.currentTarget);
+            ev.preventDefault();
+        }
+    };
+    return [onKeyDown, onKeyUp, onMenuKeyDown, onItemKeyDown];
+}
+function useScrollHandler(asyncTracker) {
+    var isScrollIdle = react__WEBPACK_IMPORTED_MODULE_0__.useRef(true);
+    var scrollIdleTimeoutId = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
+    /**
+     * Scroll handler for the callout to make sure the mouse events
+     * for updating focus are not interacting during scroll
+     */
+    var onScroll = function () {
+        if (!isScrollIdle.current && scrollIdleTimeoutId.current !== undefined) {
+            asyncTracker.clearTimeout(scrollIdleTimeoutId.current);
+            scrollIdleTimeoutId.current = undefined;
+        }
+        else {
+            isScrollIdle.current = false;
+        }
+        scrollIdleTimeoutId.current = asyncTracker.setTimeout(function () {
+            isScrollIdle.current = true;
+        }, NavigationIdleDelay);
+    };
+    return [onScroll, isScrollIdle];
+}
+function useOnSubmenuDismiss(dismiss, closeSubMenu) {
+    var isMountedRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(false);
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        isMountedRef.current = true;
+        return function () {
+            isMountedRef.current = false;
+        };
+    }, []);
+    /**
+     * This function is called ASYNCHRONOUSLY, and so there is a chance it is called
+     * after the component is unmounted. The isMountedRef is added to prevent
+     * from calling setState() after unmount. Do NOT copy this pattern in synchronous
+     * code.
+     */
+    var onSubMenuDismiss = function (ev, dismissAll) {
+        if (dismissAll) {
+            dismiss(ev, dismissAll);
+        }
+        else if (isMountedRef.current) {
+            closeSubMenu();
+        }
+    };
+    return onSubMenuDismiss;
+}
+function useSubmenuEnterTimer(_a, asyncTracker) {
+    var _b = _a.subMenuHoverDelay, subMenuHoverDelay = _b === void 0 ? NavigationIdleDelay : _b;
+    var enterTimerRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(undefined);
+    var cancelSubMenuTimer = function () {
+        if (enterTimerRef.current !== undefined) {
+            asyncTracker.clearTimeout(enterTimerRef.current);
+            enterTimerRef.current = undefined;
+        }
+    };
+    var startSubmenuTimer = function (onTimerExpired) {
+        enterTimerRef.current = asyncTracker.setTimeout(function () {
+            onTimerExpired();
+            cancelSubMenuTimer();
+        }, subMenuHoverDelay);
+    };
+    return [cancelSubMenuTimer, startSubmenuTimer, enterTimerRef];
+}
+function useMouseHandlers(props, isScrollIdle, subMenuEntryTimer, targetWindow, shouldUpdateFocusOnMouseEvent, gotMouseMove, expandedMenuItemKey, hostElement, startSubmenuTimer, cancelSubMenuTimer, openSubMenu, onSubMenuDismiss, dismiss) {
+    var menuTarget = props.target;
+    var onItemMouseEnterBase = function (item, ev, target) {
+        if (shouldUpdateFocusOnMouseEvent.current) {
+            gotMouseMove.current = true;
+        }
+        if (shouldIgnoreMouseEvent()) {
+            return;
+        }
+        updateFocusOnMouseEvent(item, ev, target);
+    };
+    var onItemMouseMoveBase = function (item, ev, target) {
+        var targetElement = ev.currentTarget;
+        // Always do this check to make sure we record a mouseMove if needed (even if we are timed out)
+        if (shouldUpdateFocusOnMouseEvent.current) {
+            gotMouseMove.current = true;
+        }
+        else {
+            return;
+        }
+        if (!isScrollIdle.current ||
+            subMenuEntryTimer.current !== undefined ||
+            targetElement === (targetWindow === null || targetWindow === void 0 ? void 0 : targetWindow.document.activeElement)) {
+            return;
+        }
+        updateFocusOnMouseEvent(item, ev, target);
+    };
+    var shouldIgnoreMouseEvent = function () {
+        return !isScrollIdle.current || !gotMouseMove.current;
+    };
+    var onMouseItemLeave = function (item, ev) {
+        var _a;
+        if (shouldIgnoreMouseEvent()) {
+            return;
+        }
+        cancelSubMenuTimer();
+        if (expandedMenuItemKey !== undefined) {
+            return;
+        }
+        /**
+         * IE11 focus() method forces parents to scroll to top of element.
+         * Edge and IE expose a setActive() function for focusable divs that
+         * sets the page focus but does not scroll the parent element.
+         */
+        if (hostElement.current.setActive) {
+            try {
+                hostElement.current.setActive();
+            }
+            catch (e) {
+                /* no-op */
+            }
+        }
+        else {
+            (_a = hostElement.current) === null || _a === void 0 ? void 0 : _a.focus();
+        }
+    };
+    /**
+     * Handles updating focus when mouseEnter or mouseMove fire.
+     * As part of updating focus, This function will also update
+     * the expand/collapse state accordingly.
+     */
+    var updateFocusOnMouseEvent = function (item, ev, target) {
+        var targetElement = target ? target : ev.currentTarget;
+        if (item.key === expandedMenuItemKey) {
+            return;
+        }
+        cancelSubMenuTimer();
+        // If the menu is not expanded we can update focus without any delay
+        if (expandedMenuItemKey === undefined) {
+            targetElement.focus();
+        }
+        // Delay updating expanding/dismissing the submenu
+        // and only set focus if we have not already done so
+        if ((0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_19__.hasSubmenu)(item)) {
+            ev.stopPropagation();
+            startSubmenuTimer(function () {
+                targetElement.focus();
+                openSubMenu(item, targetElement, true);
+            });
+        }
+        else {
+            startSubmenuTimer(function () {
+                onSubMenuDismiss(ev);
+                targetElement.focus();
+            });
+        }
+    };
+    var onItemClick = function (item, ev) {
+        onItemClickBase(item, ev, ev.currentTarget);
+    };
+    var onItemClickBase = function (item, ev, target) {
+        var items = getSubmenuItems(item, { target: menuTarget });
+        // Cancel an async menu item hover timeout action from being taken and instead
+        // just trigger the click event instead.
+        cancelSubMenuTimer();
+        if (!(0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_19__.hasSubmenu)(item) && (!items || !items.length)) {
+            // This is an item without a menu. Click it.
+            executeItemClick(item, ev);
+        }
+        else {
+            if (item.key !== expandedMenuItemKey) {
+                // This has a collapsed sub menu. Expand it.
+                // focus on the container by default when the menu is opened with a click event
+                // this differentiates from a keyboard interaction triggering the click event
+                var shouldFocusOnContainer = typeof props.shouldFocusOnContainer === 'boolean'
+                    ? props.shouldFocusOnContainer
+                    : ev.nativeEvent.pointerType === 'mouse';
+                openSubMenu(item, target, shouldFocusOnContainer);
+            }
+        }
+        ev.stopPropagation();
+        ev.preventDefault();
+    };
+    var onAnchorClick = function (item, ev) {
+        executeItemClick(item, ev);
+        ev.stopPropagation();
+    };
+    var executeItemClick = function (item, ev) {
+        if (item.disabled || item.isDisabled) {
+            return;
+        }
+        if (item.preferMenuTargetAsEventTarget) {
+            overrideTarget(ev, menuTarget);
+        }
+        var shouldDismiss = false;
+        if (item.onClick) {
+            shouldDismiss = !!item.onClick(ev, item);
+        }
+        else if (props.onItemClick) {
+            shouldDismiss = !!props.onItemClick(ev, item);
+        }
+        if (shouldDismiss || !ev.defaultPrevented) {
+            dismiss(ev, true);
+        }
+    };
+    return [
+        onItemMouseEnterBase,
+        onItemMouseMoveBase,
+        onMouseItemLeave,
+        onItemClick,
+        onAnchorClick,
+        executeItemClick,
+        onItemClickBase,
+    ];
+}
+//#endregion
+var ContextualMenuBase = react__WEBPACK_IMPORTED_MODULE_0__.memo(react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (propsWithoutDefaults, forwardedRef) {
+    var _a;
+    var _b = (0,_Utilities__WEBPACK_IMPORTED_MODULE_20__.getPropsWithDefaults)(DEFAULT_PROPS, propsWithoutDefaults), ref = _b.ref, props = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__rest)(_b, ["ref"]);
+    var hostElement = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+    var asyncTracker = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_21__.useAsync)();
+    var menuId = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_9__.useId)(COMPONENT_NAME, props.id);
+    (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_22__.useWarnings)({
+        name: COMPONENT_NAME,
+        props: props,
+        deprecations: {
+            getMenuClassNames: 'styles',
+        },
+    });
+    var dismiss = function (ev, dismissAll) { var _a; return (_a = props.onDismiss) === null || _a === void 0 ? void 0 : _a.call(props, ev, dismissAll); };
+    var _c = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_23__.useTarget)(props.target, hostElement), targetRef = _c[0], targetWindow = _c[1];
+    var tryFocusPreviousActiveElement = usePreviousActiveElement(props, targetWindow, hostElement)[0];
+    var _d = useSubMenuState(props, dismiss), expandedMenuItemKey = _d[0], openSubMenu = _d[1], getSubmenuProps = _d[2], onSubMenuDismiss = _d[3];
+    var _e = useShouldUpdateFocusOnMouseMove(props), shouldUpdateFocusOnMouseEvent = _e[0], gotMouseMove = _e[1], onMenuFocusCapture = _e[2];
+    var _f = useScrollHandler(asyncTracker), onScroll = _f[0], isScrollIdle = _f[1];
+    var _g = useSubmenuEnterTimer(props, asyncTracker), cancelSubMenuTimer = _g[0], startSubmenuTimer = _g[1], subMenuEntryTimer = _g[2];
+    var responsiveMode = (0,_ResponsiveMode__WEBPACK_IMPORTED_MODULE_24__.useResponsiveMode)(hostElement, props.responsiveMode);
+    useVisibility(props, targetWindow);
+    var _h = useKeyHandlers(props, dismiss, hostElement, openSubMenu), onKeyDown = _h[0], onKeyUp = _h[1], onMenuKeyDown = _h[2], onItemKeyDown = _h[3];
+    var _j = useMouseHandlers(props, isScrollIdle, subMenuEntryTimer, targetWindow, shouldUpdateFocusOnMouseEvent, gotMouseMove, expandedMenuItemKey, hostElement, startSubmenuTimer, cancelSubMenuTimer, openSubMenu, onSubMenuDismiss, dismiss), onItemMouseEnterBase = _j[0], onItemMouseMoveBase = _j[1], onMouseItemLeave = _j[2], onItemClick = _j[3], onAnchorClick = _j[4], executeItemClick = _j[5], onItemClickBase = _j[6];
+    //#region Render helpers
+    var onDefaultRenderMenuList = function (menuListProps, 
+    // eslint-disable-next-line deprecation/deprecation
+    menuClassNames, defaultRender) {
+        var indexCorrection = 0;
+        var items = menuListProps.items, totalItemCount = menuListProps.totalItemCount, hasCheckmarks = menuListProps.hasCheckmarks, hasIcons = menuListProps.hasIcons;
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", { className: menuClassNames.list, onKeyDown: onKeyDown, onKeyUp: onKeyUp, role: 'presentation' }, items.map(function (item, index) {
+            var menuItem = renderMenuItem(item, index, indexCorrection, totalItemCount, hasCheckmarks, hasIcons, menuClassNames);
+            if (item.itemType !== _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItemType.Divider && item.itemType !== _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItemType.Header) {
+                var indexIncrease = item.customOnRenderListLength ? item.customOnRenderListLength : 1;
+                indexCorrection += indexIncrease;
+            }
+            return menuItem;
+        })));
+    };
+    var renderFocusZone = function (children, adjustedFocusZoneProps) {
+        var _a = props.focusZoneAs, ChildrenRenderer = _a === void 0 ? _FocusZone__WEBPACK_IMPORTED_MODULE_25__.FocusZone : _a;
+        return react__WEBPACK_IMPORTED_MODULE_0__.createElement(ChildrenRenderer, (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({}, adjustedFocusZoneProps), children);
+    };
+    /**
+     * !!!IMPORTANT!!! Avoid mutating `item: IContextualMenuItem` argument. It will
+     * cause the menu items to always re-render because the component update is based on shallow comparison.
+     */
+    var renderMenuItem = function (item, index, focusableElementIndex, totalItemCount, hasCheckmarks, hasIcons, 
+    // eslint-disable-next-line deprecation/deprecation
+    menuClassNames) {
+        var _a;
+        var renderedItems = [];
+        var iconProps = item.iconProps || { iconName: 'None' };
+        var getItemClassNames = item.getItemClassNames, // eslint-disable-line deprecation/deprecation
+        itemProps = item.itemProps;
+        var styles = itemProps ? itemProps.styles : undefined;
+        // We only send a dividerClassName when the item to be rendered is a divider.
+        // For all other cases, the default divider style is used.
+        var dividerClassName = item.itemType === _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItemType.Divider ? item.className : undefined;
+        var subMenuIconClassName = item.submenuIconProps ? item.submenuIconProps.className : '';
+        // eslint-disable-next-line deprecation/deprecation
+        var itemClassNames;
+        // IContextualMenuItem#getItemClassNames for backwards compatibility
+        // otherwise uses mergeStyles for class names.
+        if (getItemClassNames) {
+            itemClassNames = getItemClassNames(props.theme, (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_19__.isItemDisabled)(item), expandedMenuItemKey === item.key, !!(0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_19__.getIsChecked)(item), !!item.href, iconProps.iconName !== 'None', item.className, dividerClassName, iconProps.className, subMenuIconClassName, item.primaryDisabled);
+        }
+        else {
+            var itemStyleProps = {
+                theme: props.theme,
+                disabled: (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_19__.isItemDisabled)(item),
+                expanded: expandedMenuItemKey === item.key,
+                checked: !!(0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_19__.getIsChecked)(item),
+                isAnchorLink: !!item.href,
+                knownIcon: iconProps.iconName !== 'None',
+                itemClassName: item.className,
+                dividerClassName: dividerClassName,
+                iconClassName: iconProps.className,
+                subMenuClassName: subMenuIconClassName,
+                primaryDisabled: item.primaryDisabled,
+            };
+            // We need to generate default styles then override if styles are provided
+            // since the ContextualMenu currently handles item classNames.
+            itemClassNames = getContextualMenuItemClassNames(_getMenuItemStylesFunction((_a = menuClassNames.subComponentStyles) === null || _a === void 0 ? void 0 : _a.menuItem, styles), itemStyleProps);
+        }
+        // eslint-disable-next-line deprecation/deprecation
+        if (item.text === '-' || item.name === '-') {
+            item.itemType = _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItemType.Divider;
+        }
+        switch (item.itemType) {
+            case _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItemType.Divider:
+                renderedItems.push(renderSeparator(index, itemClassNames));
+                break;
+            case _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItemType.Header:
+                renderedItems.push(renderSeparator(index, itemClassNames));
+                var headerItem = renderHeaderMenuItem(item, itemClassNames, menuClassNames, index, hasCheckmarks, hasIcons);
+                renderedItems.push(renderListItem(headerItem, item.key || index, itemClassNames, item.title));
+                break;
+            case _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItemType.Section:
+                renderedItems.push(renderSectionItem(item, itemClassNames, menuClassNames, index, hasCheckmarks, hasIcons));
+                break;
+            default:
+                var defaultRenderNormalItem = function () {
+                    return renderNormalItem(item, itemClassNames, index, focusableElementIndex, totalItemCount, hasCheckmarks, hasIcons);
+                };
+                var menuItem = props.onRenderContextualMenuItem
+                    ? props.onRenderContextualMenuItem(item, defaultRenderNormalItem)
+                    : defaultRenderNormalItem();
+                renderedItems.push(renderListItem(menuItem, item.key || index, itemClassNames, item.title));
+                break;
+        }
+        // Since multiple nodes *could* be rendered, wrap them all in a fragment with this item's key.
+        // This ensures the reconciler handles multi-item output per-node correctly and does not re-mount content.
+        return react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, { key: item.key }, renderedItems);
+    };
+    var defaultMenuItemRenderer = function (item, 
+    // eslint-disable-next-line deprecation/deprecation
+    menuClassNames) {
+        var index = item.index, focusableElementIndex = item.focusableElementIndex, totalItemCount = item.totalItemCount, hasCheckmarks = item.hasCheckmarks, hasIcons = item.hasIcons;
+        return renderMenuItem(item, index, focusableElementIndex, totalItemCount, hasCheckmarks, hasIcons, menuClassNames);
+    };
+    var renderSectionItem = function (sectionItem, 
+    // eslint-disable-next-line deprecation/deprecation
+    itemClassNames, 
+    // eslint-disable-next-line deprecation/deprecation
+    menuClassNames, index, hasCheckmarks, hasIcons) {
+        var sectionProps = sectionItem.sectionProps;
+        if (!sectionProps) {
+            return;
+        }
+        var headerItem;
+        var groupProps;
+        if (sectionProps.title) {
+            var headerContextualMenuItem = undefined;
+            var ariaLabelledby = '';
+            if (typeof sectionProps.title === 'string') {
+                // Since title is a user-facing string, it needs to be stripped
+                // of whitespace in order to build a valid element ID
+                var id_1 = menuId + sectionProps.title.replace(/\s/g, '');
+                headerContextualMenuItem = {
+                    key: "section-".concat(sectionProps.title, "-title"),
+                    itemType: _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItemType.Header,
+                    text: sectionProps.title,
+                    id: id_1,
+                };
+                ariaLabelledby = id_1;
+            }
+            else {
+                var id_2 = sectionProps.title.id || menuId + sectionProps.title.key.replace(/\s/g, '');
+                headerContextualMenuItem = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({}, sectionProps.title), { id: id_2 });
+                ariaLabelledby = id_2;
+            }
+            if (headerContextualMenuItem) {
+                groupProps = {
+                    role: 'group',
+                    'aria-labelledby': ariaLabelledby,
+                };
+                headerItem = renderHeaderMenuItem(headerContextualMenuItem, itemClassNames, menuClassNames, index, hasCheckmarks, hasIcons);
+            }
+        }
+        if (sectionProps.items && sectionProps.items.length > 0) {
+            var correctedIndex_1 = 0;
+            return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", { role: "presentation", key: sectionProps.key || sectionItem.key || "section-".concat(index) },
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({}, groupProps),
+                    react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", { className: menuClassNames.list, role: "presentation" },
+                        sectionProps.topDivider && renderSeparator(index, itemClassNames, true, true),
+                        headerItem && renderListItem(headerItem, sectionItem.key || index, itemClassNames, sectionItem.title),
+                        sectionProps.items.map(function (contextualMenuItem, itemsIndex) {
+                            var menuItem = renderMenuItem(contextualMenuItem, itemsIndex, correctedIndex_1, getItemCount(sectionProps.items), hasCheckmarks, hasIcons, menuClassNames);
+                            if (contextualMenuItem.itemType !== _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItemType.Divider &&
+                                contextualMenuItem.itemType !== _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItemType.Header) {
+                                var indexIncrease = contextualMenuItem.customOnRenderListLength
+                                    ? contextualMenuItem.customOnRenderListLength
+                                    : 1;
+                                correctedIndex_1 += indexIncrease;
+                            }
+                            return menuItem;
+                        }),
+                        sectionProps.bottomDivider && renderSeparator(index, itemClassNames, false, true)))));
+        }
+    };
+    var renderListItem = function (content, key, classNames, // eslint-disable-line deprecation/deprecation
+    title) {
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", { role: "presentation", title: title, key: key, className: classNames.item }, content));
+    };
+    var renderSeparator = function (index, classNames, // eslint-disable-line deprecation/deprecation
+    top, fromSection) {
+        if (fromSection || index > 0) {
+            return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", { role: "separator", key: 'separator-' + index + (top === undefined ? '' : top ? '-top' : '-bottom'), className: classNames.divider, "aria-hidden": "true" }));
+        }
+        return null;
+    };
+    var renderNormalItem = function (item, classNames, // eslint-disable-line deprecation/deprecation
+    index, focusableElementIndex, totalItemCount, hasCheckmarks, hasIcons) {
+        if (item.onRender) {
+            return item.onRender((0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({ 'aria-posinset': focusableElementIndex + 1, 'aria-setsize': totalItemCount }, item), dismiss);
+        }
+        var contextualMenuItemAs = props.contextualMenuItemAs;
+        var commonProps = {
+            item: item,
+            classNames: classNames,
+            index: index,
+            focusableElementIndex: focusableElementIndex,
+            totalItemCount: totalItemCount,
+            hasCheckmarks: hasCheckmarks,
+            hasIcons: hasIcons,
+            contextualMenuItemAs: contextualMenuItemAs,
+            onItemMouseEnter: onItemMouseEnterBase,
+            onItemMouseLeave: onMouseItemLeave,
+            onItemMouseMove: onItemMouseMoveBase,
+            onItemMouseDown: onItemMouseDown,
+            executeItemClick: executeItemClick,
+            onItemKeyDown: onItemKeyDown,
+            expandedMenuItemKey: expandedMenuItemKey,
+            openSubMenu: openSubMenu,
+            dismissSubMenu: onSubMenuDismiss,
+            dismissMenu: dismiss,
+        };
+        if (item.href) {
+            var ContextualMenuAnchorAs = _ContextualMenuItemWrapper_index__WEBPACK_IMPORTED_MODULE_26__.ContextualMenuAnchor;
+            if (item.contextualMenuItemWrapperAs) {
+                ContextualMenuAnchorAs = (0,_Utilities__WEBPACK_IMPORTED_MODULE_27__.composeComponentAs)(item.contextualMenuItemWrapperAs, ContextualMenuAnchorAs);
+            }
+            return react__WEBPACK_IMPORTED_MODULE_0__.createElement(ContextualMenuAnchorAs, (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({}, commonProps, { onItemClick: onAnchorClick }));
+        }
+        if (item.split && (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_19__.hasSubmenu)(item)) {
+            var ContextualMenuSplitButtonAs = _ContextualMenuItemWrapper_index__WEBPACK_IMPORTED_MODULE_28__.ContextualMenuSplitButton;
+            if (item.contextualMenuItemWrapperAs) {
+                ContextualMenuSplitButtonAs = (0,_Utilities__WEBPACK_IMPORTED_MODULE_27__.composeComponentAs)(item.contextualMenuItemWrapperAs, ContextualMenuSplitButtonAs);
+            }
+            return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(ContextualMenuSplitButtonAs, (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({}, commonProps, { onItemClick: onItemClick, onItemClickBase: onItemClickBase, onTap: cancelSubMenuTimer })));
+        }
+        var ContextualMenuButtonAs = _ContextualMenuItemWrapper_index__WEBPACK_IMPORTED_MODULE_29__.ContextualMenuButton;
+        if (item.contextualMenuItemWrapperAs) {
+            ContextualMenuButtonAs = (0,_Utilities__WEBPACK_IMPORTED_MODULE_27__.composeComponentAs)(item.contextualMenuItemWrapperAs, ContextualMenuButtonAs);
+        }
+        return react__WEBPACK_IMPORTED_MODULE_0__.createElement(ContextualMenuButtonAs, (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({}, commonProps, { onItemClick: onItemClick, onItemClickBase: onItemClickBase }));
+    };
+    var renderHeaderMenuItem = function (item, 
+    // eslint-disable-next-line deprecation/deprecation
+    itemClassNames, 
+    // eslint-disable-next-line deprecation/deprecation
+    menuClassNames, index, hasCheckmarks, hasIcons) {
+        var ChildrenRenderer = _ContextualMenuItem__WEBPACK_IMPORTED_MODULE_30__.ContextualMenuItem;
+        if (item.contextualMenuItemAs) {
+            ChildrenRenderer = (0,_Utilities__WEBPACK_IMPORTED_MODULE_27__.composeComponentAs)(item.contextualMenuItemAs, ChildrenRenderer);
+        }
+        if (props.contextualMenuItemAs) {
+            ChildrenRenderer = (0,_Utilities__WEBPACK_IMPORTED_MODULE_27__.composeComponentAs)(props.contextualMenuItemAs, ChildrenRenderer);
+        }
+        var itemProps = item.itemProps, id = item.id;
+        var divHtmlProperties = itemProps && (0,_Utilities__WEBPACK_IMPORTED_MODULE_31__.getNativeProps)(itemProps, _Utilities__WEBPACK_IMPORTED_MODULE_31__.divProperties);
+        return (
+        // eslint-disable-next-line deprecation/deprecation
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({ id: id, className: menuClassNames.header }, divHtmlProperties, { style: item.style }),
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(ChildrenRenderer, (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({ item: item, classNames: itemClassNames, index: index, onCheckmarkClick: hasCheckmarks ? onItemClick : undefined, hasIcons: hasIcons }, itemProps))));
+    };
+    //#endregion
+    //#region Main render
+    var isBeakVisible = props.isBeakVisible;
+    var items = props.items, labelElementId = props.labelElementId, id = props.id, className = props.className, beakWidth = props.beakWidth, directionalHint = props.directionalHint, directionalHintForRTL = props.directionalHintForRTL, alignTargetEdge = props.alignTargetEdge, gapSpace = props.gapSpace, coverTarget = props.coverTarget, ariaLabel = props.ariaLabel, doNotLayer = props.doNotLayer, target = props.target, bounds = props.bounds, useTargetWidth = props.useTargetWidth, useTargetAsMinWidth = props.useTargetAsMinWidth, directionalHintFixed = props.directionalHintFixed, shouldFocusOnMount = props.shouldFocusOnMount, shouldFocusOnContainer = props.shouldFocusOnContainer, title = props.title, styles = props.styles, theme = props.theme, calloutProps = props.calloutProps, _k = props.onRenderSubMenu, onRenderSubMenu = _k === void 0 ? onDefaultRenderSubMenu : _k, _l = props.onRenderMenuList, onRenderMenuList = _l === void 0 ? function (menuListProps, defaultRender) { return onDefaultRenderMenuList(menuListProps, classNames, defaultRender); } : _l, focusZoneProps = props.focusZoneProps, 
+    // eslint-disable-next-line deprecation/deprecation
+    getMenuClassNames = props.getMenuClassNames;
+    var classNames = getMenuClassNames
+        ? getMenuClassNames(theme, className)
+        : getClassNames(styles, {
+            theme: theme,
+            className: className,
+        });
+    var hasIcons = itemsHaveIcons(items);
+    function itemsHaveIcons(contextualMenuItems) {
+        for (var _i = 0, contextualMenuItems_1 = contextualMenuItems; _i < contextualMenuItems_1.length; _i++) {
+            var item = contextualMenuItems_1[_i];
+            if (item.iconProps) {
+                return true;
+            }
+            if (item.itemType === _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItemType.Section &&
+                item.sectionProps &&
+                itemsHaveIcons(item.sectionProps.items)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    var adjustedFocusZoneProps = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({ direction: _FocusZone__WEBPACK_IMPORTED_MODULE_14__.FocusZoneDirection.vertical, handleTabKey: _FocusZone__WEBPACK_IMPORTED_MODULE_14__.FocusZoneTabbableElements.all, isCircularNavigation: true }, focusZoneProps), { className: (0,_Utilities__WEBPACK_IMPORTED_MODULE_32__.css)(classNames.root, (_a = props.focusZoneProps) === null || _a === void 0 ? void 0 : _a.className) });
+    var hasCheckmarks = canAnyMenuItemsCheck(items);
+    var submenuProps = expandedMenuItemKey && props.hidden !== true ? getSubmenuProps() : null;
+    isBeakVisible = isBeakVisible === undefined ? responsiveMode <= _ResponsiveMode__WEBPACK_IMPORTED_MODULE_33__.ResponsiveMode.medium : isBeakVisible;
+    /**
+     * When useTargetWidth is true, get the width of the target element and apply it for the context menu container
+     */
+    var contextMenuStyle;
+    var targetAsHtmlElement = targetRef.current;
+    if ((useTargetWidth || useTargetAsMinWidth) && targetAsHtmlElement && targetAsHtmlElement.offsetWidth) {
+        var targetBoundingRect = targetAsHtmlElement.getBoundingClientRect();
+        var targetWidth = targetBoundingRect.width - 2; /* Accounts for 1px border */
+        if (useTargetWidth) {
+            contextMenuStyle = {
+                width: targetWidth,
+            };
+        }
+        else if (useTargetAsMinWidth) {
+            contextMenuStyle = {
+                minWidth: targetWidth,
+            };
+        }
+    }
+    // The menu should only return if items were provided, if no items were provided then it should not appear.
+    if (items && items.length > 0) {
+        var totalItemCount_1 = getItemCount(items);
+        var calloutStyles_1 = classNames.subComponentStyles
+            ? classNames.subComponentStyles.callout
+            : undefined;
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_utilities_MenuContext_index__WEBPACK_IMPORTED_MODULE_34__.MenuContext.Consumer, null, function (menuContext) { return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Callout__WEBPACK_IMPORTED_MODULE_35__.Callout, (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({ styles: calloutStyles_1, onRestoreFocus: tryFocusPreviousActiveElement }, calloutProps, { target: target || menuContext.target, isBeakVisible: isBeakVisible, beakWidth: beakWidth, directionalHint: directionalHint, directionalHintForRTL: directionalHintForRTL, gapSpace: gapSpace, coverTarget: coverTarget, doNotLayer: doNotLayer, className: (0,_Utilities__WEBPACK_IMPORTED_MODULE_32__.css)('ms-ContextualMenu-Callout', calloutProps && calloutProps.className), setInitialFocus: shouldFocusOnMount, onDismiss: props.onDismiss || menuContext.onDismiss, onScroll: onScroll, bounds: bounds, directionalHintFixed: directionalHintFixed, alignTargetEdge: alignTargetEdge, hidden: props.hidden || menuContext.hidden, ref: forwardedRef }),
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { style: contextMenuStyle, ref: hostElement, id: id, className: classNames.container, tabIndex: shouldFocusOnContainer ? 0 : -1, onKeyDown: onMenuKeyDown, onKeyUp: onKeyUp, onFocusCapture: onMenuFocusCapture, "aria-label": ariaLabel, "aria-labelledby": labelElementId, role: 'menu' },
+                title && react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: classNames.title },
+                    " ",
+                    title,
+                    " "),
+                items && items.length
+                    ? renderFocusZone(onRenderMenuList({
+                        ariaLabel: ariaLabel,
+                        items: items,
+                        totalItemCount: totalItemCount_1,
+                        hasCheckmarks: hasCheckmarks,
+                        hasIcons: hasIcons,
+                        defaultMenuItemRenderer: function (item) {
+                            return defaultMenuItemRenderer(item, classNames);
+                        },
+                        labelElementId: labelElementId,
+                    }, function (menuListProps, defaultRender) { return onDefaultRenderMenuList(menuListProps, classNames, defaultRender); }), adjustedFocusZoneProps)
+                    : null,
+                submenuProps && onRenderSubMenu(submenuProps, onDefaultRenderSubMenu)),
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Utilities__WEBPACK_IMPORTED_MODULE_36__.FocusRects, null))); }));
+    }
+    else {
+        return null;
+    }
+    //#endregion
+}), function (prevProps, newProps) {
+    if (!newProps.shouldUpdateWhenHidden && prevProps.hidden && newProps.hidden) {
+        // Do not update when hidden.
+        return true;
+    }
+    return (0,_Utilities__WEBPACK_IMPORTED_MODULE_11__.shallowCompare)(prevProps, newProps);
+});
+ContextualMenuBase.displayName = 'ContextualMenuBase';
+/**
+ * Returns true if the key for the event is alt (Mac option) or meta (Mac command).
+ */
+function isAltOrMeta(ev) {
+    // eslint-disable-next-line deprecation/deprecation
+    return ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_15__.KeyCodes.alt || ev.key === 'Meta';
+}
+function onItemMouseDown(item, ev) {
+    var _a;
+    (_a = item.onMouseDown) === null || _a === void 0 ? void 0 : _a.call(item, item, ev);
+}
+function onDefaultRenderSubMenu(subMenuProps, defaultRender) {
+    throw Error('ContextualMenuBase: onRenderSubMenu callback is null or undefined. ' +
+        'Please ensure to set `onRenderSubMenu` property either manually or with `styled` helper.');
+}
+/**
+ * Returns the item that matches a given key if any.
+ * @param key - The key of the item to match
+ * @param items - The items to look for the key
+ */
+function findItemByKeyFromItems(key, items) {
+    for (var _i = 0, items_3 = items; _i < items_3.length; _i++) {
+        var item = items_3[_i];
+        if (item.itemType === _ContextualMenu_types__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItemType.Section && item.sectionProps) {
+            var match = findItemByKeyFromItems(key, item.sectionProps.items);
+            if (match) {
+                return match;
+            }
+        }
+        else if (item.key && item.key === key) {
+            return item;
+        }
+    }
+}
+function getOnClickWithOverrideTarget(onClick, target) {
+    return onClick
+        ? function (ev, item) {
+            overrideTarget(ev, target);
+            return onClick(ev, item);
+        }
+        : onClick;
+}
+function overrideTarget(ev, target) {
+    if (ev && target) {
+        ev.persist();
+        if (target instanceof Event) {
+            ev.target = target.target;
+        }
+        else if (target instanceof Element) {
+            ev.target = target;
+        }
+    }
+}
+//# sourceMappingURL=ContextualMenu.base.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.classNames.js":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.classNames.js ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getItemClassNames: () => (/* binding */ getItemClassNames),
+/* harmony export */   getItemStyles: () => (/* binding */ getItemStyles),
+/* harmony export */   getSplitButtonVerticalDividerClassNames: () => (/* binding */ getSplitButtonVerticalDividerClassNames)
+/* harmony export */ });
+/* harmony import */ var _Divider_VerticalDivider_classNames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Divider/VerticalDivider.classNames */ "./node_modules/@fluentui/react/lib/components/Divider/VerticalDivider.classNames.js");
+/* harmony import */ var _ContextualMenu_cnstyles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ContextualMenu.cnstyles */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.cnstyles.js");
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/setFocusVisibility.js");
+
+
+
+
+var CONTEXTUAL_SPLIT_MENU_MINWIDTH = '28px';
+var MediumScreenSelector = (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getScreenSelector)(0, _Styling__WEBPACK_IMPORTED_MODULE_0__.ScreenWidthMaxMedium);
+var getSplitButtonVerticalDividerClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_1__.memoizeFunction)(
+/* eslint-disable deprecation/deprecation */
+function (theme) {
+    var _a;
+    return (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.mergeStyleSets)((0,_Divider_VerticalDivider_classNames__WEBPACK_IMPORTED_MODULE_2__.getDividerClassNames)(theme), {
+        /* eslint-enable deprecation/deprecation */
+        wrapper: {
+            position: 'absolute',
+            right: 28,
+            selectors: (_a = {},
+                _a[MediumScreenSelector] = {
+                    right: 32, // fontSize of the icon increased from 12px to 16px
+                },
+                _a),
+        },
+        divider: {
+            height: 16,
+            width: 1,
+        },
+    });
+});
+var GlobalClassNames = {
+    item: 'ms-ContextualMenu-item',
+    divider: 'ms-ContextualMenu-divider',
+    root: 'ms-ContextualMenu-link',
+    isChecked: 'is-checked',
+    isExpanded: 'is-expanded',
+    isDisabled: 'is-disabled',
+    linkContent: 'ms-ContextualMenu-linkContent',
+    linkContentMenu: 'ms-ContextualMenu-linkContent',
+    icon: 'ms-ContextualMenu-icon',
+    iconColor: 'ms-ContextualMenu-iconColor',
+    checkmarkIcon: 'ms-ContextualMenu-checkmarkIcon',
+    subMenuIcon: 'ms-ContextualMenu-submenuIcon',
+    label: 'ms-ContextualMenu-itemText',
+    secondaryText: 'ms-ContextualMenu-secondaryText',
+    splitMenu: 'ms-ContextualMenu-splitMenu',
+    screenReaderText: 'ms-ContextualMenu-screenReaderText',
+};
+/**
+ * @deprecated Will be removed in \>= 7.0.
+ * This is a package-internal method that has been depended on.
+ * It is being kept in this form for backwards compatibility.
+ * @internal
+ */
+// TODO: Audit perf. impact of and potentially remove memoizeFunction.
+// https://github.com/microsoft/fluentui/issues/5534
+var getItemClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_1__.memoizeFunction)(function (theme, disabled, expanded, checked, isAnchorLink, knownIcon, itemClassName, dividerClassName, iconClassName, subMenuClassName, primaryDisabled, className) {
+    var _a, _b, _c, _d;
+    var styles = (0,_ContextualMenu_cnstyles__WEBPACK_IMPORTED_MODULE_3__.getMenuItemStyles)(theme);
+    var classNames = (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getGlobalClassNames)(GlobalClassNames, theme);
+    return (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.mergeStyleSets)({
+        item: [classNames.item, styles.item, itemClassName],
+        divider: [classNames.divider, styles.divider, dividerClassName],
+        root: [
+            classNames.root,
+            styles.root,
+            checked && [classNames.isChecked, styles.rootChecked],
+            isAnchorLink && styles.anchorLink,
+            expanded && [classNames.isExpanded, styles.rootExpanded],
+            disabled && [classNames.isDisabled, styles.rootDisabled],
+            !disabled &&
+                !expanded && [
+                {
+                    selectors: (_a = {
+                            ':hover': styles.rootHovered,
+                            ':active': styles.rootPressed
+                        },
+                        _a[".".concat(_Utilities__WEBPACK_IMPORTED_MODULE_4__.IsFocusVisibleClassName, " &:focus, .").concat(_Utilities__WEBPACK_IMPORTED_MODULE_4__.IsFocusVisibleClassName, " &:focus:hover")] = styles.rootFocused,
+                        _a[".".concat(_Utilities__WEBPACK_IMPORTED_MODULE_4__.IsFocusVisibleClassName, " &:hover")] = { background: 'inherit;' },
+                        _a),
+                },
+            ],
+            className,
+        ],
+        splitPrimary: [
+            styles.root,
+            {
+                width: "calc(100% - ".concat(CONTEXTUAL_SPLIT_MENU_MINWIDTH, ")"),
+            },
+            checked && ['is-checked', styles.rootChecked],
+            (disabled || primaryDisabled) && ['is-disabled', styles.rootDisabled],
+            !(disabled || primaryDisabled) &&
+                !checked && [
+                {
+                    selectors: (_b = {
+                            ':hover': styles.rootHovered
+                        },
+                        // when hovering over the splitPrimary also affect the splitMenu
+                        _b[":hover ~ .".concat(classNames.splitMenu)] = styles.rootHovered,
+                        _b[':active'] = styles.rootPressed,
+                        _b[".".concat(_Utilities__WEBPACK_IMPORTED_MODULE_4__.IsFocusVisibleClassName, " &:focus, .").concat(_Utilities__WEBPACK_IMPORTED_MODULE_4__.IsFocusVisibleClassName, " &:focus:hover")] = styles.rootFocused,
+                        _b[".".concat(_Utilities__WEBPACK_IMPORTED_MODULE_4__.IsFocusVisibleClassName, " &:hover")] = { background: 'inherit;' },
+                        _b),
+                },
+            ],
+        ],
+        splitMenu: [
+            classNames.splitMenu,
+            styles.root,
+            {
+                flexBasis: '0',
+                padding: '0 8px',
+                minWidth: CONTEXTUAL_SPLIT_MENU_MINWIDTH,
+            },
+            expanded && ['is-expanded', styles.rootExpanded],
+            disabled && ['is-disabled', styles.rootDisabled],
+            !disabled &&
+                !expanded && [
+                {
+                    selectors: (_c = {
+                            ':hover': styles.rootHovered,
+                            ':active': styles.rootPressed
+                        },
+                        _c[".".concat(_Utilities__WEBPACK_IMPORTED_MODULE_4__.IsFocusVisibleClassName, " &:focus, .").concat(_Utilities__WEBPACK_IMPORTED_MODULE_4__.IsFocusVisibleClassName, " &:focus:hover")] = styles.rootFocused,
+                        _c[".".concat(_Utilities__WEBPACK_IMPORTED_MODULE_4__.IsFocusVisibleClassName, " &:hover")] = { background: 'inherit;' },
+                        _c),
+                },
+            ],
+        ],
+        anchorLink: styles.anchorLink,
+        linkContent: [classNames.linkContent, styles.linkContent],
+        linkContentMenu: [
+            classNames.linkContentMenu,
+            styles.linkContent,
+            {
+                justifyContent: 'center',
+            },
+        ],
+        icon: [
+            classNames.icon,
+            knownIcon && styles.iconColor,
+            styles.icon,
+            iconClassName,
+            disabled && [classNames.isDisabled, styles.iconDisabled],
+        ],
+        iconColor: styles.iconColor,
+        checkmarkIcon: [classNames.checkmarkIcon, knownIcon && styles.checkmarkIcon, styles.icon, iconClassName],
+        subMenuIcon: [
+            classNames.subMenuIcon,
+            styles.subMenuIcon,
+            subMenuClassName,
+            expanded && { color: theme.palette.neutralPrimary },
+            disabled && [styles.iconDisabled],
+        ],
+        label: [classNames.label, styles.label],
+        secondaryText: [classNames.secondaryText, styles.secondaryText],
+        splitContainer: [
+            styles.splitButtonFlexContainer,
+            !disabled &&
+                !checked && [
+                {
+                    selectors: (_d = {},
+                        _d[".".concat(_Utilities__WEBPACK_IMPORTED_MODULE_4__.IsFocusVisibleClassName, " &:focus, .").concat(_Utilities__WEBPACK_IMPORTED_MODULE_4__.IsFocusVisibleClassName, " &:focus:hover")] = styles.rootFocused,
+                        _d),
+                },
+            ],
+        ],
+        screenReaderText: [
+            classNames.screenReaderText,
+            styles.screenReaderText,
+            _Styling__WEBPACK_IMPORTED_MODULE_0__.hiddenContentStyle,
+            { visibility: 'hidden' },
+        ],
+    });
+});
+/**
+ * Wrapper function for generating ContextualMenuItem classNames which adheres to
+ * the getStyles API, but invokes memoized className generator function with
+ * primitive values.
+ *
+ * @param props - the ContextualMenuItem style props used to generate its styles.
+ */
+var getItemStyles = function (props) {
+    var theme = props.theme, disabled = props.disabled, expanded = props.expanded, checked = props.checked, isAnchorLink = props.isAnchorLink, knownIcon = props.knownIcon, itemClassName = props.itemClassName, dividerClassName = props.dividerClassName, iconClassName = props.iconClassName, subMenuClassName = props.subMenuClassName, primaryDisabled = props.primaryDisabled, className = props.className;
+    // eslint-disable-next-line deprecation/deprecation
+    return getItemClassNames(theme, disabled, expanded, checked, isAnchorLink, knownIcon, itemClassName, dividerClassName, iconClassName, subMenuClassName, primaryDisabled, className);
+};
+//# sourceMappingURL=ContextualMenu.classNames.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.cnstyles.js":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.cnstyles.js ***!
+  \***********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CONTEXTUAL_MENU_ITEM_HEIGHT: () => (/* binding */ CONTEXTUAL_MENU_ITEM_HEIGHT),
+/* harmony export */   getMenuItemStyles: () => (/* binding */ getMenuItemStyles)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+
+
+
+var CONTEXTUAL_MENU_ITEM_HEIGHT = 36;
+var MediumScreenSelector = (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getScreenSelector)(0, _Styling__WEBPACK_IMPORTED_MODULE_0__.ScreenWidthMaxMedium);
+var getMenuItemStyles = (0,_Utilities__WEBPACK_IMPORTED_MODULE_1__.memoizeFunction)(function (theme) {
+    var _a, _b, _c, _d, _e;
+    var semanticColors = theme.semanticColors, fonts = theme.fonts, palette = theme.palette;
+    var ContextualMenuItemBackgroundHoverColor = semanticColors.menuItemBackgroundHovered;
+    var ContextualMenuItemTextHoverColor = semanticColors.menuItemTextHovered;
+    var ContextualMenuItemBackgroundSelectedColor = semanticColors.menuItemBackgroundPressed;
+    var ContextualMenuItemDividerColor = semanticColors.bodyDivider;
+    var menuItemStyles = {
+        item: [
+            fonts.medium,
+            {
+                color: semanticColors.bodyText,
+                position: 'relative',
+                boxSizing: 'border-box',
+            },
+        ],
+        divider: {
+            display: 'block',
+            height: '1px',
+            backgroundColor: ContextualMenuItemDividerColor,
+            position: 'relative',
+        },
+        root: [
+            (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getFocusStyle)(theme),
+            fonts.medium,
+            {
+                color: semanticColors.bodyText,
+                backgroundColor: 'transparent',
+                border: 'none',
+                width: '100%',
+                height: CONTEXTUAL_MENU_ITEM_HEIGHT,
+                lineHeight: CONTEXTUAL_MENU_ITEM_HEIGHT,
+                display: 'block',
+                cursor: 'pointer',
+                padding: '0px 8px 0 4px',
+                textAlign: 'left',
+            },
+        ],
+        rootDisabled: {
+            color: semanticColors.disabledBodyText,
+            cursor: 'default',
+            pointerEvents: 'none',
+            selectors: (_a = {},
+                _a[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                    // ensure disabled text looks different than enabled
+                    color: 'GrayText',
+                    opacity: 1,
+                },
+                _a),
+        },
+        rootHovered: {
+            backgroundColor: ContextualMenuItemBackgroundHoverColor,
+            color: ContextualMenuItemTextHoverColor,
+            selectors: {
+                '.ms-ContextualMenu-icon': {
+                    color: palette.themeDarkAlt,
+                },
+                '.ms-ContextualMenu-submenuIcon': {
+                    color: palette.neutralPrimary,
+                },
+            },
+        },
+        rootFocused: {
+            backgroundColor: palette.white,
+        },
+        rootChecked: {
+            selectors: {
+                '.ms-ContextualMenu-checkmarkIcon': {
+                    color: palette.neutralPrimary,
+                },
+            },
+        },
+        rootPressed: {
+            backgroundColor: ContextualMenuItemBackgroundSelectedColor,
+            selectors: {
+                '.ms-ContextualMenu-icon': {
+                    color: palette.themeDark,
+                },
+                '.ms-ContextualMenu-submenuIcon': {
+                    color: palette.neutralPrimary,
+                },
+            },
+        },
+        rootExpanded: {
+            backgroundColor: ContextualMenuItemBackgroundSelectedColor,
+            color: semanticColors.bodyTextChecked,
+            selectors: (_b = {
+                    '.ms-ContextualMenu-submenuIcon': (_c = {},
+                        _c[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                            // icons inside of anchor tags are not properly inheriting color in high contrast
+                            color: 'inherit',
+                        },
+                        _c)
+                },
+                _b[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({}, (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getHighContrastNoAdjustStyle)()),
+                _b),
+        },
+        linkContent: {
+            whiteSpace: 'nowrap',
+            height: 'inherit',
+            display: 'flex',
+            alignItems: 'center',
+            maxWidth: '100%',
+        },
+        anchorLink: {
+            padding: '0px 8px 0 4px',
+            textRendering: 'auto',
+            color: 'inherit',
+            letterSpacing: 'normal',
+            wordSpacing: 'normal',
+            textTransform: 'none',
+            textIndent: '0px',
+            textShadow: 'none',
+            textDecoration: 'none',
+            boxSizing: 'border-box',
+        },
+        label: {
+            margin: '0 4px',
+            verticalAlign: 'middle',
+            display: 'inline-block',
+            flexGrow: '1',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+        },
+        secondaryText: {
+            color: theme.palette.neutralSecondary,
+            paddingLeft: '20px',
+            textAlign: 'right',
+        },
+        icon: {
+            display: 'inline-block',
+            minHeight: '1px',
+            maxHeight: CONTEXTUAL_MENU_ITEM_HEIGHT,
+            fontSize: _Styling__WEBPACK_IMPORTED_MODULE_0__.IconFontSizes.medium,
+            width: _Styling__WEBPACK_IMPORTED_MODULE_0__.IconFontSizes.medium,
+            margin: '0 4px',
+            verticalAlign: 'middle',
+            flexShrink: '0',
+            selectors: (_d = {},
+                _d[MediumScreenSelector] = {
+                    fontSize: _Styling__WEBPACK_IMPORTED_MODULE_0__.IconFontSizes.large,
+                    width: _Styling__WEBPACK_IMPORTED_MODULE_0__.IconFontSizes.large,
+                },
+                _d),
+        },
+        iconColor: {
+            color: semanticColors.menuIcon,
+        },
+        iconDisabled: {
+            color: semanticColors.disabledBodyText,
+        },
+        checkmarkIcon: {
+            color: semanticColors.bodySubtext,
+        },
+        subMenuIcon: {
+            height: CONTEXTUAL_MENU_ITEM_HEIGHT,
+            lineHeight: CONTEXTUAL_MENU_ITEM_HEIGHT,
+            color: palette.neutralSecondary,
+            textAlign: 'center',
+            display: 'inline-block',
+            verticalAlign: 'middle',
+            flexShrink: '0',
+            fontSize: _Styling__WEBPACK_IMPORTED_MODULE_0__.IconFontSizes.small,
+            selectors: (_e = {
+                    ':hover': {
+                        color: palette.neutralPrimary,
+                    },
+                    ':active': {
+                        color: palette.neutralPrimary,
+                    }
+                },
+                _e[MediumScreenSelector] = {
+                    fontSize: _Styling__WEBPACK_IMPORTED_MODULE_0__.IconFontSizes.medium, // 16px
+                },
+                _e),
+        },
+        splitButtonFlexContainer: [
+            (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getFocusStyle)(theme),
+            {
+                display: 'flex',
+                height: CONTEXTUAL_MENU_ITEM_HEIGHT,
+                flexWrap: 'nowrap',
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+            },
+        ],
+    };
+    return (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.concatStyleSets)(menuItemStyles);
+});
+//# sourceMappingURL=ContextualMenu.cnstyles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ContextualMenu: () => (/* binding */ ContextualMenu)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/styled.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/renderFunction/composeRenderFunction.js");
+/* harmony import */ var _ContextualMenu_base__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ContextualMenu.base */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.base.js");
+/* harmony import */ var _ContextualMenu_styles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ContextualMenu.styles */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.styles.js");
+
+
+
+
+
+function onRenderSubMenu(subMenuProps) {
+    return react__WEBPACK_IMPORTED_MODULE_0__.createElement(LocalContextualMenu, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, subMenuProps));
+}
+// This is to prevent cyclic import with ContextualMenu.base.tsx.
+var LocalContextualMenu = (0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.styled)(_ContextualMenu_base__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuBase, _ContextualMenu_styles__WEBPACK_IMPORTED_MODULE_4__.getStyles, function (props) { return ({
+    onRenderSubMenu: props.onRenderSubMenu
+        ? (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.composeRenderFunction)(props.onRenderSubMenu, onRenderSubMenu)
+        : onRenderSubMenu,
+}); }, { scope: 'ContextualMenu' });
+/**
+ * ContextualMenu description
+ */
+var ContextualMenu = LocalContextualMenu;
+ContextualMenu.displayName = 'ContextualMenu';
+//# sourceMappingURL=ContextualMenu.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.styles.js":
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.styles.js ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getStyles: () => (/* binding */ getStyles)
+/* harmony export */ });
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+/* harmony import */ var _ContextualMenu_cnstyles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContextualMenu.cnstyles */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.cnstyles.js");
+
+
+var GlobalClassNames = {
+    root: 'ms-ContextualMenu',
+    container: 'ms-ContextualMenu-container',
+    list: 'ms-ContextualMenu-list',
+    header: 'ms-ContextualMenu-header',
+    title: 'ms-ContextualMenu-title',
+    isopen: 'is-open',
+};
+var getStyles = function (props) {
+    var className = props.className, theme = props.theme;
+    var classNames = (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getGlobalClassNames)(GlobalClassNames, theme);
+    var fonts = theme.fonts, semanticColors = theme.semanticColors, effects = theme.effects;
+    return {
+        root: [
+            theme.fonts.medium,
+            classNames.root,
+            classNames.isopen,
+            {
+                backgroundColor: semanticColors.menuBackground,
+                minWidth: '180px',
+            },
+            className,
+        ],
+        container: [
+            classNames.container,
+            {
+                selectors: {
+                    ':focus': { outline: 0 },
+                },
+            },
+        ],
+        list: [
+            classNames.list,
+            classNames.isopen,
+            {
+                listStyleType: 'none',
+                margin: '0',
+                padding: '0',
+            },
+        ],
+        header: [
+            classNames.header,
+            fonts.small,
+            {
+                fontWeight: _Styling__WEBPACK_IMPORTED_MODULE_0__.FontWeights.semibold,
+                color: semanticColors.menuHeader,
+                background: 'none',
+                backgroundColor: 'transparent',
+                border: 'none',
+                height: _ContextualMenu_cnstyles__WEBPACK_IMPORTED_MODULE_1__.CONTEXTUAL_MENU_ITEM_HEIGHT,
+                lineHeight: _ContextualMenu_cnstyles__WEBPACK_IMPORTED_MODULE_1__.CONTEXTUAL_MENU_ITEM_HEIGHT,
+                cursor: 'default',
+                padding: '0px 6px',
+                userSelect: 'none',
+                textAlign: 'left',
+            },
+        ],
+        title: [
+            classNames.title,
+            {
+                fontSize: fonts.mediumPlus.fontSize,
+                paddingRight: '14px',
+                paddingLeft: '14px',
+                paddingBottom: '5px',
+                paddingTop: '5px',
+                backgroundColor: semanticColors.menuItemBackgroundPressed,
+            },
+        ],
+        subComponentStyles: {
+            callout: {
+                root: {
+                    boxShadow: effects.elevation8,
+                },
+            },
+            menuItem: {},
+        },
+    };
+};
+//# sourceMappingURL=ContextualMenu.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.types.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.types.js ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ContextualMenuItemType: () => (/* binding */ ContextualMenuItemType),
+/* harmony export */   DirectionalHint: () => (/* reexport safe */ _common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint)
+/* harmony export */ });
+/* harmony import */ var _common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common/DirectionalHint */ "./node_modules/@fluentui/react/lib/common/DirectionalHint.js");
+
+/**
+ * {@docCategory ContextualMenu}
+ */
+var ContextualMenuItemType;
+(function (ContextualMenuItemType) {
+    ContextualMenuItemType[ContextualMenuItemType["Normal"] = 0] = "Normal";
+    ContextualMenuItemType[ContextualMenuItemType["Divider"] = 1] = "Divider";
+    ContextualMenuItemType[ContextualMenuItemType["Header"] = 2] = "Header";
+    ContextualMenuItemType[ContextualMenuItemType["Section"] = 3] = "Section";
+})(ContextualMenuItemType || (ContextualMenuItemType = {}));
+//# sourceMappingURL=ContextualMenu.types.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItem.base.js":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItem.base.js ***!
+  \***********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ContextualMenuItemBase: () => (/* binding */ ContextualMenuItemBase)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/contextualMenu/index */ "./node_modules/@fluentui/react/lib/utilities/contextualMenu/contextualMenuUtility.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/rtl.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/initializeComponentRef.js");
+/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Icon */ "./node_modules/@fluentui/react/lib/components/Icon/Icon.js");
+
+
+
+
+
+var defaultIconRenderer = function (props) {
+    var item = props.item, classNames = props.classNames;
+    var iconProps = item.iconProps;
+    return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Icon__WEBPACK_IMPORTED_MODULE_1__.Icon, (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({}, iconProps, { className: classNames.icon }));
+};
+var renderItemIcon = function (props) {
+    var item = props.item, hasIcons = props.hasIcons;
+    if (!hasIcons) {
+        return null;
+    }
+    if (item.onRenderIcon) {
+        return item.onRenderIcon(props, defaultIconRenderer);
+    }
+    return defaultIconRenderer(props);
+};
+var renderCheckMarkIcon = function (_a) {
+    var onCheckmarkClick = _a.onCheckmarkClick, item = _a.item, classNames = _a.classNames;
+    var isItemChecked = (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_3__.getIsChecked)(item);
+    if (onCheckmarkClick) {
+        // Ensures that the item is passed as the first argument to the checkmark click callback.
+        var onClick = function (e) { return onCheckmarkClick(item, e); };
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Icon__WEBPACK_IMPORTED_MODULE_1__.Icon, { iconName: item.canCheck !== false && isItemChecked ? 'CheckMark' : '', className: classNames.checkmarkIcon, 
+            // eslint-disable-next-line react/jsx-no-bind
+            onClick: onClick }));
+    }
+    return null;
+};
+var renderItemName = function (_a) {
+    var item = _a.item, classNames = _a.classNames;
+    /* eslint-disable deprecation/deprecation */
+    if (item.text || item.name) {
+        return react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { className: classNames.label }, item.text || item.name);
+    }
+    /* eslint-enable deprecation/deprecation */
+    return null;
+};
+var renderSecondaryText = function (_a) {
+    var item = _a.item, classNames = _a.classNames;
+    if (item.secondaryText) {
+        return react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { className: classNames.secondaryText }, item.secondaryText);
+    }
+    return null;
+};
+var renderSubMenuIcon = function (_a) {
+    var item = _a.item, classNames = _a.classNames, theme = _a.theme;
+    if ((0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_3__.hasSubmenu)(item)) {
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Icon__WEBPACK_IMPORTED_MODULE_1__.Icon, (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({ iconName: (0,_Utilities__WEBPACK_IMPORTED_MODULE_4__.getRTL)(theme) ? 'ChevronLeft' : 'ChevronRight' }, item.submenuIconProps, { className: classNames.subMenuIcon })));
+    }
+    return null;
+};
+var ContextualMenuItemBase = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__extends)(ContextualMenuItemBase, _super);
+    function ContextualMenuItemBase(props) {
+        var _this = _super.call(this, props) || this;
+        _this.openSubMenu = function () {
+            var _a = _this.props, item = _a.item, openSubMenu = _a.openSubMenu, getSubmenuTarget = _a.getSubmenuTarget;
+            if (getSubmenuTarget) {
+                var submenuTarget = getSubmenuTarget();
+                if ((0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_3__.hasSubmenu)(item) && openSubMenu && submenuTarget) {
+                    openSubMenu(item, submenuTarget);
+                }
+            }
+        };
+        _this.dismissSubMenu = function () {
+            var _a = _this.props, item = _a.item, dismissSubMenu = _a.dismissSubMenu;
+            if ((0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_3__.hasSubmenu)(item) && dismissSubMenu) {
+                dismissSubMenu();
+            }
+        };
+        _this.dismissMenu = function (dismissAll) {
+            var dismissMenu = _this.props.dismissMenu;
+            if (dismissMenu) {
+                dismissMenu(undefined /* ev */, dismissAll);
+            }
+        };
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.initializeComponentRef)(_this);
+        return _this;
+    }
+    ContextualMenuItemBase.prototype.render = function () {
+        var _a = this.props, item = _a.item, classNames = _a.classNames;
+        var renderContent = item.onRenderContent || this._renderLayout;
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: item.split ? classNames.linkContentMenu : classNames.linkContent }, renderContent(this.props, {
+            renderCheckMarkIcon: renderCheckMarkIcon,
+            renderItemIcon: renderItemIcon,
+            renderItemName: renderItemName,
+            renderSecondaryText: renderSecondaryText,
+            renderSubMenuIcon: renderSubMenuIcon,
+        })));
+    };
+    ContextualMenuItemBase.prototype._renderLayout = function (props, defaultRenders) {
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,
+            defaultRenders.renderCheckMarkIcon(props),
+            defaultRenders.renderItemIcon(props),
+            defaultRenders.renderItemName(props),
+            defaultRenders.renderSecondaryText(props),
+            defaultRenders.renderSubMenuIcon(props)));
+    };
+    return ContextualMenuItemBase;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+//# sourceMappingURL=ContextualMenuItem.base.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItem.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItem.js ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ContextualMenuItem: () => (/* binding */ ContextualMenuItem)
+/* harmony export */ });
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/styled.js");
+/* harmony import */ var _ContextualMenuItem_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContextualMenuItem.base */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItem.base.js");
+/* harmony import */ var _ContextualMenu_classNames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ContextualMenu.classNames */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.classNames.js");
+
+
+
+/**
+ * ContextualMenuItem description
+ */
+var ContextualMenuItem = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.styled)(_ContextualMenuItem_base__WEBPACK_IMPORTED_MODULE_1__.ContextualMenuItemBase, _ContextualMenu_classNames__WEBPACK_IMPORTED_MODULE_2__.getItemStyles, undefined, { scope: 'ContextualMenuItem' });
+//# sourceMappingURL=ContextualMenuItem.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItemWrapper/ContextualMenuAnchor.js":
+/*!**********************************************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItemWrapper/ContextualMenuAnchor.js ***!
+  \**********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ContextualMenuAnchor: () => (/* binding */ ContextualMenuAnchor)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/componentAs/composeComponentAs.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/properties.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/getId.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/aria.js");
+/* harmony import */ var _ContextualMenuItemWrapper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ContextualMenuItemWrapper */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItemWrapper/ContextualMenuItemWrapper.js");
+/* harmony import */ var _KeytipData__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../KeytipData */ "./node_modules/@fluentui/react/lib/components/KeytipData/KeytipData.js");
+/* harmony import */ var _utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../utilities/contextualMenu/index */ "./node_modules/@fluentui/react/lib/utilities/contextualMenu/contextualMenuUtility.js");
+/* harmony import */ var _ContextualMenuItem__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ContextualMenuItem */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItem.js");
+
+
+
+
+
+
+
+var ContextualMenuAnchor = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(ContextualMenuAnchor, _super);
+    function ContextualMenuAnchor() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this._anchor = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
+        _this._getMemoizedMenuButtonKeytipProps = (0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.memoizeFunction)(function (keytipProps) {
+            return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, keytipProps), { hasMenu: true });
+        });
+        _this._getSubmenuTarget = function () {
+            return _this._anchor.current ? _this._anchor.current : undefined;
+        };
+        _this._onItemClick = function (ev) {
+            var _a = _this.props, item = _a.item, onItemClick = _a.onItemClick;
+            if (onItemClick) {
+                onItemClick(item, ev);
+            }
+        };
+        _this._renderAriaDescription = function (ariaDescription, className) {
+            // If ariaDescription is given, descriptionId will be assigned to ariaDescriptionSpan
+            return ariaDescription ? (react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { id: _this._ariaDescriptionId, className: className }, ariaDescription)) : null;
+        };
+        return _this;
+    }
+    ContextualMenuAnchor.prototype.render = function () {
+        var _this = this;
+        var _a = this.props, item = _a.item, classNames = _a.classNames, index = _a.index, focusableElementIndex = _a.focusableElementIndex, totalItemCount = _a.totalItemCount, hasCheckmarks = _a.hasCheckmarks, hasIcons = _a.hasIcons, expandedMenuItemKey = _a.expandedMenuItemKey, onItemClick = _a.onItemClick, openSubMenu = _a.openSubMenu, dismissSubMenu = _a.dismissSubMenu, dismissMenu = _a.dismissMenu;
+        var ChildrenRenderer = _ContextualMenuItem__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItem;
+        if (this.props.item.contextualMenuItemAs) {
+            ChildrenRenderer = (0,_Utilities__WEBPACK_IMPORTED_MODULE_4__.composeComponentAs)(this.props.item.contextualMenuItemAs, ChildrenRenderer);
+        }
+        if (this.props.contextualMenuItemAs) {
+            ChildrenRenderer = (0,_Utilities__WEBPACK_IMPORTED_MODULE_4__.composeComponentAs)(this.props.contextualMenuItemAs, ChildrenRenderer);
+        }
+        var anchorRel = item.rel;
+        if (item.target && item.target.toLowerCase() === '_blank') {
+            anchorRel = anchorRel ? anchorRel : 'nofollow noopener noreferrer'; // Safe default to prevent tabjacking
+        }
+        var itemHasSubmenu = (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_5__.hasSubmenu)(item);
+        var nativeProps = (0,_Utilities__WEBPACK_IMPORTED_MODULE_6__.getNativeProps)(item, _Utilities__WEBPACK_IMPORTED_MODULE_6__.anchorProperties);
+        var disabled = (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_5__.isItemDisabled)(item);
+        var itemProps = item.itemProps, ariaDescription = item.ariaDescription;
+        var keytipProps = item.keytipProps;
+        if (keytipProps && itemHasSubmenu) {
+            keytipProps = this._getMemoizedMenuButtonKeytipProps(keytipProps);
+        }
+        // Check for ariaDescription to set the _ariaDescriptionId and render a hidden span with
+        // the description in it to be added to ariaDescribedBy
+        if (ariaDescription) {
+            this._ariaDescriptionId = (0,_Utilities__WEBPACK_IMPORTED_MODULE_7__.getId)();
+        }
+        var ariaDescribedByIds = (0,_Utilities__WEBPACK_IMPORTED_MODULE_8__.mergeAriaAttributeValues)(item.ariaDescribedBy, ariaDescription ? this._ariaDescriptionId : undefined, nativeProps['aria-describedby']);
+        var additionalItemProperties = {
+            'aria-describedby': ariaDescribedByIds,
+        };
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null,
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_KeytipData__WEBPACK_IMPORTED_MODULE_9__.KeytipData, { keytipProps: item.keytipProps, ariaDescribedBy: ariaDescribedByIds, disabled: disabled }, function (keytipAttributes) { return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, additionalItemProperties, nativeProps, keytipAttributes, { ref: _this._anchor, href: item.href, target: item.target, rel: anchorRel, className: classNames.root, role: "menuitem", "aria-haspopup": itemHasSubmenu || undefined, "aria-expanded": itemHasSubmenu ? item.key === expandedMenuItemKey : undefined, "aria-posinset": focusableElementIndex + 1, "aria-setsize": totalItemCount, "aria-disabled": (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_5__.isItemDisabled)(item), 
+                // eslint-disable-next-line deprecation/deprecation
+                style: item.style, onClick: _this._onItemClick, onMouseEnter: _this._onItemMouseEnter, onMouseLeave: _this._onItemMouseLeave, onMouseMove: _this._onItemMouseMove, onKeyDown: itemHasSubmenu ? _this._onItemKeyDown : undefined }),
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement(ChildrenRenderer, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({ componentRef: item.componentRef, item: item, classNames: classNames, index: index, onCheckmarkClick: hasCheckmarks && onItemClick ? onItemClick : undefined, hasIcons: hasIcons, openSubMenu: openSubMenu, dismissSubMenu: dismissSubMenu, dismissMenu: dismissMenu, getSubmenuTarget: _this._getSubmenuTarget }, itemProps)),
+                _this._renderAriaDescription(ariaDescription, classNames.screenReaderText))); })));
+    };
+    return ContextualMenuAnchor;
+}(_ContextualMenuItemWrapper__WEBPACK_IMPORTED_MODULE_10__.ContextualMenuItemWrapper));
+
+//# sourceMappingURL=ContextualMenuAnchor.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItemWrapper/ContextualMenuButton.js":
+/*!**********************************************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItemWrapper/ContextualMenuButton.js ***!
+  \**********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ContextualMenuButton: () => (/* binding */ ContextualMenuButton)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/componentAs/composeComponentAs.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/properties.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/getId.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/aria.js");
+/* harmony import */ var _ContextualMenuItemWrapper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ContextualMenuItemWrapper */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItemWrapper/ContextualMenuItemWrapper.js");
+/* harmony import */ var _KeytipData__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../KeytipData */ "./node_modules/@fluentui/react/lib/components/KeytipData/KeytipData.js");
+/* harmony import */ var _utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../utilities/contextualMenu/index */ "./node_modules/@fluentui/react/lib/utilities/contextualMenu/contextualMenuUtility.js");
+/* harmony import */ var _ContextualMenuItem__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ContextualMenuItem */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItem.js");
+
+
+
+
+
+
+
+var ContextualMenuButton = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(ContextualMenuButton, _super);
+    function ContextualMenuButton() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this._btn = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
+        _this._getMemoizedMenuButtonKeytipProps = (0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.memoizeFunction)(function (keytipProps) {
+            return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, keytipProps), { hasMenu: true });
+        });
+        _this._renderAriaDescription = function (ariaDescription, className) {
+            // If ariaDescription is given, descriptionId will be assigned to ariaDescriptionSpan
+            return ariaDescription ? (react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { id: _this._ariaDescriptionId, className: className }, ariaDescription)) : null;
+        };
+        _this._getSubmenuTarget = function () {
+            return _this._btn.current ? _this._btn.current : undefined;
+        };
+        return _this;
+    }
+    ContextualMenuButton.prototype.render = function () {
+        var _this = this;
+        var _a = this.props, item = _a.item, classNames = _a.classNames, index = _a.index, focusableElementIndex = _a.focusableElementIndex, totalItemCount = _a.totalItemCount, hasCheckmarks = _a.hasCheckmarks, hasIcons = _a.hasIcons, contextualMenuItemAs = _a.contextualMenuItemAs, expandedMenuItemKey = _a.expandedMenuItemKey, onItemMouseDown = _a.onItemMouseDown, onItemClick = _a.onItemClick, openSubMenu = _a.openSubMenu, dismissSubMenu = _a.dismissSubMenu, dismissMenu = _a.dismissMenu;
+        var ChildrenRenderer = _ContextualMenuItem__WEBPACK_IMPORTED_MODULE_3__.ContextualMenuItem;
+        if (item.contextualMenuItemAs) {
+            ChildrenRenderer = (0,_Utilities__WEBPACK_IMPORTED_MODULE_4__.composeComponentAs)(item.contextualMenuItemAs, ChildrenRenderer);
+        }
+        if (contextualMenuItemAs) {
+            ChildrenRenderer = (0,_Utilities__WEBPACK_IMPORTED_MODULE_4__.composeComponentAs)(contextualMenuItemAs, ChildrenRenderer);
+        }
+        var isChecked = (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_5__.getIsChecked)(item);
+        var canCheck = isChecked !== null;
+        var defaultRole = (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_5__.getMenuItemAriaRole)(item);
+        var itemHasSubmenu = (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_5__.hasSubmenu)(item);
+        var itemProps = item.itemProps, ariaLabel = item.ariaLabel, ariaDescription = item.ariaDescription;
+        var buttonNativeProperties = (0,_Utilities__WEBPACK_IMPORTED_MODULE_6__.getNativeProps)(item, _Utilities__WEBPACK_IMPORTED_MODULE_6__.buttonProperties);
+        // Do not add the disabled attribute to the button so that it is focusable
+        delete buttonNativeProperties.disabled;
+        var itemRole = item.role || defaultRole;
+        // Check for ariaDescription to set the _ariaDescriptionId and render a hidden span with
+        // the description in it to be added to ariaDescribedBy
+        if (ariaDescription) {
+            this._ariaDescriptionId = (0,_Utilities__WEBPACK_IMPORTED_MODULE_7__.getId)();
+        }
+        var ariaDescribedByIds = (0,_Utilities__WEBPACK_IMPORTED_MODULE_8__.mergeAriaAttributeValues)(item.ariaDescribedBy, ariaDescription ? this._ariaDescriptionId : undefined, buttonNativeProperties['aria-describedby']);
+        var itemButtonProperties = {
+            className: classNames.root,
+            onClick: this._onItemClick,
+            onKeyDown: itemHasSubmenu ? this._onItemKeyDown : undefined,
+            onMouseEnter: this._onItemMouseEnter,
+            onMouseLeave: this._onItemMouseLeave,
+            onMouseDown: function (ev) {
+                return onItemMouseDown ? onItemMouseDown(item, ev) : undefined;
+            },
+            onMouseMove: this._onItemMouseMove,
+            href: item.href,
+            title: item.title,
+            'aria-label': ariaLabel,
+            'aria-describedby': ariaDescribedByIds,
+            'aria-haspopup': itemHasSubmenu || undefined,
+            'aria-expanded': itemHasSubmenu ? item.key === expandedMenuItemKey : undefined,
+            'aria-posinset': focusableElementIndex + 1,
+            'aria-setsize': totalItemCount,
+            'aria-disabled': (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_5__.isItemDisabled)(item),
+            'aria-checked': (itemRole === 'menuitemcheckbox' || itemRole === 'menuitemradio') && canCheck ? !!isChecked : undefined,
+            'aria-selected': itemRole === 'menuitem' && canCheck ? !!isChecked : undefined,
+            role: itemRole,
+            // eslint-disable-next-line deprecation/deprecation
+            style: item.style,
+        };
+        var keytipProps = item.keytipProps;
+        if (keytipProps && itemHasSubmenu) {
+            keytipProps = this._getMemoizedMenuButtonKeytipProps(keytipProps);
+        }
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_KeytipData__WEBPACK_IMPORTED_MODULE_9__.KeytipData, { keytipProps: keytipProps, ariaDescribedBy: ariaDescribedByIds, disabled: (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_5__.isItemDisabled)(item) }, function (keytipAttributes) { return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({ ref: _this._btn }, buttonNativeProperties, itemButtonProperties, keytipAttributes),
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(ChildrenRenderer, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({ componentRef: item.componentRef, item: item, classNames: classNames, index: index, onCheckmarkClick: hasCheckmarks && onItemClick ? onItemClick : undefined, hasIcons: hasIcons, openSubMenu: openSubMenu, dismissSubMenu: dismissSubMenu, dismissMenu: dismissMenu, getSubmenuTarget: _this._getSubmenuTarget }, itemProps)),
+            _this._renderAriaDescription(ariaDescription, classNames.screenReaderText))); }));
+    };
+    return ContextualMenuButton;
+}(_ContextualMenuItemWrapper__WEBPACK_IMPORTED_MODULE_10__.ContextualMenuItemWrapper));
+
+//# sourceMappingURL=ContextualMenuButton.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItemWrapper/ContextualMenuItemWrapper.js":
+/*!***************************************************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItemWrapper/ContextualMenuItemWrapper.js ***!
+  \***************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ContextualMenuItemWrapper: () => (/* binding */ ContextualMenuItemWrapper)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/initializeComponentRef.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/object.js");
+
+
+
+var ContextualMenuItemWrapper = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(ContextualMenuItemWrapper, _super);
+    function ContextualMenuItemWrapper(props) {
+        var _this = _super.call(this, props) || this;
+        _this._onItemMouseEnter = function (ev) {
+            var _a = _this.props, item = _a.item, onItemMouseEnter = _a.onItemMouseEnter;
+            if (onItemMouseEnter) {
+                onItemMouseEnter(item, ev, ev.currentTarget);
+            }
+        };
+        _this._onItemClick = function (ev) {
+            var _a = _this.props, item = _a.item, onItemClickBase = _a.onItemClickBase;
+            if (onItemClickBase) {
+                onItemClickBase(item, ev, ev.currentTarget);
+            }
+        };
+        _this._onItemMouseLeave = function (ev) {
+            var _a = _this.props, item = _a.item, onItemMouseLeave = _a.onItemMouseLeave;
+            if (onItemMouseLeave) {
+                onItemMouseLeave(item, ev);
+            }
+        };
+        _this._onItemKeyDown = function (ev) {
+            var _a = _this.props, item = _a.item, onItemKeyDown = _a.onItemKeyDown;
+            if (onItemKeyDown) {
+                onItemKeyDown(item, ev);
+            }
+        };
+        _this._onItemMouseMove = function (ev) {
+            var _a = _this.props, item = _a.item, onItemMouseMove = _a.onItemMouseMove;
+            if (onItemMouseMove) {
+                onItemMouseMove(item, ev, ev.currentTarget);
+            }
+        };
+        _this._getSubmenuTarget = function () {
+            return undefined;
+        };
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.initializeComponentRef)(_this);
+        return _this;
+    }
+    ContextualMenuItemWrapper.prototype.shouldComponentUpdate = function (newProps) {
+        return !(0,_Utilities__WEBPACK_IMPORTED_MODULE_3__.shallowCompare)(newProps, this.props);
+    };
+    return ContextualMenuItemWrapper;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+//# sourceMappingURL=ContextualMenuItemWrapper.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItemWrapper/ContextualMenuSplitButton.js":
+/*!***************************************************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItemWrapper/ContextualMenuSplitButton.js ***!
+  \***************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ContextualMenuSplitButton: () => (/* binding */ ContextualMenuSplitButton)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/KeyCodes.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/Async.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/EventGroup.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/getId.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/aria.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/properties.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../Utilities */ "./node_modules/@fluentui/utilities/lib/componentAs/composeComponentAs.js");
+/* harmony import */ var _ContextualMenuItem__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../ContextualMenuItem */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItem.js");
+/* harmony import */ var _ContextualMenu_classNames__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../ContextualMenu.classNames */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenu.classNames.js");
+/* harmony import */ var _KeytipData__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../KeytipData */ "./node_modules/@fluentui/react/lib/components/KeytipData/KeytipData.js");
+/* harmony import */ var _utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../utilities/contextualMenu/index */ "./node_modules/@fluentui/react/lib/utilities/contextualMenu/contextualMenuUtility.js");
+/* harmony import */ var _Divider__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../Divider */ "./node_modules/@fluentui/react/lib/components/Divider/VerticalDivider.js");
+/* harmony import */ var _ContextualMenuItemWrapper__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./ContextualMenuItemWrapper */ "./node_modules/@fluentui/react/lib/components/ContextualMenu/ContextualMenuItemWrapper/ContextualMenuItemWrapper.js");
+
+
+
+
+
+
+
+
+
+var TouchIdleDelay = 500; /* ms */
+var ContextualMenuSplitButton = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(ContextualMenuSplitButton, _super);
+    function ContextualMenuSplitButton(props) {
+        var _this = _super.call(this, props) || this;
+        _this._getMemoizedMenuButtonKeytipProps = (0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.memoizeFunction)(function (keytipProps) {
+            return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, keytipProps), { hasMenu: true });
+        });
+        _this._onItemKeyDown = function (ev) {
+            var _a = _this.props, item = _a.item, onItemKeyDown = _a.onItemKeyDown;
+            // eslint-disable-next-line deprecation/deprecation
+            if (ev.which === _Utilities__WEBPACK_IMPORTED_MODULE_3__.KeyCodes.enter) {
+                _this._executeItemClick(ev);
+                ev.preventDefault();
+                ev.stopPropagation();
+            }
+            else if (onItemKeyDown) {
+                onItemKeyDown(item, ev);
+            }
+        };
+        _this._getSubmenuTarget = function () {
+            return _this._splitButton;
+        };
+        _this._renderAriaDescription = function (ariaDescription, className) {
+            // If ariaDescription is given, descriptionId will be assigned to ariaDescriptionSpan
+            return ariaDescription ? (react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { id: _this._ariaDescriptionId, className: className }, ariaDescription)) : null;
+        };
+        _this._onItemMouseEnterPrimary = function (ev) {
+            var _a = _this.props, item = _a.item, onItemMouseEnter = _a.onItemMouseEnter;
+            if (onItemMouseEnter) {
+                onItemMouseEnter((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, item), { subMenuProps: undefined, items: undefined }), ev, _this._splitButton);
+            }
+        };
+        _this._onItemMouseEnterIcon = function (ev) {
+            var _a = _this.props, item = _a.item, onItemMouseEnter = _a.onItemMouseEnter;
+            if (onItemMouseEnter) {
+                onItemMouseEnter(item, ev, _this._splitButton);
+            }
+        };
+        _this._onItemMouseMovePrimary = function (ev) {
+            var _a = _this.props, item = _a.item, onItemMouseMove = _a.onItemMouseMove;
+            if (onItemMouseMove) {
+                onItemMouseMove((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, item), { subMenuProps: undefined, items: undefined }), ev, _this._splitButton);
+            }
+        };
+        _this._onItemMouseMoveIcon = function (ev) {
+            var _a = _this.props, item = _a.item, onItemMouseMove = _a.onItemMouseMove;
+            if (onItemMouseMove) {
+                onItemMouseMove(item, ev, _this._splitButton);
+            }
+        };
+        _this._onIconItemClick = function (ev) {
+            var _a = _this.props, item = _a.item, onItemClickBase = _a.onItemClickBase;
+            if (onItemClickBase) {
+                onItemClickBase(item, ev, (_this._splitButton ? _this._splitButton : ev.currentTarget));
+            }
+        };
+        _this._executeItemClick = function (ev) {
+            var _a = _this.props, item = _a.item, executeItemClick = _a.executeItemClick, onItemClick = _a.onItemClick;
+            if (item.disabled || item.isDisabled) {
+                return;
+            }
+            if (_this._processingTouch && !item.canCheck && onItemClick) {
+                return onItemClick(item, ev);
+            }
+            if (executeItemClick) {
+                executeItemClick(item, ev);
+            }
+        };
+        _this._onTouchStart = function (ev) {
+            if (_this._splitButton && !('onpointerdown' in _this._splitButton)) {
+                _this._handleTouchAndPointerEvent(ev);
+            }
+        };
+        _this._onPointerDown = function (ev) {
+            if (ev.pointerType === 'touch') {
+                _this._handleTouchAndPointerEvent(ev);
+                ev.preventDefault();
+                ev.stopImmediatePropagation();
+            }
+        };
+        _this._async = new _Utilities__WEBPACK_IMPORTED_MODULE_4__.Async(_this);
+        _this._events = new _Utilities__WEBPACK_IMPORTED_MODULE_5__.EventGroup(_this);
+        _this._dismissLabelId = (0,_Utilities__WEBPACK_IMPORTED_MODULE_6__.getId)();
+        return _this;
+    }
+    ContextualMenuSplitButton.prototype.componentDidMount = function () {
+        if (this._splitButton && 'onpointerdown' in this._splitButton) {
+            this._events.on(this._splitButton, 'pointerdown', this._onPointerDown, true);
+        }
+    };
+    ContextualMenuSplitButton.prototype.componentWillUnmount = function () {
+        this._async.dispose();
+        this._events.dispose();
+    };
+    ContextualMenuSplitButton.prototype.render = function () {
+        var _this = this;
+        var _a;
+        var _b = this.props, item = _b.item, classNames = _b.classNames, index = _b.index, focusableElementIndex = _b.focusableElementIndex, totalItemCount = _b.totalItemCount, hasCheckmarks = _b.hasCheckmarks, hasIcons = _b.hasIcons, onItemMouseLeave = _b.onItemMouseLeave, expandedMenuItemKey = _b.expandedMenuItemKey;
+        var itemHasSubmenu = (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_7__.hasSubmenu)(item);
+        var keytipProps = item.keytipProps;
+        if (keytipProps) {
+            keytipProps = this._getMemoizedMenuButtonKeytipProps(keytipProps);
+        }
+        // Check for ariaDescription to set the _ariaDescriptionId and render a hidden span with
+        // the description in it to be added to ariaDescribedBy
+        var ariaDescription = item.ariaDescription;
+        if (ariaDescription) {
+            this._ariaDescriptionId = (0,_Utilities__WEBPACK_IMPORTED_MODULE_6__.getId)();
+        }
+        var ariaChecked = (_a = (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_7__.getIsChecked)(item)) !== null && _a !== void 0 ? _a : undefined;
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_KeytipData__WEBPACK_IMPORTED_MODULE_8__.KeytipData, { keytipProps: keytipProps, disabled: (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_7__.isItemDisabled)(item) }, function (keytipAttributes) { return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { "data-ktp-target": keytipAttributes['data-ktp-target'], ref: function (splitButton) { return (_this._splitButton = splitButton); }, role: (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_7__.getMenuItemAriaRole)(item), "aria-label": item.ariaLabel, className: classNames.splitContainer, "aria-disabled": (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_7__.isItemDisabled)(item), "aria-expanded": itemHasSubmenu ? item.key === expandedMenuItemKey : undefined, "aria-haspopup": true, "aria-describedby": (0,_Utilities__WEBPACK_IMPORTED_MODULE_9__.mergeAriaAttributeValues)(item.ariaDescribedBy, ariaDescription ? _this._ariaDescriptionId : undefined, keytipAttributes['aria-describedby']), "aria-checked": ariaChecked, "aria-posinset": focusableElementIndex + 1, "aria-setsize": totalItemCount, onMouseEnter: _this._onItemMouseEnterPrimary, onMouseLeave: onItemMouseLeave ? onItemMouseLeave.bind(_this, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, item), { subMenuProps: null, items: null })) : undefined, onMouseMove: _this._onItemMouseMovePrimary, onKeyDown: _this._onItemKeyDown, onClick: _this._executeItemClick, onTouchStart: _this._onTouchStart, tabIndex: 0, "data-is-focusable": true, "aria-roledescription": item['aria-roledescription'] },
+            _this._renderSplitPrimaryButton(item, classNames, index, hasCheckmarks, hasIcons),
+            _this._renderSplitDivider(item),
+            _this._renderSplitIconButton(item, classNames, index, keytipAttributes),
+            _this._renderAriaDescription(ariaDescription, classNames.screenReaderText))); }));
+    };
+    ContextualMenuSplitButton.prototype._renderSplitPrimaryButton = function (item, 
+    // eslint-disable-next-line deprecation/deprecation
+    classNames, index, hasCheckmarks, hasIcons) {
+        var _a = this.props, _b = _a.contextualMenuItemAs, ChildrenRenderer = _b === void 0 ? _ContextualMenuItem__WEBPACK_IMPORTED_MODULE_10__.ContextualMenuItem : _b, onItemClick = _a.onItemClick;
+        var itemProps = {
+            key: item.key,
+            disabled: (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_7__.isItemDisabled)(item) || item.primaryDisabled,
+            /* eslint-disable deprecation/deprecation */
+            name: item.name,
+            text: item.text || item.name,
+            secondaryText: item.secondaryText,
+            /* eslint-enable deprecation/deprecation */
+            className: classNames.splitPrimary,
+            canCheck: item.canCheck,
+            isChecked: item.isChecked,
+            checked: item.checked,
+            iconProps: item.iconProps,
+            id: this._dismissLabelId,
+            onRenderIcon: item.onRenderIcon,
+            data: item.data,
+            'data-is-focusable': false,
+        };
+        var itemComponentProps = item.itemProps;
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, (0,_Utilities__WEBPACK_IMPORTED_MODULE_11__.getNativeProps)(itemProps, _Utilities__WEBPACK_IMPORTED_MODULE_11__.buttonProperties)),
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(ChildrenRenderer, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({ "data-is-focusable": false, item: itemProps, classNames: classNames, index: index, onCheckmarkClick: hasCheckmarks && onItemClick ? onItemClick : undefined, hasIcons: hasIcons }, itemComponentProps))));
+    };
+    ContextualMenuSplitButton.prototype._renderSplitDivider = function (item) {
+        var getDividerClassNames = item.getSplitButtonVerticalDividerClassNames || _ContextualMenu_classNames__WEBPACK_IMPORTED_MODULE_12__.getSplitButtonVerticalDividerClassNames;
+        return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Divider__WEBPACK_IMPORTED_MODULE_13__.VerticalDivider, { getClassNames: getDividerClassNames });
+    };
+    ContextualMenuSplitButton.prototype._renderSplitIconButton = function (item, classNames, // eslint-disable-line deprecation/deprecation
+    index, keytipAttributes) {
+        var _a = this.props, onItemMouseLeave = _a.onItemMouseLeave, onItemMouseDown = _a.onItemMouseDown, openSubMenu = _a.openSubMenu, dismissSubMenu = _a.dismissSubMenu, dismissMenu = _a.dismissMenu;
+        var ChildrenRenderer = _ContextualMenuItem__WEBPACK_IMPORTED_MODULE_10__.ContextualMenuItem;
+        if (this.props.item.contextualMenuItemAs) {
+            ChildrenRenderer = (0,_Utilities__WEBPACK_IMPORTED_MODULE_14__.composeComponentAs)(this.props.item.contextualMenuItemAs, ChildrenRenderer);
+        }
+        if (this.props.contextualMenuItemAs) {
+            ChildrenRenderer = (0,_Utilities__WEBPACK_IMPORTED_MODULE_14__.composeComponentAs)(this.props.contextualMenuItemAs, ChildrenRenderer);
+        }
+        var itemProps = {
+            onClick: this._onIconItemClick,
+            disabled: (0,_utilities_contextualMenu_index__WEBPACK_IMPORTED_MODULE_7__.isItemDisabled)(item),
+            className: classNames.splitMenu,
+            subMenuProps: item.subMenuProps,
+            submenuIconProps: item.submenuIconProps,
+            split: true,
+            key: item.key,
+            'aria-labelledby': this._dismissLabelId,
+        };
+        var buttonProps = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, (0,_Utilities__WEBPACK_IMPORTED_MODULE_11__.getNativeProps)(itemProps, _Utilities__WEBPACK_IMPORTED_MODULE_11__.buttonProperties)), {
+            onMouseEnter: this._onItemMouseEnterIcon,
+            onMouseLeave: onItemMouseLeave ? onItemMouseLeave.bind(this, item) : undefined,
+            onMouseDown: function (ev) {
+                return onItemMouseDown ? onItemMouseDown(item, ev) : undefined;
+            },
+            onMouseMove: this._onItemMouseMoveIcon,
+            'data-is-focusable': false,
+            'data-ktp-execute-target': keytipAttributes['data-ktp-execute-target'],
+            'aria-haspopup': true,
+        });
+        var itemComponentProps = item.itemProps;
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, buttonProps),
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(ChildrenRenderer, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({ componentRef: item.componentRef, item: itemProps, classNames: classNames, index: index, hasIcons: false, openSubMenu: openSubMenu, dismissSubMenu: dismissSubMenu, dismissMenu: dismissMenu, getSubmenuTarget: this._getSubmenuTarget }, itemComponentProps))));
+    };
+    ContextualMenuSplitButton.prototype._handleTouchAndPointerEvent = function (ev) {
+        var _this = this;
+        var onTap = this.props.onTap;
+        if (onTap) {
+            onTap(ev);
+        }
+        // If we already have an existing timeout from a previous touch/pointer event
+        // cancel that timeout so we can set a new one.
+        if (this._lastTouchTimeoutId) {
+            this._async.clearTimeout(this._lastTouchTimeoutId);
+            this._lastTouchTimeoutId = undefined;
+        }
+        this._processingTouch = true;
+        this._lastTouchTimeoutId = this._async.setTimeout(function () {
+            _this._processingTouch = false;
+            _this._lastTouchTimeoutId = undefined;
+        }, TouchIdleDelay);
+    };
+    return ContextualMenuSplitButton;
+}(_ContextualMenuItemWrapper__WEBPACK_IMPORTED_MODULE_15__.ContextualMenuItemWrapper));
+
+//# sourceMappingURL=ContextualMenuSplitButton.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Dialog/Dialog.base.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Dialog/Dialog.base.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DialogBase: () => (/* binding */ DialogBase)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/classNamesFunction.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/getId.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/warn/warnDeprecations.js");
+/* harmony import */ var _DialogContent_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DialogContent.types */ "./node_modules/@fluentui/react/lib/components/Dialog/DialogContent.types.js");
+/* harmony import */ var _Modal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Modal */ "./node_modules/@fluentui/react/lib/components/Modal/Modal.js");
+/* harmony import */ var _ResponsiveMode__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../ResponsiveMode */ "./node_modules/@fluentui/react/lib/utilities/decorators/withResponsiveMode.js");
+/* harmony import */ var _DialogContent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./DialogContent */ "./node_modules/@fluentui/react/lib/components/Dialog/DialogContent.js");
+
+
+
+
+
+
+var getClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_1__.classNamesFunction)();
+
+var DefaultModalProps = {
+    isDarkOverlay: false,
+    isBlocking: false,
+    className: '',
+    containerClassName: '',
+    topOffsetFixed: false,
+    enableAriaHiddenSiblings: true,
+};
+var DefaultDialogContentProps = {
+    type: _DialogContent_types__WEBPACK_IMPORTED_MODULE_2__.DialogType.normal,
+    className: '',
+    topButtonsProps: [],
+};
+// eslint-disable-next-line deprecation/deprecation
+var DialogBase = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__extends)(DialogBase, _super);
+    function DialogBase(props) {
+        var _this = _super.call(this, props) || this;
+        _this._getSubTextId = function () {
+            // eslint-disable-next-line deprecation/deprecation
+            var _a = _this.props, ariaDescribedById = _a.ariaDescribedById, modalProps = _a.modalProps, dialogContentProps = _a.dialogContentProps, subText = _a.subText;
+            var id = (modalProps && modalProps.subtitleAriaId) || ariaDescribedById;
+            if (!id) {
+                id = ((dialogContentProps && dialogContentProps.subText) || subText) && _this._defaultSubTextId;
+            }
+            return id;
+        };
+        _this._getTitleTextId = function () {
+            // eslint-disable-next-line deprecation/deprecation
+            var _a = _this.props, ariaLabelledById = _a.ariaLabelledById, modalProps = _a.modalProps, dialogContentProps = _a.dialogContentProps, title = _a.title;
+            var id = (modalProps && modalProps.titleAriaId) || ariaLabelledById;
+            if (!id) {
+                id = ((dialogContentProps && dialogContentProps.title) || title) && _this._defaultTitleTextId;
+            }
+            return id;
+        };
+        _this._id = (0,_Utilities__WEBPACK_IMPORTED_MODULE_4__.getId)('Dialog');
+        _this._defaultTitleTextId = _this._id + '-title';
+        _this._defaultSubTextId = _this._id + '-subText';
+        if (true) {
+            (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.warnDeprecations)('Dialog', props, {
+                isOpen: 'hidden',
+                type: 'dialogContentProps.type',
+                subText: 'dialogContentProps.subText',
+                contentClassName: 'dialogContentProps.className',
+                topButtonsProps: 'dialogContentProps.topButtonsProps',
+                className: 'modalProps.className',
+                isDarkOverlay: 'modalProps.isDarkOverlay',
+                isBlocking: 'modalProps.isBlocking',
+                containerClassName: 'modalProps.containerClassName',
+                onDismissed: 'modalProps.onDismissed',
+                onLayerDidMount: 'modalProps.layerProps.onLayerDidMount',
+                ariaDescribedById: 'modalProps.subtitleAriaId',
+                ariaLabelledById: 'modalProps.titleAriaId',
+            });
+        }
+        return _this;
+    }
+    DialogBase.prototype.render = function () {
+        var _a, _b, _c;
+        var props = this.props;
+        var 
+        /* eslint-disable deprecation/deprecation */
+        className = props.className, containerClassName = props.containerClassName, contentClassName = props.contentClassName, elementToFocusOnDismiss = props.elementToFocusOnDismiss, firstFocusableSelector = props.firstFocusableSelector, forceFocusInsideTrap = props.forceFocusInsideTrap, styles = props.styles, hidden = props.hidden, _d = props.disableRestoreFocus, disableRestoreFocus = _d === void 0 ? props.ignoreExternalFocusing : _d, isBlocking = props.isBlocking, isClickableOutsideFocusTrap = props.isClickableOutsideFocusTrap, isDarkOverlay = props.isDarkOverlay, _e = props.isOpen, isOpen = _e === void 0 ? !hidden : _e, onDismiss = props.onDismiss, onDismissed = props.onDismissed, onLayerDidMount = props.onLayerDidMount, responsiveMode = props.responsiveMode, subText = props.subText, theme = props.theme, title = props.title, topButtonsProps = props.topButtonsProps, type = props.type, 
+        /* eslint-enable deprecation/deprecation */
+        minWidth = props.minWidth, maxWidth = props.maxWidth, modalProps = props.modalProps;
+        var mergedLayerProps = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)({ onLayerDidMount: onLayerDidMount }, modalProps === null || modalProps === void 0 ? void 0 : modalProps.layerProps);
+        var dialogDraggableClassName;
+        var dragOptions;
+        // If dragOptions are provided, but no drag handle is specified, we supply a drag handle,
+        // and inform dialog contents to add class to draggable class to the header
+        if ((modalProps === null || modalProps === void 0 ? void 0 : modalProps.dragOptions) && !((_a = modalProps.dragOptions) === null || _a === void 0 ? void 0 : _a.dragHandleSelector)) {
+            // spread options to avoid mutating props
+            dragOptions = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)({}, modalProps.dragOptions);
+            dialogDraggableClassName = 'ms-Dialog-draggable-header';
+            dragOptions.dragHandleSelector = ".".concat(dialogDraggableClassName);
+        }
+        var mergedModalProps = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)({}, DefaultModalProps), { elementToFocusOnDismiss: elementToFocusOnDismiss, firstFocusableSelector: firstFocusableSelector, forceFocusInsideTrap: forceFocusInsideTrap, disableRestoreFocus: disableRestoreFocus, isClickableOutsideFocusTrap: isClickableOutsideFocusTrap, responsiveMode: responsiveMode, className: className, containerClassName: containerClassName, isBlocking: isBlocking, isDarkOverlay: isDarkOverlay, onDismissed: onDismissed }), modalProps), { dragOptions: dragOptions, layerProps: mergedLayerProps, isOpen: isOpen });
+        var dialogContentProps = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)({ className: contentClassName, subText: subText, title: title, topButtonsProps: topButtonsProps, type: type }, DefaultDialogContentProps), props.dialogContentProps), { draggableHeaderClassName: dialogDraggableClassName, titleProps: (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)({ 
+                // eslint-disable-next-line deprecation/deprecation
+                id: ((_b = props.dialogContentProps) === null || _b === void 0 ? void 0 : _b.titleId) || this._defaultTitleTextId }, (_c = props.dialogContentProps) === null || _c === void 0 ? void 0 : _c.titleProps) });
+        var classNames = getClassNames(styles, {
+            theme: theme,
+            className: mergedModalProps.className,
+            containerClassName: mergedModalProps.containerClassName,
+            hidden: hidden,
+            dialogDefaultMinWidth: minWidth,
+            dialogDefaultMaxWidth: maxWidth,
+        });
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Modal__WEBPACK_IMPORTED_MODULE_6__.Modal, (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)({}, mergedModalProps, { className: classNames.root, containerClassName: classNames.main, onDismiss: onDismiss || mergedModalProps.onDismiss, subtitleAriaId: this._getSubTextId(), titleAriaId: this._getTitleTextId() }),
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_DialogContent__WEBPACK_IMPORTED_MODULE_7__.DialogContent, (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)({ subTextId: this._defaultSubTextId, showCloseButton: mergedModalProps.isBlocking, onDismiss: onDismiss }, dialogContentProps), props.children)));
+    };
+    DialogBase.defaultProps = {
+        hidden: true,
+    };
+    DialogBase = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+        _ResponsiveMode__WEBPACK_IMPORTED_MODULE_8__.withResponsiveMode
+    ], DialogBase);
+    return DialogBase;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+//# sourceMappingURL=Dialog.base.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Dialog/Dialog.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Dialog/Dialog.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Dialog: () => (/* binding */ Dialog)
+/* harmony export */ });
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/styled.js");
+/* harmony import */ var _Dialog_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dialog.base */ "./node_modules/@fluentui/react/lib/components/Dialog/Dialog.base.js");
+/* harmony import */ var _Dialog_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Dialog.styles */ "./node_modules/@fluentui/react/lib/components/Dialog/Dialog.styles.js");
+
+
+
+var Dialog = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.styled)(_Dialog_base__WEBPACK_IMPORTED_MODULE_1__.DialogBase, _Dialog_styles__WEBPACK_IMPORTED_MODULE_2__.getStyles, undefined, { scope: 'Dialog' });
+Dialog.displayName = 'Dialog';
+//# sourceMappingURL=Dialog.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Dialog/Dialog.styles.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Dialog/Dialog.styles.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getStyles: () => (/* binding */ getStyles)
+/* harmony export */ });
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+
+var GlobalClassNames = {
+    root: 'ms-Dialog',
+};
+var getStyles = function (props) {
+    var _a;
+    var className = props.className, containerClassName = props.containerClassName, // eslint-disable-line deprecation/deprecation
+    _b = props.dialogDefaultMinWidth, // eslint-disable-line deprecation/deprecation
+    dialogDefaultMinWidth = _b === void 0 ? '288px' : _b, _c = props.dialogDefaultMaxWidth, dialogDefaultMaxWidth = _c === void 0 ? '340px' : _c, hidden = props.hidden, theme = props.theme;
+    var classNames = (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getGlobalClassNames)(GlobalClassNames, theme);
+    return {
+        root: [classNames.root, theme.fonts.medium, className],
+        main: [
+            {
+                width: dialogDefaultMinWidth,
+                outline: '3px solid transparent',
+                selectors: (_a = {},
+                    _a["@media (min-width: ".concat(_Styling__WEBPACK_IMPORTED_MODULE_0__.ScreenWidthMinMedium, "px)")] = {
+                        width: 'auto',
+                        maxWidth: dialogDefaultMaxWidth,
+                        minWidth: dialogDefaultMinWidth,
+                    },
+                    _a),
+            },
+            !hidden && { display: 'flex' },
+            containerClassName,
+        ],
+    };
+};
+//# sourceMappingURL=Dialog.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Dialog/DialogContent.base.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Dialog/DialogContent.base.js ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DialogContentBase: () => (/* binding */ DialogContentBase)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/classNamesFunction.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/initializeComponentRef.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/warn/warnDeprecations.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/css.js");
+/* harmony import */ var _DialogContent_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./DialogContent.types */ "./node_modules/@fluentui/react/lib/components/Dialog/DialogContent.types.js");
+/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../Button */ "./node_modules/@fluentui/react/lib/components/Button/IconButton/IconButton.js");
+/* harmony import */ var _DialogFooter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DialogFooter */ "./node_modules/@fluentui/react/lib/components/Dialog/DialogFooter.js");
+/* harmony import */ var _ResponsiveMode__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../ResponsiveMode */ "./node_modules/@fluentui/react/lib/utilities/decorators/withResponsiveMode.js");
+
+
+
+
+
+
+
+var getClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_1__.classNamesFunction)();
+var DialogFooterType = (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_DialogFooter__WEBPACK_IMPORTED_MODULE_2__.DialogFooter, null)).type;
+var COMPONENT_NAME = 'DialogContent';
+// eslint-disable-next-line deprecation/deprecation
+var DialogContentBase = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__extends)(DialogContentBase, _super);
+    function DialogContentBase(props) {
+        var _this = _super.call(this, props) || this;
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_4__.initializeComponentRef)(_this);
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.warnDeprecations)(COMPONENT_NAME, props, {
+            titleId: 'titleProps.id',
+        });
+        return _this;
+    }
+    DialogContentBase.prototype.render = function () {
+        var _a = this.props, showCloseButton = _a.showCloseButton, className = _a.className, closeButtonAriaLabel = _a.closeButtonAriaLabel, onDismiss = _a.onDismiss, subTextId = _a.subTextId, subText = _a.subText, _b = _a.titleProps, titleProps = _b === void 0 ? {} : _b, 
+        // eslint-disable-next-line deprecation/deprecation
+        titleId = _a.titleId, title = _a.title, type = _a.type, styles = _a.styles, theme = _a.theme, draggableHeaderClassName = _a.draggableHeaderClassName;
+        var classNames = getClassNames(styles, {
+            theme: theme,
+            className: className,
+            isLargeHeader: type === _DialogContent_types__WEBPACK_IMPORTED_MODULE_6__.DialogType.largeHeader,
+            isClose: type === _DialogContent_types__WEBPACK_IMPORTED_MODULE_6__.DialogType.close,
+            draggableHeaderClassName: draggableHeaderClassName,
+        });
+        var groupings = this._groupChildren();
+        var subTextContent;
+        if (subText) {
+            subTextContent = (react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", { className: classNames.subText, id: subTextId }, subText));
+        }
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: classNames.content },
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: classNames.header },
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)({ id: titleId, role: "heading", "aria-level": 1 }, titleProps, { className: (0,_Utilities__WEBPACK_IMPORTED_MODULE_7__.css)(classNames.title, titleProps.className) }), title),
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: classNames.topButton },
+                    this.props.topButtonsProps.map(function (props, index) { return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Button__WEBPACK_IMPORTED_MODULE_8__.IconButton, (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__assign)({ key: props.uniqueId || index }, props))); }),
+                    (type === _DialogContent_types__WEBPACK_IMPORTED_MODULE_6__.DialogType.close || (showCloseButton && type !== _DialogContent_types__WEBPACK_IMPORTED_MODULE_6__.DialogType.largeHeader)) && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Button__WEBPACK_IMPORTED_MODULE_8__.IconButton, { className: classNames.button, iconProps: { iconName: 'Cancel' }, ariaLabel: closeButtonAriaLabel, onClick: onDismiss })))),
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: classNames.inner },
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: classNames.innerContent },
+                    subTextContent,
+                    groupings.contents),
+                groupings.footers)));
+    };
+    // @TODO - typing the footers as an array of DialogFooter is difficult because
+    // casing "child as DialogFooter" causes a problem because
+    // "Neither type 'ReactElement<any>' nor type 'DialogFooter' is assignable to the other."
+    DialogContentBase.prototype._groupChildren = function () {
+        var groupings = {
+            footers: [],
+            contents: [],
+        };
+        react__WEBPACK_IMPORTED_MODULE_0__.Children.map(this.props.children, function (child) {
+            if (typeof child === 'object' && child !== null && child.type === DialogFooterType) {
+                groupings.footers.push(child);
+            }
+            else {
+                groupings.contents.push(child);
+            }
+        });
+        return groupings;
+    };
+    DialogContentBase.defaultProps = {
+        showCloseButton: false,
+        className: '',
+        topButtonsProps: [],
+        closeButtonAriaLabel: 'Close',
+    };
+    DialogContentBase = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+        _ResponsiveMode__WEBPACK_IMPORTED_MODULE_9__.withResponsiveMode
+    ], DialogContentBase);
+    return DialogContentBase;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+//# sourceMappingURL=DialogContent.base.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Dialog/DialogContent.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Dialog/DialogContent.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DialogContent: () => (/* binding */ DialogContent)
+/* harmony export */ });
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/styled.js");
+/* harmony import */ var _DialogContent_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DialogContent.base */ "./node_modules/@fluentui/react/lib/components/Dialog/DialogContent.base.js");
+/* harmony import */ var _DialogContent_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DialogContent.styles */ "./node_modules/@fluentui/react/lib/components/Dialog/DialogContent.styles.js");
+
+
+
+var DialogContent = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.styled)(_DialogContent_base__WEBPACK_IMPORTED_MODULE_1__.DialogContentBase, _DialogContent_styles__WEBPACK_IMPORTED_MODULE_2__.getStyles, undefined, { scope: 'DialogContent' });
+DialogContent.displayName = 'DialogContent';
+//# sourceMappingURL=DialogContent.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Dialog/DialogContent.styles.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Dialog/DialogContent.styles.js ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getStyles: () => (/* binding */ getStyles)
+/* harmony export */ });
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+
+var GlobalClassNames = {
+    contentLgHeader: 'ms-Dialog-lgHeader',
+    close: 'ms-Dialog--close',
+    subText: 'ms-Dialog-subText',
+    header: 'ms-Dialog-header',
+    headerLg: 'ms-Dialog--lgHeader',
+    button: 'ms-Dialog-button ms-Dialog-button--close',
+    inner: 'ms-Dialog-inner',
+    content: 'ms-Dialog-content',
+    title: 'ms-Dialog-title',
+};
+var getStyles = function (props) {
+    var _a, _b, _c;
+    var className = props.className, theme = props.theme, isLargeHeader = props.isLargeHeader, isClose = props.isClose, hidden = props.hidden, isMultiline = props.isMultiline, draggableHeaderClassName = props.draggableHeaderClassName;
+    var palette = theme.palette, fonts = theme.fonts, effects = theme.effects, semanticColors = theme.semanticColors;
+    var classNames = (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getGlobalClassNames)(GlobalClassNames, theme);
+    return {
+        content: [
+            isLargeHeader && [
+                classNames.contentLgHeader,
+                {
+                    borderTop: "4px solid ".concat(palette.themePrimary),
+                },
+            ],
+            isClose && classNames.close,
+            {
+                flexGrow: 1,
+                overflowY: 'hidden', // required for allowScrollOnElement
+            },
+            className,
+        ],
+        subText: [
+            classNames.subText,
+            fonts.medium,
+            {
+                margin: '0 0 24px 0',
+                color: semanticColors.bodySubtext,
+                lineHeight: '1.5',
+                wordWrap: 'break-word',
+                fontWeight: _Styling__WEBPACK_IMPORTED_MODULE_0__.FontWeights.regular,
+            },
+        ],
+        header: [
+            classNames.header,
+            {
+                position: 'relative',
+                width: '100%',
+                boxSizing: 'border-box',
+            },
+            isClose && classNames.close,
+            draggableHeaderClassName && [
+                draggableHeaderClassName,
+                {
+                    cursor: 'move',
+                },
+            ],
+        ],
+        button: [
+            classNames.button,
+            hidden && {
+                selectors: {
+                    '.ms-Icon.ms-Icon--Cancel': {
+                        color: semanticColors.buttonText,
+                        fontSize: _Styling__WEBPACK_IMPORTED_MODULE_0__.IconFontSizes.medium,
+                    },
+                },
+            },
+        ],
+        inner: [
+            classNames.inner,
+            {
+                padding: '0 24px 24px',
+                selectors: (_a = {},
+                    _a["@media (min-width: ".concat(_Styling__WEBPACK_IMPORTED_MODULE_0__.ScreenWidthMinSmall, "px) and (max-width: ").concat(_Styling__WEBPACK_IMPORTED_MODULE_0__.ScreenWidthMaxSmall, "px)")] = {
+                        padding: '0 16px 16px',
+                    },
+                    _a),
+            },
+        ],
+        innerContent: [
+            classNames.content,
+            {
+                position: 'relative',
+                width: '100%',
+            },
+        ],
+        title: [
+            classNames.title,
+            fonts.xLarge,
+            {
+                color: semanticColors.bodyText,
+                margin: '0',
+                minHeight: fonts.xLarge.fontSize,
+                padding: '16px 46px 20px 24px',
+                lineHeight: 'normal',
+                selectors: (_b = {},
+                    _b["@media (min-width: ".concat(_Styling__WEBPACK_IMPORTED_MODULE_0__.ScreenWidthMinSmall, "px) and (max-width: ").concat(_Styling__WEBPACK_IMPORTED_MODULE_0__.ScreenWidthMaxSmall, "px)")] = {
+                        padding: '16px 46px 16px 16px',
+                    },
+                    _b),
+            },
+            isLargeHeader && {
+                color: semanticColors.menuHeader,
+            },
+            isMultiline && { fontSize: fonts.xxLarge.fontSize },
+        ],
+        topButton: [
+            {
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'nowrap',
+                position: 'absolute',
+                top: '0',
+                right: '0',
+                padding: '15px 15px 0 0',
+                selectors: (_c = {
+                        '> *': {
+                            flex: '0 0 auto',
+                        },
+                        '.ms-Dialog-button': {
+                            color: semanticColors.buttonText,
+                        },
+                        '.ms-Dialog-button:hover': {
+                            color: semanticColors.buttonTextHovered,
+                            borderRadius: effects.roundedCorner2,
+                        }
+                    },
+                    _c["@media (min-width: ".concat(_Styling__WEBPACK_IMPORTED_MODULE_0__.ScreenWidthMinSmall, "px) and (max-width: ").concat(_Styling__WEBPACK_IMPORTED_MODULE_0__.ScreenWidthMaxSmall, "px)")] = {
+                        padding: '15px 8px 0 0',
+                    },
+                    _c),
+            },
+        ],
+    };
+};
+//# sourceMappingURL=DialogContent.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Dialog/DialogContent.types.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Dialog/DialogContent.types.js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DialogType: () => (/* binding */ DialogType)
+/* harmony export */ });
+/**
+ * {@docCategory Dialog}
+ */
+var DialogType;
+(function (DialogType) {
+    /** Standard dialog */
+    DialogType[DialogType["normal"] = 0] = "normal";
+    /** Dialog with large header banner */
+    DialogType[DialogType["largeHeader"] = 1] = "largeHeader";
+    /** Dialog with an 'x' close button in the upper-right corner */
+    DialogType[DialogType["close"] = 2] = "close";
+})(DialogType || (DialogType = {}));
+//# sourceMappingURL=DialogContent.types.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Dialog/DialogFooter.base.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Dialog/DialogFooter.base.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DialogFooterBase: () => (/* binding */ DialogFooterBase)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/classNamesFunction.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/initializeComponentRef.js");
+
+
+
+var getClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_1__.classNamesFunction)();
+var DialogFooterBase = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__extends)(DialogFooterBase, _super);
+    function DialogFooterBase(props) {
+        var _this = _super.call(this, props) || this;
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_3__.initializeComponentRef)(_this);
+        return _this;
+    }
+    DialogFooterBase.prototype.render = function () {
+        var _a = this.props, className = _a.className, styles = _a.styles, theme = _a.theme;
+        this._classNames = getClassNames(styles, {
+            theme: theme,
+            className: className,
+        });
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: this._classNames.actions },
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: this._classNames.actionsRight }, this._renderChildrenAsActions())));
+    };
+    DialogFooterBase.prototype._renderChildrenAsActions = function () {
+        var _this = this;
+        return react__WEBPACK_IMPORTED_MODULE_0__.Children.map(this.props.children, function (child) {
+            return child ? react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { className: _this._classNames.action }, child) : null;
+        });
+    };
+    return DialogFooterBase;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+//# sourceMappingURL=DialogFooter.base.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Dialog/DialogFooter.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Dialog/DialogFooter.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DialogFooter: () => (/* binding */ DialogFooter)
+/* harmony export */ });
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/styled.js");
+/* harmony import */ var _DialogFooter_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DialogFooter.base */ "./node_modules/@fluentui/react/lib/components/Dialog/DialogFooter.base.js");
+/* harmony import */ var _DialogFooter_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DialogFooter.styles */ "./node_modules/@fluentui/react/lib/components/Dialog/DialogFooter.styles.js");
+
+
+
+var DialogFooter = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.styled)(_DialogFooter_base__WEBPACK_IMPORTED_MODULE_1__.DialogFooterBase, _DialogFooter_styles__WEBPACK_IMPORTED_MODULE_2__.getStyles, undefined, { scope: 'DialogFooter' });
+DialogFooter.displayName = 'DialogFooter';
+//# sourceMappingURL=DialogFooter.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Dialog/DialogFooter.styles.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Dialog/DialogFooter.styles.js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getStyles: () => (/* binding */ getStyles)
+/* harmony export */ });
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+
+var GlobalClassNames = {
+    actions: 'ms-Dialog-actions',
+    action: 'ms-Dialog-action',
+    actionsRight: 'ms-Dialog-actionsRight',
+};
+var getStyles = function (props) {
+    var className = props.className, theme = props.theme;
+    var classNames = (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getGlobalClassNames)(GlobalClassNames, theme);
+    return {
+        actions: [
+            classNames.actions,
+            {
+                position: 'relative',
+                width: '100%',
+                minHeight: '24px',
+                lineHeight: '24px',
+                margin: '16px 0 0',
+                fontSize: '0',
+                selectors: {
+                    '.ms-Button': {
+                        lineHeight: 'normal',
+                        verticalAlign: 'middle',
+                    },
+                },
+            },
+            className,
+        ],
+        action: [
+            classNames.action,
+            {
+                margin: '0 4px',
+            },
+        ],
+        actionsRight: [
+            classNames.actionsRight,
+            {
+                alignItems: 'center',
+                display: 'flex',
+                fontSize: '0',
+                justifyContent: 'flex-end',
+                marginRight: '-4px',
+            },
+        ],
+    };
+};
+//# sourceMappingURL=DialogFooter.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Divider/VerticalDivider.base.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Divider/VerticalDivider.base.js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   VerticalDividerBase: () => (/* binding */ VerticalDividerBase)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/classNamesFunction.js");
+
+
+var getClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_1__.classNamesFunction)();
+var VerticalDividerBase = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (props, ref) {
+    // eslint-disable-next-line deprecation/deprecation
+    var styles = props.styles, theme = props.theme, deprecatedGetClassNames = props.getClassNames, className = props.className;
+    var classNames = getClassNames(styles, { theme: theme, getClassNames: deprecatedGetClassNames, className: className });
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { className: classNames.wrapper, ref: ref },
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { className: classNames.divider })));
+});
+VerticalDividerBase.displayName = 'VerticalDividerBase';
+//# sourceMappingURL=VerticalDivider.base.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Divider/VerticalDivider.classNames.js":
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Divider/VerticalDivider.classNames.js ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getDividerClassNames: () => (/* binding */ getDividerClassNames)
+/* harmony export */ });
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+
+
+/**
+ * @deprecated use getStyles exported from VerticalDivider.styles.ts
+ */
+var getDividerClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.memoizeFunction)(
+// eslint-disable-next-line deprecation/deprecation
+function (theme) {
+    return (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.mergeStyleSets)({
+        wrapper: {
+            display: 'inline-flex',
+            height: '100%',
+            alignItems: 'center',
+        },
+        divider: {
+            width: 1,
+            height: '100%',
+            backgroundColor: theme.palette.neutralTertiaryAlt,
+        },
+    });
+});
+//# sourceMappingURL=VerticalDivider.classNames.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Divider/VerticalDivider.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Divider/VerticalDivider.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   VerticalDivider: () => (/* binding */ VerticalDivider)
+/* harmony export */ });
+/* harmony import */ var _VerticalDivider_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./VerticalDivider.styles */ "./node_modules/@fluentui/react/lib/components/Divider/VerticalDivider.styles.js");
+/* harmony import */ var _VerticalDivider_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VerticalDivider.base */ "./node_modules/@fluentui/react/lib/components/Divider/VerticalDivider.base.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/styled.js");
+
+
+
+var VerticalDivider = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.styled)(_VerticalDivider_base__WEBPACK_IMPORTED_MODULE_1__.VerticalDividerBase, _VerticalDivider_styles__WEBPACK_IMPORTED_MODULE_2__.getStyles, undefined, {
+    scope: 'VerticalDivider',
+});
+//# sourceMappingURL=VerticalDivider.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Divider/VerticalDivider.styles.js":
+/*!***************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Divider/VerticalDivider.styles.js ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getStyles: () => (/* binding */ getStyles)
+/* harmony export */ });
+var getStyles = function (props) {
+    // eslint-disable-next-line deprecation/deprecation
+    var theme = props.theme, getClassNames = props.getClassNames, className = props.className;
+    if (!theme) {
+        throw new Error('Theme is undefined or null.');
+    }
+    if (getClassNames) {
+        var names = getClassNames(theme);
+        return {
+            wrapper: [names.wrapper],
+            divider: [names.divider],
+        };
+    }
+    return {
+        wrapper: [
+            {
+                display: 'inline-flex',
+                height: '100%',
+                alignItems: 'center',
+            },
+            className,
+        ],
+        divider: [
+            {
+                width: 1,
+                height: '100%',
+                backgroundColor: theme.palette.neutralTertiaryAlt,
+            },
+        ],
+    };
+};
+//# sourceMappingURL=VerticalDivider.styles.js.map
 
 /***/ }),
 
@@ -5260,6 +12563,449 @@ var getStyles = function (props) {
 
 /***/ }),
 
+/***/ "./node_modules/@fluentui/react/lib/components/Fabric/Fabric.base.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Fabric/Fabric.base.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FabricBase: () => (/* binding */ FabricBase)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/classNamesFunction.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/rtl.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/properties.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/FocusRectsProvider.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/customizations/Customizer.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/dom/getDocument.js");
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/theme/lib/createTheme.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useMergedRefs.js");
+
+
+
+
+
+var getClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_1__.classNamesFunction)();
+var getFabricTheme = (0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.memoizeFunction)(function (theme, isRTL) { return (0,_Styling__WEBPACK_IMPORTED_MODULE_3__.createTheme)((0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({}, theme), { rtl: isRTL })); });
+var getDir = function (_a) {
+    var theme = _a.theme, dir = _a.dir;
+    var contextDir = (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.getRTL)(theme) ? 'rtl' : 'ltr';
+    var pageDir = (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.getRTL)() ? 'rtl' : 'ltr';
+    var componentDir = dir ? dir : contextDir;
+    return {
+        // If Fabric dir !== contextDir
+        // Or If contextDir !== pageDir
+        // Then we need to set dir of the Fabric root
+        rootDir: componentDir !== contextDir || componentDir !== pageDir ? componentDir : dir,
+        // If dir !== contextDir || pageDir
+        // then set contextual theme around content
+        needsTheme: componentDir !== contextDir,
+    };
+};
+var FabricBase = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (props, ref) {
+    var className = props.className, theme = props.theme, applyTheme = props.applyTheme, applyThemeToBody = props.applyThemeToBody, styles = props.styles;
+    var classNames = getClassNames(styles, {
+        theme: theme,
+        applyTheme: applyTheme,
+        className: className,
+    });
+    var rootElement = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+    useApplyThemeToBody(applyThemeToBody, classNames, rootElement);
+    return react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, useRenderedContent(props, classNames, rootElement, ref));
+});
+FabricBase.displayName = 'FabricBase';
+function useRenderedContent(props, _a, rootElement, ref) {
+    var root = _a.root;
+    var _b = props.as, Root = _b === void 0 ? 'div' : _b, dir = props.dir, theme = props.theme;
+    var divProps = (0,_Utilities__WEBPACK_IMPORTED_MODULE_6__.getNativeProps)(props, _Utilities__WEBPACK_IMPORTED_MODULE_6__.divProperties, ['dir']);
+    var _c = getDir(props), rootDir = _c.rootDir, needsTheme = _c.needsTheme;
+    var renderedContent = (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Utilities__WEBPACK_IMPORTED_MODULE_7__.FocusRectsProvider, { providerRef: rootElement },
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(Root, (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({ dir: rootDir }, divProps, { className: root, ref: (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_8__.useMergedRefs)(rootElement, ref) }))));
+    // Create the contextual theme if component direction does not match parent direction.
+    if (needsTheme) {
+        // Disabling ThemeProvider here because theme doesn't need to be re-provided by ThemeProvider if dir has changed.
+        renderedContent = (
+        // eslint-disable-next-line deprecation/deprecation
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Utilities__WEBPACK_IMPORTED_MODULE_9__.Customizer, { settings: { theme: getFabricTheme(theme, dir === 'rtl') } }, renderedContent));
+    }
+    return renderedContent;
+}
+function useApplyThemeToBody(applyThemeToBody, _a, rootElement) {
+    var bodyThemed = _a.bodyThemed;
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        if (applyThemeToBody) {
+            var currentDoc_1 = (0,_Utilities__WEBPACK_IMPORTED_MODULE_10__.getDocument)(rootElement.current);
+            if (currentDoc_1) {
+                currentDoc_1.body.classList.add(bodyThemed);
+                return function () {
+                    currentDoc_1.body.classList.remove(bodyThemed);
+                };
+            }
+        }
+    }, [bodyThemed, applyThemeToBody, rootElement]);
+    return rootElement;
+}
+//# sourceMappingURL=Fabric.base.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Fabric/Fabric.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Fabric/Fabric.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Fabric: () => (/* binding */ Fabric)
+/* harmony export */ });
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/styled.js");
+/* harmony import */ var _Fabric_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Fabric.base */ "./node_modules/@fluentui/react/lib/components/Fabric/Fabric.base.js");
+/* harmony import */ var _Fabric_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Fabric.styles */ "./node_modules/@fluentui/react/lib/components/Fabric/Fabric.styles.js");
+
+
+
+/**
+ * @deprecated This component is deprecated as of `@fluentui/react` version 8. Use `ThemeProvider` instead.
+ */
+var Fabric = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.styled)(_Fabric_base__WEBPACK_IMPORTED_MODULE_1__.FabricBase, _Fabric_styles__WEBPACK_IMPORTED_MODULE_2__.getStyles, undefined, {
+    scope: 'Fabric',
+});
+//# sourceMappingURL=Fabric.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Fabric/Fabric.styles.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Fabric/Fabric.styles.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getStyles: () => (/* binding */ getStyles)
+/* harmony export */ });
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+
+var inheritFont = { fontFamily: 'inherit' };
+var GlobalClassNames = {
+    root: 'ms-Fabric',
+    bodyThemed: 'ms-Fabric-bodyThemed',
+};
+var getStyles = function (props) {
+    var applyTheme = props.applyTheme, className = props.className, preventBlanketFontInheritance = props.preventBlanketFontInheritance, theme = props.theme;
+    var classNames = (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getGlobalClassNames)(GlobalClassNames, theme);
+    return {
+        root: [
+            classNames.root,
+            theme.fonts.medium,
+            {
+                color: theme.palette.neutralPrimary,
+            },
+            !preventBlanketFontInheritance && {
+                '& button': inheritFont,
+                '& input': inheritFont,
+                '& textarea': inheritFont,
+            },
+            // apply theme to only if applyTheme is true
+            applyTheme && {
+                color: theme.semanticColors.bodyText,
+                backgroundColor: theme.semanticColors.bodyBackground,
+            },
+            className,
+        ],
+        bodyThemed: [
+            {
+                backgroundColor: theme.semanticColors.bodyBackground,
+            },
+        ],
+    };
+};
+//# sourceMappingURL=Fabric.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/FocusTrapZone/FocusTrapZone.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/FocusTrapZone/FocusTrapZone.js ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FocusTrapZone: () => (/* binding */ FocusTrapZone)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/getPropsWithDefaults.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/focus.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/dom-utilities/lib/elementContains.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/dom/on.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/modalize.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/properties.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useMergedRefs.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/usePrevious.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useConst.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useId.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useEventCallback.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useUnmount.js");
+/* harmony import */ var _WindowProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../WindowProvider */ "./node_modules/@fluentui/react-window-provider/lib/WindowProvider.js");
+/* harmony import */ var _utilities_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/dom */ "./node_modules/@fluentui/react/lib/utilities/dom.js");
+
+
+
+
+
+
+var COMPONENT_NAME = 'FocusTrapZone';
+var DEFAULT_PROPS = {
+    disabled: false,
+    disableFirstFocus: false,
+    forceFocusInsideTrap: true,
+    isClickableOutsideFocusTrap: false,
+    // Hardcoding completely uncontrolled flag for proper interop with FluentUI V9.
+    'data-tabster': '{"uncontrolled": {"completely": true}}',
+};
+var useComponentRef = function (componentRef, previouslyFocusedElement, focusFTZ) {
+    react__WEBPACK_IMPORTED_MODULE_0__.useImperativeHandle(componentRef, function () { return ({
+        get previouslyFocusedElement() {
+            return previouslyFocusedElement;
+        },
+        focus: focusFTZ,
+    }); }, [focusFTZ, previouslyFocusedElement]);
+};
+var FocusTrapZone = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (propsWithoutDefaults, ref) {
+    var _a;
+    var root = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+    var firstBumper = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+    var lastBumper = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+    var mergedRootRef = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_1__.useMergedRefs)(root, ref);
+    var doc = (0,_WindowProvider__WEBPACK_IMPORTED_MODULE_2__.useDocument)();
+    var win = (0,_utilities_dom__WEBPACK_IMPORTED_MODULE_3__.useWindowEx)();
+    var isFirstRender = (_a = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_4__.usePrevious)(false)) !== null && _a !== void 0 ? _a : true;
+    var props = (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.getPropsWithDefaults)(DEFAULT_PROPS, propsWithoutDefaults);
+    var internalState = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_6__.useConst)({
+        hasFocus: false,
+        focusStackId: (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_7__.useId)('ftz-', props.id),
+    });
+    var children = props.children, componentRef = props.componentRef, disabled = props.disabled, disableFirstFocus = props.disableFirstFocus, forceFocusInsideTrap = props.forceFocusInsideTrap, focusPreviouslyFocusedInnerElement = props.focusPreviouslyFocusedInnerElement, 
+    // eslint-disable-next-line deprecation/deprecation
+    firstFocusableSelector = props.firstFocusableSelector, firstFocusableTarget = props.firstFocusableTarget, 
+    // eslint-disable-next-line deprecation/deprecation
+    _b = props.disableRestoreFocus, 
+    // eslint-disable-next-line deprecation/deprecation
+    disableRestoreFocus = _b === void 0 ? props.ignoreExternalFocusing : _b, isClickableOutsideFocusTrap = props.isClickableOutsideFocusTrap, enableAriaHiddenSiblings = props.enableAriaHiddenSiblings;
+    var bumperProps = {
+        'aria-hidden': true,
+        style: {
+            pointerEvents: 'none',
+            position: 'fixed', // 'fixed' prevents browsers from scrolling to bumpers when viewport does not contain them
+        },
+        tabIndex: disabled ? -1 : 0,
+        'data-is-visible': true,
+        'data-is-focus-trap-zone-bumper': true,
+    };
+    var focusElementAsync = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function (element) {
+        if (element !== firstBumper.current && element !== lastBumper.current) {
+            (0,_Utilities__WEBPACK_IMPORTED_MODULE_8__.focusAsync)(element);
+        }
+    }, []);
+    /**
+     * Callback to force focus into FTZ (named to avoid overlap with global focus() callback).
+     * useEventCallback always returns the same callback reference but updates the implementation
+     * every render to avoid stale captured values.
+     */
+    var focusFTZ = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_9__.useEventCallback)(function () {
+        if (!root.current) {
+            return; // not done mounting
+        }
+        var previouslyFocusedElementInTrapZone = internalState.previouslyFocusedElementInTrapZone;
+        if (focusPreviouslyFocusedInnerElement &&
+            previouslyFocusedElementInTrapZone &&
+            (0,_Utilities__WEBPACK_IMPORTED_MODULE_10__.elementContains)(root.current, previouslyFocusedElementInTrapZone)) {
+            // focus on the last item that had focus in the zone before we left the zone
+            focusElementAsync(previouslyFocusedElementInTrapZone);
+            return;
+        }
+        var firstFocusableChild = null;
+        if (typeof firstFocusableTarget === 'string') {
+            firstFocusableChild = root.current.querySelector(firstFocusableTarget);
+        }
+        else if (firstFocusableTarget) {
+            firstFocusableChild = firstFocusableTarget(root.current);
+        }
+        else if (firstFocusableSelector) {
+            var focusSelector = typeof firstFocusableSelector === 'string' ? firstFocusableSelector : firstFocusableSelector();
+            firstFocusableChild = root.current.querySelector('.' + focusSelector);
+        }
+        // Fall back to first element if query selector did not match any elements.
+        if (!firstFocusableChild) {
+            firstFocusableChild = (0,_Utilities__WEBPACK_IMPORTED_MODULE_8__.getNextElement)(root.current, root.current.firstChild, false, false, false, true);
+        }
+        if (firstFocusableChild) {
+            focusElementAsync(firstFocusableChild);
+        }
+    });
+    /** Used in root div focus/blur handlers */
+    var focusBumper = function (isFirstBumper) {
+        if (disabled || !root.current) {
+            return;
+        }
+        var nextFocusable = isFirstBumper === internalState.hasFocus
+            ? (0,_Utilities__WEBPACK_IMPORTED_MODULE_8__.getLastTabbable)(root.current, lastBumper.current, true, false)
+            : (0,_Utilities__WEBPACK_IMPORTED_MODULE_8__.getFirstTabbable)(root.current, firstBumper.current, true, false);
+        if (nextFocusable) {
+            if (nextFocusable === firstBumper.current || nextFocusable === lastBumper.current) {
+                // This can happen when FTZ contains no tabbable elements.
+                // focusFTZ() will take care of finding a focusable element in FTZ.
+                focusFTZ();
+            }
+            else {
+                nextFocusable.focus();
+            }
+        }
+    };
+    /** Root div blur handler (doesn't need useCallback since it's for a native element) */
+    var onRootBlurCapture = function (ev) {
+        var _a;
+        (_a = props.onBlurCapture) === null || _a === void 0 ? void 0 : _a.call(props, ev);
+        var relatedTarget = ev.relatedTarget;
+        if (ev.relatedTarget === null) {
+            // In IE11, due to lack of support, event.relatedTarget is always
+            // null making every onBlur call to be "outside" of the root
+            // even when it's not. Using document.activeElement is another way
+            // for us to be able to get what the relatedTarget without relying
+            // on the event
+            relatedTarget = doc.activeElement;
+        }
+        if (!(0,_Utilities__WEBPACK_IMPORTED_MODULE_10__.elementContains)(root.current, relatedTarget)) {
+            internalState.hasFocus = false;
+        }
+    };
+    /** Root div focus handler (doesn't need useCallback since it's for a native element) */
+    var onRootFocusCapture = function (ev) {
+        var _a;
+        (_a = props.onFocusCapture) === null || _a === void 0 ? void 0 : _a.call(props, ev);
+        if (ev.target === firstBumper.current) {
+            focusBumper(true);
+        }
+        else if (ev.target === lastBumper.current) {
+            focusBumper(false);
+        }
+        internalState.hasFocus = true;
+        if (ev.target !== ev.currentTarget && !(ev.target === firstBumper.current || ev.target === lastBumper.current)) {
+            // every time focus changes within the trap zone, remember the focused element so that
+            // it can be restored if focus leaves the pane and returns via keystroke (i.e. via a call to this.focus(true))
+            internalState.previouslyFocusedElementInTrapZone = ev.target;
+        }
+    };
+    /** Called to restore focus on unmount or props change. (useEventCallback ensures latest prop values are used.) */
+    var returnFocusToInitiator = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_9__.useEventCallback)(function (elementToFocusOnDismiss) {
+        FocusTrapZone.focusStack = FocusTrapZone.focusStack.filter(function (value) { return internalState.focusStackId !== value; });
+        if (!doc) {
+            return;
+        }
+        var activeElement = doc.activeElement;
+        if (!disableRestoreFocus &&
+            typeof (elementToFocusOnDismiss === null || elementToFocusOnDismiss === void 0 ? void 0 : elementToFocusOnDismiss.focus) === 'function' &&
+            // only restore focus if the current focused element is within the FTZ, or if nothing is focused
+            ((0,_Utilities__WEBPACK_IMPORTED_MODULE_10__.elementContains)(root.current, activeElement) || activeElement === doc.body)) {
+            focusElementAsync(elementToFocusOnDismiss);
+        }
+    });
+    /** Called in window event handlers. (useEventCallback ensures latest prop values are used.) */
+    var forceFocusOrClickInTrap = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_9__.useEventCallback)(function (ev) {
+        // be sure to use the latest values here
+        if (disabled) {
+            return;
+        }
+        if (internalState.focusStackId === FocusTrapZone.focusStack.slice(-1)[0]) {
+            var targetElement = ev.target;
+            if (targetElement && !(0,_Utilities__WEBPACK_IMPORTED_MODULE_10__.elementContains)(root.current, targetElement)) {
+                if (doc && doc.activeElement === doc.body) {
+                    setTimeout(function () {
+                        if (doc && doc.activeElement === doc.body) {
+                            focusFTZ();
+                            internalState.hasFocus = true; // set focus here since we stop event propagation
+                        }
+                    }, 0);
+                }
+                else {
+                    focusFTZ();
+                    internalState.hasFocus = true; // set focus here since we stop event propagation
+                }
+                ev.preventDefault();
+                ev.stopPropagation();
+            }
+        }
+    });
+    // Update window event handlers when relevant props change
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        var disposables = [];
+        if (forceFocusInsideTrap) {
+            disposables.push((0,_Utilities__WEBPACK_IMPORTED_MODULE_11__.on)(win, 'focus', forceFocusOrClickInTrap, true));
+        }
+        if (!isClickableOutsideFocusTrap) {
+            disposables.push((0,_Utilities__WEBPACK_IMPORTED_MODULE_11__.on)(win, 'click', forceFocusOrClickInTrap, true));
+        }
+        return function () {
+            disposables.forEach(function (dispose) { return dispose(); });
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- should only run when these two props change
+    }, [forceFocusInsideTrap, isClickableOutsideFocusTrap, win]);
+    // On prop change or first render, focus the FTZ and update focusStack if appropriate
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        // Do nothing if disabled, or if it's a re-render and forceFocusInsideTrap is false
+        // (to match existing behavior, the FTZ handles first focus even if forceFocusInsideTrap
+        // is false, though it's debatable whether it should do this)
+        if (disabled || (!isFirstRender && !forceFocusInsideTrap) || !root.current) {
+            return;
+        }
+        // Transition from forceFocusInsideTrap / FTZ disabled to enabled (or initial mount)
+        FocusTrapZone.focusStack.push(internalState.focusStackId);
+        var elementToFocusOnDismiss = props.elementToFocusOnDismiss || doc.activeElement;
+        if (!disableFirstFocus && !(0,_Utilities__WEBPACK_IMPORTED_MODULE_10__.elementContains)(root.current, elementToFocusOnDismiss)) {
+            focusFTZ();
+        }
+        // To match existing behavior, always return focus on cleanup (even if we didn't handle
+        // initial focus), but it's debatable whether that's correct
+        return function () { return returnFocusToInitiator(elementToFocusOnDismiss); };
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- should only run when these two props change
+    }, [forceFocusInsideTrap, disabled]);
+    // Handle modalization separately from first focus
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        if (!disabled && enableAriaHiddenSiblings) {
+            var unmodalize = (0,_Utilities__WEBPACK_IMPORTED_MODULE_12__.modalize)(root.current);
+            return unmodalize;
+        }
+    }, [disabled, enableAriaHiddenSiblings, root]);
+    // Cleanup lifecyle method for internalState.
+    (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_13__.useUnmount)(function () {
+        // Dispose of element references so the DOM Nodes can be garbage-collected
+        delete internalState.previouslyFocusedElementInTrapZone;
+    });
+    useComponentRef(componentRef, internalState.previouslyFocusedElementInTrapZone, focusFTZ);
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__assign)({ "aria-labelledby": props.ariaLabelledBy }, (0,_Utilities__WEBPACK_IMPORTED_MODULE_15__.getNativeProps)(props, _Utilities__WEBPACK_IMPORTED_MODULE_15__.divProperties), { ref: mergedRootRef, onFocusCapture: onRootFocusCapture, onBlurCapture: onRootBlurCapture }),
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__assign)({}, bumperProps, { ref: firstBumper })),
+        children,
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__assign)({}, bumperProps, { ref: lastBumper }))));
+});
+FocusTrapZone.displayName = COMPONENT_NAME;
+FocusTrapZone.focusStack = [];
+//# sourceMappingURL=FocusTrapZone.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/react/lib/components/Icon/FontIcon.js":
 /*!**********************************************************************!*\
   !*** ./node_modules/@fluentui/react/lib/components/Icon/FontIcon.js ***!
@@ -5577,6 +13323,67 @@ var IconType;
     IconType[IconType["Image"] = 100001] = "Image";
 })(IconType || (IconType = {}));
 //# sourceMappingURL=Icon.types.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Icon/ImageIcon.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Icon/ImageIcon.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ImageIcon: () => (/* binding */ ImageIcon)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Image_Image__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Image/Image */ "./node_modules/@fluentui/react/lib/components/Image/Image.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/properties.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/css.js");
+/* harmony import */ var _Icon_styles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Icon.styles */ "./node_modules/@fluentui/react/lib/components/Icon/Icon.styles.js");
+
+
+
+
+
+/**
+ * Fast icon component which only supports images (not font glyphs) and can't be targeted by customizations.
+ * To style the icon, use `className` or reference `ms-Icon` in CSS.
+ * {@docCategory Icon}
+ */
+var ImageIcon = function (props) {
+    var className = props.className, imageProps = props.imageProps;
+    var nativeProps = (0,_Utilities__WEBPACK_IMPORTED_MODULE_1__.getNativeProps)(props, _Utilities__WEBPACK_IMPORTED_MODULE_1__.htmlElementProperties, [
+        'aria-label',
+        'aria-labelledby',
+        'title',
+        'aria-describedby',
+    ]);
+    var altText = imageProps.alt || props['aria-label'];
+    var hasName = altText ||
+        props['aria-labelledby'] ||
+        props.title ||
+        imageProps['aria-label'] ||
+        imageProps['aria-labelledby'] ||
+        imageProps.title;
+    // move naming or describing attributes from the container (where they are invalid) to the image
+    var imageNameProps = {
+        'aria-labelledby': props['aria-labelledby'],
+        'aria-describedby': props['aria-describedby'],
+        title: props.title,
+    };
+    var containerProps = hasName
+        ? {}
+        : {
+            'aria-hidden': true,
+        };
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({}, containerProps, nativeProps, { className: (0,_Utilities__WEBPACK_IMPORTED_MODULE_3__.css)(_Icon_styles__WEBPACK_IMPORTED_MODULE_4__.MS_ICON, _Icon_styles__WEBPACK_IMPORTED_MODULE_4__.classNames.root, _Icon_styles__WEBPACK_IMPORTED_MODULE_4__.classNames.image, className) }),
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Image_Image__WEBPACK_IMPORTED_MODULE_5__.Image, (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({}, imageNameProps, imageProps, { alt: hasName ? altText : '' }))));
+};
+//# sourceMappingURL=ImageIcon.js.map
 
 /***/ }),
 
@@ -6002,6 +13809,128 @@ var ImageLoadState;
 
 /***/ }),
 
+/***/ "./node_modules/@fluentui/react/lib/components/KeytipData/KeytipData.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/KeytipData/KeytipData.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   KeytipData: () => (/* binding */ KeytipData)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var _utilities_keytips_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/keytips/index */ "./node_modules/@fluentui/react/lib/utilities/keytips/KeytipConstants.js");
+/* harmony import */ var _useKeytipData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./useKeytipData */ "./node_modules/@fluentui/react/lib/components/KeytipData/useKeytipData.js");
+
+
+
+/**
+ * A small element to help the target component correctly read out its aria-describedby for its Keytip
+ * {@docCategory Keytips}
+ */
+var KeytipData = function (props) {
+    var _a;
+    var children = props.children, keytipDataProps = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__rest)(props, ["children"]);
+    var _b = (0,_useKeytipData__WEBPACK_IMPORTED_MODULE_1__.useKeytipData)(keytipDataProps), keytipId = _b.keytipId, ariaDescribedBy = _b.ariaDescribedBy;
+    return children((_a = {},
+        _a[_utilities_keytips_index__WEBPACK_IMPORTED_MODULE_2__.DATAKTP_TARGET] = keytipId,
+        _a[_utilities_keytips_index__WEBPACK_IMPORTED_MODULE_2__.DATAKTP_EXECUTE_TARGET] = keytipId,
+        _a['aria-describedby'] = ariaDescribedBy,
+        _a));
+};
+//# sourceMappingURL=KeytipData.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/KeytipData/useKeytipData.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/KeytipData/useKeytipData.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useKeytipData: () => (/* binding */ useKeytipData)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useConst.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/usePrevious.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/utilities/lib/useIsomorphicLayoutEffect.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/aria.js");
+/* harmony import */ var _utilities_keytips_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/keytips/index */ "./node_modules/@fluentui/react/lib/utilities/keytips/KeytipManager.js");
+/* harmony import */ var _utilities_keytips_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utilities/keytips/index */ "./node_modules/@fluentui/react/lib/utilities/keytips/KeytipUtils.js");
+
+
+
+
+
+/**
+ * Hook that creates attributes for components which are enabled with Keytip.
+ */
+function useKeytipData(options) {
+    var uniqueId = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
+    var keytipProps = options.keytipProps
+        ? (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({ disabled: options.disabled }, options.keytipProps) : undefined;
+    var keytipManager = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_2__.useConst)(_utilities_keytips_index__WEBPACK_IMPORTED_MODULE_3__.KeytipManager.getInstance());
+    var prevOptions = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_4__.usePrevious)(options);
+    // useLayoutEffect used to strictly emulate didUpdate/didMount behavior
+    (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_5__.useIsomorphicLayoutEffect)(function () {
+        if (uniqueId.current &&
+            keytipProps &&
+            ((prevOptions === null || prevOptions === void 0 ? void 0 : prevOptions.keytipProps) !== options.keytipProps || (prevOptions === null || prevOptions === void 0 ? void 0 : prevOptions.disabled) !== options.disabled)) {
+            keytipManager.update(keytipProps, uniqueId.current);
+        }
+    });
+    (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_5__.useIsomorphicLayoutEffect)(function () {
+        // Register Keytip in KeytipManager
+        if (keytipProps) {
+            uniqueId.current = keytipManager.register(keytipProps);
+        }
+        return function () {
+            // Unregister Keytip in KeytipManager
+            keytipProps && keytipManager.unregister(keytipProps, uniqueId.current);
+        };
+        // this is meant to run only at mount, and updates are handled separately
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    var nativeKeytipProps = {
+        ariaDescribedBy: undefined,
+        keytipId: undefined,
+    };
+    if (keytipProps) {
+        nativeKeytipProps = getKeytipData(keytipManager, keytipProps, options.ariaDescribedBy);
+    }
+    return nativeKeytipProps;
+}
+/**
+ * Gets the aria- and data- attributes to attach to the component
+ * @param keytipProps - options for Keytip
+ * @param describedByPrepend - ariaDescribedBy value to prepend
+ */
+function getKeytipData(keytipManager, keytipProps, describedByPrepend) {
+    // Add the parent overflow sequence if necessary
+    var newKeytipProps = keytipManager.addParentOverflow(keytipProps);
+    // Construct aria-describedby and data-ktp-id attributes
+    var ariaDescribedBy = (0,_Utilities__WEBPACK_IMPORTED_MODULE_6__.mergeAriaAttributeValues)(describedByPrepend, (0,_utilities_keytips_index__WEBPACK_IMPORTED_MODULE_7__.getAriaDescribedBy)(newKeytipProps.keySequences));
+    var keySequences = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__spreadArray)([], newKeytipProps.keySequences, true);
+    if (newKeytipProps.overflowSetSequence) {
+        keySequences = (0,_utilities_keytips_index__WEBPACK_IMPORTED_MODULE_7__.mergeOverflows)(keySequences, newKeytipProps.overflowSetSequence);
+    }
+    var keytipId = (0,_utilities_keytips_index__WEBPACK_IMPORTED_MODULE_7__.sequencesToID)(keySequences);
+    return {
+        ariaDescribedBy: ariaDescribedBy,
+        keytipId: keytipId,
+    };
+}
+//# sourceMappingURL=useKeytipData.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/react/lib/components/Label/Label.base.js":
 /*!*************************************************************************!*\
   !*** ./node_modules/@fluentui/react/lib/components/Label/Label.base.js ***!
@@ -6133,6 +14062,472 @@ var getStyles = function (props) {
     };
 };
 //# sourceMappingURL=Label.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Layer/Layer.base.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Layer/Layer.base.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LayerBase: () => (/* binding */ LayerBase)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var _fluentui_react_portal_compat_context__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fluentui/react-portal-compat-context */ "./node_modules/@fluentui/react-portal-compat-context/lib/PortalCompatContext.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var _Fabric__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../Fabric */ "./node_modules/@fluentui/react/lib/components/Fabric/Fabric.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/classNamesFunction.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/setFocusVisibility.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/useFocusRects.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/dom/getDocument.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/dom-utilities/lib/setPortalAttribute.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/dom-utilities/lib/setVirtualParent.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/FocusRectsProvider.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/css.js");
+/* harmony import */ var _Layer_notification__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Layer.notification */ "./node_modules/@fluentui/react/lib/components/Layer/Layer.notification.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useMergedRefs.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/utilities/lib/useIsomorphicLayoutEffect.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useWarnings.js");
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore "react-portal-compat-context" uses v9 configs via path aliases
+
+
+
+
+
+
+
+var getClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.classNamesFunction)();
+var getFocusVisibility = function (providerRef) {
+    if (providerRef === null || providerRef === void 0 ? void 0 : providerRef.current) {
+        return providerRef.current.classList.contains(_Utilities__WEBPACK_IMPORTED_MODULE_3__.IsFocusVisibleClassName);
+    }
+    return false;
+};
+var LayerBase = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (props, ref) {
+    var registerPortalEl = (0,_fluentui_react_portal_compat_context__WEBPACK_IMPORTED_MODULE_4__.usePortalCompat)();
+    var rootRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+    var mergedRef = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_5__.useMergedRefs)(rootRef, ref);
+    var layerRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
+    var fabricElementRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+    var focusContext = react__WEBPACK_IMPORTED_MODULE_0__.useContext(_Utilities__WEBPACK_IMPORTED_MODULE_6__.FocusRectsContext);
+    // Tracks if the layer mount events need to be raised.
+    // Required to allow the DOM to render after the layer element is added.
+    var _a = react__WEBPACK_IMPORTED_MODULE_0__.useState(false), needRaiseLayerMount = _a[0], setNeedRaiseLayerMount = _a[1];
+    // Sets the focus visible className when the FocusRectsProvider for the layer is rendered
+    // This allows the current focus visibility style to be carried over to the layer content
+    var focusRectsRef = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function (el) {
+        var isFocusVisible = getFocusVisibility(focusContext === null || focusContext === void 0 ? void 0 : focusContext.providerRef);
+        if (el && isFocusVisible) {
+            el.classList.add(_Utilities__WEBPACK_IMPORTED_MODULE_3__.IsFocusVisibleClassName);
+        }
+    }, [focusContext]);
+    var children = props.children, className = props.className, eventBubblingEnabled = props.eventBubblingEnabled, fabricProps = props.fabricProps, hostId = props.hostId, insertFirst = props.insertFirst, _b = props.onLayerDidMount, onLayerDidMount = _b === void 0 ? function () { return undefined; } : _b, 
+    // eslint-disable-next-line deprecation/deprecation
+    _c = props.onLayerMounted, 
+    // eslint-disable-next-line deprecation/deprecation
+    onLayerMounted = _c === void 0 ? function () { return undefined; } : _c, onLayerWillUnmount = props.onLayerWillUnmount, styles = props.styles, theme = props.theme;
+    var fabricRef = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_5__.useMergedRefs)(fabricElementRef, fabricProps === null || fabricProps === void 0 ? void 0 : fabricProps.ref, focusRectsRef);
+    var classNames = getClassNames(styles, {
+        theme: theme,
+        className: className,
+        isNotHost: !hostId,
+    });
+    // Returns the user provided hostId props element, the default target selector,
+    // or undefined if document doesn't exist.
+    var getHost = function (doc) {
+        var _a, _b;
+        if (hostId) {
+            var layerHost = (0,_Layer_notification__WEBPACK_IMPORTED_MODULE_7__.getLayerHost)(hostId);
+            if (layerHost) {
+                return (_a = layerHost.rootRef.current) !== null && _a !== void 0 ? _a : null;
+            }
+            return (_b = doc.getElementById(hostId)) !== null && _b !== void 0 ? _b : null;
+        }
+        else {
+            var defaultHostSelector = (0,_Layer_notification__WEBPACK_IMPORTED_MODULE_7__.getDefaultTarget)();
+            // Find the host.
+            var host = defaultHostSelector ? doc.querySelector(defaultHostSelector) : null;
+            // If no host is available, create a container for injecting layers in.
+            // Having a container scopes layout computation.
+            if (!host) {
+                host = (0,_Layer_notification__WEBPACK_IMPORTED_MODULE_7__.createDefaultLayerHost)(doc);
+            }
+            return host;
+        }
+    };
+    // Removes the current layer element's parentNode and runs onLayerWillUnmount prop if provided.
+    var removeLayerElement = function () {
+        onLayerWillUnmount === null || onLayerWillUnmount === void 0 ? void 0 : onLayerWillUnmount();
+        var elem = layerRef.current;
+        // Clear ref before removing from the DOM
+        layerRef.current = undefined;
+        if (elem && elem.parentNode) {
+            elem.parentNode.removeChild(elem);
+        }
+    };
+    // If a doc or host exists, it will remove and update layer parentNodes.
+    var createLayerElement = function () {
+        var _a;
+        var doc = (0,_Utilities__WEBPACK_IMPORTED_MODULE_8__.getDocument)(rootRef.current);
+        if (!doc) {
+            return;
+        }
+        var host = getHost(doc);
+        if (!host) {
+            return;
+        }
+        // Remove and re-create any previous existing layer elements.
+        removeLayerElement();
+        var el = ((_a = host.ownerDocument) !== null && _a !== void 0 ? _a : doc).createElement('div');
+        el.className = classNames.root;
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_9__.setPortalAttribute)(el);
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_10__.setVirtualParent)(el, rootRef.current);
+        insertFirst ? host.insertBefore(el, host.firstChild) : host.appendChild(el);
+        layerRef.current = el;
+        setNeedRaiseLayerMount(true);
+    };
+    (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_11__.useIsomorphicLayoutEffect)(function () {
+        createLayerElement();
+        // Check if the user provided a hostId prop and register the layer with the ID.
+        if (hostId) {
+            (0,_Layer_notification__WEBPACK_IMPORTED_MODULE_7__.registerLayer)(hostId, createLayerElement);
+        }
+        var unregisterPortalEl = layerRef.current ? registerPortalEl(layerRef.current) : undefined;
+        return function () {
+            if (unregisterPortalEl) {
+                unregisterPortalEl();
+            }
+            removeLayerElement();
+            if (hostId) {
+                (0,_Layer_notification__WEBPACK_IMPORTED_MODULE_7__.unregisterLayer)(hostId, createLayerElement);
+            }
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- should run if the hostId updates.
+    }, [hostId]);
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        if (layerRef.current && needRaiseLayerMount) {
+            onLayerMounted === null || onLayerMounted === void 0 ? void 0 : onLayerMounted();
+            onLayerDidMount === null || onLayerDidMount === void 0 ? void 0 : onLayerDidMount();
+            setNeedRaiseLayerMount(false);
+        }
+    }, [needRaiseLayerMount, onLayerMounted, onLayerDidMount]);
+    useDebugWarnings(props);
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { className: "ms-layer", ref: mergedRef }, layerRef.current &&
+        react_dom__WEBPACK_IMPORTED_MODULE_1__.createPortal(react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Utilities__WEBPACK_IMPORTED_MODULE_12__.FocusRectsProvider, { layerRoot: true, providerRef: fabricRef },
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Fabric__WEBPACK_IMPORTED_MODULE_13__.Fabric, (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__assign)({}, (!eventBubblingEnabled && getFilteredEvents()), fabricProps, { className: (0,_Utilities__WEBPACK_IMPORTED_MODULE_15__.css)(classNames.content, fabricProps === null || fabricProps === void 0 ? void 0 : fabricProps.className), ref: fabricRef }), children)), layerRef.current)));
+});
+LayerBase.displayName = 'LayerBase';
+var filteredEventProps;
+var onFilterEvent = function (ev) {
+    // We should just be able to check ev.bubble here and only stop events that are bubbling up. However, even though
+    // mouseenter and mouseleave do NOT bubble up, they are showing up as bubbling. Therefore we stop events based on
+    // event name rather than ev.bubble.
+    if (ev.eventPhase === Event.BUBBLING_PHASE &&
+        ev.type !== 'mouseenter' &&
+        ev.type !== 'mouseleave' &&
+        ev.type !== 'touchstart' &&
+        ev.type !== 'touchend') {
+        ev.stopPropagation();
+    }
+};
+function getFilteredEvents() {
+    if (!filteredEventProps) {
+        filteredEventProps = {};
+        [
+            'onClick',
+            'onContextMenu',
+            'onDoubleClick',
+            'onDrag',
+            'onDragEnd',
+            'onDragEnter',
+            'onDragExit',
+            'onDragLeave',
+            'onDragOver',
+            'onDragStart',
+            'onDrop',
+            'onMouseDown',
+            'onMouseEnter',
+            'onMouseLeave',
+            'onMouseMove',
+            'onMouseOver',
+            'onMouseOut',
+            'onMouseUp',
+            'onTouchMove',
+            'onTouchStart',
+            'onTouchCancel',
+            'onTouchEnd',
+            'onKeyDown',
+            'onKeyPress',
+            'onKeyUp',
+            'onFocus',
+            'onBlur',
+            'onChange',
+            'onInput',
+            'onInvalid',
+            'onSubmit',
+        ].forEach(function (name) { return (filteredEventProps[name] = onFilterEvent); });
+    }
+    return filteredEventProps;
+}
+function useDebugWarnings(props) {
+    if (true) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks -- build-time conditional
+        (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_16__.useWarnings)({
+            name: 'Layer',
+            props: props,
+            deprecations: { onLayerMounted: 'onLayerDidMount' },
+        });
+    }
+}
+//# sourceMappingURL=Layer.base.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Layer/Layer.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Layer/Layer.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Layer: () => (/* binding */ Layer)
+/* harmony export */ });
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/styled.js");
+/* harmony import */ var _Layer_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Layer.base */ "./node_modules/@fluentui/react/lib/components/Layer/Layer.base.js");
+/* harmony import */ var _Layer_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Layer.styles */ "./node_modules/@fluentui/react/lib/components/Layer/Layer.styles.js");
+
+
+
+var Layer = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.styled)(_Layer_base__WEBPACK_IMPORTED_MODULE_1__.LayerBase, _Layer_styles__WEBPACK_IMPORTED_MODULE_2__.getStyles, undefined, {
+    scope: 'Layer',
+    fields: ['hostId', 'theme', 'styles'],
+});
+//# sourceMappingURL=Layer.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Layer/Layer.notification.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Layer/Layer.notification.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   cleanupDefaultLayerHost: () => (/* binding */ cleanupDefaultLayerHost),
+/* harmony export */   createDefaultLayerHost: () => (/* binding */ createDefaultLayerHost),
+/* harmony export */   getDefaultTarget: () => (/* binding */ getDefaultTarget),
+/* harmony export */   getLayerCount: () => (/* binding */ getLayerCount),
+/* harmony export */   getLayerHost: () => (/* binding */ getLayerHost),
+/* harmony export */   notifyHostChanged: () => (/* binding */ notifyHostChanged),
+/* harmony export */   registerLayer: () => (/* binding */ registerLayer),
+/* harmony export */   registerLayerHost: () => (/* binding */ registerLayerHost),
+/* harmony export */   setDefaultTarget: () => (/* binding */ setDefaultTarget),
+/* harmony export */   unregisterLayer: () => (/* binding */ unregisterLayer),
+/* harmony export */   unregisterLayerHost: () => (/* binding */ unregisterLayerHost)
+/* harmony export */ });
+var _layersByHostId = {};
+var _layerHostsById = {};
+var defaultHostId = 'fluent-default-layer-host';
+var _defaultHostSelector = "#".concat(defaultHostId);
+/**
+ * Register a layer for a given host id
+ * @param hostId - Id of the layer host
+ * @param layer - Layer instance
+ */
+function registerLayer(hostId, callback) {
+    if (!_layersByHostId[hostId]) {
+        _layersByHostId[hostId] = [];
+    }
+    _layersByHostId[hostId].push(callback);
+    var layerHosts = _layerHostsById[hostId];
+    if (layerHosts) {
+        for (var _i = 0, layerHosts_1 = layerHosts; _i < layerHosts_1.length; _i++) {
+            var layerHost = layerHosts_1[_i];
+            layerHost.notifyLayersChanged();
+        }
+    }
+}
+/**
+ * Unregister a layer for a given host id
+ * @param hostId - Id of the layer host
+ * @param layer - Layer instance
+ */
+function unregisterLayer(hostId, callback) {
+    var layers = _layersByHostId[hostId];
+    if (layers) {
+        var idx = layers.indexOf(callback);
+        if (idx >= 0) {
+            layers.splice(idx, 1);
+            if (layers.length === 0) {
+                delete _layersByHostId[hostId];
+            }
+        }
+    }
+    var layerHosts = _layerHostsById[hostId];
+    if (layerHosts) {
+        for (var _i = 0, layerHosts_2 = layerHosts; _i < layerHosts_2.length; _i++) {
+            var layerHost = layerHosts_2[_i];
+            layerHost.notifyLayersChanged();
+        }
+    }
+}
+/**
+ * Gets the number of layers currently registered with a host id.
+ * @param hostId - Id of the layer host.
+ * @returns The number of layers currently registered with the host.
+ */
+function getLayerCount(hostId) {
+    var layers = _layerHostsById[hostId];
+    return layers ? layers.length : 0;
+}
+/**
+ * Gets the Layer Host instance associated with a hostId, if applicable.
+ * @param hostId - Id of the layer host
+ * @returns A component ref for the associated layer host.
+ */
+function getLayerHost(hostId) {
+    var layerHosts = _layerHostsById[hostId];
+    return (layerHosts && layerHosts[0]) || undefined;
+}
+/**
+ * Registers a Layer Host with an associated hostId.
+ * @param hostId - Id of the layer host
+ * @param layerHost - layer host instance
+ */
+function registerLayerHost(hostId, layerHost) {
+    var layerHosts = _layerHostsById[hostId] || (_layerHostsById[hostId] = []);
+    // Insert this at the start of an array to avoid race conditions between mount and unmount.
+    // If a LayerHost is re-mounted, and mount of the new instance may occur before the unmount of the old one.
+    // Putting the new instance at the start of this array ensures that calls to `getLayerHost` will immediately
+    // get the new one even if the old one is around briefly.
+    layerHosts.unshift(layerHost);
+}
+/**
+ * Unregisters a Layer Host from the associated hostId.
+ * @param hostId - Id of the layer host
+ * @param layerHost - layer host instance
+ */
+function unregisterLayerHost(hostId, layerHost) {
+    var layerHosts = _layerHostsById[hostId];
+    if (layerHosts) {
+        var idx = layerHosts.indexOf(layerHost);
+        if (idx >= 0) {
+            layerHosts.splice(idx, 1);
+        }
+        if (layerHosts.length === 0) {
+            delete _layerHostsById[hostId];
+        }
+    }
+}
+/**
+ * When no default layer host is provided, this function is executed to create the default host.
+ */
+function createDefaultLayerHost(doc) {
+    var host = doc.createElement('div');
+    host.setAttribute('id', defaultHostId);
+    host.style.cssText = 'position:fixed;z-index:1000000';
+    doc === null || doc === void 0 ? void 0 : doc.body.appendChild(host);
+    return host;
+}
+/**
+ * This function can be optionally called to clean up the default layer host as needed.
+ */
+function cleanupDefaultLayerHost(doc) {
+    var host = doc.querySelector("#".concat(defaultHostId));
+    if (host) {
+        doc.removeChild(host);
+    }
+}
+/**
+ * Used for notifying applicable Layers that a host is available/unavailable and to re-evaluate Layers that
+ * care about the specific host.
+ */
+function notifyHostChanged(id) {
+    if (_layersByHostId[id]) {
+        _layersByHostId[id].forEach(function (callback) { return callback(); });
+    }
+}
+/**
+ * Sets the default target selector to use when determining the host in which
+ * Layered content will be injected into. If not provided, an element will be
+ * created at the end of the document body.
+ *
+ * Passing in a falsy value will clear the default target and reset back to
+ * using a created element at the end of document body.
+ */
+function setDefaultTarget(selector) {
+    _defaultHostSelector = selector;
+}
+/**
+ * Get the default target selector when determining a host
+ */
+function getDefaultTarget() {
+    return _defaultHostSelector;
+}
+//# sourceMappingURL=Layer.notification.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Layer/Layer.styles.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Layer/Layer.styles.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getStyles: () => (/* binding */ getStyles)
+/* harmony export */ });
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+
+var GlobalClassNames = {
+    root: 'ms-Layer',
+    rootNoHost: 'ms-Layer--fixed',
+    content: 'ms-Layer-content',
+};
+var getStyles = function (props) {
+    var className = props.className, isNotHost = props.isNotHost, theme = props.theme;
+    var classNames = (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getGlobalClassNames)(GlobalClassNames, theme);
+    return {
+        root: [
+            classNames.root,
+            theme.fonts.medium,
+            isNotHost && [
+                classNames.rootNoHost,
+                {
+                    position: 'fixed',
+                    zIndex: _Styling__WEBPACK_IMPORTED_MODULE_0__.ZIndexes.Layer,
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    visibility: 'hidden',
+                },
+            ],
+            className,
+        ],
+        content: [
+            classNames.content,
+            {
+                visibility: 'visible',
+            },
+        ],
+    };
+};
+//# sourceMappingURL=Layer.styles.js.map
 
 /***/ }),
 
@@ -6409,6 +14804,813 @@ var adjustPropsForRootType = function (RootType, props) {
     return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({ target: target, href: href, disabled: disabled }, restProps);
 };
 //# sourceMappingURL=useLink.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Modal/Modal.base.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Modal/Modal.base.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ModalBase: () => (/* binding */ ModalBase)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/classNamesFunction.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/getPropsWithDefaults.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/EventGroup.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/scroll.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/KeyCodes.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/dom-utilities/lib/elementContains.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/css.js");
+/* harmony import */ var _FocusTrapZone__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../FocusTrapZone */ "./node_modules/@fluentui/react/lib/components/FocusTrapZone/FocusTrapZone.js");
+/* harmony import */ var _Modal_styles__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Modal.styles */ "./node_modules/@fluentui/react/lib/components/Modal/Modal.styles.js");
+/* harmony import */ var _Overlay__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../Overlay */ "./node_modules/@fluentui/react/lib/components/Overlay/Overlay.js");
+/* harmony import */ var _Layer__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../Layer */ "./node_modules/@fluentui/react/lib/components/Layer/Layer.js");
+/* harmony import */ var _Popup__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../Popup */ "./node_modules/@fluentui/react/lib/components/Popup/Popup.js");
+/* harmony import */ var _ResponsiveMode__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../ResponsiveMode */ "./node_modules/@fluentui/react/lib/utilities/hooks/useResponsiveMode.js");
+/* harmony import */ var _ResponsiveMode__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../ResponsiveMode */ "./node_modules/@fluentui/react/lib/utilities/decorators/withResponsiveMode.js");
+/* harmony import */ var _common_DirectionalHint__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../common/DirectionalHint */ "./node_modules/@fluentui/react/lib/common/DirectionalHint.js");
+/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../Icon */ "./node_modules/@fluentui/react/lib/components/Icon/Icon.js");
+/* harmony import */ var _utilities_DraggableZone_index__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../../utilities/DraggableZone/index */ "./node_modules/@fluentui/react/lib/utilities/DraggableZone/DraggableZone.js");
+/* harmony import */ var _fluentui_react_window_provider__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fluentui/react-window-provider */ "./node_modules/@fluentui/react-window-provider/lib/WindowProvider.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useMergedRefs.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useId.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useSetTimeout.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useBoolean.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useConst.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useUnmount.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useWarnings.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var ZERO = { x: 0, y: 0 };
+var DEFAULT_PROPS = {
+    isOpen: false,
+    isDarkOverlay: true,
+    className: '',
+    containerClassName: '',
+    enableAriaHiddenSiblings: true,
+};
+var getClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_1__.classNamesFunction)();
+var getMoveDelta = function (ev) {
+    var delta = 10;
+    if (ev.shiftKey) {
+        if (!ev.ctrlKey) {
+            delta = 50;
+        }
+    }
+    else if (ev.ctrlKey) {
+        delta = 1;
+    }
+    return delta;
+};
+var useComponentRef = function (props, focusTrapZone) {
+    react__WEBPACK_IMPORTED_MODULE_0__.useImperativeHandle(props.componentRef, function () { return ({
+        focus: function () {
+            if (focusTrapZone.current) {
+                focusTrapZone.current.focus();
+            }
+        },
+    }); }, [focusTrapZone]);
+};
+var ModalBase = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (propsWithoutDefaults, ref) {
+    var _a, _b, _c, _d, _e;
+    var props = (0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.getPropsWithDefaults)(DEFAULT_PROPS, propsWithoutDefaults);
+    var allowTouchBodyScroll = props.allowTouchBodyScroll, className = props.className, children = props.children, containerClassName = props.containerClassName, scrollableContentClassName = props.scrollableContentClassName, elementToFocusOnDismiss = props.elementToFocusOnDismiss, firstFocusableSelector = props.firstFocusableSelector, focusTrapZoneProps = props.focusTrapZoneProps, forceFocusInsideTrap = props.forceFocusInsideTrap, 
+    // eslint-disable-next-line deprecation/deprecation
+    _f = props.disableRestoreFocus, 
+    // eslint-disable-next-line deprecation/deprecation
+    disableRestoreFocus = _f === void 0 ? props.ignoreExternalFocusing : _f, isBlocking = props.isBlocking, isAlert = props.isAlert, isClickableOutsideFocusTrap = props.isClickableOutsideFocusTrap, isDarkOverlay = props.isDarkOverlay, onDismiss = props.onDismiss, layerProps = props.layerProps, overlay = props.overlay, isOpen = props.isOpen, titleAriaId = props.titleAriaId, styles = props.styles, subtitleAriaId = props.subtitleAriaId, theme = props.theme, topOffsetFixed = props.topOffsetFixed, responsiveMode = props.responsiveMode, 
+    // eslint-disable-next-line deprecation/deprecation
+    onLayerDidMount = props.onLayerDidMount, isModeless = props.isModeless, dragOptions = props.dragOptions, onDismissed = props.onDismissed, 
+    // eslint-disable-next-line deprecation/deprecation
+    enableAriaHiddenSiblings = props.enableAriaHiddenSiblings, popupProps = props.popupProps;
+    var rootRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+    var focusTrapZone = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+    var focusTrapZoneRef = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_3__.useMergedRefs)(focusTrapZone, focusTrapZoneProps === null || focusTrapZoneProps === void 0 ? void 0 : focusTrapZoneProps.componentRef);
+    var focusTrapZoneElm = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+    var mergedRef = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_3__.useMergedRefs)(rootRef, ref);
+    var modalResponsiveMode = (0,_ResponsiveMode__WEBPACK_IMPORTED_MODULE_4__.useResponsiveMode)(mergedRef);
+    var focusTrapZoneId = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_5__.useId)('ModalFocusTrapZone', focusTrapZoneProps === null || focusTrapZoneProps === void 0 ? void 0 : focusTrapZoneProps.id);
+    var win = (0,_fluentui_react_window_provider__WEBPACK_IMPORTED_MODULE_6__.useWindow)();
+    var _g = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_7__.useSetTimeout)(), setTimeout = _g.setTimeout, clearTimeout = _g.clearTimeout;
+    var _h = react__WEBPACK_IMPORTED_MODULE_0__.useState(isOpen), isModalOpen = _h[0], setIsModalOpen = _h[1];
+    var _j = react__WEBPACK_IMPORTED_MODULE_0__.useState(isOpen), isVisible = _j[0], setIsVisible = _j[1];
+    var _k = react__WEBPACK_IMPORTED_MODULE_0__.useState(ZERO), coordinates = _k[0], setCoordinates = _k[1];
+    var _l = react__WEBPACK_IMPORTED_MODULE_0__.useState(), modalRectangleTop = _l[0], setModalRectangleTop = _l[1];
+    var _m = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_8__.useBoolean)(false), isModalMenuOpen = _m[0], _o = _m[1], toggleModalMenuOpen = _o.toggle, setModalMenuClose = _o.setFalse;
+    var internalState = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_9__.useConst)(function () { return ({
+        onModalCloseTimer: 0,
+        allowTouchBodyScroll: allowTouchBodyScroll,
+        scrollableContent: null,
+        lastSetCoordinates: ZERO,
+        events: new _Utilities__WEBPACK_IMPORTED_MODULE_10__.EventGroup({}),
+    }); });
+    var keepInBounds = (dragOptions || {}).keepInBounds;
+    var isAlertRole = isAlert !== null && isAlert !== void 0 ? isAlert : (isBlocking && !isModeless);
+    var layerClassName = layerProps === undefined ? '' : layerProps.className;
+    var classNames = getClassNames(styles, {
+        theme: theme,
+        className: className,
+        containerClassName: containerClassName,
+        scrollableContentClassName: scrollableContentClassName,
+        isOpen: isOpen,
+        isVisible: isVisible,
+        hasBeenOpened: internalState.hasBeenOpened,
+        modalRectangleTop: modalRectangleTop,
+        topOffsetFixed: topOffsetFixed,
+        isModeless: isModeless,
+        layerClassName: layerClassName,
+        windowInnerHeight: win === null || win === void 0 ? void 0 : win.innerHeight,
+        isDefaultDragHandle: dragOptions && !dragOptions.dragHandleSelector,
+    });
+    var mergedLayerProps = (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_11__.__assign)({ eventBubblingEnabled: false }, layerProps), { onLayerDidMount: layerProps && layerProps.onLayerDidMount ? layerProps.onLayerDidMount : onLayerDidMount, insertFirst: (layerProps === null || layerProps === void 0 ? void 0 : layerProps.insertFirst) || isModeless, className: classNames.layer });
+    // Allow the user to scroll within the modal but not on the body
+    var allowScrollOnModal = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function (elt) {
+        if (elt) {
+            if (internalState.allowTouchBodyScroll) {
+                (0,_Utilities__WEBPACK_IMPORTED_MODULE_12__.allowOverscrollOnElement)(elt, internalState.events);
+            }
+            else {
+                (0,_Utilities__WEBPACK_IMPORTED_MODULE_12__.allowScrollOnElement)(elt, internalState.events);
+            }
+        }
+        else {
+            internalState.events.off(internalState.scrollableContent);
+        }
+        internalState.scrollableContent = elt;
+    }, [internalState]);
+    var registerInitialModalPosition = function () {
+        var dialogMain = focusTrapZoneElm.current;
+        var modalRectangle = dialogMain === null || dialogMain === void 0 ? void 0 : dialogMain.getBoundingClientRect();
+        if (modalRectangle) {
+            if (topOffsetFixed) {
+                setModalRectangleTop(modalRectangle.top);
+            }
+            if (keepInBounds) {
+                // x/y are unavailable in IE, so use the equivalent left/top
+                internalState.minPosition = { x: -modalRectangle.left, y: -modalRectangle.top };
+                internalState.maxPosition = { x: modalRectangle.left, y: modalRectangle.top };
+            }
+        }
+    };
+    /**
+     * Clamps an axis to a specified min and max position.
+     *
+     * @param axis A string that represents the axis (x/y).
+     * @param position The position on the axis.
+     */
+    var getClampedAxis = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function (axis, position) {
+        var minPosition = internalState.minPosition, maxPosition = internalState.maxPosition;
+        if (keepInBounds && minPosition && maxPosition) {
+            position = Math.max(minPosition[axis], position);
+            position = Math.min(maxPosition[axis], position);
+        }
+        return position;
+    }, [keepInBounds, internalState]);
+    var handleModalClose = function () {
+        var _a;
+        internalState.lastSetCoordinates = ZERO;
+        setModalMenuClose();
+        internalState.isInKeyboardMoveMode = false;
+        setIsModalOpen(false);
+        setCoordinates(ZERO);
+        (_a = internalState.disposeOnKeyUp) === null || _a === void 0 ? void 0 : _a.call(internalState);
+        onDismissed === null || onDismissed === void 0 ? void 0 : onDismissed();
+    };
+    var handleDragStart = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function () {
+        setModalMenuClose();
+        internalState.isInKeyboardMoveMode = false;
+    }, [internalState, setModalMenuClose]);
+    var handleDrag = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function (ev, dragData) {
+        setCoordinates(function (prevValue) { return ({
+            x: getClampedAxis('x', prevValue.x + dragData.delta.x),
+            y: getClampedAxis('y', prevValue.y + dragData.delta.y),
+        }); });
+    }, [getClampedAxis]);
+    var handleDragStop = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function () {
+        if (focusTrapZone.current) {
+            focusTrapZone.current.focus();
+        }
+    }, []);
+    var handleEnterKeyboardMoveMode = function () {
+        // We need a global handleKeyDown event when we are in the move mode so that we can
+        // handle the key presses and the components inside the modal do not get the events
+        var handleKeyDown = function (ev) {
+            // eslint-disable-next-line deprecation/deprecation
+            if (ev.altKey && ev.ctrlKey && ev.keyCode === _Utilities__WEBPACK_IMPORTED_MODULE_13__.KeyCodes.space) {
+                // CTRL + ALT + SPACE is handled during keyUp
+                ev.preventDefault();
+                ev.stopPropagation();
+                return;
+            }
+            // eslint-disable-next-line deprecation/deprecation
+            var newLocal = ev.altKey || ev.keyCode === _Utilities__WEBPACK_IMPORTED_MODULE_13__.KeyCodes.escape;
+            if (isModalMenuOpen && newLocal) {
+                setModalMenuClose();
+            }
+            // eslint-disable-next-line deprecation/deprecation
+            if (internalState.isInKeyboardMoveMode && (ev.keyCode === _Utilities__WEBPACK_IMPORTED_MODULE_13__.KeyCodes.escape || ev.keyCode === _Utilities__WEBPACK_IMPORTED_MODULE_13__.KeyCodes.enter)) {
+                internalState.isInKeyboardMoveMode = false;
+                ev.preventDefault();
+                ev.stopPropagation();
+            }
+            if (internalState.isInKeyboardMoveMode) {
+                var handledEvent = true;
+                var delta_1 = getMoveDelta(ev);
+                // eslint-disable-next-line deprecation/deprecation
+                switch (ev.keyCode) {
+                    /* eslint-disable no-fallthrough */
+                    case _Utilities__WEBPACK_IMPORTED_MODULE_13__.KeyCodes.escape:
+                        setCoordinates(internalState.lastSetCoordinates);
+                    case _Utilities__WEBPACK_IMPORTED_MODULE_13__.KeyCodes.enter: {
+                        // TODO: determine if fallthrough was intentional
+                        /* eslint-enable no-fallthrough */
+                        internalState.lastSetCoordinates = ZERO;
+                        // setIsInKeyboardMoveMode(false);
+                        break;
+                    }
+                    case _Utilities__WEBPACK_IMPORTED_MODULE_13__.KeyCodes.up: {
+                        setCoordinates(function (prevValue) { return ({ x: prevValue.x, y: getClampedAxis('y', prevValue.y - delta_1) }); });
+                        break;
+                    }
+                    case _Utilities__WEBPACK_IMPORTED_MODULE_13__.KeyCodes.down: {
+                        setCoordinates(function (prevValue) { return ({ x: prevValue.x, y: getClampedAxis('y', prevValue.y + delta_1) }); });
+                        break;
+                    }
+                    case _Utilities__WEBPACK_IMPORTED_MODULE_13__.KeyCodes.left: {
+                        setCoordinates(function (prevValue) { return ({ x: getClampedAxis('x', prevValue.x - delta_1), y: prevValue.y }); });
+                        break;
+                    }
+                    case _Utilities__WEBPACK_IMPORTED_MODULE_13__.KeyCodes.right: {
+                        setCoordinates(function (prevValue) { return ({ x: getClampedAxis('x', prevValue.x + delta_1), y: prevValue.y }); });
+                        break;
+                    }
+                    default: {
+                        handledEvent = false;
+                    }
+                }
+                if (handledEvent) {
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                }
+            }
+        };
+        internalState.lastSetCoordinates = coordinates;
+        setModalMenuClose();
+        internalState.isInKeyboardMoveMode = true;
+        internalState.events.on(win, 'keydown', handleKeyDown, true /* useCapture */);
+        internalState.disposeOnKeyDown = function () {
+            internalState.events.off(win, 'keydown', handleKeyDown, true /* useCapture */);
+            internalState.disposeOnKeyDown = undefined;
+        };
+    };
+    var handleExitKeyboardMoveMode = function (ev) {
+        var _a, _b;
+        (_a = focusTrapZoneProps === null || focusTrapZoneProps === void 0 ? void 0 : focusTrapZoneProps.onBlur) === null || _a === void 0 ? void 0 : _a.call(focusTrapZoneProps, ev);
+        internalState.lastSetCoordinates = ZERO;
+        internalState.isInKeyboardMoveMode = false;
+        (_b = internalState.disposeOnKeyDown) === null || _b === void 0 ? void 0 : _b.call(internalState);
+    };
+    var registerForKeyUp = function () {
+        var handleKeyUp = function (ev) {
+            // Needs to handle the CTRL + ALT + SPACE key during keyup due to FireFox bug:
+            // https://bugzilla.mozilla.org/show_bug.cgi?id=1220143
+            // eslint-disable-next-line deprecation/deprecation
+            if (ev.altKey && ev.ctrlKey && ev.keyCode === _Utilities__WEBPACK_IMPORTED_MODULE_13__.KeyCodes.space) {
+                if ((0,_Utilities__WEBPACK_IMPORTED_MODULE_14__.elementContains)(internalState.scrollableContent, ev.target)) {
+                    toggleModalMenuOpen();
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                }
+            }
+        };
+        if (!internalState.disposeOnKeyUp) {
+            internalState.events.on(win, 'keyup', handleKeyUp, true /* useCapture */);
+            internalState.disposeOnKeyUp = function () {
+                internalState.events.off(win, 'keyup', handleKeyUp, true /* useCapture */);
+                internalState.disposeOnKeyUp = undefined;
+            };
+        }
+    };
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        clearTimeout(internalState.onModalCloseTimer);
+        // Opening the dialog
+        if (isOpen) {
+            // This must be done after the modal content has rendered
+            requestAnimationFrame(function () { return setTimeout(registerInitialModalPosition, 0); });
+            setIsModalOpen(true);
+            // Add a keyUp handler for all key up events once the dialog is open.
+            if (dragOptions) {
+                registerForKeyUp();
+            }
+            internalState.hasBeenOpened = true;
+            setIsVisible(true);
+        }
+        // Closing the dialog
+        if (!isOpen && isModalOpen) {
+            internalState.onModalCloseTimer = setTimeout(handleModalClose, parseFloat(_Modal_styles__WEBPACK_IMPORTED_MODULE_15__.animationDuration) * 1000);
+            setIsVisible(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- should only run if isModalOpen or isOpen mutates.
+    }, [isModalOpen, isOpen]);
+    (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_16__.useUnmount)(function () {
+        internalState.events.dispose();
+    });
+    useComponentRef(props, focusTrapZone);
+    useDebugWarnings(props);
+    var modalContent = (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_FocusTrapZone__WEBPACK_IMPORTED_MODULE_17__.FocusTrapZone, (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__assign)({}, focusTrapZoneProps, { id: focusTrapZoneId, ref: focusTrapZoneElm, componentRef: focusTrapZoneRef, className: (0,_Utilities__WEBPACK_IMPORTED_MODULE_18__.css)(classNames.main, focusTrapZoneProps === null || focusTrapZoneProps === void 0 ? void 0 : focusTrapZoneProps.className), elementToFocusOnDismiss: (_a = focusTrapZoneProps === null || focusTrapZoneProps === void 0 ? void 0 : focusTrapZoneProps.elementToFocusOnDismiss) !== null && _a !== void 0 ? _a : elementToFocusOnDismiss, isClickableOutsideFocusTrap: (_b = focusTrapZoneProps === null || focusTrapZoneProps === void 0 ? void 0 : focusTrapZoneProps.isClickableOutsideFocusTrap) !== null && _b !== void 0 ? _b : (isModeless || isClickableOutsideFocusTrap || !isBlocking), disableRestoreFocus: (_c = focusTrapZoneProps === null || focusTrapZoneProps === void 0 ? void 0 : focusTrapZoneProps.disableRestoreFocus) !== null && _c !== void 0 ? _c : disableRestoreFocus, forceFocusInsideTrap: ((_d = focusTrapZoneProps === null || focusTrapZoneProps === void 0 ? void 0 : focusTrapZoneProps.forceFocusInsideTrap) !== null && _d !== void 0 ? _d : forceFocusInsideTrap) && !isModeless, 
+        // eslint-disable-next-line deprecation/deprecation
+        firstFocusableSelector: (focusTrapZoneProps === null || focusTrapZoneProps === void 0 ? void 0 : focusTrapZoneProps.firstFocusableSelector) || firstFocusableSelector, focusPreviouslyFocusedInnerElement: (_e = focusTrapZoneProps === null || focusTrapZoneProps === void 0 ? void 0 : focusTrapZoneProps.focusPreviouslyFocusedInnerElement) !== null && _e !== void 0 ? _e : true, onBlur: internalState.isInKeyboardMoveMode ? handleExitKeyboardMoveMode : undefined }),
+        dragOptions && internalState.isInKeyboardMoveMode && (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: classNames.keyboardMoveIconContainer }, dragOptions.keyboardMoveIconProps ? (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Icon__WEBPACK_IMPORTED_MODULE_19__.Icon, (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__assign)({}, dragOptions.keyboardMoveIconProps))) : (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Icon__WEBPACK_IMPORTED_MODULE_19__.Icon, { iconName: "move", className: classNames.keyboardMoveIcon })))),
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: allowScrollOnModal, className: classNames.scrollableContent, "data-is-scrollable": true },
+            dragOptions && isModalMenuOpen && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(dragOptions.menu, { items: [
+                    { key: 'move', text: dragOptions.moveMenuItemText, onClick: handleEnterKeyboardMoveMode },
+                    { key: 'close', text: dragOptions.closeMenuItemText, onClick: handleModalClose },
+                ], onDismiss: setModalMenuClose, alignTargetEdge: true, coverTarget: true, directionalHint: _common_DirectionalHint__WEBPACK_IMPORTED_MODULE_20__.DirectionalHint.topLeftEdge, directionalHintFixed: true, shouldFocusOnMount: true, target: internalState.scrollableContent })),
+            children)));
+    return ((isModalOpen && modalResponsiveMode >= (responsiveMode || _ResponsiveMode__WEBPACK_IMPORTED_MODULE_21__.ResponsiveMode.small) && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Layer__WEBPACK_IMPORTED_MODULE_22__.Layer, (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__assign)({ ref: mergedRef }, mergedLayerProps),
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Popup__WEBPACK_IMPORTED_MODULE_23__.Popup, (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__assign)({ role: isAlertRole ? 'alertdialog' : 'dialog', ariaLabelledBy: titleAriaId, ariaDescribedBy: subtitleAriaId, onDismiss: onDismiss, shouldRestoreFocus: !disableRestoreFocus, 
+            // Modeless modals shouldn't hide siblings.
+            // Popup will automatically handle this based on the aria-modal setting.
+            enableAriaHiddenSiblings: enableAriaHiddenSiblings, "aria-modal": !isModeless }, popupProps),
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: classNames.root, role: !isModeless ? 'document' : undefined },
+                !isModeless && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Overlay__WEBPACK_IMPORTED_MODULE_24__.Overlay, (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__assign)({ "aria-hidden": true, isDarkThemed: isDarkOverlay, onClick: isBlocking ? undefined : onDismiss, allowTouchBodyScroll: allowTouchBodyScroll }, overlay))),
+                dragOptions ? (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_utilities_DraggableZone_index__WEBPACK_IMPORTED_MODULE_25__.DraggableZone, { handleSelector: dragOptions.dragHandleSelector || "#".concat(focusTrapZoneId), preventDragSelector: "button", onStart: handleDragStart, onDragChange: handleDrag, onStop: handleDragStop, position: coordinates }, modalContent)) : (modalContent)))))) ||
+        null);
+});
+ModalBase.displayName = 'Modal';
+function useDebugWarnings(props) {
+    if (true) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks -- build-time conditional
+        (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_26__.useWarnings)({
+            name: 'Modal',
+            props: props,
+            deprecations: { onLayerDidMount: 'layerProps.onLayerDidMount' },
+        });
+    }
+}
+//# sourceMappingURL=Modal.base.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Modal/Modal.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Modal/Modal.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Modal: () => (/* binding */ Modal)
+/* harmony export */ });
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/styled.js");
+/* harmony import */ var _Modal_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Modal.base */ "./node_modules/@fluentui/react/lib/components/Modal/Modal.base.js");
+/* harmony import */ var _Modal_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Modal.styles */ "./node_modules/@fluentui/react/lib/components/Modal/Modal.styles.js");
+
+
+
+var Modal = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.styled)(_Modal_base__WEBPACK_IMPORTED_MODULE_1__.ModalBase, _Modal_styles__WEBPACK_IMPORTED_MODULE_2__.getStyles, undefined, {
+    scope: 'Modal',
+    fields: ['theme', 'styles', 'enableAriaHiddenSiblings'],
+});
+Modal.displayName = 'Modal';
+//# sourceMappingURL=Modal.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Modal/Modal.styles.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Modal/Modal.styles.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   animationDuration: () => (/* binding */ animationDuration),
+/* harmony export */   getStyles: () => (/* binding */ getStyles)
+/* harmony export */ });
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+
+var animationDuration = _Styling__WEBPACK_IMPORTED_MODULE_0__.AnimationVariables.durationValue2;
+var globalClassNames = {
+    root: 'ms-Modal',
+    main: 'ms-Dialog-main',
+    scrollableContent: 'ms-Modal-scrollableContent',
+    isOpen: 'is-open',
+    layer: 'ms-Modal-Layer',
+};
+var getStyles = function (props) {
+    var _a;
+    var className = props.className, containerClassName = props.containerClassName, scrollableContentClassName = props.scrollableContentClassName, isOpen = props.isOpen, isVisible = props.isVisible, hasBeenOpened = props.hasBeenOpened, modalRectangleTop = props.modalRectangleTop, theme = props.theme, topOffsetFixed = props.topOffsetFixed, isModeless = props.isModeless, layerClassName = props.layerClassName, isDefaultDragHandle = props.isDefaultDragHandle, windowInnerHeight = props.windowInnerHeight;
+    var palette = theme.palette, effects = theme.effects, fonts = theme.fonts;
+    var classNames = (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getGlobalClassNames)(globalClassNames, theme);
+    return {
+        root: [
+            classNames.root,
+            fonts.medium,
+            {
+                backgroundColor: 'transparent',
+                position: 'fixed',
+                height: '100%',
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                opacity: 0,
+                pointerEvents: 'none',
+                transition: "opacity ".concat(animationDuration),
+            },
+            topOffsetFixed &&
+                typeof modalRectangleTop === 'number' &&
+                hasBeenOpened && {
+                alignItems: 'flex-start',
+            },
+            isOpen && classNames.isOpen,
+            isVisible && {
+                opacity: 1,
+            },
+            isVisible &&
+                !isModeless && {
+                pointerEvents: 'auto',
+            },
+            className,
+        ],
+        main: [
+            classNames.main,
+            {
+                boxShadow: effects.elevation64,
+                borderRadius: effects.roundedCorner2,
+                backgroundColor: palette.white,
+                boxSizing: 'border-box',
+                position: 'relative',
+                textAlign: 'left',
+                outline: '3px solid transparent',
+                maxHeight: 'calc(100% - 32px)',
+                maxWidth: 'calc(100% - 32px)',
+                minHeight: '176px',
+                minWidth: '288px',
+                overflowY: 'auto',
+                zIndex: isModeless ? _Styling__WEBPACK_IMPORTED_MODULE_0__.ZIndexes.Layer : undefined,
+            },
+            isModeless && {
+                pointerEvents: 'auto',
+            },
+            topOffsetFixed &&
+                typeof modalRectangleTop === 'number' &&
+                hasBeenOpened && {
+                top: modalRectangleTop,
+            },
+            isDefaultDragHandle && {
+                cursor: 'move',
+            },
+            containerClassName,
+        ],
+        scrollableContent: [
+            classNames.scrollableContent,
+            {
+                overflowY: 'auto',
+                flexGrow: 1,
+                maxHeight: '100vh',
+                selectors: (_a = {},
+                    _a['@supports (-webkit-overflow-scrolling: touch)'] = {
+                        maxHeight: windowInnerHeight,
+                    },
+                    _a),
+            },
+            scrollableContentClassName,
+        ],
+        layer: isModeless && [layerClassName, classNames.layer, { pointerEvents: 'none' }],
+        keyboardMoveIconContainer: {
+            position: 'absolute',
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%',
+            padding: '3px 0px',
+        },
+        keyboardMoveIcon: {
+            // eslint-disable-next-line deprecation/deprecation
+            fontSize: fonts.xLargePlus.fontSize,
+            width: '24px',
+        },
+    };
+};
+//# sourceMappingURL=Modal.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Overlay/Overlay.base.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Overlay/Overlay.base.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   OverlayBase: () => (/* binding */ OverlayBase)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/classNamesFunction.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/initializeComponentRef.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/scroll.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/properties.js");
+
+
+
+var getClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_1__.classNamesFunction)();
+var OverlayBase = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__extends)(OverlayBase, _super);
+    function OverlayBase(props) {
+        var _this = _super.call(this, props) || this;
+        (0,_Utilities__WEBPACK_IMPORTED_MODULE_3__.initializeComponentRef)(_this);
+        var _a = _this.props.allowTouchBodyScroll, allowTouchBodyScroll = _a === void 0 ? false : _a;
+        _this._allowTouchBodyScroll = allowTouchBodyScroll;
+        return _this;
+    }
+    OverlayBase.prototype.componentDidMount = function () {
+        !this._allowTouchBodyScroll && (0,_Utilities__WEBPACK_IMPORTED_MODULE_4__.disableBodyScroll)();
+    };
+    OverlayBase.prototype.componentWillUnmount = function () {
+        !this._allowTouchBodyScroll && (0,_Utilities__WEBPACK_IMPORTED_MODULE_4__.enableBodyScroll)();
+    };
+    OverlayBase.prototype.render = function () {
+        var _a = this.props, isDark = _a.isDarkThemed, className = _a.className, theme = _a.theme, styles = _a.styles;
+        var divProps = (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.getNativeProps)(this.props, _Utilities__WEBPACK_IMPORTED_MODULE_5__.divProperties);
+        var classNames = getClassNames(styles, {
+            theme: theme,
+            className: className,
+            isDark: isDark,
+        });
+        return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({}, divProps, { className: classNames.root }));
+    };
+    return OverlayBase;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+//# sourceMappingURL=Overlay.base.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Overlay/Overlay.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Overlay/Overlay.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Overlay: () => (/* binding */ Overlay)
+/* harmony export */ });
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/styled.js");
+/* harmony import */ var _Overlay_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Overlay.base */ "./node_modules/@fluentui/react/lib/components/Overlay/Overlay.base.js");
+/* harmony import */ var _Overlay_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Overlay.styles */ "./node_modules/@fluentui/react/lib/components/Overlay/Overlay.styles.js");
+
+
+
+var Overlay = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.styled)(_Overlay_base__WEBPACK_IMPORTED_MODULE_1__.OverlayBase, _Overlay_styles__WEBPACK_IMPORTED_MODULE_2__.getStyles, undefined, {
+    scope: 'Overlay',
+});
+//# sourceMappingURL=Overlay.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Overlay/Overlay.styles.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Overlay/Overlay.styles.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getStyles: () => (/* binding */ getStyles)
+/* harmony export */ });
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+
+var GlobalClassNames = {
+    root: 'ms-Overlay',
+    rootDark: 'ms-Overlay--dark',
+};
+var getStyles = function (props) {
+    var _a;
+    var className = props.className, theme = props.theme, isNone = props.isNone, isDark = props.isDark;
+    var palette = theme.palette;
+    var classNames = (0,_Styling__WEBPACK_IMPORTED_MODULE_0__.getGlobalClassNames)(GlobalClassNames, theme);
+    return {
+        root: [
+            classNames.root,
+            theme.fonts.medium,
+            {
+                backgroundColor: palette.whiteTranslucent40,
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0,
+                position: 'absolute',
+                selectors: (_a = {},
+                    _a[_Styling__WEBPACK_IMPORTED_MODULE_0__.HighContrastSelector] = {
+                        border: '1px solid WindowText',
+                        opacity: 0,
+                    },
+                    _a),
+            },
+            isNone && {
+                visibility: 'hidden',
+            },
+            isDark && [
+                classNames.rootDark,
+                {
+                    backgroundColor: palette.blackTranslucent40,
+                },
+            ],
+            className,
+        ],
+    };
+};
+//# sourceMappingURL=Overlay.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/components/Popup/Popup.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/components/Popup/Popup.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Popup: () => (/* binding */ Popup)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/dom/getWindow.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/dom/getDocument.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/focus.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/modalize.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/getPropsWithDefaults.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/KeyCodes.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/properties.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useAsync.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useOnEvent.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useMergedRefs.js");
+/* harmony import */ var _fluentui_react_window_provider__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @fluentui/react-window-provider */ "./node_modules/@fluentui/react-window-provider/lib/WindowProvider.js");
+
+
+
+
+
+function useScrollbarAsync(props, root) {
+    var async = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_1__.useAsync)();
+    var _a = react__WEBPACK_IMPORTED_MODULE_0__.useState(false), needsVerticalScrollBarState = _a[0], setNeedsVerticalScrollBar = _a[1];
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        async.requestAnimationFrame(function () {
+            var _a;
+            // If overflowY is overridden, don't waste time calculating whether the scrollbar is necessary.
+            if (props.style && props.style.overflowY) {
+                return;
+            }
+            var needsVerticalScrollBar = false;
+            if (root && root.current && ((_a = root.current) === null || _a === void 0 ? void 0 : _a.firstElementChild)) {
+                // ClientHeight returns the client height of an element rounded to an
+                // integer. On some browsers at different zoom levels this rounding
+                // can generate different results for the root container and child even
+                // though they are the same height. This causes us to show a scroll bar
+                // when not needed. Ideally we would use BoundingClientRect().height
+                // instead however seems that the API is 90% slower than using ClientHeight.
+                // Therefore instead we will calculate the difference between heights and
+                // allow for a 1px difference to still be considered ok and not show the
+                // scroll bar.
+                var rootHeight = root.current.clientHeight;
+                var firstChildHeight = root.current.firstElementChild.clientHeight;
+                if (rootHeight > 0 && firstChildHeight > rootHeight) {
+                    needsVerticalScrollBar = firstChildHeight - rootHeight > 1;
+                }
+            }
+            if (needsVerticalScrollBarState !== needsVerticalScrollBar) {
+                setNeedsVerticalScrollBar(needsVerticalScrollBar);
+            }
+        });
+        return function () { return async.dispose(); };
+    });
+    return needsVerticalScrollBarState;
+}
+function defaultFocusRestorer(options) {
+    var originalElement = options.originalElement, containsFocus = options.containsFocus;
+    if (originalElement && containsFocus && originalElement !== (0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.getWindow)()) {
+        // Make sure that the focus method actually exists
+        // In some cases the object might exist but not be a real element.
+        // This is primarily for IE 11 and should be removed once IE 11 is no longer in use.
+        // This is wrapped in a setTimeout because of a React 16 bug that is resolved in 17.
+        // Once we move to 17, the setTimeout should be removed (ref: https://github.com/facebook/react/issues/17894#issuecomment-656094405)
+        setTimeout(function () {
+            var _a;
+            (_a = originalElement.focus) === null || _a === void 0 ? void 0 : _a.call(originalElement);
+        }, 0);
+    }
+}
+function useRestoreFocus(props, root) {
+    var _a = props.onRestoreFocus, onRestoreFocus = _a === void 0 ? defaultFocusRestorer : _a;
+    var originalFocusedElement = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
+    var containsFocus = react__WEBPACK_IMPORTED_MODULE_0__.useRef(false);
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        originalFocusedElement.current = (0,_Utilities__WEBPACK_IMPORTED_MODULE_3__.getDocument)().activeElement;
+        if ((0,_Utilities__WEBPACK_IMPORTED_MODULE_4__.doesElementContainFocus)(root.current)) {
+            containsFocus.current = true;
+        }
+        return function () {
+            var _a;
+            onRestoreFocus === null || onRestoreFocus === void 0 ? void 0 : onRestoreFocus({
+                originalElement: originalFocusedElement.current,
+                containsFocus: containsFocus.current,
+                documentContainsFocus: ((_a = (0,_Utilities__WEBPACK_IMPORTED_MODULE_3__.getDocument)()) === null || _a === void 0 ? void 0 : _a.hasFocus()) || false,
+            });
+            // De-reference DOM Node to avoid retainment via transpiled closure of _onKeyDown
+            originalFocusedElement.current = undefined;
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- should only run on first render
+    }, []);
+    (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_5__.useOnEvent)(root, 'focus', react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function () {
+        containsFocus.current = true;
+    }, []), true);
+    (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_5__.useOnEvent)(root, 'blur', react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function (ev) {
+        /** The popup should update this._containsFocus when:
+         * relatedTarget exists AND
+         * the relatedTarget is not contained within the popup.
+         * If the relatedTarget is within the popup, that means the popup still has focus
+         * and focused moved from one element to another within the popup.
+         * If relatedTarget is undefined or null that usually means that a
+         * keyboard event occurred and focus didn't change
+         */
+        if (root.current && ev.relatedTarget && !root.current.contains(ev.relatedTarget)) {
+            containsFocus.current = false;
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- should only run on first render
+    }, []), true);
+}
+function useHideSiblingNodes(props, root) {
+    // eslint-disable-next-line deprecation/deprecation
+    var shouldHideSiblings = String(props['aria-modal']).toLowerCase() === 'true' && props.enableAriaHiddenSiblings;
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        if (!(shouldHideSiblings && root.current)) {
+            return;
+        }
+        var unmodalize = (0,_Utilities__WEBPACK_IMPORTED_MODULE_6__.modalize)(root.current);
+        return unmodalize;
+    }, [root, shouldHideSiblings]);
+}
+/**
+ * This adds accessibility to Dialog and Panel controls
+ */
+var Popup = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (propsWithoutDefaults, forwardedRef) {
+    var props = (0,_Utilities__WEBPACK_IMPORTED_MODULE_7__.getPropsWithDefaults)({ shouldRestoreFocus: true, enableAriaHiddenSiblings: true }, propsWithoutDefaults);
+    var root = react__WEBPACK_IMPORTED_MODULE_0__.useRef();
+    var mergedRootRef = (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_8__.useMergedRefs)(root, forwardedRef);
+    useHideSiblingNodes(props, root);
+    useRestoreFocus(props, root);
+    var role = props.role, className = props.className, ariaLabel = props.ariaLabel, ariaLabelledBy = props.ariaLabelledBy, ariaDescribedBy = props.ariaDescribedBy, style = props.style, children = props.children, onDismiss = props.onDismiss;
+    var needsVerticalScrollBar = useScrollbarAsync(props, root);
+    var onKeyDown = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function (ev) {
+        // eslint-disable-next-line deprecation/deprecation
+        switch (ev.which) {
+            case _Utilities__WEBPACK_IMPORTED_MODULE_9__.KeyCodes.escape:
+                if (onDismiss) {
+                    onDismiss(ev);
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                }
+                break;
+        }
+    }, [onDismiss]);
+    var win = (0,_fluentui_react_window_provider__WEBPACK_IMPORTED_MODULE_10__.useWindow)();
+    (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_5__.useOnEvent)(win, 'keydown', onKeyDown);
+    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__assign)({ ref: mergedRootRef }, (0,_Utilities__WEBPACK_IMPORTED_MODULE_12__.getNativeProps)(props, _Utilities__WEBPACK_IMPORTED_MODULE_12__.divProperties), { className: className, role: role, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, "aria-describedby": ariaDescribedBy, onKeyDown: onKeyDown, style: (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__assign)({ overflowY: needsVerticalScrollBar ? 'scroll' : undefined, outline: 'none' }, style) }), children));
+});
+Popup.displayName = 'Popup';
+//# sourceMappingURL=Popup.js.map
 
 /***/ }),
 
@@ -6820,6 +16022,356 @@ var getStyles = function (props) {
     };
 };
 //# sourceMappingURL=Toggle.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/utilities/DraggableZone/DraggableZone.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/utilities/DraggableZone/DraggableZone.js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DraggableZone: () => (/* binding */ DraggableZone)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _DraggableZone_styles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DraggableZone.styles */ "./node_modules/@fluentui/react/lib/utilities/DraggableZone/DraggableZone.styles.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/dom/on.js");
+/* harmony import */ var _fluentui_react_window_provider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fluentui/react-window-provider */ "./node_modules/@fluentui/react-window-provider/lib/WindowProvider.js");
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../dom */ "./node_modules/@fluentui/react/lib/utilities/dom.js");
+
+
+
+
+
+
+var eventMapping = {
+    touch: {
+        start: 'touchstart',
+        move: 'touchmove',
+        stop: 'touchend',
+    },
+    mouse: {
+        start: 'mousedown',
+        move: 'mousemove',
+        stop: 'mouseup',
+    },
+};
+var DraggableZone = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(DraggableZone, _super);
+    function DraggableZone(props) {
+        var _this = _super.call(this, props) || this;
+        _this._currentEventType = eventMapping.mouse;
+        _this._events = [];
+        _this._onMouseDown = function (event) {
+            var onMouseDown = react__WEBPACK_IMPORTED_MODULE_0__.Children.only(_this.props.children).props.onMouseDown;
+            if (onMouseDown) {
+                onMouseDown(event);
+            }
+            _this._currentEventType = eventMapping.mouse;
+            return _this._onDragStart(event);
+        };
+        _this._onMouseUp = function (event) {
+            var onMouseUp = react__WEBPACK_IMPORTED_MODULE_0__.Children.only(_this.props.children).props.onMouseUp;
+            if (onMouseUp) {
+                onMouseUp(event);
+            }
+            _this._currentEventType = eventMapping.mouse;
+            return _this._onDragStop(event);
+        };
+        _this._onTouchStart = function (event) {
+            var onTouchStart = react__WEBPACK_IMPORTED_MODULE_0__.Children.only(_this.props.children).props.onTouchStart;
+            if (onTouchStart) {
+                onTouchStart(event);
+            }
+            _this._currentEventType = eventMapping.touch;
+            return _this._onDragStart(event);
+        };
+        _this._onTouchEnd = function (event) {
+            var onTouchEnd = react__WEBPACK_IMPORTED_MODULE_0__.Children.only(_this.props.children).props.onTouchEnd;
+            if (onTouchEnd) {
+                onTouchEnd(event);
+            }
+            _this._currentEventType = eventMapping.touch;
+            _this._onDragStop(event);
+        };
+        _this._onDragStart = function (event) {
+            // Only handle left click for dragging
+            if (typeof event.button === 'number' && event.button !== 0) {
+                return false;
+            }
+            // If the target doesn't match the handleSelector OR
+            // if the target does match the preventDragSelector, bail out
+            if ((_this.props.handleSelector && !_this._matchesSelector(event.target, _this.props.handleSelector)) ||
+                (_this.props.preventDragSelector &&
+                    _this._matchesSelector(event.target, _this.props.preventDragSelector))) {
+                return;
+            }
+            // Remember the touch identifier if this is a touch event so we can
+            // distinguish between individual touches in multitouch scenarios
+            // by remembering which touch point we were given
+            _this._touchId = _this._getTouchId(event);
+            var position = _this._getControlPosition(event);
+            if (position === undefined) {
+                return;
+            }
+            var dragData = _this._createDragDataFromPosition(position);
+            _this.props.onStart && _this.props.onStart(event, dragData);
+            _this.setState({
+                isDragging: true,
+                lastPosition: position,
+            });
+            // hook up the appropriate mouse/touch events to the body to ensure
+            // smooth dragging
+            var doc = (0,_dom__WEBPACK_IMPORTED_MODULE_2__.getDocumentEx)(_this.context);
+            _this._events = [
+                (0,_Utilities__WEBPACK_IMPORTED_MODULE_3__.on)(doc.body, _this._currentEventType.move, _this._onDrag, true /* use capture phase */),
+                (0,_Utilities__WEBPACK_IMPORTED_MODULE_3__.on)(doc.body, _this._currentEventType.stop, _this._onDragStop, true /* use capture phase */),
+            ];
+        };
+        _this._onDrag = function (event) {
+            // Prevent scrolling on mobile devices
+            if (event.type === 'touchmove') {
+                event.preventDefault();
+            }
+            var position = _this._getControlPosition(event);
+            if (!position) {
+                return;
+            }
+            // create the updated drag data from the position data
+            var updatedData = _this._createUpdatedDragData(_this._createDragDataFromPosition(position));
+            var updatedPosition = updatedData.position;
+            _this.props.onDragChange && _this.props.onDragChange(event, updatedData);
+            _this.setState({
+                position: updatedPosition,
+                lastPosition: position,
+            });
+        };
+        _this._onDragStop = function (event) {
+            if (!_this.state.isDragging) {
+                return;
+            }
+            var position = _this._getControlPosition(event);
+            if (!position) {
+                return;
+            }
+            var baseDragData = _this._createDragDataFromPosition(position);
+            // Set dragging to false and reset the lastPosition
+            _this.setState({
+                isDragging: false,
+                lastPosition: undefined,
+            });
+            _this.props.onStop && _this.props.onStop(event, baseDragData);
+            if (_this.props.position) {
+                _this.setState({
+                    position: _this.props.position,
+                });
+            }
+            // Remove event handlers
+            _this._events.forEach(function (dispose) { return dispose(); });
+        };
+        _this.state = {
+            isDragging: false,
+            position: _this.props.position || { x: 0, y: 0 },
+            lastPosition: undefined,
+        };
+        return _this;
+    }
+    DraggableZone.prototype.componentDidUpdate = function (prevProps) {
+        if (this.props.position && (!prevProps.position || this.props.position !== prevProps.position)) {
+            this.setState({ position: this.props.position });
+        }
+    };
+    DraggableZone.prototype.componentWillUnmount = function () {
+        this._events.forEach(function (dispose) { return dispose(); });
+    };
+    DraggableZone.prototype.render = function () {
+        var child = react__WEBPACK_IMPORTED_MODULE_0__.Children.only(this.props.children);
+        var props = child.props;
+        var position = this.props.position;
+        var _a = this.state, statePosition = _a.position, isDragging = _a.isDragging;
+        var x = statePosition.x;
+        var y = statePosition.y;
+        if (position && !isDragging) {
+            x = position.x;
+            y = position.y;
+        }
+        return react__WEBPACK_IMPORTED_MODULE_0__.cloneElement(child, {
+            style: (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, props.style), { transform: "translate(".concat(x, "px, ").concat(y, "px)") }),
+            className: (0,_DraggableZone_styles__WEBPACK_IMPORTED_MODULE_4__.getClassNames)(props.className, this.state.isDragging).root,
+            onMouseDown: this._onMouseDown,
+            onMouseUp: this._onMouseUp,
+            onTouchStart: this._onTouchStart,
+            onTouchEnd: this._onTouchEnd,
+        });
+    };
+    /**
+     * Get the control position based off the event that fired
+     * @param event - The event to get offsets from
+     */
+    DraggableZone.prototype._getControlPosition = function (event) {
+        var touchObj = this._getActiveTouch(event);
+        // did we get the right touch?
+        if (this._touchId !== undefined && !touchObj) {
+            return undefined;
+        }
+        var eventToGetOffset = touchObj || event;
+        return {
+            x: eventToGetOffset.clientX,
+            y: eventToGetOffset.clientY,
+        };
+    };
+    /**
+     * Get the active touch point that we have saved from the event's TouchList
+     * @param event - The event used to get the TouchList for the active touch point
+     */
+    DraggableZone.prototype._getActiveTouch = function (event) {
+        return ((event.targetTouches && this._findTouchInTouchList(event.targetTouches)) ||
+            (event.changedTouches && this._findTouchInTouchList(event.changedTouches)));
+    };
+    /**
+     * Get the initial touch identifier associated with the given event
+     * @param event - The event that contains the TouchList
+     */
+    DraggableZone.prototype._getTouchId = function (event) {
+        var touch = (event.targetTouches && event.targetTouches[0]) || (event.changedTouches && event.changedTouches[0]);
+        if (touch) {
+            return touch.identifier;
+        }
+    };
+    /**
+     * Returns if an element (or any of the element's parents) match the given selector
+     */
+    DraggableZone.prototype._matchesSelector = function (element, selector) {
+        var _a;
+        if (!element || element === ((_a = (0,_dom__WEBPACK_IMPORTED_MODULE_2__.getDocumentEx)(this.context)) === null || _a === void 0 ? void 0 : _a.body)) {
+            return false;
+        }
+        var matchesSelectorFn = 
+        // eslint-disable-next-line deprecation/deprecation
+        element.matches || element.webkitMatchesSelector || element.msMatchesSelector; /* for IE */
+        if (!matchesSelectorFn) {
+            return false;
+        }
+        return matchesSelectorFn.call(element, selector) || this._matchesSelector(element.parentElement, selector);
+    };
+    /**
+     * Attempts to find the Touch that matches the identifier  we stored in dragStart
+     * @param touchList The TouchList to look for the stored identifier from dragStart
+     */
+    DraggableZone.prototype._findTouchInTouchList = function (touchList) {
+        if (this._touchId === undefined) {
+            return;
+        }
+        for (var i = 0; i < touchList.length; i++) {
+            if (touchList[i].identifier === this._touchId) {
+                return touchList[i];
+            }
+        }
+        return undefined;
+    };
+    /**
+     * Create DragData based off of the last known position and the new position passed in
+     * @param position The new position as part of the drag
+     */
+    DraggableZone.prototype._createDragDataFromPosition = function (position) {
+        var lastPosition = this.state.lastPosition;
+        // If we have no lastPosition, use the given position
+        // for last position
+        if (lastPosition === undefined) {
+            return {
+                delta: { x: 0, y: 0 },
+                lastPosition: position,
+                position: position,
+            };
+        }
+        return {
+            delta: {
+                x: position.x - lastPosition.x,
+                y: position.y - lastPosition.y,
+            },
+            lastPosition: lastPosition,
+            position: position,
+        };
+    };
+    /**
+     * Creates an updated DragData based off the current position and given baseDragData
+     * @param baseDragData The base DragData (from _createDragDataFromPosition) used to calculate the updated positions
+     */
+    DraggableZone.prototype._createUpdatedDragData = function (baseDragData) {
+        var position = this.state.position;
+        return {
+            position: {
+                x: position.x + baseDragData.delta.x,
+                y: position.y + baseDragData.delta.y,
+            },
+            delta: baseDragData.delta,
+            lastPosition: position,
+        };
+    };
+    DraggableZone.contextType = _fluentui_react_window_provider__WEBPACK_IMPORTED_MODULE_5__.WindowContext;
+    return DraggableZone;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+//# sourceMappingURL=DraggableZone.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/utilities/DraggableZone/DraggableZone.styles.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/utilities/DraggableZone/DraggableZone.styles.js ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getClassNames: () => (/* binding */ getClassNames)
+/* harmony export */ });
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+/* harmony import */ var _Styling__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Styling */ "./node_modules/@fluentui/style-utilities/lib/index.js");
+
+
+var getClassNames = (0,_Utilities__WEBPACK_IMPORTED_MODULE_0__.memoizeFunction)(function (className, isDragging) {
+    return {
+        root: (0,_Styling__WEBPACK_IMPORTED_MODULE_1__.mergeStyles)(className, isDragging && {
+            touchAction: 'none',
+            selectors: {
+                '& *': {
+                    userSelect: 'none',
+                },
+            },
+        }),
+    };
+});
+//# sourceMappingURL=DraggableZone.styles.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/utilities/MenuContext/MenuContext.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/utilities/MenuContext/MenuContext.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MenuContext: () => (/* binding */ MenuContext),
+/* harmony export */   useMenuContext: () => (/* binding */ useMenuContext)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+var MenuContext = react__WEBPACK_IMPORTED_MODULE_0__.createContext({});
+var useMenuContext = function () {
+    return react__WEBPACK_IMPORTED_MODULE_0__.useContext(MenuContext);
+};
+//# sourceMappingURL=MenuContext.js.map
 
 /***/ }),
 
@@ -7302,6 +16854,269 @@ var useThemeProviderState = function (draftState) {
 
 /***/ }),
 
+/***/ "./node_modules/@fluentui/react/lib/utilities/contextualMenu/contextualMenuUtility.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/utilities/contextualMenu/contextualMenuUtility.js ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getIsChecked: () => (/* binding */ getIsChecked),
+/* harmony export */   getMenuItemAriaRole: () => (/* binding */ getMenuItemAriaRole),
+/* harmony export */   hasSubmenu: () => (/* binding */ hasSubmenu),
+/* harmony export */   isItemDisabled: () => (/* binding */ isItemDisabled)
+/* harmony export */ });
+/**
+ * Determines the effective checked state of a menu item.
+ *
+ * @param item {IContextualMenuItem} to get the check state of.
+ * @returns {true} if the item is checked.
+ * @returns {false} if the item is unchecked.
+ * @returns {null} if the item is not checkable.
+ */
+function getIsChecked(item) {
+    if (item.canCheck) {
+        return !!(item.isChecked || item.checked);
+    }
+    if (typeof item.isChecked === 'boolean') {
+        return item.isChecked;
+    }
+    if (typeof item.checked === 'boolean') {
+        return item.checked;
+    }
+    // Item is not checkable.
+    return null;
+}
+function hasSubmenu(item) {
+    // eslint-disable-next-line deprecation/deprecation
+    return !!(item.subMenuProps || item.items);
+}
+function isItemDisabled(item) {
+    return !!(item.isDisabled || item.disabled);
+}
+function getMenuItemAriaRole(item) {
+    var isChecked = getIsChecked(item);
+    var canCheck = isChecked !== null;
+    return canCheck ? 'menuitemcheckbox' : 'menuitem';
+}
+//# sourceMappingURL=contextualMenuUtility.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/utilities/decorators/BaseDecorator.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/utilities/decorators/BaseDecorator.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BaseDecorator: () => (/* binding */ BaseDecorator)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/hoist.js");
+
+
+
+var BaseDecorator = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(BaseDecorator, _super);
+    function BaseDecorator(props) {
+        var _this = _super.call(this, props) || this;
+        _this._updateComposedComponentRef = _this._updateComposedComponentRef.bind(_this);
+        return _this;
+    }
+    /**
+     * Updates the ref to the component composed by the decorator, which will also take care of hoisting
+     * (and unhoisting as appropriate) methods from said component.
+     *
+     * Pass this method as the argument to the 'ref' property of the composed component.
+     */
+    BaseDecorator.prototype._updateComposedComponentRef = function (composedComponentInstance) {
+        this._composedComponentInstance = composedComponentInstance;
+        if (composedComponentInstance) {
+            this._hoisted = (0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.hoistMethods)(this, composedComponentInstance);
+        }
+        else if (this._hoisted) {
+            (0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.unhoistMethods)(this, this._hoisted);
+        }
+    };
+    return BaseDecorator;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+//# sourceMappingURL=BaseDecorator.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/utilities/decorators/withResponsiveMode.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/utilities/decorators/withResponsiveMode.js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ResponsiveMode: () => (/* binding */ ResponsiveMode),
+/* harmony export */   getInitialResponsiveMode: () => (/* binding */ getInitialResponsiveMode),
+/* harmony export */   getResponsiveMode: () => (/* binding */ getResponsiveMode),
+/* harmony export */   initializeResponsiveMode: () => (/* binding */ initializeResponsiveMode),
+/* harmony export */   setResponsiveMode: () => (/* binding */ setResponsiveMode),
+/* harmony export */   withResponsiveMode: () => (/* binding */ withResponsiveMode)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _BaseDecorator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./BaseDecorator */ "./node_modules/@fluentui/react/lib/utilities/decorators/BaseDecorator.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/dom/getWindow.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/EventGroup.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/hoistStatics.js");
+/* harmony import */ var _WindowProvider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../WindowProvider */ "./node_modules/@fluentui/react-window-provider/lib/WindowProvider.js");
+
+
+
+
+
+var ResponsiveMode;
+(function (ResponsiveMode) {
+    /** Width \<= 479px */
+    ResponsiveMode[ResponsiveMode["small"] = 0] = "small";
+    /** Width \> 479px and \<= 639px */
+    ResponsiveMode[ResponsiveMode["medium"] = 1] = "medium";
+    /** Width \> 639px and \<= 1023px */
+    ResponsiveMode[ResponsiveMode["large"] = 2] = "large";
+    /** Width \> 1023px and \<= 1365px */
+    ResponsiveMode[ResponsiveMode["xLarge"] = 3] = "xLarge";
+    /** Width \> 1365px and \<= 1919px */
+    ResponsiveMode[ResponsiveMode["xxLarge"] = 4] = "xxLarge";
+    /** Width \> 1919px */
+    ResponsiveMode[ResponsiveMode["xxxLarge"] = 5] = "xxxLarge";
+    ResponsiveMode[ResponsiveMode["unknown"] = 999] = "unknown";
+})(ResponsiveMode || (ResponsiveMode = {}));
+var RESPONSIVE_MAX_CONSTRAINT = [479, 639, 1023, 1365, 1919, 99999999];
+/**
+ * User specified mode to default to, useful for server side rendering scenarios.
+ */
+var _defaultMode;
+/**
+ * Tracking the last mode we successfully rendered, which allows us to
+ * paint initial renders with the correct size.
+ */
+var _lastMode;
+/**
+ * Allows a server rendered scenario to provide a **default** responsive mode.
+ * This WILL NOT trigger any updates to components that have already consumed the responsive mode!
+ */
+function setResponsiveMode(responsiveMode) {
+    _defaultMode = responsiveMode;
+}
+/**
+ * Initializes the responsive mode to the current window size. This can be used to avoid
+ * a re-render during first component mount since the window would otherwise not be measured
+ * until after mounting.
+ *
+ * This WILL NOT trigger any updates to components that have already consumed the responsive mode!
+ */
+function initializeResponsiveMode(element) {
+    var currentWindow = (0,_Utilities__WEBPACK_IMPORTED_MODULE_1__.getWindow)(element);
+    if (currentWindow) {
+        getResponsiveMode(currentWindow);
+    }
+}
+function getInitialResponsiveMode() {
+    var _a;
+    return (_a = _defaultMode !== null && _defaultMode !== void 0 ? _defaultMode : _lastMode) !== null && _a !== void 0 ? _a : ResponsiveMode.large;
+}
+/**
+ * @deprecated Decorator usage is deprecated. Either call `getResponsiveMode` manually, or
+ * use the `useResponsiveMode` hook within a function component.
+ */
+function withResponsiveMode(ComposedComponent) {
+    var _a;
+    // eslint-disable-next-line deprecation/deprecation
+    var resultClass = (_a = /** @class */ (function (_super) {
+            (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__extends)(WithResponsiveMode, _super);
+            function WithResponsiveMode(props) {
+                var _this = _super.call(this, props) || this;
+                _this._onResize = function () {
+                    var responsiveMode = getResponsiveMode(_this.context.window);
+                    if (responsiveMode !== _this.state.responsiveMode) {
+                        _this.setState({
+                            responsiveMode: responsiveMode,
+                        });
+                    }
+                };
+                _this._events = new _Utilities__WEBPACK_IMPORTED_MODULE_3__.EventGroup(_this);
+                _this._updateComposedComponentRef = _this._updateComposedComponentRef.bind(_this);
+                _this.state = {
+                    responsiveMode: getInitialResponsiveMode(),
+                };
+                return _this;
+            }
+            WithResponsiveMode.prototype.componentDidMount = function () {
+                this._events.on(this.context.window, 'resize', this._onResize);
+                this._onResize();
+            };
+            WithResponsiveMode.prototype.componentWillUnmount = function () {
+                this._events.dispose();
+            };
+            WithResponsiveMode.prototype.render = function () {
+                var responsiveMode = this.state.responsiveMode;
+                return responsiveMode === ResponsiveMode.unknown ? null : (react__WEBPACK_IMPORTED_MODULE_0__.createElement(ComposedComponent, (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({ ref: this._updateComposedComponentRef, responsiveMode: responsiveMode }, this.props)));
+            };
+            return WithResponsiveMode;
+        }(_BaseDecorator__WEBPACK_IMPORTED_MODULE_4__.BaseDecorator)),
+        _a.contextType = _WindowProvider__WEBPACK_IMPORTED_MODULE_5__.WindowContext,
+        _a);
+    return (0,_Utilities__WEBPACK_IMPORTED_MODULE_6__.hoistStatics)(ComposedComponent, resultClass);
+}
+function getWidthOfCurrentWindow(currentWindow) {
+    try {
+        return currentWindow.document.documentElement.clientWidth;
+    }
+    catch (e) {
+        return currentWindow.innerWidth;
+    }
+}
+/**
+ * Hook to get the current responsive mode (window size category).
+ * @param currentWindow - Use this window when determining the responsive mode.
+ */
+function getResponsiveMode(currentWindow) {
+    var responsiveMode = ResponsiveMode.small;
+    if (currentWindow) {
+        try {
+            while (getWidthOfCurrentWindow(currentWindow) > RESPONSIVE_MAX_CONSTRAINT[responsiveMode]) {
+                responsiveMode++;
+            }
+        }
+        catch (e) {
+            // Return a best effort result in cases where we're in the browser but it throws on getting innerWidth.
+            responsiveMode = getInitialResponsiveMode();
+        }
+        // Tracking last mode just gives us a better default in future renders,
+        // which avoids starting with the wrong value if we've measured once.
+        _lastMode = responsiveMode;
+    }
+    else {
+        if (_defaultMode !== undefined) {
+            responsiveMode = _defaultMode;
+        }
+        else {
+            throw new Error('Content was rendered in a server environment without providing a default responsive mode. ' +
+                'Call setResponsiveMode to define what the responsive mode is.');
+        }
+    }
+    return responsiveMode;
+}
+//# sourceMappingURL=withResponsiveMode.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/react/lib/utilities/dom.js":
 /*!***********************************************************!*\
   !*** ./node_modules/@fluentui/react/lib/utilities/dom.js ***!
@@ -7372,6 +17187,1237 @@ var getWindowEx = function (ctx) {
     return ((_a = ctx === null || ctx === void 0 ? void 0 : ctx.window) !== null && _a !== void 0 ? _a : typeof window !== 'undefined') ? window : undefined;
 };
 //# sourceMappingURL=dom.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/utilities/hooks/useResponsiveMode.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/utilities/hooks/useResponsiveMode.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useResponsiveMode: () => (/* binding */ useResponsiveMode)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fluentui_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fluentui/utilities */ "./node_modules/@fluentui/utilities/lib/dom/getWindow.js");
+/* harmony import */ var _fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fluentui/react-hooks */ "./node_modules/@fluentui/react-hooks/lib/useOnEvent.js");
+/* harmony import */ var _decorators_withResponsiveMode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../decorators/withResponsiveMode */ "./node_modules/@fluentui/react/lib/utilities/decorators/withResponsiveMode.js");
+/* harmony import */ var _WindowProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../WindowProvider */ "./node_modules/@fluentui/react-window-provider/lib/WindowProvider.js");
+
+
+
+
+
+/**
+ * Hook to get the current responsive mode (window size category).
+ * @param elementRef - Use this element's parent window when determining the responsive mode.
+ * @param overrideResponsiveMode - Override the responsive mode. If this param is present, it's always returned.
+ */
+var useResponsiveMode = function (elementRef, overrideResponsiveMode) {
+    var _a = react__WEBPACK_IMPORTED_MODULE_0__.useState((0,_decorators_withResponsiveMode__WEBPACK_IMPORTED_MODULE_1__.getInitialResponsiveMode)()), lastResponsiveMode = _a[0], setLastResponsiveMode = _a[1];
+    var onResize = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function () {
+        var newResponsiveMode = (0,_decorators_withResponsiveMode__WEBPACK_IMPORTED_MODULE_1__.getResponsiveMode)((0,_fluentui_utilities__WEBPACK_IMPORTED_MODULE_2__.getWindow)(elementRef.current));
+        // Setting the same value should not cause a re-render.
+        if (lastResponsiveMode !== newResponsiveMode) {
+            setLastResponsiveMode(newResponsiveMode);
+        }
+    }, [elementRef, lastResponsiveMode]);
+    var win = (0,_WindowProvider__WEBPACK_IMPORTED_MODULE_3__.useWindow)();
+    (0,_fluentui_react_hooks__WEBPACK_IMPORTED_MODULE_4__.useOnEvent)(win, 'resize', onResize);
+    // Call resize function initially on mount, or if the override changes from defined to undefined
+    // (the effect will run on all override changes, but onResize will only be called if it changed to undefined)
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+        if (overrideResponsiveMode === undefined) {
+            onResize();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- only meant to run on mount or when override changes
+    }, [overrideResponsiveMode]);
+    return overrideResponsiveMode !== null && overrideResponsiveMode !== void 0 ? overrideResponsiveMode : lastResponsiveMode;
+};
+//# sourceMappingURL=useResponsiveMode.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/utilities/keytips/KeytipConstants.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/utilities/keytips/KeytipConstants.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DATAKTP_ARIA_TARGET: () => (/* binding */ DATAKTP_ARIA_TARGET),
+/* harmony export */   DATAKTP_EXECUTE_TARGET: () => (/* binding */ DATAKTP_EXECUTE_TARGET),
+/* harmony export */   DATAKTP_TARGET: () => (/* binding */ DATAKTP_TARGET),
+/* harmony export */   KTP_ARIA_SEPARATOR: () => (/* binding */ KTP_ARIA_SEPARATOR),
+/* harmony export */   KTP_FULL_PREFIX: () => (/* binding */ KTP_FULL_PREFIX),
+/* harmony export */   KTP_LAYER_ID: () => (/* binding */ KTP_LAYER_ID),
+/* harmony export */   KTP_PREFIX: () => (/* binding */ KTP_PREFIX),
+/* harmony export */   KTP_SEPARATOR: () => (/* binding */ KTP_SEPARATOR),
+/* harmony export */   KeytipEvents: () => (/* binding */ KeytipEvents)
+/* harmony export */ });
+var KTP_PREFIX = 'ktp';
+var KTP_SEPARATOR = '-';
+var KTP_FULL_PREFIX = KTP_PREFIX + KTP_SEPARATOR;
+var DATAKTP_TARGET = 'data-ktp-target';
+var DATAKTP_EXECUTE_TARGET = 'data-ktp-execute-target';
+var DATAKTP_ARIA_TARGET = 'data-ktp-aria-target';
+var KTP_LAYER_ID = 'ktp-layer-id';
+var KTP_ARIA_SEPARATOR = ', ';
+// Events
+var KeytipEvents;
+(function (KeytipEvents) {
+    KeytipEvents.KEYTIP_ADDED = 'keytipAdded';
+    KeytipEvents.KEYTIP_REMOVED = 'keytipRemoved';
+    KeytipEvents.KEYTIP_UPDATED = 'keytipUpdated';
+    KeytipEvents.PERSISTED_KEYTIP_ADDED = 'persistedKeytipAdded';
+    KeytipEvents.PERSISTED_KEYTIP_REMOVED = 'persistedKeytipRemoved';
+    KeytipEvents.PERSISTED_KEYTIP_EXECUTE = 'persistedKeytipExecute';
+    KeytipEvents.ENTER_KEYTIP_MODE = 'enterKeytipMode';
+    KeytipEvents.EXIT_KEYTIP_MODE = 'exitKeytipMode';
+})(KeytipEvents || (KeytipEvents = {}));
+//# sourceMappingURL=KeytipConstants.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/utilities/keytips/KeytipManager.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/utilities/keytips/KeytipManager.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   KeytipManager: () => (/* binding */ KeytipManager)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/EventGroup.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/getId.js");
+/* harmony import */ var _utilities_keytips_KeytipConstants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utilities/keytips/KeytipConstants */ "./node_modules/@fluentui/react/lib/utilities/keytips/KeytipConstants.js");
+
+
+
+/**
+ * This class is responsible for handling registering, updating, and unregistering of keytips
+ */
+var KeytipManager = /** @class */ (function () {
+    function KeytipManager() {
+        this.keytips = {};
+        this.persistedKeytips = {};
+        this.sequenceMapping = {};
+        // This is (and should be) updated and kept in sync
+        // with the inKeytipMode in KeytipLayer.
+        this.inKeytipMode = false;
+        // Boolean that gets checked before entering keytip mode by the KeytipLayer
+        // Used for an override in special cases (e.g. Disable entering keytip mode when a modal is shown)
+        this.shouldEnterKeytipMode = true;
+        // Boolean to indicate whether to delay firing an event to update subscribers of
+        // keytip data changed.
+        this.delayUpdatingKeytipChange = false;
+    }
+    /**
+     * Static function to get singleton KeytipManager instance
+     *
+     * @returns Singleton KeytipManager instance
+     */
+    KeytipManager.getInstance = function () {
+        return this._instance;
+    };
+    /**
+     * Initialization code to set set parameters to define
+     * how the KeytipManager handles keytip data.
+     *
+     * @param delayUpdatingKeytipChange - T/F if we should delay notifiying keytip subscribers
+     * of keytip changes
+     */
+    KeytipManager.prototype.init = function (delayUpdatingKeytipChange) {
+        this.delayUpdatingKeytipChange = delayUpdatingKeytipChange;
+    };
+    /**
+     * Registers a keytip
+     *
+     * @param keytipProps - Keytip to register
+     * @param persisted - T/F if this keytip should be persisted, default is false
+     * @returns Unique ID for this keytip
+     */
+    KeytipManager.prototype.register = function (keytipProps, persisted) {
+        if (persisted === void 0) { persisted = false; }
+        var props = keytipProps;
+        if (!persisted) {
+            // Add the overflowSetSequence if necessary
+            props = this.addParentOverflow(keytipProps);
+            this.sequenceMapping[props.keySequences.toString()] = props;
+        }
+        // Create a unique keytip
+        var uniqueKeytip = this._getUniqueKtp(props);
+        // Add to dictionary
+        persisted
+            ? (this.persistedKeytips[uniqueKeytip.uniqueID] = uniqueKeytip)
+            : (this.keytips[uniqueKeytip.uniqueID] = uniqueKeytip);
+        // We only want to add something new if we are currently showing keytip mode
+        if (this.inKeytipMode || !this.delayUpdatingKeytipChange) {
+            var event_1 = persisted ? _utilities_keytips_KeytipConstants__WEBPACK_IMPORTED_MODULE_0__.KeytipEvents.PERSISTED_KEYTIP_ADDED : _utilities_keytips_KeytipConstants__WEBPACK_IMPORTED_MODULE_0__.KeytipEvents.KEYTIP_ADDED;
+            _Utilities__WEBPACK_IMPORTED_MODULE_1__.EventGroup.raise(this, event_1, {
+                keytip: props,
+                uniqueID: uniqueKeytip.uniqueID,
+            });
+        }
+        return uniqueKeytip.uniqueID;
+    };
+    /**
+     * Update a keytip
+     *
+     * @param keytipProps - Keytip to update
+     * @param uniqueID - Unique ID of this keytip
+     */
+    KeytipManager.prototype.update = function (keytipProps, uniqueID) {
+        var newKeytipProps = this.addParentOverflow(keytipProps);
+        var uniqueKeytip = this._getUniqueKtp(newKeytipProps, uniqueID);
+        var oldKeyTip = this.keytips[uniqueID];
+        if (oldKeyTip) {
+            // Update everything except 'visible'
+            uniqueKeytip.keytip.visible = oldKeyTip.keytip.visible;
+            // Update keytip in this.keytips
+            this.keytips[uniqueID] = uniqueKeytip;
+            // Update the sequence to be up to date
+            delete this.sequenceMapping[oldKeyTip.keytip.keySequences.toString()];
+            this.sequenceMapping[uniqueKeytip.keytip.keySequences.toString()] = uniqueKeytip.keytip;
+            // Raise event only if we are currently in keytip mode
+            if (this.inKeytipMode || !this.delayUpdatingKeytipChange) {
+                _Utilities__WEBPACK_IMPORTED_MODULE_1__.EventGroup.raise(this, _utilities_keytips_KeytipConstants__WEBPACK_IMPORTED_MODULE_0__.KeytipEvents.KEYTIP_UPDATED, {
+                    keytip: uniqueKeytip.keytip,
+                    uniqueID: uniqueKeytip.uniqueID,
+                });
+            }
+        }
+    };
+    /**
+     * Unregisters a keytip
+     *
+     * @param keytipToRemove - IKeytipProps of the keytip to remove
+     * @param uniqueID - Unique ID of this keytip
+     * @param persisted - T/F if this keytip should be persisted, default is false
+     */
+    KeytipManager.prototype.unregister = function (keytipToRemove, uniqueID, persisted) {
+        if (persisted === void 0) { persisted = false; }
+        persisted ? delete this.persistedKeytips[uniqueID] : delete this.keytips[uniqueID];
+        !persisted && delete this.sequenceMapping[keytipToRemove.keySequences.toString()];
+        var event = persisted ? _utilities_keytips_KeytipConstants__WEBPACK_IMPORTED_MODULE_0__.KeytipEvents.PERSISTED_KEYTIP_REMOVED : _utilities_keytips_KeytipConstants__WEBPACK_IMPORTED_MODULE_0__.KeytipEvents.KEYTIP_REMOVED;
+        // Update keytips only if we're in keytip mode
+        if (this.inKeytipMode || !this.delayUpdatingKeytipChange) {
+            _Utilities__WEBPACK_IMPORTED_MODULE_1__.EventGroup.raise(this, event, {
+                keytip: keytipToRemove,
+                uniqueID: uniqueID,
+            });
+        }
+    };
+    /**
+     * Manual call to enter keytip mode
+     */
+    KeytipManager.prototype.enterKeytipMode = function () {
+        _Utilities__WEBPACK_IMPORTED_MODULE_1__.EventGroup.raise(this, _utilities_keytips_KeytipConstants__WEBPACK_IMPORTED_MODULE_0__.KeytipEvents.ENTER_KEYTIP_MODE);
+    };
+    /**
+     * Manual call to exit keytip mode
+     */
+    KeytipManager.prototype.exitKeytipMode = function () {
+        _Utilities__WEBPACK_IMPORTED_MODULE_1__.EventGroup.raise(this, _utilities_keytips_KeytipConstants__WEBPACK_IMPORTED_MODULE_0__.KeytipEvents.EXIT_KEYTIP_MODE);
+    };
+    /**
+     * Gets all IKeytipProps from this.keytips
+     *
+     * @returns All keytips stored in the manager
+     */
+    KeytipManager.prototype.getKeytips = function () {
+        var _this = this;
+        return Object.keys(this.keytips).map(function (key) { return _this.keytips[key].keytip; });
+    };
+    /**
+     * Adds the overflowSetSequence to the keytipProps if its parent keytip also has it
+     *
+     * @param keytipProps - Keytip props to add overflowSetSequence to if necessary
+     * @returns - Modified keytip props, if needed to be modified
+     */
+    KeytipManager.prototype.addParentOverflow = function (keytipProps) {
+        var fullSequence = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__spreadArray)([], keytipProps.keySequences, true);
+        fullSequence.pop();
+        if (fullSequence.length !== 0) {
+            var parentKeytip = this.sequenceMapping[fullSequence.toString()];
+            if (parentKeytip && parentKeytip.overflowSetSequence) {
+                return (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({}, keytipProps), { overflowSetSequence: parentKeytip.overflowSetSequence });
+            }
+        }
+        return keytipProps;
+    };
+    /**
+     * Public function to bind for overflow items that have a submenu
+     */
+    KeytipManager.prototype.menuExecute = function (overflowButtonSequences, keytipSequences) {
+        _Utilities__WEBPACK_IMPORTED_MODULE_1__.EventGroup.raise(this, _utilities_keytips_KeytipConstants__WEBPACK_IMPORTED_MODULE_0__.KeytipEvents.PERSISTED_KEYTIP_EXECUTE, {
+            overflowButtonSequences: overflowButtonSequences,
+            keytipSequences: keytipSequences,
+        });
+    };
+    /**
+     * Creates an IUniqueKeytip object
+     *
+     * @param keytipProps - IKeytipProps
+     * @param uniqueID - Unique ID, will default to the next unique ID if not passed
+     * @returns IUniqueKeytip object
+     */
+    KeytipManager.prototype._getUniqueKtp = function (keytipProps, uniqueID) {
+        if (uniqueID === void 0) { uniqueID = (0,_Utilities__WEBPACK_IMPORTED_MODULE_3__.getId)(); }
+        return { keytip: (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({}, keytipProps), uniqueID: uniqueID };
+    };
+    KeytipManager._instance = new KeytipManager();
+    return KeytipManager;
+}());
+
+//# sourceMappingURL=KeytipManager.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/utilities/keytips/KeytipUtils.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/utilities/keytips/KeytipUtils.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getAriaDescribedBy: () => (/* binding */ getAriaDescribedBy),
+/* harmony export */   ktpTargetFromId: () => (/* binding */ ktpTargetFromId),
+/* harmony export */   ktpTargetFromSequences: () => (/* binding */ ktpTargetFromSequences),
+/* harmony export */   mergeOverflows: () => (/* binding */ mergeOverflows),
+/* harmony export */   sequencesToID: () => (/* binding */ sequencesToID)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var _KeytipConstants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./KeytipConstants */ "./node_modules/@fluentui/react/lib/utilities/keytips/KeytipConstants.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/array.js");
+
+
+
+/**
+ * Converts a whole set of KeySequences into one keytip ID, which will be the ID for the last keytip sequence specified
+ * keySequences should not include the initial keytip 'start' sequence.
+ *
+ * @param keySequences - Full path of IKeySequences for one keytip.
+ * @returns String to use for the keytip ID.
+ */
+function sequencesToID(keySequences) {
+    return keySequences.reduce(function (prevValue, keySequence) {
+        return prevValue + _KeytipConstants__WEBPACK_IMPORTED_MODULE_0__.KTP_SEPARATOR + keySequence.split('').join(_KeytipConstants__WEBPACK_IMPORTED_MODULE_0__.KTP_SEPARATOR);
+    }, _KeytipConstants__WEBPACK_IMPORTED_MODULE_0__.KTP_PREFIX);
+}
+/**
+ * Merges an overflow sequence with a key sequence.
+ *
+ * @param keySequences - Full sequence for one keytip.
+ * @param overflowKeySequences - Full overflow keytip sequence.
+ * @returns Sequence that will be used by the keytip when in the overflow.
+ */
+function mergeOverflows(keySequences, overflowKeySequences) {
+    var overflowSequenceLen = overflowKeySequences.length;
+    var overflowSequence = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__spreadArray)([], overflowKeySequences, true).pop();
+    var newKeySequences = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__spreadArray)([], keySequences, true);
+    return (0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.addElementAtIndex)(newKeySequences, overflowSequenceLen - 1, overflowSequence);
+}
+/**
+ * Constructs the data-ktp-target attribute selector from a full key sequence.
+ *
+ * @param keySequences - Full string[] for a Keytip.
+ * @returns String selector to use to query for the keytip target.
+ */
+function ktpTargetFromSequences(keySequences) {
+    return '[' + _KeytipConstants__WEBPACK_IMPORTED_MODULE_0__.DATAKTP_TARGET + '="' + sequencesToID(keySequences) + '"]';
+}
+/**
+ * Constructs the data-ktp-execute-target attribute selector from a keytip ID.
+ *
+ * @param keytipId - ID of the Keytip.
+ * @returns String selector to use to query for the keytip execute target.
+ */
+function ktpTargetFromId(keytipId) {
+    return '[' + _KeytipConstants__WEBPACK_IMPORTED_MODULE_0__.DATAKTP_EXECUTE_TARGET + '="' + keytipId + '"]';
+}
+/**
+ * Gets the aria-describedby value to put on the component with this keytip.
+ *
+ * @param keySequences - KeySequences of the keytip.
+ * @returns The aria-describedby value to set on the component with this keytip.
+ */
+function getAriaDescribedBy(keySequences) {
+    var describedby = ' ' + _KeytipConstants__WEBPACK_IMPORTED_MODULE_0__.KTP_LAYER_ID;
+    if (!keySequences.length) {
+        // Return just the layer ID
+        return describedby;
+    }
+    return describedby + ' ' + sequencesToID(keySequences);
+}
+//# sourceMappingURL=KeytipUtils.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/utilities/positioning/positioning.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/utilities/positioning/positioning.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   __positioningTestPackage: () => (/* binding */ __positioningTestPackage),
+/* harmony export */   calculateGapSpace: () => (/* binding */ calculateGapSpace),
+/* harmony export */   getBoundsFromTargetWindow: () => (/* binding */ getBoundsFromTargetWindow),
+/* harmony export */   getMaxHeight: () => (/* binding */ getMaxHeight),
+/* harmony export */   getOppositeEdge: () => (/* binding */ getOppositeEdge),
+/* harmony export */   getRectangleFromTarget: () => (/* binding */ getRectangleFromTarget),
+/* harmony export */   positionCallout: () => (/* binding */ positionCallout),
+/* harmony export */   positionCard: () => (/* binding */ positionCard),
+/* harmony export */   positionElement: () => (/* binding */ positionElement)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var _common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common/DirectionalHint */ "./node_modules/@fluentui/react/lib/common/DirectionalHint.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/rtl.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/dom/getWindow.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/scroll.js");
+/* harmony import */ var _positioning_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./positioning.types */ "./node_modules/@fluentui/react/lib/utilities/positioning/positioning.types.js");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Utilities */ "./node_modules/@fluentui/utilities/lib/Rectangle.js");
+var _a;
+
+
+
+
+
+function _createPositionData(targetEdge, alignmentEdge, isAuto) {
+    return {
+        targetEdge: targetEdge,
+        alignmentEdge: alignmentEdge,
+        isAuto: isAuto,
+    };
+}
+// Currently the beakPercent is set to 50 for all positions meaning that it should tend to the center of the target
+var DirectionalDictionary = (_a = {},
+    _a[_common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.topLeftEdge] = _createPositionData(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top, _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.left),
+    _a[_common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.topCenter] = _createPositionData(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top),
+    _a[_common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.topRightEdge] = _createPositionData(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top, _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.right),
+    _a[_common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.topAutoEdge] = _createPositionData(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top, undefined, true),
+    _a[_common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.bottomLeftEdge] = _createPositionData(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.bottom, _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.left),
+    _a[_common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.bottomCenter] = _createPositionData(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.bottom),
+    _a[_common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.bottomRightEdge] = _createPositionData(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.bottom, _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.right),
+    _a[_common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.bottomAutoEdge] = _createPositionData(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.bottom, undefined, true),
+    _a[_common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.leftTopEdge] = _createPositionData(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.left, _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top),
+    _a[_common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.leftCenter] = _createPositionData(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.left),
+    _a[_common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.leftBottomEdge] = _createPositionData(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.left, _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.bottom),
+    _a[_common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.rightTopEdge] = _createPositionData(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.right, _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top),
+    _a[_common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.rightCenter] = _createPositionData(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.right),
+    _a[_common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.rightBottomEdge] = _createPositionData(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.right, _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.bottom),
+    _a);
+function _isRectangleWithinBounds(rect, boundingRect) {
+    if (rect.top < boundingRect.top) {
+        return false;
+    }
+    if (rect.bottom > boundingRect.bottom) {
+        return false;
+    }
+    if (rect.left < boundingRect.left) {
+        return false;
+    }
+    if (rect.right > boundingRect.right) {
+        return false;
+    }
+    return true;
+}
+/**
+ * Gets all of the edges of a rectangle that are outside of the given bounds.
+ * If there are no out of bounds edges it returns an empty array.
+ */
+function _getOutOfBoundsEdges(rect, boundingRect) {
+    var outOfBounds = [];
+    if (rect.top < boundingRect.top) {
+        outOfBounds.push(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top);
+    }
+    if (rect.bottom > boundingRect.bottom) {
+        outOfBounds.push(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.bottom);
+    }
+    if (rect.left < boundingRect.left) {
+        outOfBounds.push(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.left);
+    }
+    if (rect.right > boundingRect.right) {
+        outOfBounds.push(_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.right);
+    }
+    return outOfBounds;
+}
+function _getEdgeValue(rect, edge) {
+    return rect[_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge[edge]];
+}
+function _setEdgeValue(rect, edge, value) {
+    rect[_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge[edge]] = value;
+    return rect;
+}
+/**
+ * Returns the middle value of an edge. Only returns 1 value rather than xy coordinates as
+ * the itself already contains the other coordinate.
+ * For instance, a bottom edge's current value is it's y coordinate, so the number returned is the x.
+ */
+function _getCenterValue(rect, edge) {
+    var edges = _getFlankingEdges(edge);
+    return (_getEdgeValue(rect, edges.positiveEdge) + _getEdgeValue(rect, edges.negativeEdge)) / 2;
+}
+/**
+ * Flips the value depending on the edge.
+ * If the edge is a "positive" edge, Top or Left, then the value should stay as it is.
+ * If the edge is a "negative" edge, Bottom or Right, then the value should be flipped.
+ * This is to account for the fact that the coordinates are effectively reserved in certain cases for the
+ * "negative" edges.
+ *
+ * For example, when testing to see if a bottom edge 1 is within the bounds of another bottom edge 2:
+ * If edge 1 is greater than edge 2 then it is out of bounds. This is reversed for top edge 1 and top edge 2.
+ * If top edge 1 is less than edge 2 then it is out of bounds.
+ */
+function _getRelativeEdgeValue(edge, value) {
+    if (edge > 0) {
+        return value;
+    }
+    else {
+        return value * -1;
+    }
+}
+function _getRelativeRectEdgeValue(edge, rect) {
+    return _getRelativeEdgeValue(edge, _getEdgeValue(rect, edge));
+}
+function _getRelativeEdgeDifference(rect, hostRect, edge) {
+    var edgeDifference = _getEdgeValue(rect, edge) - _getEdgeValue(hostRect, edge);
+    return _getRelativeEdgeValue(edge, edgeDifference);
+}
+/**
+ * Moves the edge of a rectangle to the value given. It only moves the edge in a linear direction based on that edge.
+ * For example, if it's a bottom edge it will only change y coordinates.
+ * if maintainSize is set to false, it will only adjust the specified edge value
+ */
+function _moveEdge(rect, edge, newValue, maintainSize) {
+    if (maintainSize === void 0) { maintainSize = true; }
+    var difference = _getEdgeValue(rect, edge) - newValue;
+    var returnRect = _setEdgeValue(rect, edge, newValue);
+    if (maintainSize) {
+        returnRect = _setEdgeValue(rect, edge * -1, _getEdgeValue(rect, edge * -1) - difference);
+    }
+    return returnRect;
+}
+/**
+ * Aligns the edge on the passed in rect to the target. If there is a gap then it will have that space between the two.
+ */
+function _alignEdges(rect, target, edge, gap) {
+    if (gap === void 0) { gap = 0; }
+    return _moveEdge(rect, edge, _getEdgeValue(target, edge) + _getRelativeEdgeValue(edge, gap));
+}
+/**
+ * Aligns the targetEdge on the passed in target to the rects corresponding opposite edge.
+ * For instance if targetEdge is bottom, then the rects top will be moved to match it.
+ */
+function _alignOppositeEdges(rect, target, targetEdge, gap) {
+    if (gap === void 0) { gap = 0; }
+    var oppositeEdge = targetEdge * -1;
+    var adjustedGap = _getRelativeEdgeValue(oppositeEdge, gap);
+    return _moveEdge(rect, targetEdge * -1, _getEdgeValue(target, targetEdge) + adjustedGap);
+}
+/**
+ * Tests to see if the given edge is within the bounds of the given rectangle.
+ */
+function _isEdgeInBounds(rect, bounds, edge) {
+    var adjustedRectValue = _getRelativeRectEdgeValue(edge, rect);
+    return adjustedRectValue > _getRelativeRectEdgeValue(edge, bounds);
+}
+/**
+ * Returns a measure of how much a rectangle is out of bounds for a given alignment;
+ * this can be used to compare which rectangle is more or less out of bounds.
+ * A value of 0 means the rectangle is entirely in bounds
+ */
+function _getOutOfBoundsDegree(rect, bounds) {
+    var breakingEdges = _getOutOfBoundsEdges(rect, bounds);
+    var total = 0;
+    for (var _i = 0, breakingEdges_1 = breakingEdges; _i < breakingEdges_1.length; _i++) {
+        var edge = breakingEdges_1[_i];
+        total += Math.pow(_getRelativeEdgeDifference(rect, bounds, edge), 2);
+    }
+    return total;
+}
+/**
+ * Returns true if scroll-resizing will move the target edge within the bounding rectangle,
+ * and there is room between the target edge and the bounding edge for scrolled content.
+ * Returns false otherwise.
+ */
+function _canScrollResizeToFitEdge(target, bounding, targetEdge, minimumScrollResizeHeight) {
+    if (minimumScrollResizeHeight === void 0) { minimumScrollResizeHeight = 200; }
+    // Only scroll vertically to fit - cannot scroll to fit right or left edges
+    if (targetEdge !== _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.bottom && targetEdge !== _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top) {
+        return false;
+    }
+    return _getRelativeEdgeDifference(target, bounding, targetEdge) >= minimumScrollResizeHeight;
+}
+/**
+ * Attempts to move the rectangle through various sides of the target to find a place to fit.
+ * If no fit is found, the least bad option should be returned.
+ */
+function _flipToFit(rect, target, bounding, positionData, shouldScroll, minimumScrollResizeHeight, gap) {
+    if (shouldScroll === void 0) { shouldScroll = false; }
+    if (gap === void 0) { gap = 0; }
+    var directions = [
+        _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.left,
+        _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.right,
+        _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.bottom,
+        _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top,
+    ];
+    // In RTL page, RectangleEdge.right has a higher priority than RectangleEdge.left, so the order should be updated.
+    if ((0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.getRTL)()) {
+        directions[0] *= -1;
+        directions[1] *= -1;
+    }
+    var currentEstimate = rect;
+    var currentEdge = positionData.targetEdge;
+    var currentAlignment = positionData.alignmentEdge;
+    // keep track of least bad option, in case no sides fit
+    var oobDegree;
+    var bestEdge = currentEdge;
+    var bestAlignment = currentAlignment;
+    // Keep switching sides until one is found with enough space.
+    // If all sides don't fit then return the unmodified element.
+    for (var i = 0; i < 4; i++) {
+        if (_isEdgeInBounds(currentEstimate, bounding, currentEdge)) {
+            // Edge is in bounds, return current estimate
+            return {
+                elementRectangle: currentEstimate,
+                targetEdge: currentEdge,
+                alignmentEdge: currentAlignment,
+            };
+        }
+        else if (shouldScroll && _canScrollResizeToFitEdge(target, bounding, currentEdge, minimumScrollResizeHeight)) {
+            // Scrolling will allow edge to fit, move the estimate currentEdge inside the bounds and return
+            switch (currentEdge) {
+                case _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.bottom:
+                    currentEstimate.bottom = bounding.bottom;
+                    break;
+                case _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top:
+                    currentEstimate.top = bounding.top;
+                    break;
+            }
+            return {
+                elementRectangle: currentEstimate,
+                targetEdge: currentEdge,
+                alignmentEdge: currentAlignment,
+                forcedInBounds: true,
+            };
+        }
+        else {
+            // update least-bad edges
+            var currentOOBDegree = _getOutOfBoundsDegree(currentEstimate, bounding);
+            if (!oobDegree || currentOOBDegree < oobDegree) {
+                oobDegree = currentOOBDegree;
+                bestEdge = currentEdge;
+                bestAlignment = currentAlignment;
+            }
+            directions.splice(directions.indexOf(currentEdge), 1);
+            if (directions.length > 0) {
+                if (directions.indexOf(currentEdge * -1) > -1) {
+                    currentEdge = currentEdge * -1;
+                }
+                else {
+                    currentAlignment = currentEdge;
+                    currentEdge = directions.slice(-1)[0];
+                }
+                currentEstimate = _estimatePosition(rect, target, { targetEdge: currentEdge, alignmentEdge: currentAlignment }, gap);
+            }
+        }
+    }
+    // nothing fits, use least-bad option
+    currentEstimate = _estimatePosition(rect, target, { targetEdge: bestEdge, alignmentEdge: bestAlignment }, gap);
+    return {
+        elementRectangle: currentEstimate,
+        targetEdge: bestEdge,
+        alignmentEdge: bestAlignment,
+    };
+}
+/**
+ * Flips only the alignment edge of an element rectangle. This is used instead of nudging the alignment edges
+ * into position, when `alignTargetEdge` is specified.
+ */
+function _flipAlignmentEdge(elementEstimate, target, gap, coverTarget) {
+    var alignmentEdge = elementEstimate.alignmentEdge, targetEdge = elementEstimate.targetEdge, elementRectangle = elementEstimate.elementRectangle;
+    var oppositeEdge = alignmentEdge * -1;
+    var newEstimate = _estimatePosition(elementRectangle, target, { targetEdge: targetEdge, alignmentEdge: oppositeEdge }, gap, coverTarget);
+    return {
+        elementRectangle: newEstimate,
+        targetEdge: targetEdge,
+        alignmentEdge: oppositeEdge,
+    };
+}
+/**
+ * Adjusts a element rectangle to fit within the bounds given. If directionalHintFixed or covertarget is passed in
+ * then the element will not flip sides on the target. They will, however, be nudged to fit within the bounds given.
+ */
+function _adjustFitWithinBounds(element, target, bounding, positionData, shouldScroll, minimumScrollResizeHeight, gap, directionalHintFixed, coverTarget) {
+    if (shouldScroll === void 0) { shouldScroll = false; }
+    if (gap === void 0) { gap = 0; }
+    var alignmentEdge = positionData.alignmentEdge, alignTargetEdge = positionData.alignTargetEdge;
+    var elementEstimate = {
+        elementRectangle: element,
+        targetEdge: positionData.targetEdge,
+        alignmentEdge: alignmentEdge,
+    };
+    if (!directionalHintFixed && !coverTarget) {
+        elementEstimate = _flipToFit(element, target, bounding, positionData, shouldScroll, minimumScrollResizeHeight, gap);
+    }
+    var outOfBounds = _getOutOfBoundsEdges(elementEstimate.elementRectangle, bounding);
+    // if directionalHintFixed is specified, we need to force the target edge to not change
+    // we need *-1 because targetEdge refers to the target's edge; the callout edge is the opposite
+    var fixedEdge = directionalHintFixed ? -elementEstimate.targetEdge : undefined;
+    if (outOfBounds.length > 0) {
+        if (alignTargetEdge) {
+            // The edge opposite to the alignment edge might be out of bounds.
+            // Flip alignment to see if we can get it within bounds.
+            if (elementEstimate.alignmentEdge && outOfBounds.indexOf(elementEstimate.alignmentEdge * -1) > -1) {
+                var flippedElementEstimate = _flipAlignmentEdge(elementEstimate, target, gap, coverTarget);
+                if (_isRectangleWithinBounds(flippedElementEstimate.elementRectangle, bounding)) {
+                    return flippedElementEstimate;
+                }
+                else {
+                    // If the flipped elements edges are still out of bounds, try nudging it.
+                    elementEstimate = _alignOutOfBoundsEdges(_getOutOfBoundsEdges(flippedElementEstimate.elementRectangle, bounding), elementEstimate, bounding, fixedEdge);
+                }
+            }
+            else {
+                elementEstimate = _alignOutOfBoundsEdges(outOfBounds, elementEstimate, bounding, fixedEdge);
+            }
+        }
+        else {
+            elementEstimate = _alignOutOfBoundsEdges(outOfBounds, elementEstimate, bounding, fixedEdge);
+        }
+    }
+    return elementEstimate;
+}
+/**
+ * Iterates through a list of out of bounds edges and tries to nudge and align them.
+ * @param outOfBoundsEdges - Array of edges that are out of bounds
+ * @param elementEstimate - The current element positioning estimate
+ * @param bounding - The current bounds
+ * @param preserveEdge - Specify an edge that should not be modified
+ */
+function _alignOutOfBoundsEdges(outOfBoundsEdges, elementEstimate, bounding, preserveEdge) {
+    for (var _i = 0, outOfBoundsEdges_1 = outOfBoundsEdges; _i < outOfBoundsEdges_1.length; _i++) {
+        var direction = outOfBoundsEdges_1[_i];
+        var edgeAttempt = void 0;
+        // if preserveEdge is specified, do not call _alignEdges, skip directly to _moveEdge
+        // this is because _alignEdges will move the opposite edge
+        if (preserveEdge && preserveEdge === direction * -1) {
+            edgeAttempt = _moveEdge(elementEstimate.elementRectangle, direction, _getEdgeValue(bounding, direction), false);
+            elementEstimate.forcedInBounds = true;
+        }
+        else {
+            edgeAttempt = _alignEdges(elementEstimate.elementRectangle, bounding, direction);
+            var inBounds = _isEdgeInBounds(edgeAttempt, bounding, direction * -1);
+            // only update estimate if the attempt didn't break out of the opposite bounding edge
+            if (!inBounds) {
+                edgeAttempt = _moveEdge(edgeAttempt, direction * -1, _getEdgeValue(bounding, direction * -1), false);
+                elementEstimate.forcedInBounds = true;
+            }
+        }
+        elementEstimate.elementRectangle = edgeAttempt;
+    }
+    return elementEstimate;
+}
+/**
+ * Moves the middle point on an edge to the point given.
+ * Only moves in one direction. For instance if a bottom edge is passed in, then
+ * the bottom edge will be moved in the x axis to match the point.
+ */
+function _centerEdgeToPoint(rect, edge, point) {
+    var positiveEdge = _getFlankingEdges(edge).positiveEdge;
+    var elementMiddle = _getCenterValue(rect, edge);
+    var distanceToMiddle = elementMiddle - _getEdgeValue(rect, positiveEdge);
+    return _moveEdge(rect, positiveEdge, point - distanceToMiddle);
+}
+/**
+ * Moves the element rectangle to be appropriately positioned relative to a given target.
+ * Does not flip or adjust the element.
+ */
+function _estimatePosition(elementToPosition, target, positionData, gap, coverTarget) {
+    if (gap === void 0) { gap = 0; }
+    var estimatedElementPosition = new _Utilities__WEBPACK_IMPORTED_MODULE_3__.Rectangle(elementToPosition.left, elementToPosition.right, elementToPosition.top, elementToPosition.bottom);
+    var alignmentEdge = positionData.alignmentEdge, targetEdge = positionData.targetEdge;
+    var elementEdge = coverTarget ? targetEdge : targetEdge * -1;
+    estimatedElementPosition = coverTarget
+        ? _alignEdges(estimatedElementPosition, target, targetEdge, gap)
+        : _alignOppositeEdges(estimatedElementPosition, target, targetEdge, gap);
+    // if no alignment edge is provided it's supposed to be centered.
+    if (!alignmentEdge) {
+        var targetMiddlePoint = _getCenterValue(target, targetEdge);
+        estimatedElementPosition = _centerEdgeToPoint(estimatedElementPosition, elementEdge, targetMiddlePoint);
+    }
+    else {
+        estimatedElementPosition = _alignEdges(estimatedElementPosition, target, alignmentEdge);
+    }
+    return estimatedElementPosition;
+}
+/**
+ * Returns the non-opposite edges of the target edge.
+ * For instance if bottom is passed in then left and right will be returned.
+ */
+function _getFlankingEdges(edge) {
+    if (edge === _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top || edge === _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.bottom) {
+        return {
+            positiveEdge: _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.left,
+            negativeEdge: _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.right,
+        };
+    }
+    else {
+        return {
+            positiveEdge: _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top,
+            negativeEdge: _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.bottom,
+        };
+    }
+}
+/**
+ * Retrieve the final value for the return edge of `elementRectangle`. If the `elementRectangle` is closer to one side
+ * of the bounds versus the other, the return edge is flipped to grow inward.
+ */
+function _finalizeReturnEdge(elementRectangle, returnEdge, bounds) {
+    if (bounds &&
+        Math.abs(_getRelativeEdgeDifference(elementRectangle, bounds, returnEdge)) >
+            Math.abs(_getRelativeEdgeDifference(elementRectangle, bounds, returnEdge * -1))) {
+        return returnEdge * -1;
+    }
+    return returnEdge;
+}
+/**
+ * Whether or not the considered edge of the elementRectangle is lying on the edge of the bounds
+ * @param elementRectangle The rectangle whose edge we are considering
+ * @param bounds The rectangle marking the bounds
+ * @param edge The target edge we're considering
+ * @returns If the target edge of the elementRectangle is in the same location as that edge of the bounds
+ */
+function _isEdgeOnBounds(elementRectangle, edge, bounds) {
+    return bounds !== undefined && _getEdgeValue(elementRectangle, edge) === _getEdgeValue(bounds, edge);
+}
+/**
+ * Finalizes the element position based on the hostElement. Only returns the
+ * rectangle values to position such that they are anchored to the target.
+ * This helps prevent resizing from looking very strange.
+ * For instance, if the target edge is top and aligned with the left side then
+ * the bottom and left values are returned so as the Callout shrinks it shrinks towards that corner.
+ */
+function _finalizeElementPosition(elementRectangle, hostElement, targetEdge, bounds, alignmentEdge, coverTarget, doNotFinalizeReturnEdge, forceWithinBounds) {
+    var returnValue = {};
+    var hostRect = _getRectangleFromElement(hostElement);
+    var elementEdge = coverTarget ? targetEdge : targetEdge * -1;
+    var returnEdge = alignmentEdge ? alignmentEdge : _getFlankingEdges(targetEdge).positiveEdge;
+    // If we are finalizing the return edge, choose the edge such that we grow away from the bounds
+    // If we are not finalizing the return edge but the opposite edge is flush against the bounds,
+    // choose that as the anchor edge so the element rect can grow away from the bounds' edge
+    // In this case there will not be a visual difference because there is no more room for the elementRectangle to grow
+    // in the usual direction
+    if (!doNotFinalizeReturnEdge || _isEdgeOnBounds(elementRectangle, getOppositeEdge(returnEdge), bounds)) {
+        returnEdge = _finalizeReturnEdge(elementRectangle, returnEdge, bounds);
+    }
+    returnValue[_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge[elementEdge]] = _getRelativeEdgeDifference(elementRectangle, hostRect, elementEdge);
+    returnValue[_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge[returnEdge]] = _getRelativeEdgeDifference(elementRectangle, hostRect, returnEdge);
+    // if the positioned element will still overflow, return all four edges with in-bounds values
+    if (forceWithinBounds) {
+        returnValue[_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge[elementEdge * -1]] = _getRelativeEdgeDifference(elementRectangle, hostRect, elementEdge * -1);
+        returnValue[_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge[returnEdge * -1]] = _getRelativeEdgeDifference(elementRectangle, hostRect, returnEdge * -1);
+    }
+    return returnValue;
+}
+// Since the beak is rotated 45 degrees the actual height/width is the length of the diagonal.
+// We still want to position the beak based on it's midpoint which does not change. It will
+// be at (beakwidth / 2, beakwidth / 2)
+function _calculateActualBeakWidthInPixels(beakWidth) {
+    return Math.sqrt(beakWidth * beakWidth * 2);
+}
+/**
+ * Returns the appropriate IPositionData based on the props altered for RTL.
+ * If directionalHintForRTL is passed in that is used if the page is RTL.
+ * If directionalHint is specified, no directionalHintForRTL is available, and the page is RTL, the hint will be
+ * flipped (e.g. bottomLeftEdge would become bottomRightEdge).
+ *
+ * If there is no directionalHint passed in, bottomAutoEdge is chosen automatically.
+ */
+function _getPositionData(directionalHint, directionalHintForRTL, previousPositions) {
+    if (directionalHint === void 0) { directionalHint = _common_DirectionalHint__WEBPACK_IMPORTED_MODULE_0__.DirectionalHint.bottomAutoEdge; }
+    if (previousPositions) {
+        return {
+            alignmentEdge: previousPositions.alignmentEdge,
+            isAuto: previousPositions.isAuto,
+            targetEdge: previousPositions.targetEdge,
+        };
+    }
+    var positionInformation = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({}, DirectionalDictionary[directionalHint]);
+    if ((0,_Utilities__WEBPACK_IMPORTED_MODULE_2__.getRTL)()) {
+        // If alignment edge exists and that alignment edge is -2 or 2, right or left, then flip it.
+        if (positionInformation.alignmentEdge && positionInformation.alignmentEdge % 2 === 0) {
+            positionInformation.alignmentEdge = positionInformation.alignmentEdge * -1;
+        }
+        return directionalHintForRTL !== undefined ? DirectionalDictionary[directionalHintForRTL] : positionInformation;
+    }
+    return positionInformation;
+}
+/**
+ * Gets the alignment data for the given information. This only really matters if the positioning is Auto.
+ * If it is auto then the alignmentEdge should be chosen based on the target edge's position relative to
+ * the center of the page.
+ */
+function _getAlignmentData(positionData, target, boundingRect, coverTarget, alignTargetEdge) {
+    if (positionData.isAuto) {
+        positionData.alignmentEdge = getClosestEdge(positionData.targetEdge, target, boundingRect);
+    }
+    positionData.alignTargetEdge = alignTargetEdge;
+    return positionData;
+}
+function getClosestEdge(targetEdge, target, boundingRect) {
+    var targetCenter = _getCenterValue(target, targetEdge);
+    var boundingCenter = _getCenterValue(boundingRect, targetEdge);
+    var _a = _getFlankingEdges(targetEdge), positiveEdge = _a.positiveEdge, negativeEdge = _a.negativeEdge;
+    if (targetCenter <= boundingCenter) {
+        return positiveEdge;
+    }
+    else {
+        return negativeEdge;
+    }
+}
+function _positionElementWithinBounds(elementToPosition, target, bounding, positionData, gap, shouldScroll, minimumScrollResizeHeight, directionalHintFixed, coverTarget) {
+    if (shouldScroll === void 0) { shouldScroll = false; }
+    var estimatedElementPosition = _estimatePosition(elementToPosition, target, positionData, gap, coverTarget);
+    if (_isRectangleWithinBounds(estimatedElementPosition, bounding)) {
+        return {
+            elementRectangle: estimatedElementPosition,
+            targetEdge: positionData.targetEdge,
+            alignmentEdge: positionData.alignmentEdge,
+        };
+    }
+    else {
+        return _adjustFitWithinBounds(estimatedElementPosition, target, bounding, positionData, shouldScroll, minimumScrollResizeHeight, gap, directionalHintFixed, coverTarget);
+    }
+}
+function _finalizeBeakPosition(elementPosition, positionedBeak, bounds) {
+    var targetEdge = elementPosition.targetEdge * -1;
+    // The "host" element that we will use to help position the beak.
+    var actualElement = new _Utilities__WEBPACK_IMPORTED_MODULE_3__.Rectangle(0, elementPosition.elementRectangle.width, 0, elementPosition.elementRectangle.height);
+    var returnValue = {};
+    var returnEdge = _finalizeReturnEdge(elementPosition.elementRectangle, elementPosition.alignmentEdge ? elementPosition.alignmentEdge : _getFlankingEdges(targetEdge).positiveEdge, bounds);
+    // only show the beak if the callout is not fully covering the target
+    var beakEdgeDifference = _getRelativeEdgeDifference(elementPosition.elementRectangle, elementPosition.targetRectangle, targetEdge);
+    var showBeak = beakEdgeDifference > Math.abs(_getEdgeValue(positionedBeak, targetEdge));
+    returnValue[_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge[targetEdge]] = _getEdgeValue(positionedBeak, targetEdge);
+    returnValue[_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge[returnEdge]] = _getRelativeEdgeDifference(positionedBeak, actualElement, returnEdge);
+    return {
+        elementPosition: (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({}, returnValue),
+        closestEdge: getClosestEdge(elementPosition.targetEdge, positionedBeak, actualElement),
+        targetEdge: targetEdge,
+        hideBeak: !showBeak,
+    };
+}
+function _positionBeak(beakWidth, elementPosition) {
+    var target = elementPosition.targetRectangle;
+    /**
+     * Note about beak positioning: The actual beak width only matters for getting the gap between the callout and
+     * target, it does not impact the beak placement within the callout. For example example, if the beakWidth is 8,
+     * then the actual beakWidth is sqrroot(8^2 + 8^2) = 11.31x11.31. So the callout will need to be an extra 3 pixels
+     * away from its target. While the beak is being positioned in the callout it still acts as though it were 8x8.
+     */
+    var _a = _getFlankingEdges(elementPosition.targetEdge), positiveEdge = _a.positiveEdge, negativeEdge = _a.negativeEdge;
+    var beakTargetPoint = _getCenterValue(target, elementPosition.targetEdge);
+    var elementBounds = new _Utilities__WEBPACK_IMPORTED_MODULE_3__.Rectangle(beakWidth / 2, elementPosition.elementRectangle.width - beakWidth / 2, beakWidth / 2, elementPosition.elementRectangle.height - beakWidth / 2);
+    var beakPosition = new _Utilities__WEBPACK_IMPORTED_MODULE_3__.Rectangle(0, beakWidth, 0, beakWidth);
+    beakPosition = _moveEdge(beakPosition, elementPosition.targetEdge * -1, -beakWidth / 2);
+    beakPosition = _centerEdgeToPoint(beakPosition, elementPosition.targetEdge * -1, beakTargetPoint - _getRelativeRectEdgeValue(positiveEdge, elementPosition.elementRectangle));
+    if (!_isEdgeInBounds(beakPosition, elementBounds, positiveEdge)) {
+        beakPosition = _alignEdges(beakPosition, elementBounds, positiveEdge);
+    }
+    else if (!_isEdgeInBounds(beakPosition, elementBounds, negativeEdge)) {
+        beakPosition = _alignEdges(beakPosition, elementBounds, negativeEdge);
+    }
+    return beakPosition;
+}
+function _getRectangleFromElement(element) {
+    // eslint-disable-next-line deprecation/deprecation
+    var clientRect = element.getBoundingClientRect();
+    return new _Utilities__WEBPACK_IMPORTED_MODULE_3__.Rectangle(clientRect.left, clientRect.right, clientRect.top, clientRect.bottom);
+}
+function _getRectangleFromIRect(rect) {
+    return new _Utilities__WEBPACK_IMPORTED_MODULE_3__.Rectangle(rect.left, rect.right, rect.top, rect.bottom);
+}
+function _getTargetRect(bounds, target) {
+    var targetRectangle;
+    if (target) {
+        // eslint-disable-next-line no-extra-boolean-cast
+        if (!!target.preventDefault) {
+            var ev = target;
+            targetRectangle = new _Utilities__WEBPACK_IMPORTED_MODULE_3__.Rectangle(ev.clientX, ev.clientX, ev.clientY, ev.clientY);
+            // eslint-disable-next-line no-extra-boolean-cast
+        }
+        else if (!!target.getBoundingClientRect) {
+            targetRectangle = _getRectangleFromElement(target);
+            // HTMLImgElements can have x and y values. The check for it being a point must go last.
+        }
+        else {
+            var rectOrPoint = target;
+            // eslint-disable-next-line deprecation/deprecation
+            var left = rectOrPoint.left || rectOrPoint.x;
+            // eslint-disable-next-line deprecation/deprecation
+            var top_1 = rectOrPoint.top || rectOrPoint.y;
+            var right = rectOrPoint.right || left;
+            var bottom = rectOrPoint.bottom || top_1;
+            targetRectangle = new _Utilities__WEBPACK_IMPORTED_MODULE_3__.Rectangle(left, right, top_1, bottom);
+        }
+        if (!_isRectangleWithinBounds(targetRectangle, bounds)) {
+            var outOfBounds = _getOutOfBoundsEdges(targetRectangle, bounds);
+            for (var _i = 0, outOfBounds_1 = outOfBounds; _i < outOfBounds_1.length; _i++) {
+                var direction = outOfBounds_1[_i];
+                targetRectangle[_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge[direction]] = bounds[_positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge[direction]];
+            }
+        }
+    }
+    else {
+        targetRectangle = new _Utilities__WEBPACK_IMPORTED_MODULE_3__.Rectangle(0, 0, 0, 0);
+    }
+    return targetRectangle;
+}
+/**
+ * If max height is less than zero it returns the bounds height instead.
+ */
+function _getMaxHeightFromTargetRectangle(targetRectangle, targetEdge, gapSpace, bounds, coverTarget) {
+    var maxHeight = 0;
+    var directionalHint = DirectionalDictionary[targetEdge];
+    // If cover target is set, then the max height should be calculated using the opposite of the target edge since
+    // that's the direction that the callout will expand in.
+    // For instance, if the directionalhint is bottomLeftEdge then the callout will position so it's bottom edge
+    // is aligned with the bottom of the target and expand up towards the top of the screen and the calculated max height
+    // is (bottom of target) - (top of screen) - gapSpace.
+    var target = coverTarget ? directionalHint.targetEdge * -1 : directionalHint.targetEdge;
+    if (target === _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.top) {
+        maxHeight = _getEdgeValue(targetRectangle, directionalHint.targetEdge) - bounds.top - gapSpace;
+    }
+    else if (target === _positioning_types__WEBPACK_IMPORTED_MODULE_1__.RectangleEdge.bottom) {
+        maxHeight = bounds.bottom - _getEdgeValue(targetRectangle, directionalHint.targetEdge) - gapSpace;
+    }
+    else {
+        maxHeight = bounds.bottom - targetRectangle.top - gapSpace;
+    }
+    return maxHeight > 0 ? maxHeight : bounds.height;
+}
+function _positionElementRelative(props, elementToPosition, boundingRect, previousPositions, shouldScroll, minimumScrollResizeHeight) {
+    if (shouldScroll === void 0) { shouldScroll = false; }
+    var gap = props.gapSpace ? props.gapSpace : 0;
+    var targetRect = _getTargetRect(boundingRect, props.target);
+    var positionData = _getAlignmentData(_getPositionData(props.directionalHint, props.directionalHintForRTL, previousPositions), targetRect, boundingRect, props.coverTarget, props.alignTargetEdge);
+    var positionedElement = _positionElementWithinBounds(_getRectangleFromElement(elementToPosition), targetRect, boundingRect, positionData, gap, shouldScroll, minimumScrollResizeHeight, props.directionalHintFixed, props.coverTarget);
+    return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({}, positionedElement), { targetRectangle: targetRect });
+}
+function _finalizePositionData(positionedElement, hostElement, bounds, coverTarget, doNotFinalizeReturnEdge) {
+    var finalizedElement = _finalizeElementPosition(positionedElement.elementRectangle, hostElement, positionedElement.targetEdge, bounds, positionedElement.alignmentEdge, coverTarget, doNotFinalizeReturnEdge, positionedElement.forcedInBounds);
+    return {
+        elementPosition: finalizedElement,
+        targetEdge: positionedElement.targetEdge,
+        alignmentEdge: positionedElement.alignmentEdge,
+    };
+}
+function _positionElement(props, hostElement, elementToPosition, previousPositions, win) {
+    var theWin = win !== null && win !== void 0 ? win : (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.getWindow)();
+    var boundingRect = props.bounds
+        ? _getRectangleFromIRect(props.bounds)
+        : new _Utilities__WEBPACK_IMPORTED_MODULE_3__.Rectangle(0, theWin.innerWidth - (0,_Utilities__WEBPACK_IMPORTED_MODULE_6__.getScrollbarWidth)(), 0, theWin.innerHeight);
+    var positionedElement = _positionElementRelative(props, elementToPosition, boundingRect, previousPositions);
+    return _finalizePositionData(positionedElement, hostElement, boundingRect, props.coverTarget);
+}
+function _calculateGapSpace(isBeakVisible, beakWidth, gapSpace) {
+    if (beakWidth === void 0) { beakWidth = 0; }
+    if (gapSpace === void 0) { gapSpace = 0; }
+    return _calculateActualBeakWidthInPixels(isBeakVisible ? beakWidth : 0) / 2 + gapSpace;
+}
+function _positionCallout(props, hostElement, callout, previousPositions, shouldScroll, minimumScrollResizeHeight, doNotFinalizeReturnEdge, win) {
+    if (shouldScroll === void 0) { shouldScroll = false; }
+    var theWin = win !== null && win !== void 0 ? win : (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.getWindow)();
+    var beakWidth = props.isBeakVisible ? props.beakWidth || 0 : 0;
+    var gap = _calculateGapSpace(props.isBeakVisible, props.beakWidth, props.gapSpace);
+    var positionProps = props;
+    positionProps.gapSpace = gap;
+    var boundingRect = props.bounds
+        ? _getRectangleFromIRect(props.bounds)
+        : new _Utilities__WEBPACK_IMPORTED_MODULE_3__.Rectangle(0, theWin.innerWidth - (0,_Utilities__WEBPACK_IMPORTED_MODULE_6__.getScrollbarWidth)(), 0, theWin.innerHeight);
+    var positionedElement = _positionElementRelative(positionProps, callout, boundingRect, previousPositions, shouldScroll, minimumScrollResizeHeight);
+    var beakPositioned = _positionBeak(beakWidth, positionedElement);
+    var finalizedBeakPosition = _finalizeBeakPosition(positionedElement, beakPositioned, boundingRect);
+    return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({}, _finalizePositionData(positionedElement, hostElement, boundingRect, props.coverTarget, doNotFinalizeReturnEdge)), { beakPosition: finalizedBeakPosition });
+}
+function _positionCard(props, hostElement, callout, previousPositions, win) {
+    var theWin = win !== null && win !== void 0 ? win : (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.getWindow)();
+    return _positionCallout(props, hostElement, callout, previousPositions, false, undefined, true, theWin);
+}
+function _getRectangleFromTarget(target) {
+    var _a, _b, _c, _d;
+    var mouseTarget = target;
+    var elementTarget = target;
+    var rectOrPointTarget = target;
+    var targetRect;
+    // eslint-disable-next-line deprecation/deprecation
+    var left = (_a = rectOrPointTarget.left) !== null && _a !== void 0 ? _a : rectOrPointTarget.x;
+    // eslint-disable-next-line deprecation/deprecation
+    var top = (_b = rectOrPointTarget.top) !== null && _b !== void 0 ? _b : rectOrPointTarget.y;
+    var right = (_c = rectOrPointTarget.right) !== null && _c !== void 0 ? _c : left;
+    var bottom = (_d = rectOrPointTarget.bottom) !== null && _d !== void 0 ? _d : top;
+    // eslint-disable-next-line no-extra-boolean-cast -- may not actually be a MouseEvent
+    if (!!mouseTarget.stopPropagation) {
+        targetRect = new _Utilities__WEBPACK_IMPORTED_MODULE_3__.Rectangle(mouseTarget.clientX, mouseTarget.clientX, mouseTarget.clientY, mouseTarget.clientY);
+    }
+    else if (left !== undefined && top !== undefined) {
+        targetRect = new _Utilities__WEBPACK_IMPORTED_MODULE_3__.Rectangle(left, right, top, bottom);
+    }
+    else {
+        targetRect = _getRectangleFromElement(elementTarget);
+    }
+    return targetRect;
+}
+// END PRIVATE FUNCTIONS
+var __positioningTestPackage = {
+    _finalizePositionData: _finalizePositionData,
+    _finalizeBeakPosition: _finalizeBeakPosition,
+    _calculateActualBeakWidthInPixels: _calculateActualBeakWidthInPixels,
+    _positionElementWithinBounds: _positionElementWithinBounds,
+    _positionBeak: _positionBeak,
+    _getPositionData: _getPositionData,
+    _getMaxHeightFromTargetRectangle: _getMaxHeightFromTargetRectangle,
+};
+/**
+ * Used to position an element relative to the given positioning props.
+ * If positioning has been completed before, previousPositions can be passed to ensure that the positioning element
+ * repositions based on its previous targets rather than starting with directionalhint.
+ */
+function positionElement(props, hostElement, elementToPosition, previousPositions, win) {
+    return _positionElement(props, hostElement, elementToPosition, previousPositions, win);
+}
+function positionCallout(props, hostElement, elementToPosition, previousPositions, shouldScroll, minimumScrollResizeHeight, win) {
+    return _positionCallout(props, hostElement, elementToPosition, previousPositions, shouldScroll, minimumScrollResizeHeight, undefined, win);
+}
+function positionCard(props, hostElement, elementToPosition, previousPositions, win) {
+    return _positionCard(props, hostElement, elementToPosition, previousPositions, win);
+}
+/**
+ * Gets the maximum height that a rectangle can have in order to fit below or above a target.
+ * If the directional hint specifies a left or right edge (i.e. leftCenter) it will limit the height to the topBorder
+ * of the target given.
+ * If no bounds are provided then the window is treated as the bounds.
+ */
+function getMaxHeight(target, targetEdge, gapSpace, bounds, coverTarget, win) {
+    if (gapSpace === void 0) { gapSpace = 0; }
+    var theWin = win !== null && win !== void 0 ? win : (0,_Utilities__WEBPACK_IMPORTED_MODULE_5__.getWindow)();
+    var targetRect = _getRectangleFromTarget(target);
+    var boundingRectangle = bounds
+        ? _getRectangleFromIRect(bounds)
+        : new _Utilities__WEBPACK_IMPORTED_MODULE_3__.Rectangle(0, theWin.innerWidth - (0,_Utilities__WEBPACK_IMPORTED_MODULE_6__.getScrollbarWidth)(), 0, theWin.innerHeight);
+    return _getMaxHeightFromTargetRectangle(targetRect, targetEdge, gapSpace, boundingRectangle, coverTarget);
+}
+/**
+ * Returns the opposite edge of the given RectangleEdge.
+ */
+function getOppositeEdge(edge) {
+    return edge * -1;
+}
+function _getBoundsFromTargetWindow(target, targetWindow) {
+    var segments = undefined;
+    if (targetWindow.getWindowSegments) {
+        segments = targetWindow.getWindowSegments();
+    }
+    // Identify if we're dealing with single screen scenarios.
+    if (segments === undefined || segments.length <= 1) {
+        return {
+            top: 0,
+            left: 0,
+            right: targetWindow.innerWidth,
+            bottom: targetWindow.innerHeight,
+            width: targetWindow.innerWidth,
+            height: targetWindow.innerHeight,
+        };
+    }
+    // Logic for determining dual screen scenarios.
+    var x = 0;
+    var y = 0;
+    // If the target is an Element get coordinates for its center.
+    if (target !== null && !!target.getBoundingClientRect) {
+        var clientRect = target.getBoundingClientRect();
+        x = (clientRect.left + clientRect.right) / 2;
+        y = (clientRect.top + clientRect.bottom) / 2;
+    }
+    // If the target is not null get x-axis and y-axis coordinates directly.
+    else if (target !== null) {
+        // eslint-disable-next-line deprecation/deprecation
+        x = target.left || target.x;
+        // eslint-disable-next-line deprecation/deprecation
+        y = target.top || target.y;
+    }
+    var bounds = { top: 0, left: 0, right: 0, bottom: 0, width: 0, height: 0 };
+    // Define which window segment are the coordinates in and calculate bounds based on that.
+    for (var _i = 0, segments_1 = segments; _i < segments_1.length; _i++) {
+        var segment = segments_1[_i];
+        if (x && segment.left <= x && segment.right >= x && y && segment.top <= y && segment.bottom >= y) {
+            bounds = {
+                top: segment.top,
+                left: segment.left,
+                right: segment.right,
+                bottom: segment.bottom,
+                width: segment.width,
+                height: segment.height,
+            };
+        }
+    }
+    return bounds;
+}
+function getBoundsFromTargetWindow(target, targetWindow) {
+    return _getBoundsFromTargetWindow(target, targetWindow);
+}
+function calculateGapSpace(isBeakVisible, beakWidth, gapSpace) {
+    return _calculateGapSpace(isBeakVisible, beakWidth, gapSpace);
+}
+function getRectangleFromTarget(target) {
+    return _getRectangleFromTarget(target);
+}
+//# sourceMappingURL=positioning.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/react/lib/utilities/positioning/positioning.types.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@fluentui/react/lib/utilities/positioning/positioning.types.js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Position: () => (/* binding */ Position),
+/* harmony export */   RectangleEdge: () => (/* binding */ RectangleEdge)
+/* harmony export */ });
+var RectangleEdge;
+(function (RectangleEdge) {
+    RectangleEdge[RectangleEdge["top"] = 1] = "top";
+    RectangleEdge[RectangleEdge["bottom"] = -1] = "bottom";
+    RectangleEdge[RectangleEdge["left"] = 2] = "left";
+    RectangleEdge[RectangleEdge["right"] = -2] = "right";
+})(RectangleEdge || (RectangleEdge = {}));
+var Position;
+(function (Position) {
+    Position[Position["top"] = 0] = "top";
+    Position[Position["bottom"] = 1] = "bottom";
+    Position[Position["start"] = 2] = "start";
+    Position[Position["end"] = 3] = "end";
+})(Position || (Position = {}));
+//# sourceMappingURL=positioning.types.js.map
 
 /***/ }),
 
@@ -10226,6 +21272,269 @@ var Async = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./node_modules/@fluentui/utilities/lib/BaseComponent.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/BaseComponent.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BaseComponent: () => (/* binding */ BaseComponent),
+/* harmony export */   nullRender: () => (/* binding */ nullRender)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Async__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Async */ "./node_modules/@fluentui/utilities/lib/Async.js");
+/* harmony import */ var _EventGroup__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EventGroup */ "./node_modules/@fluentui/utilities/lib/EventGroup.js");
+/* harmony import */ var _warn_warnConditionallyRequiredProps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./warn/warnConditionallyRequiredProps */ "./node_modules/@fluentui/utilities/lib/warn/warnConditionallyRequiredProps.js");
+/* harmony import */ var _warn_warnMutuallyExclusive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./warn/warnMutuallyExclusive */ "./node_modules/@fluentui/utilities/lib/warn/warnMutuallyExclusive.js");
+/* harmony import */ var _warn_warnDeprecations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./warn/warnDeprecations */ "./node_modules/@fluentui/utilities/lib/warn/warnDeprecations.js");
+
+
+
+
+
+
+
+/**
+ * BaseComponent class, which provides basic helpers for all components.
+ *
+ * @public
+ * {@docCategory BaseComponent}
+ *
+ * @deprecated Do not use. We are moving away from class component.
+ */
+var BaseComponent = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(BaseComponent, _super);
+    /**
+     * BaseComponent constructor
+     * @param props - The props for the component.
+     * @param context - The context for the component.
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function BaseComponent(props, context) {
+        var _this = _super.call(this, props, context) || this;
+        // eslint-disable-next-line deprecation/deprecation
+        _makeAllSafe(_this, BaseComponent.prototype, [
+            'componentDidMount',
+            'shouldComponentUpdate',
+            'getSnapshotBeforeUpdate',
+            'render',
+            'componentDidUpdate',
+            'componentWillUnmount',
+        ]);
+        return _this;
+    }
+    /**
+     * When the component receives props, make sure the componentRef is updated.
+     */
+    BaseComponent.prototype.componentDidUpdate = function (prevProps, prevState) {
+        this._updateComponentRef(prevProps, this.props);
+    };
+    /**
+     * When the component has mounted, update the componentRef.
+     */
+    BaseComponent.prototype.componentDidMount = function () {
+        this._setComponentRef(this.props.componentRef, this);
+    };
+    /**
+     * If we have disposables, dispose them automatically on unmount.
+     */
+    BaseComponent.prototype.componentWillUnmount = function () {
+        this._setComponentRef(this.props.componentRef, null);
+        if (this.__disposables) {
+            for (var i = 0, len = this._disposables.length; i < len; i++) {
+                var disposable = this.__disposables[i];
+                if (disposable.dispose) {
+                    disposable.dispose();
+                }
+            }
+            this.__disposables = null;
+        }
+    };
+    Object.defineProperty(BaseComponent.prototype, "className", {
+        /**
+         * Gets the object's class name.
+         */
+        get: function () {
+            if (!this.__className) {
+                var funcNameRegex = /function (.{1,})\(/;
+                var results = funcNameRegex.exec(this.constructor.toString());
+                this.__className = results && results.length > 1 ? results[1] : '';
+            }
+            return this.__className;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(BaseComponent.prototype, "_disposables", {
+        /**
+         * Allows subclasses to push things to this._disposables to be auto disposed.
+         */
+        get: function () {
+            if (!this.__disposables) {
+                this.__disposables = [];
+            }
+            return this.__disposables;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(BaseComponent.prototype, "_async", {
+        /**
+         * Gets the async instance associated with the component, created on demand. The async instance gives
+         * subclasses a way to execute setTimeout/setInterval async calls safely, where the callbacks
+         * will be cleared/ignored automatically after unmounting. The helpers within the async object also
+         * preserve the this pointer so that you don't need to "bind" the callbacks.
+         */
+        get: function () {
+            if (!this.__async) {
+                this.__async = new _Async__WEBPACK_IMPORTED_MODULE_2__.Async(this);
+                this._disposables.push(this.__async);
+            }
+            return this.__async;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(BaseComponent.prototype, "_events", {
+        /**
+         * Gets the event group instance assocaited with the component, created on demand. The event instance
+         * provides on/off methods for listening to DOM (or regular javascript object) events. The event callbacks
+         * will be automatically disconnected after unmounting. The helpers within the events object also
+         * preserve the this reference so that you don't need to "bind" the callbacks.
+         */
+        get: function () {
+            if (!this.__events) {
+                this.__events = new _EventGroup__WEBPACK_IMPORTED_MODULE_3__.EventGroup(this);
+                this._disposables.push(this.__events);
+            }
+            return this.__events;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    /**
+     * Helper to return a memoized ref resolver function.
+     * @param refName - Name of the member to assign the ref to.
+     * @returns A function instance keyed from the given refname.
+     * @deprecated Use `createRef` from React.createRef.
+     */
+    BaseComponent.prototype._resolveRef = function (refName) {
+        var _this = this;
+        if (!this.__resolves) {
+            this.__resolves = {};
+        }
+        if (!this.__resolves[refName]) {
+            this.__resolves[refName] = function (ref) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                return (_this[refName] = ref);
+            };
+        }
+        return this.__resolves[refName];
+    };
+    /**
+     * Updates the componentRef (by calling it with "this" when necessary.)
+     */
+    BaseComponent.prototype._updateComponentRef = function (currentProps, newProps) {
+        if (newProps === void 0) { newProps = {}; }
+        // currentProps *should* always be defined, but verify that just in case a subclass is manually
+        // calling a lifecycle method with no parameters (which has happened) or other odd usage.
+        if (currentProps && newProps && currentProps.componentRef !== newProps.componentRef) {
+            this._setComponentRef(currentProps.componentRef, null);
+            this._setComponentRef(newProps.componentRef, this);
+        }
+    };
+    /**
+     * Warns when a deprecated props are being used.
+     *
+     * @param deprecationMap - The map of deprecations, where key is the prop name and the value is
+     * either null or a replacement prop name.
+     */
+    BaseComponent.prototype._warnDeprecations = function (deprecationMap) {
+        (0,_warn_warnDeprecations__WEBPACK_IMPORTED_MODULE_4__.warnDeprecations)(this.className, this.props, deprecationMap);
+    };
+    /**
+     * Warns when props which are mutually exclusive with each other are both used.
+     *
+     * @param mutuallyExclusiveMap - The map of mutually exclusive props.
+     */
+    BaseComponent.prototype._warnMutuallyExclusive = function (mutuallyExclusiveMap) {
+        (0,_warn_warnMutuallyExclusive__WEBPACK_IMPORTED_MODULE_5__.warnMutuallyExclusive)(this.className, this.props, mutuallyExclusiveMap);
+    };
+    /**
+     * Warns when props are required if a condition is met.
+     *
+     * @param requiredProps - The name of the props that are required when the condition is met.
+     * @param conditionalPropName - The name of the prop that the condition is based on.
+     * @param condition - Whether the condition is met.
+     */
+    BaseComponent.prototype._warnConditionallyRequiredProps = function (requiredProps, conditionalPropName, condition) {
+        (0,_warn_warnConditionallyRequiredProps__WEBPACK_IMPORTED_MODULE_6__.warnConditionallyRequiredProps)(this.className, this.props, requiredProps, conditionalPropName, condition);
+    };
+    BaseComponent.prototype._setComponentRef = function (ref, value) {
+        if (!this._skipComponentRefResolution && ref) {
+            if (typeof ref === 'function') {
+                ref(value);
+            }
+            if (typeof ref === 'object') {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                ref.current = value;
+            }
+        }
+    };
+    return BaseComponent;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+/**
+ * Helper to override a given method with a wrapper method that can try/catch the original, but also
+ * ensures that the BaseComponent's methods are called before the subclass's. This ensures that
+ * componentWillUnmount in the base is called and that things in the _disposables array are disposed.
+ */
+// eslint-disable-next-line deprecation/deprecation
+function _makeAllSafe(obj, prototype, methodNames) {
+    for (var i = 0, len = methodNames.length; i < len; i++) {
+        _makeSafe(obj, prototype, methodNames[i]);
+    }
+}
+// eslint-disable-next-line deprecation/deprecation
+function _makeSafe(obj, prototype, methodName) {
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    var classMethod = obj[methodName];
+    var prototypeMethod = prototype[methodName];
+    if (classMethod || prototypeMethod) {
+        obj[methodName] = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            /* eslint-enable @typescript-eslint/no-explicit-any */
+            var retVal;
+            if (prototypeMethod) {
+                retVal = prototypeMethod.apply(this, args);
+            }
+            if (classMethod !== prototypeMethod) {
+                retVal = classMethod.apply(this, args);
+            }
+            return retVal;
+        };
+    }
+}
+/**
+ * Simple constant function for returning null, used to render empty templates in JSX.
+ *
+ * @public
+ */
+function nullRender() {
+    return null;
+}
+//# sourceMappingURL=BaseComponent.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/utilities/lib/EventGroup.js":
 /*!************************************************************!*\
   !*** ./node_modules/@fluentui/utilities/lib/EventGroup.js ***!
@@ -10780,6 +22089,72 @@ var KeyCodes = {
 
 /***/ }),
 
+/***/ "./node_modules/@fluentui/utilities/lib/Rectangle.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/Rectangle.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Rectangle: () => (/* binding */ Rectangle)
+/* harmony export */ });
+/**
+ * Rectangle helper class.
+ *
+ * @public
+ * {@docCategory Rectangle}
+ */
+var Rectangle = /** @class */ (function () {
+    function Rectangle(left, right, top, bottom) {
+        if (left === void 0) { left = 0; }
+        if (right === void 0) { right = 0; }
+        if (top === void 0) { top = 0; }
+        if (bottom === void 0) { bottom = 0; }
+        this.top = top;
+        this.bottom = bottom;
+        this.left = left;
+        this.right = right;
+    }
+    Object.defineProperty(Rectangle.prototype, "width", {
+        /**
+         * Calculated automatically by subtracting the right from left
+         */
+        get: function () {
+            return this.right - this.left;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Rectangle.prototype, "height", {
+        /**
+         * Calculated automatically by subtracting the bottom from top.
+         */
+        get: function () {
+            return this.bottom - this.top;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    /**
+     * Tests if another rect is approximately equal to this rect (within 4 decimal places.)
+     */
+    Rectangle.prototype.equals = function (rect) {
+        // Fixing to 4 decimal places because it allows enough precision and will handle cases when something
+        // should be rounded, like .999999 should round to 1.
+        return (parseFloat(this.top.toFixed(4)) === parseFloat(rect.top.toFixed(4)) &&
+            parseFloat(this.bottom.toFixed(4)) === parseFloat(rect.bottom.toFixed(4)) &&
+            parseFloat(this.left.toFixed(4)) === parseFloat(rect.left.toFixed(4)) &&
+            parseFloat(this.right.toFixed(4)) === parseFloat(rect.right.toFixed(4)));
+    };
+    return Rectangle;
+}());
+
+//# sourceMappingURL=Rectangle.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/utilities/lib/appendFunction.js":
 /*!****************************************************************!*\
   !*** ./node_modules/@fluentui/utilities/lib/appendFunction.js ***!
@@ -10813,6 +22188,184 @@ function appendFunction(parent) {
     };
 }
 //# sourceMappingURL=appendFunction.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/utilities/lib/aria.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/aria.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   mergeAriaAttributeValues: () => (/* binding */ mergeAriaAttributeValues)
+/* harmony export */ });
+/**
+ * ARIA helper to concatenate attributes, returning undefined if all attributes
+ * are undefined. (Empty strings are not a valid ARIA attribute value.)
+ *
+ * @param ariaAttributes - ARIA attributes to merge
+ */
+function mergeAriaAttributeValues() {
+    var ariaAttributes = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        ariaAttributes[_i] = arguments[_i];
+    }
+    var mergedAttribute = ariaAttributes
+        .filter(function (arg) { return arg; })
+        .join(' ')
+        .trim();
+    return mergedAttribute === '' ? undefined : mergedAttribute;
+}
+//# sourceMappingURL=aria.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/utilities/lib/array.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/array.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addElementAtIndex: () => (/* binding */ addElementAtIndex),
+/* harmony export */   arraysEqual: () => (/* binding */ arraysEqual),
+/* harmony export */   createArray: () => (/* binding */ createArray),
+/* harmony export */   find: () => (/* binding */ find),
+/* harmony export */   findIndex: () => (/* binding */ findIndex),
+/* harmony export */   flatten: () => (/* binding */ flatten),
+/* harmony export */   removeIndex: () => (/* binding */ removeIndex),
+/* harmony export */   replaceElement: () => (/* binding */ replaceElement),
+/* harmony export */   toMatrix: () => (/* binding */ toMatrix)
+/* harmony export */ });
+/**
+ * Helper to find the index of an item within an array, using a callback to
+ * determine the match.
+ *
+ * @public
+ * @param array - Array to search.
+ * @param cb - Callback which returns true on matches.
+ * @param fromIndex - Optional index to start from (defaults to 0)
+ */
+function findIndex(array, cb, fromIndex) {
+    if (fromIndex === void 0) { fromIndex = 0; }
+    var index = -1;
+    for (var i = fromIndex; array && i < array.length; i++) {
+        if (cb(array[i], i)) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
+/**
+ * Helper to find the first item within an array that satisfies the callback.
+ * @param array - Array to search
+ * @param cb - Callback which returns true on matches
+ */
+function find(array, cb) {
+    var index = findIndex(array, cb);
+    if (index < 0) {
+        return undefined;
+    }
+    return array[index];
+}
+/**
+ * Creates an array of a given size and helper method to populate.
+ *
+ * @public
+ * @param size - Size of array.
+ * @param getItem - Callback to populate given cell index.
+ */
+function createArray(size, getItem) {
+    var array = [];
+    for (var i = 0; i < size; i++) {
+        array.push(getItem(i));
+    }
+    return array;
+}
+/**
+ * Convert the given array to a matrix with columnCount number
+ * of columns.
+ *
+ * @public
+ * @param items - The array to convert
+ * @param columnCount - The number of columns for the resulting matrix
+ * @returns A matrix of items
+ */
+function toMatrix(items, columnCount) {
+    return items.reduce(function (rows, currentValue, index) {
+        if (index % columnCount === 0) {
+            rows.push([currentValue]);
+        }
+        else {
+            rows[rows.length - 1].push(currentValue);
+        }
+        return rows;
+    }, []);
+}
+/**
+ * Given an array, it returns a new array that does not contain the item at the given index.
+ * @param array - The array to operate on
+ * @param index - The index of the element to remove
+ */
+function removeIndex(array, index) {
+    return array.filter(function (_, i) { return index !== i; });
+}
+/**
+ * Given an array, this function returns a new array where the element at a given index has been replaced.
+ * @param array - The array to operate on
+ * @param newElement - The element that will be placed in the new array
+ * @param index - The index of the element that should be replaced
+ */
+function replaceElement(array, newElement, index) {
+    var copy = array.slice();
+    copy[index] = newElement;
+    return copy;
+}
+/**
+ * Given an array, this function returns a new array where an element has been inserted at the given index.
+ * @param array - The array to operate on
+ * @param index - The index where an element should be inserted
+ * @param itemToAdd - The element to insert
+ */
+function addElementAtIndex(array, index, itemToAdd) {
+    var copy = array.slice();
+    copy.splice(index, 0, itemToAdd);
+    return copy;
+}
+/**
+ * Given an array where each element is of type T or T[], flatten it into an array of T
+ * @param array - The array where each element can optionally also be an array
+ */
+function flatten(array) {
+    var result = [];
+    array.forEach(function (item) { return (result = result.concat(item)); });
+    return result;
+}
+/**
+ * Returns a boolean indicating if the two given arrays are equal in length and values.
+ *
+ * @param array1 - First array to compare
+ * @param array2 - Second array to compare
+ * @returns True if the arrays are the same length and have the same values in the same positions, false otherwise.
+ */
+function arraysEqual(array1, array2) {
+    if (array1.length !== array2.length) {
+        return false;
+    }
+    for (var i = 0; i < array1.length; i++) {
+        if (array1[i] !== array2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+//# sourceMappingURL=array.js.map
 
 /***/ }),
 
@@ -10973,6 +22526,60 @@ function _normalizeValue(value) {
 
 /***/ }),
 
+/***/ "./node_modules/@fluentui/utilities/lib/componentAs/composeComponentAs.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/componentAs/composeComponentAs.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   composeComponentAs: () => (/* binding */ composeComponentAs)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _memoize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../memoize */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+
+
+
+function createComposedComponent(outer) {
+    var Outer = outer;
+    var outerMemoizer = (0,_memoize__WEBPACK_IMPORTED_MODULE_1__.createMemoizer)(function (inner) {
+        if (outer === inner) {
+            throw new Error('Attempted to compose a component with itself.');
+        }
+        var Inner = inner;
+        var innerMemoizer = (0,_memoize__WEBPACK_IMPORTED_MODULE_1__.createMemoizer)(function (defaultRender) {
+            var InnerWithDefaultRender = function (innerProps) {
+                return react__WEBPACK_IMPORTED_MODULE_0__.createElement(Inner, (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({}, innerProps, { defaultRender: defaultRender }));
+            };
+            return InnerWithDefaultRender;
+        });
+        var OuterWithDefaultRender = function (outerProps) {
+            var defaultRender = outerProps.defaultRender;
+            return react__WEBPACK_IMPORTED_MODULE_0__.createElement(Outer, (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({}, outerProps, { defaultRender: defaultRender ? innerMemoizer(defaultRender) : Inner }));
+        };
+        return OuterWithDefaultRender;
+    });
+    return outerMemoizer;
+}
+var componentAsMemoizer = (0,_memoize__WEBPACK_IMPORTED_MODULE_1__.createMemoizer)(createComposedComponent);
+/**
+ * Composes two components which conform to the `IComponentAs` specification; that is, two
+ * components which accept a `defaultRender` prop, which is a 'default' implementation of
+ * a component which accepts the same overall props.
+ *
+ * @public
+ */
+function composeComponentAs(outer, inner) {
+    return componentAsMemoizer(outer)(inner);
+}
+//# sourceMappingURL=composeComponentAs.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/utilities/lib/controlled.js":
 /*!************************************************************!*\
   !*** ./node_modules/@fluentui/utilities/lib/controlled.js ***!
@@ -10996,6 +22603,60 @@ function isControlled(props, valueProp) {
     return props[valueProp] !== undefined && props[valueProp] !== null;
 }
 //# sourceMappingURL=controlled.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/utilities/lib/createMergedRef.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/createMergedRef.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createMergedRef: () => (/* binding */ createMergedRef)
+/* harmony export */ });
+/* harmony import */ var _array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./array */ "./node_modules/@fluentui/utilities/lib/array.js");
+
+/**
+ * Set up a ref resolver function given internal state managed for the ref.
+ * @param local Set
+ */
+var createResolver = function (local) {
+    return function (newValue) {
+        for (var _i = 0, _a = local.refs; _i < _a.length; _i++) {
+            var ref = _a[_i];
+            if (typeof ref === 'function') {
+                ref(newValue);
+            }
+            else if (ref) {
+                // work around the immutability of the React.Ref type
+                ref.current = newValue;
+            }
+        }
+    };
+};
+/**
+ * Helper to merge refs from within class components.
+ */
+var createMergedRef = function (value) {
+    var local = {
+        refs: [],
+    };
+    return function () {
+        var newRefs = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            newRefs[_i] = arguments[_i];
+        }
+        if (!local.resolver || !(0,_array__WEBPACK_IMPORTED_MODULE_0__.arraysEqual)(local.refs, newRefs)) {
+            local.resolver = createResolver(local);
+        }
+        local.refs = newRefs;
+        return local.resolver;
+    };
+};
+//# sourceMappingURL=createMergedRef.js.map
 
 /***/ }),
 
@@ -11142,6 +22803,76 @@ var Customizations = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./node_modules/@fluentui/utilities/lib/customizations/Customizer.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/customizations/Customizer.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Customizer: () => (/* binding */ Customizer)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Customizations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Customizations */ "./node_modules/@fluentui/utilities/lib/customizations/Customizations.js");
+/* harmony import */ var _CustomizerContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CustomizerContext */ "./node_modules/@fluentui/utilities/lib/customizations/CustomizerContext.js");
+/* harmony import */ var _mergeCustomizations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mergeCustomizations */ "./node_modules/@fluentui/utilities/lib/customizations/mergeCustomizations.js");
+
+
+
+
+
+/**
+ * The Customizer component allows for default props to be mixed into components which
+ * are decorated with the customizable() decorator, or use the styled HOC. This enables
+ * injection scenarios like:
+ *
+ * 1. render svg icons instead of the icon font within all buttons
+ * 2. inject a custom theme object into a component
+ *
+ * Props are provided via the settings prop which should be one of the following:
+ * - A json map which contains 1 or more name/value pairs representing injectable props.
+ * - A function that receives the current settings and returns the new ones that apply to the scope
+ *
+ * @public
+ *
+ * @deprecated This component is deprecated for purpose of applying theme to components
+ * as of `@fluentui/react` version 8. Use `ThemeProvider` for applying theme instead.
+ */
+var Customizer = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(Customizer, _super);
+    function Customizer() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this._onCustomizationChange = function () { return _this.forceUpdate(); };
+        return _this;
+    }
+    Customizer.prototype.componentDidMount = function () {
+        _Customizations__WEBPACK_IMPORTED_MODULE_2__.Customizations.observe(this._onCustomizationChange);
+    };
+    Customizer.prototype.componentWillUnmount = function () {
+        _Customizations__WEBPACK_IMPORTED_MODULE_2__.Customizations.unobserve(this._onCustomizationChange);
+    };
+    Customizer.prototype.render = function () {
+        var _this = this;
+        var contextTransform = this.props.contextTransform;
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_CustomizerContext__WEBPACK_IMPORTED_MODULE_3__.CustomizerContext.Consumer, null, function (parentContext) {
+            var newContext = (0,_mergeCustomizations__WEBPACK_IMPORTED_MODULE_4__.mergeCustomizations)(_this.props, parentContext);
+            if (contextTransform) {
+                newContext = contextTransform(newContext);
+            }
+            return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_CustomizerContext__WEBPACK_IMPORTED_MODULE_3__.CustomizerContext.Provider, { value: newContext }, _this.props.children);
+        }));
+    };
+    return Customizer;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+//# sourceMappingURL=Customizer.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/utilities/lib/customizations/CustomizerContext.js":
 /*!**********************************************************************************!*\
   !*** ./node_modules/@fluentui/utilities/lib/customizations/CustomizerContext.js ***!
@@ -11164,6 +22895,121 @@ var CustomizerContext = react__WEBPACK_IMPORTED_MODULE_0__.createContext({
     },
 });
 //# sourceMappingURL=CustomizerContext.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/utilities/lib/customizations/customizable.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/customizations/customizable.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   customizable: () => (/* binding */ customizable)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Customizations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Customizations */ "./node_modules/@fluentui/utilities/lib/customizations/Customizations.js");
+/* harmony import */ var _hoistStatics__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../hoistStatics */ "./node_modules/@fluentui/utilities/lib/hoistStatics.js");
+/* harmony import */ var _CustomizerContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CustomizerContext */ "./node_modules/@fluentui/utilities/lib/customizations/CustomizerContext.js");
+/* harmony import */ var _fluentui_merge_styles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fluentui/merge-styles */ "./node_modules/@fluentui/merge-styles/lib/concatStyleSets.js");
+
+
+
+
+
+
+function customizable(scope, fields, concatStyles) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return function customizableFactory(ComposedComponent) {
+        var _a;
+        var resultClass = (_a = /** @class */ (function (_super) {
+                (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(ComponentWithInjectedProps, _super);
+                function ComponentWithInjectedProps(props) {
+                    var _this = _super.call(this, props) || this;
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    _this._styleCache = {};
+                    _this._onSettingChanged = _this._onSettingChanged.bind(_this);
+                    return _this;
+                }
+                ComponentWithInjectedProps.prototype.componentDidMount = function () {
+                    _Customizations__WEBPACK_IMPORTED_MODULE_2__.Customizations.observe(this._onSettingChanged);
+                };
+                ComponentWithInjectedProps.prototype.componentWillUnmount = function () {
+                    _Customizations__WEBPACK_IMPORTED_MODULE_2__.Customizations.unobserve(this._onSettingChanged);
+                };
+                ComponentWithInjectedProps.prototype.render = function () {
+                    var _this = this;
+                    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_CustomizerContext__WEBPACK_IMPORTED_MODULE_3__.CustomizerContext.Consumer, null, function (context) {
+                        var defaultProps = _Customizations__WEBPACK_IMPORTED_MODULE_2__.Customizations.getSettings(fields, scope, context.customizations);
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        var componentProps = _this.props;
+                        // If defaultProps.styles is a function, evaluate it before calling concatStyleSets
+                        if (defaultProps.styles && typeof defaultProps.styles === 'function') {
+                            defaultProps.styles = defaultProps.styles((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, defaultProps), componentProps));
+                        }
+                        // If concatStyles is true and custom styles have been defined compute those styles
+                        if (concatStyles && defaultProps.styles) {
+                            if (_this._styleCache.default !== defaultProps.styles ||
+                                _this._styleCache.component !== componentProps.styles) {
+                                var mergedStyles = (0,_fluentui_merge_styles__WEBPACK_IMPORTED_MODULE_4__.concatStyleSets)(defaultProps.styles, componentProps.styles);
+                                _this._styleCache.default = defaultProps.styles;
+                                _this._styleCache.component = componentProps.styles;
+                                _this._styleCache.merged = mergedStyles;
+                            }
+                            return react__WEBPACK_IMPORTED_MODULE_0__.createElement(ComposedComponent, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, defaultProps, componentProps, { styles: _this._styleCache.merged }));
+                        }
+                        return react__WEBPACK_IMPORTED_MODULE_0__.createElement(ComposedComponent, (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__assign)({}, defaultProps, componentProps));
+                    }));
+                };
+                ComponentWithInjectedProps.prototype._onSettingChanged = function () {
+                    this.forceUpdate();
+                };
+                return ComponentWithInjectedProps;
+            }(react__WEBPACK_IMPORTED_MODULE_0__.Component)),
+            _a.displayName = 'Customized' + scope,
+            _a);
+        return (0,_hoistStatics__WEBPACK_IMPORTED_MODULE_5__.hoistStatics)(ComposedComponent, resultClass);
+    };
+}
+//# sourceMappingURL=customizable.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/utilities/lib/customizations/mergeCustomizations.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/customizations/mergeCustomizations.js ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   mergeCustomizations: () => (/* binding */ mergeCustomizations)
+/* harmony export */ });
+/* harmony import */ var _mergeSettings__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mergeSettings */ "./node_modules/@fluentui/utilities/lib/customizations/mergeSettings.js");
+
+/**
+ * Merge props and customizations giving priority to props over context.
+ * NOTE: This function will always perform multiple merge operations. Use with caution.
+ * @param props - New settings to merge in.
+ * @param parentContext - Context containing current settings.
+ * @returns Merged customizations.
+ */
+function mergeCustomizations(props, parentContext) {
+    var _a = (parentContext || {}).customizations, customizations = _a === void 0 ? { settings: {}, scopedSettings: {} } : _a;
+    return {
+        customizations: {
+            settings: (0,_mergeSettings__WEBPACK_IMPORTED_MODULE_0__.mergeSettings)(customizations.settings, props.settings),
+            scopedSettings: (0,_mergeSettings__WEBPACK_IMPORTED_MODULE_0__.mergeScopedSettings)(customizations.scopedSettings, props.scopedSettings),
+            inCustomizerContext: true,
+        },
+    };
+}
+//# sourceMappingURL=mergeCustomizations.js.map
 
 /***/ }),
 
@@ -11373,6 +23219,25 @@ function getWindow(rootElement) {
 
 /***/ }),
 
+/***/ "./node_modules/@fluentui/utilities/lib/dom/on.js":
+/*!********************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/dom/on.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   on: () => (/* binding */ on)
+/* harmony export */ });
+function on(element, eventName, callback, options) {
+    element.addEventListener(eventName, callback, options);
+    return function () { return element.removeEventListener(eventName, callback, options); };
+}
+//# sourceMappingURL=on.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/utilities/lib/extendComponent.js":
 /*!*****************************************************************!*\
   !*** ./node_modules/@fluentui/utilities/lib/extendComponent.js ***!
@@ -11398,6 +23263,372 @@ function extendComponent(parent, methods) {
     }
 }
 //# sourceMappingURL=extendComponent.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/utilities/lib/focus.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/focus.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   doesElementContainFocus: () => (/* binding */ doesElementContainFocus),
+/* harmony export */   focusAsync: () => (/* binding */ focusAsync),
+/* harmony export */   focusFirstChild: () => (/* binding */ focusFirstChild),
+/* harmony export */   getElementIndexPath: () => (/* binding */ getElementIndexPath),
+/* harmony export */   getFirstFocusable: () => (/* binding */ getFirstFocusable),
+/* harmony export */   getFirstTabbable: () => (/* binding */ getFirstTabbable),
+/* harmony export */   getFocusableByIndexPath: () => (/* binding */ getFocusableByIndexPath),
+/* harmony export */   getLastFocusable: () => (/* binding */ getLastFocusable),
+/* harmony export */   getLastTabbable: () => (/* binding */ getLastTabbable),
+/* harmony export */   getNextElement: () => (/* binding */ getNextElement),
+/* harmony export */   getPreviousElement: () => (/* binding */ getPreviousElement),
+/* harmony export */   isElementFocusSubZone: () => (/* binding */ isElementFocusSubZone),
+/* harmony export */   isElementFocusZone: () => (/* binding */ isElementFocusZone),
+/* harmony export */   isElementTabbable: () => (/* binding */ isElementTabbable),
+/* harmony export */   isElementVisible: () => (/* binding */ isElementVisible),
+/* harmony export */   isElementVisibleAndNotHidden: () => (/* binding */ isElementVisibleAndNotHidden),
+/* harmony export */   shouldWrapFocus: () => (/* binding */ shouldWrapFocus)
+/* harmony export */ });
+/* harmony import */ var _dom_elementContainsAttribute__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dom/elementContainsAttribute */ "./node_modules/@fluentui/dom-utilities/lib/elementContainsAttribute.js");
+/* harmony import */ var _dom_elementContains__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dom/elementContains */ "./node_modules/@fluentui/dom-utilities/lib/elementContains.js");
+/* harmony import */ var _dom_getParent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./dom/getParent */ "./node_modules/@fluentui/dom-utilities/lib/getParent.js");
+/* harmony import */ var _dom_getWindow__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom/getWindow */ "./node_modules/@fluentui/utilities/lib/dom/getWindow.js");
+/* harmony import */ var _dom_getDocument__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom/getDocument */ "./node_modules/@fluentui/utilities/lib/dom/getDocument.js");
+
+
+
+
+
+var IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable';
+var IS_VISIBLE_ATTRIBUTE = 'data-is-visible';
+var FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id';
+var FOCUSZONE_SUB_ATTRIBUTE = 'data-is-sub-focuszone';
+/**
+ * Gets the first focusable element.
+ *
+ * @public
+ */
+function getFirstFocusable(rootElement, currentElement, includeElementsInFocusZones) {
+    return getNextElement(rootElement, currentElement, true /*checkNode*/, false /*suppressParentTraversal*/, false /*suppressChildTraversal*/, includeElementsInFocusZones);
+}
+/**
+ * Gets the last focusable element.
+ *
+ * @public
+ */
+function getLastFocusable(rootElement, currentElement, includeElementsInFocusZones) {
+    return getPreviousElement(rootElement, currentElement, true /*checkNode*/, false /*suppressParentTraversal*/, true /*traverseChildren*/, includeElementsInFocusZones);
+}
+/**
+ * Gets the first tabbable element. (The difference between focusable and tabbable is that tabbable elements are
+ * focusable elements that also have tabIndex != -1.)
+ * @param rootElement - The parent element to search beneath.
+ * @param currentElement - The descendant of rootElement to start the search at.  This element is the first one checked,
+ * and iteration continues forward.  Typical use passes rootElement.firstChild.
+ * @param includeElementsInFocusZones - true if traversal should go into FocusZone descendants.
+ * @param checkNode - Include currentElement in search when true. Defaults to true.
+ * @public
+ */
+function getFirstTabbable(rootElement, currentElement, includeElementsInFocusZones, checkNode) {
+    if (checkNode === void 0) { checkNode = true; }
+    return getNextElement(rootElement, currentElement, checkNode, false /*suppressParentTraversal*/, false /*suppressChildTraversal*/, includeElementsInFocusZones, false /*allowFocusRoot*/, true /*tabbable*/);
+}
+/**
+ * Gets the last tabbable element. (The difference between focusable and tabbable is that tabbable elements are
+ * focusable elements that also have tabIndex != -1.)
+ * @param rootElement - The parent element to search beneath.
+ * @param currentElement - The descendant of rootElement to start the search at.  This element is the first one checked,
+ * and iteration continues in reverse.  Typical use passes rootElement.lastChild.
+ * @param includeElementsInFocusZones - true if traversal should go into FocusZone descendants.
+ * @param checkNode - Include currentElement in search when true. Defaults to true.
+ * @public
+ */
+function getLastTabbable(rootElement, currentElement, includeElementsInFocusZones, checkNode) {
+    if (checkNode === void 0) { checkNode = true; }
+    return getPreviousElement(rootElement, currentElement, checkNode, false /*suppressParentTraversal*/, true /*traverseChildren*/, includeElementsInFocusZones, false /*allowFocusRoot*/, true /*tabbable*/);
+}
+/**
+ * Attempts to focus the first focusable element that is a child or child's child of the rootElement.
+ *
+ * @public
+ * @param rootElement - Element to start the search for a focusable child.
+ * @param bypassHiddenElements - If true, focus will be not be set on hidden elements.
+ * @returns True if focus was set, false if it was not.
+ */
+function focusFirstChild(rootElement, bypassHiddenElements) {
+    var element = getNextElement(rootElement, rootElement, true, false, false, true, undefined, undefined, bypassHiddenElements);
+    if (element) {
+        focusAsync(element);
+        return true;
+    }
+    return false;
+}
+/**
+ * Traverse to find the previous element.
+ * If tabbable is true, the element must have tabIndex != -1.
+ *
+ * @public
+ */
+function getPreviousElement(rootElement, currentElement, checkNode, suppressParentTraversal, traverseChildren, includeElementsInFocusZones, allowFocusRoot, tabbable) {
+    if (!currentElement || (!allowFocusRoot && currentElement === rootElement)) {
+        return null;
+    }
+    var isCurrentElementVisible = isElementVisible(currentElement);
+    // Check its children.
+    if (traverseChildren &&
+        isCurrentElementVisible &&
+        (includeElementsInFocusZones || !(isElementFocusZone(currentElement) || isElementFocusSubZone(currentElement)))) {
+        var childMatch = getPreviousElement(rootElement, currentElement.lastElementChild, true, true, true, includeElementsInFocusZones, allowFocusRoot, tabbable);
+        if (childMatch) {
+            if ((tabbable && isElementTabbable(childMatch, true)) || !tabbable) {
+                return childMatch;
+            }
+            var childMatchSiblingMatch = getPreviousElement(rootElement, childMatch.previousElementSibling, true, true, true, includeElementsInFocusZones, allowFocusRoot, tabbable);
+            if (childMatchSiblingMatch) {
+                return childMatchSiblingMatch;
+            }
+            var childMatchParent = childMatch.parentElement;
+            // At this point if we have not found any potential matches
+            // start looking at the rest of the subtree under the currentParent.
+            // NOTE: We do not want to recurse here because doing so could
+            // cause elements to get skipped.
+            while (childMatchParent && childMatchParent !== currentElement) {
+                var childMatchParentMatch = getPreviousElement(rootElement, childMatchParent.previousElementSibling, true, true, true, includeElementsInFocusZones, allowFocusRoot, tabbable);
+                if (childMatchParentMatch) {
+                    return childMatchParentMatch;
+                }
+                childMatchParent = childMatchParent.parentElement;
+            }
+        }
+    }
+    // Check the current node, if it's not the first traversal.
+    if (checkNode && isCurrentElementVisible && isElementTabbable(currentElement, tabbable)) {
+        return currentElement;
+    }
+    // Check its previous sibling.
+    var siblingMatch = getPreviousElement(rootElement, currentElement.previousElementSibling, true, true, true, includeElementsInFocusZones, allowFocusRoot, tabbable);
+    if (siblingMatch) {
+        return siblingMatch;
+    }
+    // Check its parent.
+    if (!suppressParentTraversal) {
+        return getPreviousElement(rootElement, currentElement.parentElement, true, false, false, includeElementsInFocusZones, allowFocusRoot, tabbable);
+    }
+    return null;
+}
+/**
+ * Traverse to find the next focusable element.
+ * If tabbable is true, the element must have tabIndex != -1.
+ *
+ * @public
+ * @param checkNode - Include currentElement in search when true.
+ */
+function getNextElement(rootElement, currentElement, checkNode, suppressParentTraversal, suppressChildTraversal, includeElementsInFocusZones, allowFocusRoot, tabbable, bypassHiddenElements) {
+    if (!currentElement || (currentElement === rootElement && suppressChildTraversal && !allowFocusRoot)) {
+        return null;
+    }
+    var checkElementVisibility = bypassHiddenElements ? isElementVisibleAndNotHidden : isElementVisible;
+    var isCurrentElementVisible = checkElementVisibility(currentElement);
+    // Check the current node, if it's not the first traversal.
+    if (checkNode && isCurrentElementVisible && isElementTabbable(currentElement, tabbable)) {
+        return currentElement;
+    }
+    // Check its children.
+    if (!suppressChildTraversal &&
+        isCurrentElementVisible &&
+        (includeElementsInFocusZones || !(isElementFocusZone(currentElement) || isElementFocusSubZone(currentElement)))) {
+        var childMatch = getNextElement(rootElement, currentElement.firstElementChild, true, true, false, includeElementsInFocusZones, allowFocusRoot, tabbable, bypassHiddenElements);
+        if (childMatch) {
+            return childMatch;
+        }
+    }
+    if (currentElement === rootElement) {
+        return null;
+    }
+    // Check its sibling.
+    var siblingMatch = getNextElement(rootElement, currentElement.nextElementSibling, true, true, false, includeElementsInFocusZones, allowFocusRoot, tabbable, bypassHiddenElements);
+    if (siblingMatch) {
+        return siblingMatch;
+    }
+    if (!suppressParentTraversal) {
+        return getNextElement(rootElement, currentElement.parentElement, false, false, true, includeElementsInFocusZones, allowFocusRoot, tabbable, bypassHiddenElements);
+    }
+    return null;
+}
+/**
+ * Determines if an element is visible.
+ *
+ * @public
+ */
+function isElementVisible(element) {
+    // If the element is not valid, return false.
+    if (!element || !element.getAttribute) {
+        return false;
+    }
+    var visibilityAttribute = element.getAttribute(IS_VISIBLE_ATTRIBUTE);
+    // If the element is explicitly marked with the visibility attribute, return that value as boolean.
+    if (visibilityAttribute !== null && visibilityAttribute !== undefined) {
+        return visibilityAttribute === 'true';
+    }
+    // Fallback to other methods of determining actual visibility.
+    return (element.offsetHeight !== 0 ||
+        element.offsetParent !== null ||
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        element.isVisible === true); // used as a workaround for testing.
+}
+/**
+ * Determines if an element is visible and not hidden
+ * @param element - Element to check
+ * @returns Returns true if the given element is visible and not hidden
+ *
+ * @public
+ */
+function isElementVisibleAndNotHidden(element, win) {
+    var theWin = win !== null && win !== void 0 ? win : (0,_dom_getWindow__WEBPACK_IMPORTED_MODULE_0__.getWindow)();
+    return (!!element &&
+        isElementVisible(element) &&
+        !element.hidden &&
+        theWin.getComputedStyle(element).visibility !== 'hidden');
+}
+/**
+ * Determines if an element can receive focus programmatically or via a mouse click.
+ * If checkTabIndex is true, additionally checks to ensure the element can be focused with the tab key,
+ * meaning tabIndex != -1.
+ *
+ * @public
+ */
+function isElementTabbable(element, checkTabIndex) {
+    // If this element is null or is disabled, it is not considered tabbable.
+    if (!element || element.disabled) {
+        return false;
+    }
+    var tabIndex = 0;
+    var tabIndexAttributeValue = null;
+    if (element && element.getAttribute) {
+        tabIndexAttributeValue = element.getAttribute('tabIndex');
+        if (tabIndexAttributeValue) {
+            tabIndex = parseInt(tabIndexAttributeValue, 10);
+        }
+    }
+    var isFocusableAttribute = element.getAttribute ? element.getAttribute(IS_FOCUSABLE_ATTRIBUTE) : null;
+    var isTabIndexSet = tabIndexAttributeValue !== null && tabIndex >= 0;
+    var result = !!element &&
+        isFocusableAttribute !== 'false' &&
+        (element.tagName === 'A' ||
+            element.tagName === 'BUTTON' ||
+            element.tagName === 'INPUT' ||
+            element.tagName === 'TEXTAREA' ||
+            element.tagName === 'SELECT' ||
+            isFocusableAttribute === 'true' ||
+            isTabIndexSet);
+    return checkTabIndex ? tabIndex !== -1 && result : result;
+}
+/**
+ * Determines if a given element is a focus zone.
+ *
+ * @public
+ */
+function isElementFocusZone(element) {
+    return !!(element && element.getAttribute && !!element.getAttribute(FOCUSZONE_ID_ATTRIBUTE));
+}
+/**
+ * Determines if a given element is a focus sub zone.
+ *
+ * @public
+ */
+function isElementFocusSubZone(element) {
+    return !!(element && element.getAttribute && element.getAttribute(FOCUSZONE_SUB_ATTRIBUTE) === 'true');
+}
+/**
+ * Determines if an element, or any of its children, contain focus.
+ *
+ * @public
+ */
+function doesElementContainFocus(element) {
+    var doc = (0,_dom_getDocument__WEBPACK_IMPORTED_MODULE_1__.getDocument)(element);
+    var currentActiveElement = doc && doc.activeElement;
+    if (currentActiveElement && (0,_dom_elementContains__WEBPACK_IMPORTED_MODULE_2__.elementContains)(element, currentActiveElement)) {
+        return true;
+    }
+    return false;
+}
+/**
+ * Determines if an, or any of its ancestors, sepcificies that it doesn't want focus to wrap
+ * @param element - element to start searching from
+ * @param noWrapDataAttribute - the no wrap data attribute to match (either)
+ * @returns true if focus should wrap, false otherwise
+ */
+function shouldWrapFocus(element, noWrapDataAttribute, doc) {
+    var theDoc = doc !== null && doc !== void 0 ? doc : (0,_dom_getDocument__WEBPACK_IMPORTED_MODULE_1__.getDocument)();
+    return (0,_dom_elementContainsAttribute__WEBPACK_IMPORTED_MODULE_3__.elementContainsAttribute)(element, noWrapDataAttribute, theDoc) === 'true' ? false : true;
+}
+var animationId = undefined;
+/**
+ * Sets focus to an element asynchronously. The focus will be set at the next browser repaint,
+ * meaning it won't cause any extra recalculations. If more than one focusAsync is called during one frame,
+ * only the latest called focusAsync element will actually be focused
+ * @param element - The element to focus
+ */
+function focusAsync(element) {
+    if (element) {
+        var win = (0,_dom_getWindow__WEBPACK_IMPORTED_MODULE_0__.getWindow)(element);
+        if (win) {
+            // cancel any previous focus queues
+            if (animationId !== undefined) {
+                win.cancelAnimationFrame(animationId);
+            }
+            // element.focus() is a no-op if the element is no longer in the DOM, meaning this is always safe
+            animationId = win.requestAnimationFrame(function () {
+                element && element.focus();
+                // We are done focusing for this frame, so reset the queued focus element
+                animationId = undefined;
+            });
+        }
+    }
+}
+/**
+ * Finds the closest focusable element via an index path from a parent. See
+ * `getElementIndexPath` for getting an index path from an element to a child.
+ */
+function getFocusableByIndexPath(parent, path) {
+    var element = parent;
+    for (var _i = 0, path_1 = path; _i < path_1.length; _i++) {
+        var index = path_1[_i];
+        var nextChild = element.children[Math.min(index, element.children.length - 1)];
+        if (!nextChild) {
+            break;
+        }
+        element = nextChild;
+    }
+    element =
+        isElementTabbable(element) && isElementVisible(element)
+            ? element
+            : getNextElement(parent, element, true) || getPreviousElement(parent, element);
+    return element;
+}
+/**
+ * Finds the element index path from a parent element to a child element.
+ *
+ * If you had this node structure: "A has children [B, C] and C has child D",
+ * the index path from A to D would be [1, 0], or `parent.chidren[1].children[0]`.
+ */
+function getElementIndexPath(fromElement, toElement) {
+    var path = [];
+    while (toElement && fromElement && toElement !== fromElement) {
+        var parent_1 = (0,_dom_getParent__WEBPACK_IMPORTED_MODULE_4__.getParent)(toElement, true);
+        if (parent_1 === null) {
+            return [];
+        }
+        path.unshift(Array.prototype.indexOf.call(parent_1.children, toElement));
+        toElement = parent_1;
+    }
+    return path;
+}
+//# sourceMappingURL=focus.js.map
 
 /***/ }),
 
@@ -11538,6 +23769,118 @@ function getPropsWithDefaults(defaultProps, propsWithoutDefaults) {
     return props;
 }
 //# sourceMappingURL=getPropsWithDefaults.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/utilities/lib/hoist.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/hoist.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   hoistMethods: () => (/* binding */ hoistMethods),
+/* harmony export */   unhoistMethods: () => (/* binding */ unhoistMethods)
+/* harmony export */ });
+var REACT_LIFECYCLE_EXCLUSIONS = [
+    'setState',
+    'render',
+    'componentWillMount',
+    'UNSAFE_componentWillMount',
+    'componentDidMount',
+    'componentWillReceiveProps',
+    'UNSAFE_componentWillReceiveProps',
+    'shouldComponentUpdate',
+    'componentWillUpdate',
+    'getSnapshotBeforeUpdate',
+    'UNSAFE_componentWillUpdate',
+    'componentDidUpdate',
+    'componentWillUnmount',
+];
+/**
+ * Allows you to hoist methods, except those in an exclusion set from a source object into a destination object.
+ *
+ * @public
+ * @param destination - The instance of the object to hoist the methods onto.
+ * @param source - The instance of the object where the methods are hoisted from.
+ * @param exclusions - (Optional) What methods to exclude from being hoisted.
+ * @returns An array of names of methods that were hoisted.
+ */
+function hoistMethods(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+destination, 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+source, exclusions) {
+    if (exclusions === void 0) { exclusions = REACT_LIFECYCLE_EXCLUSIONS; }
+    var hoisted = [];
+    var _loop_1 = function (methodName) {
+        if (typeof source[methodName] === 'function' &&
+            destination[methodName] === undefined &&
+            (!exclusions || exclusions.indexOf(methodName) === -1)) {
+            hoisted.push(methodName);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            destination[methodName] = function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                source[methodName].apply(source, args);
+            };
+        }
+    };
+    for (var methodName in source) {
+        _loop_1(methodName);
+    }
+    return hoisted;
+}
+/**
+ * Provides a method for convenience to unhoist hoisted methods.
+ *
+ * @public
+ * @param source - The source object upon which methods were hoisted.
+ * @param methodNames - An array of method names to unhoist.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function unhoistMethods(source, methodNames) {
+    methodNames.forEach(function (methodName) { return delete source[methodName]; });
+}
+//# sourceMappingURL=hoist.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/utilities/lib/hoistStatics.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/hoistStatics.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   hoistStatics: () => (/* binding */ hoistStatics)
+/* harmony export */ });
+/**
+ * Allows you to hoist static functions in components.
+ * Created for the purpose of fixing broken static functions in classes
+ * that utilize decorators.
+ *
+ * @public
+ * @param source - The object where the methods are hoisted from.
+ * @param dest - The object to hoist the methods onto.
+ * @returns The dest object with methods added
+ */
+function hoistStatics(source, dest) {
+    for (var name_1 in source) {
+        if (source.hasOwnProperty(name_1)) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            dest[name_1] = source[name_1];
+        }
+    }
+    return dest;
+}
+//# sourceMappingURL=hoistStatics.js.map
 
 /***/ }),
 
@@ -11994,6 +24337,106 @@ function _merge(target, source, circularReferences) {
 
 /***/ }),
 
+/***/ "./node_modules/@fluentui/utilities/lib/mobileDetector.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/mobileDetector.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   isIOS: () => (/* binding */ isIOS)
+/* harmony export */ });
+/**
+ * Returns true if and only if the user is on a iOS device.
+ * Used to determine whether iOS-specific behavior should be applied.
+ */
+var isIOS = function () {
+    // eslint-disable-next-line no-restricted-globals
+    if (!window || !window.navigator || !window.navigator.userAgent) {
+        return false;
+    }
+    // eslint-disable-next-line no-restricted-globals
+    return /iPad|iPhone|iPod/i.test(window.navigator.userAgent);
+};
+//# sourceMappingURL=mobileDetector.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/utilities/lib/modalize.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/modalize.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   modalize: () => (/* binding */ modalize)
+/* harmony export */ });
+/* harmony import */ var _dom_getDocument__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom/getDocument */ "./node_modules/@fluentui/utilities/lib/dom/getDocument.js");
+/**
+ * The helper functions here will make the target element as modal to screen readers, by placing aria-hidden on elements
+ * that are siblings to the target element and the target element's ancestors (because aria-hidden gets inherited).
+ * That way, all other elements on the page are hidden to the screen reader.
+ */
+
+/** Tag names to ignore when modalizing */
+var tagsToIgnore = ['TEMPLATE', 'STYLE', 'SCRIPT'];
+/**
+ * Call this on a target element to make it modal to screen readers.
+ * Returns a function that undoes the changes it made.
+ */
+function modalize(target) {
+    var targetDocument = (0,_dom_getDocument__WEBPACK_IMPORTED_MODULE_0__.getDocument)(target);
+    if (!targetDocument) {
+        // can't do this in SSR
+        return function () { return undefined; };
+    }
+    var affectedNodes = [];
+    // start at target, then recurse and do the same for parent, until we reach <body>
+    while (target !== targetDocument.body && target.parentElement) {
+        // grab all siblings of current element
+        for (var _i = 0, _a = target.parentElement.children; _i < _a.length; _i++) {
+            var sibling = _a[_i];
+            // but ignore elements that are already aria-hidden
+            var ariaHidden = sibling.getAttribute('aria-hidden');
+            if (sibling !== target && (ariaHidden === null || ariaHidden === void 0 ? void 0 : ariaHidden.toLowerCase()) !== 'true' && tagsToIgnore.indexOf(sibling.tagName) === -1) {
+                affectedNodes.push([sibling, ariaHidden]);
+            }
+        }
+        target = target.parentElement;
+    }
+    // take all those elements and set aria-hidden=true on them
+    affectedNodes.forEach(function (_a) {
+        var node = _a[0];
+        node.setAttribute('aria-hidden', 'true');
+    });
+    return function () {
+        unmodalize(affectedNodes);
+        affectedNodes = []; // dispose
+    };
+}
+/**
+ * Undoes the changes that modalize() did.
+ */
+function unmodalize(affectedNodes) {
+    affectedNodes.forEach(function (_a) {
+        var node = _a[0], originalValue = _a[1];
+        // Restore the original value (false or unset)
+        if (originalValue) {
+            node.setAttribute('aria-hidden', originalValue);
+        }
+        else {
+            node.removeAttribute('aria-hidden');
+        }
+    });
+}
+//# sourceMappingURL=modalize.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/utilities/lib/object.js":
 /*!********************************************************!*\
   !*** ./node_modules/@fluentui/utilities/lib/object.js ***!
@@ -12145,6 +24588,38 @@ function omit(obj, exclusions) {
     return result;
 }
 //# sourceMappingURL=object.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/utilities/lib/osDetector.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/osDetector.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   isMac: () => (/* binding */ isMac)
+/* harmony export */ });
+/* harmony import */ var _dom_getWindow__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom/getWindow */ "./node_modules/@fluentui/utilities/lib/dom/getWindow.js");
+
+var isMacResult;
+/**
+ * Returns true if the user is on a Mac. Caches the result value.
+ * @param reset - Reset the cached result value (mainly for testing).
+ */
+function isMac(reset) {
+    var _a;
+    if (typeof isMacResult === 'undefined' || reset) {
+        var win = (0,_dom_getWindow__WEBPACK_IMPORTED_MODULE_0__.getWindow)();
+        // In certain SSR frameworks, `window` will be defined even on the server but `navigator` will be undefined
+        var userAgent = (_a = win === null || win === void 0 ? void 0 : win.navigator) === null || _a === void 0 ? void 0 : _a.userAgent;
+        isMacResult = !!userAgent && userAgent.indexOf('Macintosh') !== -1;
+    }
+    return !!isMacResult;
+}
+//# sourceMappingURL=osDetector.js.map
 
 /***/ }),
 
@@ -12599,6 +25074,46 @@ props, allowedPropNames, excludedPropNames) {
 
 /***/ }),
 
+/***/ "./node_modules/@fluentui/utilities/lib/renderFunction/composeRenderFunction.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/renderFunction/composeRenderFunction.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   composeRenderFunction: () => (/* binding */ composeRenderFunction)
+/* harmony export */ });
+/* harmony import */ var _memoize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../memoize */ "./node_modules/@fluentui/utilities/lib/memoize.js");
+
+function createComposedRenderFunction(outer) {
+    var outerMemoizer = (0,_memoize__WEBPACK_IMPORTED_MODULE_0__.createMemoizer)(function (inner) {
+        var innerMemoizer = (0,_memoize__WEBPACK_IMPORTED_MODULE_0__.createMemoizer)(function (defaultRender) {
+            return function (innerProps) {
+                return inner(innerProps, defaultRender);
+            };
+        });
+        return function (outerProps, defaultRender) {
+            return outer(outerProps, defaultRender ? innerMemoizer(defaultRender) : inner);
+        };
+    });
+    return outerMemoizer;
+}
+var memoizer = (0,_memoize__WEBPACK_IMPORTED_MODULE_0__.createMemoizer)(createComposedRenderFunction);
+/**
+ * Composes two 'render functions' to produce a final render function that renders
+ * the outer function, passing the inner function as 'default render'. The inner function
+ * is then passed the original 'default render' prop.
+ * @public
+ */
+function composeRenderFunction(outer, inner) {
+    return memoizer(outer)(inner);
+}
+//# sourceMappingURL=composeRenderFunction.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@fluentui/utilities/lib/rtl.js":
 /*!*****************************************************!*\
   !*** ./node_modules/@fluentui/utilities/lib/rtl.js ***!
@@ -12677,6 +25192,200 @@ function getRTLSafeKeyCode(key, theme) {
     return key;
 }
 //# sourceMappingURL=rtl.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@fluentui/utilities/lib/scroll.js":
+/*!********************************************************!*\
+  !*** ./node_modules/@fluentui/utilities/lib/scroll.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DATA_IS_SCROLLABLE_ATTRIBUTE: () => (/* binding */ DATA_IS_SCROLLABLE_ATTRIBUTE),
+/* harmony export */   allowOverscrollOnElement: () => (/* binding */ allowOverscrollOnElement),
+/* harmony export */   allowScrollOnElement: () => (/* binding */ allowScrollOnElement),
+/* harmony export */   disableBodyScroll: () => (/* binding */ disableBodyScroll),
+/* harmony export */   enableBodyScroll: () => (/* binding */ enableBodyScroll),
+/* harmony export */   findScrollableParent: () => (/* binding */ findScrollableParent),
+/* harmony export */   getScrollbarWidth: () => (/* binding */ getScrollbarWidth)
+/* harmony export */ });
+/* harmony import */ var _dom_getDocument__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dom/getDocument */ "./node_modules/@fluentui/utilities/lib/dom/getDocument.js");
+/* harmony import */ var _fluentui_merge_styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @fluentui/merge-styles */ "./node_modules/@fluentui/merge-styles/lib/mergeStyles.js");
+/* harmony import */ var _dom_getWindow__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom/getWindow */ "./node_modules/@fluentui/utilities/lib/dom/getWindow.js");
+
+
+
+var _scrollbarWidth;
+var _bodyScrollDisabledCount = 0;
+var DisabledScrollClassName = (0,_fluentui_merge_styles__WEBPACK_IMPORTED_MODULE_0__.mergeStyles)({
+    overflow: 'hidden !important',
+});
+/**
+ * Placing this attribute on scrollable divs optimizes detection to know
+ * if the div is scrollable or not (given we can avoid expensive operations
+ * like getComputedStyle.)
+ *
+ * @public
+ */
+var DATA_IS_SCROLLABLE_ATTRIBUTE = 'data-is-scrollable';
+/**
+ * Allows the user to scroll within a element,
+ * while preventing the user from scrolling the body
+ */
+var allowScrollOnElement = function (element, events) {
+    var window = (0,_dom_getWindow__WEBPACK_IMPORTED_MODULE_1__.getWindow)(element);
+    if (!element || !window) {
+        return;
+    }
+    var _previousClientY = 0;
+    var _element = null;
+    var computedStyles = window.getComputedStyle(element);
+    // remember the clientY for future calls of _preventOverscrolling
+    var _saveClientY = function (event) {
+        if (event.targetTouches.length === 1) {
+            _previousClientY = event.targetTouches[0].clientY;
+        }
+    };
+    // prevent the body from scrolling when the user attempts
+    // to scroll past the top or bottom of the element
+    var _preventOverscrolling = function (event) {
+        // only respond to a single-finger touch
+        if (event.targetTouches.length !== 1) {
+            return;
+        }
+        // prevent the body touchmove handler from firing
+        // so that scrolling is allowed within the element
+        event.stopPropagation();
+        if (!_element) {
+            return;
+        }
+        var clientY = event.targetTouches[0].clientY - _previousClientY;
+        var scrollableParent = findScrollableParent(event.target);
+        if (scrollableParent && _element !== scrollableParent) {
+            _element = scrollableParent;
+            computedStyles = window.getComputedStyle(_element);
+        }
+        var scrollTop = _element.scrollTop;
+        var isColumnReverse = (computedStyles === null || computedStyles === void 0 ? void 0 : computedStyles.flexDirection) === 'column-reverse';
+        // if the element is scrolled to the top,
+        // prevent the user from scrolling up
+        if (scrollTop === 0 && (isColumnReverse ? clientY < 0 : clientY > 0)) {
+            event.preventDefault();
+        }
+        // if the element is scrolled to the bottom,
+        // prevent the user from scrolling down
+        if (_element.scrollHeight - Math.abs(Math.ceil(scrollTop)) <= _element.clientHeight &&
+            (isColumnReverse ? clientY > 0 : clientY < 0)) {
+            event.preventDefault();
+        }
+    };
+    events.on(element, 'touchstart', _saveClientY, { passive: false });
+    events.on(element, 'touchmove', _preventOverscrolling, { passive: false });
+    _element = element;
+};
+/**
+ * Same as allowScrollOnElement but does not prevent overscrolling.
+ */
+var allowOverscrollOnElement = function (element, events) {
+    if (!element) {
+        return;
+    }
+    var _allowElementScroll = function (event) {
+        event.stopPropagation();
+    };
+    events.on(element, 'touchmove', _allowElementScroll, { passive: false });
+};
+var _disableIosBodyScroll = function (event) {
+    event.preventDefault();
+};
+/**
+ * Disables the body scrolling.
+ *
+ * @public
+ */
+function disableBodyScroll() {
+    var doc = (0,_dom_getDocument__WEBPACK_IMPORTED_MODULE_2__.getDocument)();
+    if (doc && doc.body && !_bodyScrollDisabledCount) {
+        doc.body.classList.add(DisabledScrollClassName);
+        doc.body.addEventListener('touchmove', _disableIosBodyScroll, { passive: false, capture: false });
+    }
+    _bodyScrollDisabledCount++;
+}
+/**
+ * Enables the body scrolling.
+ *
+ * @public
+ */
+function enableBodyScroll() {
+    if (_bodyScrollDisabledCount > 0) {
+        var doc = (0,_dom_getDocument__WEBPACK_IMPORTED_MODULE_2__.getDocument)();
+        if (doc && doc.body && _bodyScrollDisabledCount === 1) {
+            doc.body.classList.remove(DisabledScrollClassName);
+            doc.body.removeEventListener('touchmove', _disableIosBodyScroll);
+        }
+        _bodyScrollDisabledCount--;
+    }
+}
+/**
+ * Calculates the width of a scrollbar for the browser/os.
+ *
+ * @public
+ */
+function getScrollbarWidth(doc) {
+    if (_scrollbarWidth === undefined) {
+        var theDoc = doc !== null && doc !== void 0 ? doc : (0,_dom_getDocument__WEBPACK_IMPORTED_MODULE_2__.getDocument)();
+        var scrollDiv = theDoc.createElement('div');
+        scrollDiv.style.setProperty('width', '100px');
+        scrollDiv.style.setProperty('height', '100px');
+        scrollDiv.style.setProperty('overflow', 'scroll');
+        scrollDiv.style.setProperty('position', 'absolute');
+        scrollDiv.style.setProperty('top', '-9999px');
+        theDoc.body.appendChild(scrollDiv);
+        // Get the scrollbar width
+        _scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+        // Delete the DIV
+        theDoc.body.removeChild(scrollDiv);
+    }
+    return _scrollbarWidth;
+}
+/**
+ * Traverses up the DOM for the element with the data-is-scrollable=true attribute, or returns
+ * document.body.
+ *
+ * @public
+ */
+function findScrollableParent(startingElement) {
+    var el = startingElement;
+    var doc = (0,_dom_getDocument__WEBPACK_IMPORTED_MODULE_2__.getDocument)(startingElement);
+    // First do a quick scan for the scrollable attribute.
+    while (el && el !== doc.body) {
+        if (el.getAttribute(DATA_IS_SCROLLABLE_ATTRIBUTE) === 'true') {
+            return el;
+        }
+        el = el.parentElement;
+    }
+    // If we haven't found it, the use the slower method: compute styles to evaluate if overflow is set.
+    el = startingElement;
+    while (el && el !== doc.body) {
+        if (el.getAttribute(DATA_IS_SCROLLABLE_ATTRIBUTE) !== 'false') {
+            var computedStyles = getComputedStyle(el);
+            var overflowY = computedStyles ? computedStyles.getPropertyValue('overflow-y') : '';
+            if (overflowY && (overflowY === 'scroll' || overflowY === 'auto')) {
+                return el;
+            }
+        }
+        el = el.parentElement;
+    }
+    // Fall back to window scroll.
+    if (!el || el === doc.body) {
+        el = (0,_dom_getWindow__WEBPACK_IMPORTED_MODULE_1__.getWindow)(startingElement);
+    }
+    return el;
+}
+//# sourceMappingURL=scroll.js.map
 
 /***/ }),
 
@@ -18466,7 +31175,8 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 
 
 var TrampSection = function TrampSection(_ref) {
-  var singer = _ref.singer,
+  var onClick = _ref.onClick,
+    singer = _ref.singer,
     singers = _ref.singers,
     voice_part = _ref.voice_part;
   var filterSticker = function filterSticker(_ref2) {
@@ -18482,12 +31192,28 @@ var TrampSection = function TrampSection(_ref) {
         sender = _ref4.sender;
       return ~[recipient === null || recipient === void 0 ? void 0 : recipient.unique_id, sender === null || sender === void 0 ? void 0 : sender.unique_id].indexOf(unique_id);
     };
+    var handleClick = function handleClick(sticker) {
+      return function () {
+        var _sticker$recipient, _sticker$status;
+        var action = {
+          "accepted": "accepted",
+          "declined": "send",
+          "pending": (sticker === null || sticker === void 0 || (_sticker$recipient = sticker.recipient) === null || _sticker$recipient === void 0 ? void 0 : _sticker$recipient.unique_id) === unique_id ? "respond" : "status",
+          "undefined": "send"
+        }[(_sticker$status = sticker === null || sticker === void 0 ? void 0 : sticker.status) !== null && _sticker$status !== void 0 ? _sticker$status : "undefined"];
+        onClick === null || onClick === void 0 || onClick({
+          action: action,
+          sender: singer,
+          recipient: singerOther
+        });
+      };
+    };
     var sortStickers = function sortStickers(left, right) {
       return new Date(right.updated_at).valueOf() - new Date(left.updated_at).valueOf();
     };
     var stickers_received = singer.stickers_received,
       stickers_sent = singer.stickers_sent;
-    var stickerLatest = [].concat(_toConsumableArray(stickers_received), _toConsumableArray(stickers_sent)).filter(filterForThisSinger).sort(sortStickers).pop();
+    var stickerLatest = [].concat(_toConsumableArray(stickers_received !== null && stickers_received !== void 0 ? stickers_received : []), _toConsumableArray(stickers_sent !== null && stickers_sent !== void 0 ? stickers_sent : [])).filter(filterForThisSinger).sort(sortStickers).pop();
     var styles = {
       root: {
         backgroundColor: "var(--color-voice-background--".concat(voice_part, ")"),
@@ -18501,6 +31227,7 @@ var TrampSection = function TrampSection(_ref) {
       voice_part: voice_part
     })), {}, {
       key: "singer-card--".concat(unique_id),
+      onClick: handleClick(stickerLatest),
       status: stickerLatest === null || stickerLatest === void 0 ? void 0 : stickerLatest.status
     }));
   };
@@ -18652,7 +31379,7 @@ var HomepageRouter = function HomepageRouter() {
                 element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_pages__WEBPACK_IMPORTED_MODULE_4__.SingersPage, {})
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
                 path: "/card/:unique_id",
-                element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_pages__WEBPACK_IMPORTED_MODULE_4__.TrampCard, {})
+                element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_pages__WEBPACK_IMPORTED_MODULE_4__.TrampPage, {})
               })]
             })
           })]
@@ -18884,9 +31611,9 @@ SingersPage.displayName = "SingersPage";
 
 /***/ }),
 
-/***/ "./resources/js/pages/TrampCard.jsx":
+/***/ "./resources/js/pages/TrampPage.jsx":
 /*!******************************************!*\
-  !*** ./resources/js/pages/TrampCard.jsx ***!
+  !*** ./resources/js/pages/TrampPage.jsx ***!
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -18897,13 +31624,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _fluentui_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fluentui/react */ "./node_modules/@fluentui/react/lib/components/Dialog/Dialog.js");
+/* harmony import */ var _fluentui_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fluentui/react */ "./node_modules/@fluentui/react/lib/components/Dialog/DialogFooter.js");
+/* harmony import */ var _fluentui_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @fluentui/react */ "./node_modules/@fluentui/react/lib/components/Button/PrimaryButton/PrimaryButton.js");
+/* harmony import */ var _fluentui_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @fluentui/react */ "./node_modules/@fluentui/react/lib/components/Button/DefaultButton/DefaultButton.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _app_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../app.constants */ "./resources/js/app.constants.js");
-/* harmony import */ var _components_SingerCard_SingerCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/SingerCard/SingerCard */ "./resources/js/components/SingerCard/SingerCard.jsx");
-/* harmony import */ var react_i18next__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-i18next */ "./node_modules/react-i18next/dist/es/index.js");
-/* harmony import */ var _components_TrampSection_TrampSection__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/TrampSection/TrampSection */ "./resources/js/components/TrampSection/TrampSection.jsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_i18next__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-i18next */ "./node_modules/react-i18next/dist/es/index.js");
+/* harmony import */ var _components_TrampSection_TrampSection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/TrampSection/TrampSection */ "./resources/js/components/TrampSection/TrampSection.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -18922,20 +31657,24 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var TrampCard = function TrampCard() {
-  var _useTranslation = (0,react_i18next__WEBPACK_IMPORTED_MODULE_3__.useTranslation)("tramp"),
+var TrampPage = function TrampPage() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState2 = _slicedToArray(_useState, 2),
+    refresh = _useState2[0],
+    triggerRefresh = _useState2[1];
+  var _useTranslation = (0,react_i18next__WEBPACK_IMPORTED_MODULE_2__.useTranslation)("tramp"),
     t = _useTranslation.t;
-  var routerParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useParams)();
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+  var routerParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)();
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       unique_id: routerParams.unique_id
     }),
-    _useState2 = _slicedToArray(_useState, 2),
-    singer = _useState2[0],
-    setSinger = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState4 = _slicedToArray(_useState3, 2),
-    singers = _useState4[0],
-    setSingers = _useState4[1];
+    singer = _useState4[0],
+    setSinger = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState6 = _slicedToArray(_useState5, 2),
+    singers = _useState6[0],
+    setSingers = _useState6[1];
   var getSinger = function getSinger() {
     var fetchSinger = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -18943,7 +31682,8 @@ var TrampCard = function TrampCard() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              bodyText = "query ($unique_id: String) {\n        singer(unique_id: $unique_id) {\n          family_name\n          given_name\n          id\n          unique_id\n          voice_part\n          stickers_received {\n            sender {\n              unique_id\n            }\n            status\n            updated_at\n          }\n          stickers_sent {\n            recipient {\n              unique_id\n            }\n            status\n            updated_at\n          }\n        }\n      }";
+              triggerRefresh(false);
+              bodyText = "query ($unique_id: String) {\n        singer(unique_id: $unique_id) {\n          family_name\n          given_name\n          id\n          unique_id\n          voice_part\n          stickers_received {\n            id\n            sender {\n              unique_id\n            }\n            status\n            updated_at\n          }\n          stickers_sent {\n            id\n            recipient {\n              unique_id\n            }\n            status\n            updated_at\n          }\n        }\n      }";
               unique_id = routerParams.unique_id;
               optionsFetch = {
                 body: JSON.stringify({
@@ -18959,15 +31699,15 @@ var TrampCard = function TrampCard() {
                 method: "POST"
               };
               _context.t0 = setSinger;
-              _context.next = 6;
+              _context.next = 7;
               return fetch(_app_constants__WEBPACK_IMPORTED_MODULE_1__["default"].urlGraphQL, optionsFetch);
-            case 6:
-              _context.next = 8;
+            case 7:
+              _context.next = 9;
               return _context.sent.json();
-            case 8:
+            case 9:
               _context.t1 = _context.sent.data.singer;
               (0, _context.t0)(_context.t1);
-            case 10:
+            case 11:
             case "end":
               return _context.stop();
           }
@@ -18977,9 +31717,9 @@ var TrampCard = function TrampCard() {
         return _ref.apply(this, arguments);
       };
     }();
-    fetchSinger();
+    refresh && fetchSinger();
   };
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(getSinger, [routerParams === null || routerParams === void 0 ? void 0 : routerParams.unique_id]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(getSinger, [refresh, routerParams === null || routerParams === void 0 ? void 0 : routerParams.unique_id, triggerRefresh]);
   var getSingers = function getSingers() {
     var fetchSingers = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
@@ -19029,31 +31769,189 @@ var TrampCard = function TrampCard() {
     fetchSingers();
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(getSingers, [setSingers]);
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState8 = _slicedToArray(_useState7, 2),
+    buttonProps = _useState8[0],
+    setButtonProps = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      hidden: true
+    }),
+    _useState10 = _slicedToArray(_useState9, 2),
+    dialogProps = _useState10[0],
+    setDialogProps = _useState10[1];
+  var iconStyles = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    return {
+      root: {
+        color: "white",
+        fontSize: "48px",
+        fontWeight: "bold"
+      }
+    };
+  }, []);
+  var onCloseDialog = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    return setDialogProps({
+      hidden: true
+    });
+  }, [setDialogProps]);
+  var handleClick = function handleClick(_ref4) {
+    var action = _ref4.action,
+      id = _ref4.id,
+      recipient = _ref4.recipient,
+      sender = _ref4.sender;
+    var onClick_accept = function onClick_accept(sticker) {
+      return function () {
+        var bodyText = "mutation {\n        updateSticker(id: ".concat(sticker.id, ", status: \"accepted\") {\n          recipient_id\n          sender_id\n          status\n        }\n      }");
+        var optionsFetch = {
+          body: JSON.stringify({
+            query: bodyText
+          }),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          method: "POST"
+        };
+        fetch(_app_constants__WEBPACK_IMPORTED_MODULE_1__["default"].urlGraphQL, optionsFetch).then(requestRefresh)["catch"](requestRefresh);
+      };
+    };
+    var onClick_decline = function onClick_decline(sticker) {
+      return function () {
+        var bodyText = "mutation {\n        updateSticker(id: ".concat(sticker.id, ", status: \"declined\") {\n          recipient_id\n          sender_id\n          status\n        }\n      }");
+        var optionsFetch = {
+          body: JSON.stringify({
+            query: bodyText
+          }),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          method: "POST"
+        };
+        fetch(_app_constants__WEBPACK_IMPORTED_MODULE_1__["default"].urlGraphQL, optionsFetch).then(requestRefresh)["catch"](requestRefresh);
+      };
+    };
+    var onClick_send = function onClick_send(_ref5) {
+      var recipient = _ref5.recipient,
+        sender = _ref5.sender;
+      var bodyText = "mutation {\n        createSticker(recipient_id: ".concat(recipient.id, ", sender_id: ").concat(sender.id, ", status: \"pending\") {\n          recipient_id\n          sender_id\n          status\n        }\n      }");
+      var optionsFetch = {
+        body: JSON.stringify({
+          query: bodyText
+        }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        method: "POST"
+      };
+      fetch(_app_constants__WEBPACK_IMPORTED_MODULE_1__["default"].urlGraphQL, optionsFetch).then(requestRefresh)["catch"](requestRefresh);
+    };
+    var requestRefresh = function requestRefresh() {
+      return triggerRefresh(true);
+    };
+    var unique_id = routerParams.unique_id;
+    var singerOther = recipient.unique_id === unique_id ? sender : recipient;
+    var nameOther = "".concat(singerOther.given_name, " ").concat(singerOther.family_name);
+    var title = {
+      "accepted": t("dialog.accepted", {
+        other: nameOther
+      }),
+      "respond": t("dialog.respond", {
+        sender: nameOther
+      }),
+      "send": t("dialog.send", {
+        recipient: nameOther
+      }),
+      "status": t("dialog.status", {
+        recipient: nameOther
+      })
+    }[action !== null && action !== void 0 ? action : "send"];
+    setButtonProps({
+      onAccept: onClick_accept({
+        id: id
+      }),
+      onDecline: onClick_decline({
+        id: id
+      })
+    });
+    if (action === "send") {
+      onClick_send({
+        recipient: recipient,
+        sender: sender
+      });
+    }
+    setDialogProps({
+      dialogContentProps: {
+        title: title
+      },
+      hidden: false,
+      hiddenButtons: action !== "respond",
+      modalProps: {
+        isBlocking: true
+      },
+      onDismiss: onCloseDialog
+    });
+  };
+  var onClickTrampSection = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(handleClick, [onCloseDialog, routerParams, setDialogProps, triggerRefresh]);
   var mapSection = function mapSection(voice_part) {
-    return /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_TrampSection_TrampSection__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    return /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_TrampSection_TrampSection__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      onClick: onClickTrampSection,
       singer: singer,
       singers: singers,
       voice_part: voice_part,
       key: "section--".concat(voice_part)
     });
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("main", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("main", {
     id: "main",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
       style: {
         textAlign: "center"
       },
       children: t("welcome")
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("h2", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("h2", {
       style: {
         textAlign: "center"
       },
       children: [singer === null || singer === void 0 ? void 0 : singer.given_name, " ", singer === null || singer === void 0 ? void 0 : singer.family_name]
-    }), _app_constants__WEBPACK_IMPORTED_MODULE_1__["default"].parts.map(mapSection)]
+    }), _app_constants__WEBPACK_IMPORTED_MODULE_1__["default"].parts.map(mapSection), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_fluentui_react__WEBPACK_IMPORTED_MODULE_6__.Dialog, _objectSpread(_objectSpread({}, dialogProps !== null && dialogProps !== void 0 ? dialogProps : {}), {}, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_fluentui_react__WEBPACK_IMPORTED_MODULE_7__.DialogFooter, {
+        styles: {
+          actionsRight: {
+            display: dialogProps.hiddenButtons ? "none" : "block"
+          }
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_fluentui_react__WEBPACK_IMPORTED_MODULE_8__.PrimaryButton, {
+          iconProps: {
+            iconName: "CheckMark",
+            styles: iconStyles
+          },
+          onClick: buttonProps.onClick_accept,
+          style: {
+            backgroundColor: "#080",
+            height: 64,
+            width: 64
+          }
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_fluentui_react__WEBPACK_IMPORTED_MODULE_9__.DefaultButton, {
+          iconProps: {
+            iconName: "Cancel",
+            styles: iconStyles
+          },
+          onClick: buttonProps.onClick_decline,
+          style: {
+            backgroundColor: "#800",
+            color: "white",
+            fontSize: "48px",
+            height: 64,
+            width: 64
+          }
+        })]
+      })
+    }))]
   });
 };
-TrampCard.displayName = "TrampCard";
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TrampCard);
+TrampPage.displayName = "TrampPage";
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TrampPage);
 
 /***/ }),
 
@@ -19068,11 +31966,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   HomePage: () => (/* reexport safe */ _HomePage__WEBPACK_IMPORTED_MODULE_0__["default"]),
 /* harmony export */   SingersPage: () => (/* reexport safe */ _SingersPage__WEBPACK_IMPORTED_MODULE_1__["default"]),
-/* harmony export */   TrampCard: () => (/* reexport safe */ _TrampCard__WEBPACK_IMPORTED_MODULE_2__["default"])
+/* harmony export */   TrampPage: () => (/* reexport safe */ _TrampPage__WEBPACK_IMPORTED_MODULE_2__["default"])
 /* harmony export */ });
 /* harmony import */ var _HomePage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HomePage */ "./resources/js/pages/HomePage.jsx");
 /* harmony import */ var _SingersPage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SingersPage */ "./resources/js/pages/SingersPage.jsx");
-/* harmony import */ var _TrampCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TrampCard */ "./resources/js/pages/TrampCard.jsx");
+/* harmony import */ var _TrampPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TrampPage */ "./resources/js/pages/TrampPage.jsx");
 
 
 

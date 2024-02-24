@@ -1,3 +1,9 @@
 {
+  "dialog": {
+    "accepted": "You have a sticker with {{other}}.",
+    "respond": "{{sender}} sent you a sticker. Do you accept?",
+    "send": "You just sent a sticker to {{recipient}}.",
+    "status": "You have sent a sticker to {{recipient}}. We’re still waiting on a response."
+  },
   "welcome": "Welcome to Your Tramp Card"
 }

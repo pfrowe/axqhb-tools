@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import { I18nContext, useTranslation } from "react-i18next";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ThemePicker from "./components/ThemePicker";
-import { HomePage, SingersPage, TrampCard } from "./pages";
+import { HomePage, SingersPage, TrampPage } from "./pages";
 import "./i18n";
 
 const container = document.getElementById("app");
@@ -27,7 +27,7 @@ const HomepageRouter = () => {
               <Routes>
                 <Route exact path="/" element={<HomePage />} />
                 <Route path="/singers/*" element={<SingersPage />} />
-                <Route path="/card/:unique_id" element={<TrampCard />} />
+                <Route path="/card/:unique_id" element={<TrampPage />} />
               </Routes>
             </Router>
           </I18nContext.Provider>

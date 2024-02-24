@@ -10,6 +10,25 @@ class Singer extends Model
 {
   use HasFactory;
 
+  protected $fillable = [
+    "can_receive_texts",
+    "city",
+    "country",
+    "email",
+    "family_name",
+    "geo_division_1",
+    "given_name",
+    "image",
+    "phone",
+    "postal_code",
+    "street_line_1",
+    "street_line_2",
+    "unique_id",
+    "user_id",
+    "user",
+    "voice_part"
+  ];
+
   public function stickers_received()
   {
     return $this->hasMany(Sticker::class, "recipient_id", "id");

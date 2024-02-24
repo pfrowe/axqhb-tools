@@ -10,6 +10,12 @@ class Sticker extends Model
 {
   use HasFactory;
 
+  protected $fillable = [
+    "recipient_id",
+    "sender_id",
+    "status"
+  ];
+
   protected function bothSingersQuery()
   {
     return Singer::where(

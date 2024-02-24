@@ -1,5 +1,5 @@
 import HomePage from "./HomePage";
 import SingersPage from "./SingersPage";
-import TrampCard from "./TrampCard";
+import TrampPage from "./TrampPage";
 
-export { HomePage, SingersPage, TrampCard };
+export { HomePage, SingersPage, TrampPage };
