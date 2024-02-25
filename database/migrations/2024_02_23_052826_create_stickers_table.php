@@ -14,8 +14,8 @@ return new class extends Migration
     Schema::create('stickers', function (Blueprint $table)
     {
       $table->id();
-      $table->unsignedInteger('recipient_id');
-      $table->unsignedInteger('sender_id');
+      $table->unsignedBigInteger('recipient_id');
+      $table->unsignedBigInteger('sender_id');
       $table->string('status')->default('pending');
       $table->foreign('recipient_id')->references('id')->on('singers')->onDelete('cascade')->onUpdate('cascade');
       $table->foreign('sender_id')->references('id')->on('singers')->onDelete('cascade')->onUpdate('cascade');

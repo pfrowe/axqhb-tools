@@ -142,5 +142,5 @@ type User {
 
 type Mutation {
   createSticker(recipient_id: ID!, sender_id: ID!, status: String): Sticker
-  updateSticker(id: ID! @whereKey, recipient_id: ID, sender_id: ID, status: String): Sticker
+  updateSticker(id: ID! @where(operator: "="), recipient_id: ID, sender_id: ID, status: String): Sticker
 }

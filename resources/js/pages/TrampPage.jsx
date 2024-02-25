@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import CONSTANTS from "../app.constants";
 import { useTranslation } from "react-i18next";
 import TrampSection from "../components/TrampSection/TrampSection";
+import { useInterval } from "@react-hooks-library/core";
 
 const TrampPage = () => {
   const [refresh, triggerRefresh] = useState(true);
@@ -146,7 +147,6 @@ const TrampPage = () => {
       };
       fetch(CONSTANTS.urlGraphQL, optionsFetch).then(requestRefresh).catch(requestRefresh);
     };
-    const requestRefresh = () => (triggerRefresh(true));
     const { unique_id } = routerParams;
     const singerOther = recipient.unique_id === unique_id ? sender : recipient;
     const nameOther = `${singerOther.given_name} ${singerOther.family_name}`;
@@ -168,10 +168,12 @@ const TrampPage = () => {
       onDismiss: onCloseDialog
     });
   };
-  const onClickTrampSection = useCallback(handleClick, [onCloseDialog, routerParams, setDialogProps, triggerRefresh]);
+  const onClickTrampSection = useCallback(handleClick, [onCloseDialog, requestRefresh, routerParams, setDialogProps]);
   const mapSection = (voice_part) => (
     <TrampSection onClick={onClickTrampSection} {...{ singer, singers, voice_part }} key={`section--${voice_part}`} />
   );
+  const requestRefresh = useCallback(() => (triggerRefresh(true)), [triggerRefresh]);
+  useInterval(requestRefresh, 10000);
   return (<main id="main">
     <h1 style={{ textAlign: "center" }}>{t("welcome")}</h1>
     <h2 style={{ textAlign: "center" }}>{singer?.given_name} {singer?.family_name}</h2>
