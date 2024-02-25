@@ -5,11 +5,101 @@
   --color-background-red: hsla(0, 100%, 50%, 0.25);
   --color-error-background: rgb(255, 192, 192);
   --color-error-text: rgb(164, 38, 44);
-  --color-voice-background--bari: hsla(120, 100%, 50%, 0.25);
-  --color-voice-background--bass: hsla(240, 100%, 50%, 0.25);
-  --color-voice-background--guest: hsla(300, 100%, 50%, 0.25);
-  --color-voice-background--lead: hsla(0, 100%, 50%, 0.25);
-  --color-voice-background--tenor: hsla(60, 100%, 50%, 0.25);
+  --hue-voice--bari: 120;
+  --hue-voice--bass: 240;
+  --hue-voice--guest: 300;
+  --hue-voice--lead: 0;
+  --hue-voice--tenor: 60;
+}
+
+@keyframes blink--bari {
+  0% {
+    background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.15);
+  }
+
+  50% {
+    background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.40);
+  }
+
+  90% {
+    background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.15);
+  }
+
+  100% {
+    background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.15);
+  }
+}
+
+@keyframes blink--bass {
+  0% {
+    background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.15);
+  }
+
+  50% {
+    background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.40);
+  }
+
+  90% {
+    background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.15);
+  }
+
+  100% {
+    background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.15);
+  }
+}
+
+@keyframes blink--guest {
+  0% {
+    background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.15);
+  }
+
+  50% {
+    background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.40);
+  }
+
+  90% {
+    background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.15);
+  }
+
+  100% {
+    background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.15);
+  }
+}
+
+@keyframes blink--lead {
+  0% {
+    background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.15);
+  }
+
+  50% {
+    background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.40);
+  }
+
+  90% {
+    background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.15);
+  }
+
+  100% {
+    background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.15);
+  }
+}
+
+@keyframes blink--tenor {
+  0% {
+    background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.15);
+  }
+
+  50% {
+    background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.40);
+  }
+
+  90% {
+    background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.15);
+  }
+
+  100% {
+    background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.15);
+  }
 }
 
 main {
@@ -63,4 +153,140 @@ main {
 
 .flex-justify--end {
   justify-content: end;
+}
+
+.ms-DocumentCard--compact {
+  border-style: solid;
+  border-width: 1px;
+}
+
+.ms-DocumentCard--compact.bari {
+  background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.15);
+  border-color: hsla(var(--hue-voice--bari), 100%, 25%, 1.0);
+}
+
+.ms-DocumentCard--compact.bari.accepted {
+  background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.5);
+}
+
+.ms-DocumentCard--compact.bari.received {
+  animation: blink--bari 1.0s linear infinite;
+}
+
+.ms-DocumentCard--compact.bari.sent {
+  animation: blink--bari 3.0s linear infinite;
+}
+
+.ms-DocumentCard--compact.bass {
+  background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.15);
+  border-color: hsla(var(--hue-voice--bass), 100%, 25%, 1.0);
+}
+
+.ms-DocumentCard--compact.bass.accepted {
+  background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.5);
+}
+
+.ms-DocumentCard--compact.bass.received {
+  animation: blink--bass 1.0s linear infinite;
+}
+
+.ms-DocumentCard--compact.bass.sent {
+  animation: blink--bass 3.0s linear infinite;
+}
+
+.ms-DocumentCard--compact.guest {
+  background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.15);
+  border-color: hsla(var(--hue-voice--guest), 100%, 25%, 1.0);
+}
+
+.ms-DocumentCard--compact.guest.accepted {
+  background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.5);
+}
+
+.ms-DocumentCard--compact.guest.received {
+  animation: blink--guest 1.0s linear infinite;
+}
+
+.ms-DocumentCard--compact.guest.sent {
+  animation: blink--guest 3.0s linear infinite;
+}
+
+.ms-DocumentCard--compact.lead {
+  background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.15);
+  border-color: hsla(var(--hue-voice--lead), 100%, 25%, 1.0);
+}
+
+.ms-DocumentCard--compact.lead.accepted {
+  background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.5);
+}
+
+.ms-DocumentCard--compact.lead.received {
+  animation: blink--lead 1.0s linear infinite;
+}
+
+.ms-DocumentCard--compact.lead.sent {
+  animation: blink--lead 3.0s linear infinite;
+}
+
+.ms-DocumentCard--compact.tenor {
+  background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.15);
+  border-color: hsla(var(--hue-voice--tenor), 100%, 25%, 1.0);
+}
+
+.ms-DocumentCard--compact.tenor.accepted {
+  background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.5);
+}
+
+.ms-DocumentCard--compact.tenor.received {
+  animation: blink--tenor 1.0s linear infinite;
+}
+
+.ms-DocumentCard--compact.tenor.sent {
+  animation: blink--tenor 3.0s linear infinite;
+}
+
+.ms-DocumentCard--compact.sticker i[data-icon-name] {
+  font-size: min(24pt, 5vw);
+}
+
+.ms-DocumentCard--compact.sticker .ms-DocumentCardPreview {
+  flex-shrink: 0;
+  width: calc(min(24pt, 5vw) + 1em);
+}
+
+@media only screen and (max-width: 767px) {
+
+  div#app,
+  main {
+    margin: 0;
+    max-width: 100vw;
+    padding: 0;
+  }
+
+  main * {
+    max-width: 100vw;
+  }
+
+  div.ms-DocumentCard--compact {
+    max-width: calc(50vw - 2em);
+    min-width: calc(50vw - 2em);
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  div.ms-DocumentCard--compact {
+    max-width: calc(256px - 0.75em);
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  div.ms-DocumentCard--compact {
+    max-width: calc(256px - 1em);
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  div.ms-DocumentCard--compact {
+    max-width: calc(256px - 1.2em);
+  }
 }

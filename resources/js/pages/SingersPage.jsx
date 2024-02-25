@@ -35,22 +35,13 @@ const SingersPage = () => {
     fetchSingers();
   };
   useEffect(getSingers, [setSingers]);
-  const mapSingerCard = ({ unique_id, voice_part, ...singer }) => {
-    const styles = {
-      root: {
-        backgroundColor: `var(--color-voice-background--${voice_part})`,
-        borderColor: `brightness(var(--color-voice-background--${voice_part}), -.5)`,
-        borderStyle: "solid",
-        borderWidth: "1px"
-      }
-    }
-    return (
-      <SingerCard
-        {...{ ...singer, styles, voice_part }}
-        href={`/card/${unique_id}`}
-        key={`singer-card--${unique_id}`} />
-    );
-  };
+  const mapSingerCard = ({ unique_id, voice_part, ...singer }) => (
+    <SingerCard
+      {...{ ...singer, voice_part }}
+      className={voice_part}
+      href={`/card/${unique_id}`}
+      key={`singer-card--${unique_id}`} />
+  );
   return (<main id="main">
     <h1 style={{ textAlign: "center" }}>{t("title")}</h1>
     <h2 style={{ textAlign: "center" }}>{t("subtitle")}</h2>

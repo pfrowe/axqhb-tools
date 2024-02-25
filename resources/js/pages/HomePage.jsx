@@ -21,6 +21,7 @@ const HomePage = () => {
         styles: {
           root: {
             height: "3.5em",
+            textAlign: "center"
           },
         },
         title: (
