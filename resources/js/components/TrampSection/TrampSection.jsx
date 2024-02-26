@@ -13,14 +13,14 @@ const TrampSection = ({ onClick, singer, singers, voice_part }) => {
         "sent": "status",
         "undefined": "send"
       }[sticker?.status ?? "undefined"];
-      onClick?.({ action, sender: singer, recipient: singerOther });
+      onClick?.({ action, id: sticker?.id, sender: singer, recipient: singerOther });
     };
     const sortStickers = (left, right) => (new Date(right.updated_at).valueOf() - new Date(left.updated_at).valueOf());
     const { stickers_received, stickers_sent } = singer;
     const stickerLatest =
       ([...(stickers_received ?? []), ...(stickers_sent ?? [])].filter(filterOthers).sort(sortStickers).pop());
     if (stickerLatest?.status === "pending") {
-      stickerLatest.status = (stickerLatest.recipient?.unique_id === unique_id) ? "received" : "sent";
+      stickerLatest.status = (stickerLatest.recipient?.unique_id === singer?.unique_id) ? "received" : "sent";
     }
     return (
       <StickerCard

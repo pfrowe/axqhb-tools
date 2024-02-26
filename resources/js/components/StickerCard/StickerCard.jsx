@@ -23,8 +23,8 @@ const StickerCard = ({ family_name, given_name, onClick, status, ...props }) => 
   const { t } = useTranslation("tramp");
   return (
     <DocumentCard
-      className={`flex-align--center flex-justify--center sticker ${props?.className}`}
       {...props}
+      className={`flex-align--center flex-justify--center sticker ${props?.className}`}
       onClick={onClick}
       type={DocumentCardType.compact}>
       <DocumentCardPreview {...propsPreview}></DocumentCardPreview>

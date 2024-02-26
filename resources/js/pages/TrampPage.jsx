@@ -24,6 +24,9 @@ const TrampPage = () => {
           voice_part
           stickers_received {
             id
+            recipient {
+              unique_id
+            }
             sender {
               unique_id
             }
@@ -33,6 +36,9 @@ const TrampPage = () => {
           stickers_sent {
             id
             recipient {
+              unique_id
+            }
+            sender {
               unique_id
             }
             status
@@ -93,9 +99,9 @@ const TrampPage = () => {
   const iconStyles = useMemo(() => ({ root: { color: "white", fontSize: "48px", fontWeight: "bold" } }), []);
   const onCloseDialog = useCallback(() => (setDialogProps({ hidden: true })), [setDialogProps]);
   const handleClick = ({ action, id, recipient, sender }) => {
-    const onClick_accept = (sticker) => () => {
+    const onClick_accept = () => () => {
       const bodyText = `mutation {
-        updateSticker(id: ${sticker.id}, status: "accepted") {
+        updateSticker(id: ${id}, status: "accepted") {
           recipient_id
           sender_id
           status
@@ -109,11 +115,11 @@ const TrampPage = () => {
         },
         method: "POST"
       };
-      fetch(CONSTANTS.urlGraphQL, optionsFetch).then(requestRefresh).catch(requestRefresh);
+      fetch(CONSTANTS.urlGraphQL, optionsFetch).then(onCloseDialog).then(requestRefresh).catch(requestRefresh);
     };
-    const onClick_decline = (sticker) => () => {
+    const onClick_decline = () => () => {
       const bodyText = `mutation {
-        updateSticker(id: ${sticker.id}, status: "declined") {
+        updateSticker(id: ${id}, status: "declined") {
           recipient_id
           sender_id
           status
@@ -127,7 +133,7 @@ const TrampPage = () => {
         },
         method: "POST"
       };
-      fetch(CONSTANTS.urlGraphQL, optionsFetch).then(requestRefresh).catch(requestRefresh);
+      fetch(CONSTANTS.urlGraphQL, optionsFetch).then(onCloseDialog).then(requestRefresh).catch(requestRefresh);
     };
     const onClick_send = ({ recipient, sender }) => {
       const bodyText = `mutation {
@@ -173,7 +179,7 @@ const TrampPage = () => {
     <TrampSection onClick={onClickTrampSection} {...{ singer, singers, voice_part }} key={`section--${voice_part}`} />
   );
   const requestRefresh = useCallback(() => (triggerRefresh(true)), [triggerRefresh]);
-  useInterval(requestRefresh, 10000);
+  useInterval(requestRefresh, CONSTANTS.pollInterval);
   return (<main id="main">
     <h1 style={{ textAlign: "center" }}>{t("welcome")}</h1>
     <h2 style={{ textAlign: "center" }}>{singer?.given_name} {singer?.family_name}</h2>
@@ -182,11 +188,11 @@ const TrampPage = () => {
       <DialogFooter styles={{ actionsRight: { display: dialogProps.hiddenButtons ? "none" : "block" } }}>
         <PrimaryButton
           iconProps={{ iconName: "CheckMark", styles: iconStyles }}
-          onClick={buttonProps.onClick_accept}
+          onClick={buttonProps.onAccept}
           style={{ backgroundColor: "#080", height: 64, width: 64 }} />
         <DefaultButton
           iconProps={{ iconName: "Cancel", styles: iconStyles }}
-          onClick={buttonProps.onClick_decline}
+          onClick={buttonProps.onDecline}
           style={{ backgroundColor: "#800", color: "white", fontSize: "48px", height: 64, width: 64 }} />
       </DialogFooter>
     </Dialog>
