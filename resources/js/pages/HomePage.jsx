@@ -6,7 +6,7 @@ const HomePage = () => {
   const { t } = useTranslation("app");
   const cards = useMemo(() => ([
     {
-      key: "power-user",
+      key: "singers",
       onClickHref: "/singers",
       previewProps: {
         previewImages: [
@@ -26,6 +26,29 @@ const HomePage = () => {
         },
         title: (
           <Trans i18nKey="app:homepage.cards.title.singers.name" t={t} />),
+      },
+    },
+    {
+      key: "leaderboard",
+      onClickHref: "/leaderboard",
+      previewProps: {
+        previewImages: [
+          {
+            linkProps: { href: "/leaderboard" },
+            name: <Trans i18nKey="app:homepage.cards.preview.leaderboard.name" t={t}>Leaderboard</Trans>,
+            previewImageSrc: "/images/forefront.jpg",
+          },
+        ],
+      },
+      titleProps: {
+        styles: {
+          root: {
+            height: "3.5em",
+            textAlign: "center"
+          },
+        },
+        title: (
+          <Trans i18nKey="app:homepage.cards.title.leaderboard.name" t={t} />),
       },
     },
   ]), []);

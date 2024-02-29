@@ -1,10 +1,16 @@
 :root {
-  --color-app-background-dark: rgba(51, 51, 51, 0.15);
-  --color-app-background-light: rgba(255, 255, 255, 0.85);
-  --color-background-green: hsla(120, 100%, 50%, 0.25);
-  --color-background-red: hsla(0, 100%, 50%, 0.25);
-  --color-error-background: rgb(255, 192, 192);
-  --color-error-text: rgb(164, 38, 44);
+  --bgcolor--app-dark: rgba(51, 51, 51, 0.15);
+  --bgcolor--app-light: rgba(255, 255, 255, 0.85);
+  --bgcolor--error: rgb(255, 192, 192);
+  --bgcolor--green: hsla(120, 100%, 50%, 0.25);
+  --bgcolor--red: hsla(0, 100%, 50%, 0.25);
+  --bgcolor--super-status: rgba(0, 0, 136, 0.5);
+  --bgcolor--tramp-status: rgba(0, 136, 0, 0.5);
+  --bgcolor--ultra-status: rgba(136, 0, 136, 0.5);
+  --color--error: rgb(164, 38, 44);
+  --color--super-progress: rgba(0, 0, 192, 0.5);
+  --color--tramp-progress: rgba(0, 192, 0, 0.5);
+  --color--ultra-progress: rgba(192, 0, 192, 0.5);
   --hue-voice--bari: 120;
   --hue-voice--bass: 240;
   --hue-voice--guest: 300;
@@ -122,11 +128,11 @@ main {
 }
 
 .App.theme--dark {
-  background-color: var(--color-app-background-dark);
+  background-color: var(--bgcolor--app-dark);
 }
 
 .App.theme--light {
-  background-color: var(--color-app-background-light);
+  background-color: var(--bgcolor--app-light);
 }
 
 .div--columns {

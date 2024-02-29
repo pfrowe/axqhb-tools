@@ -5,11 +5,17 @@
   "homepage": {
     "cards": {
       "preview": {
+        "leaderboard": {
+          "name": "Leaderboard"
+        },
         "singers": {
           "name": "Singers"
         }
       },
       "title": {
+        "leaderboard": {
+          "name": "Leaderboard"
+        },
         "singers": {
           "name": "Singers"
         }
