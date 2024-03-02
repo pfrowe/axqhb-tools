@@ -9,6 +9,14 @@ const LeaderboardPage = () => {
   const [refresh, triggerRefresh] = useState(true);
   const [singers, setSingers] = useState([]);
   const [statuses, setStatuses] = useState([]);
+  const sortScore = useCallback((left, right) => {
+    const resultScore = left.score - right.score;
+    const latestLeft = new Date([...(left.stickers?.all || [])].pop()?.created_at).valueOf();
+    const latestRight = new Date([...(right.stickers?.all || [])].pop()?.created_at).valueOf();
+    const resultTime = latestLeft - latestRight;
+    return resultScore || resultTime;
+  }, []);
+  const sortString = useCallback((field) => (left, right) => (left[field].localeCompare(right[field])), []);
   const columnsStatus = useMemo(() => {
     const renderProgressBar = (item) => {
       const getPercentage = (part, whole) => (((part ?? []).length / (whole ?? []).length) * 100);
@@ -42,12 +50,15 @@ const LeaderboardPage = () => {
                 `var(--color--ultra-progress) ${(getPercentage(item.superTramp?.all, item.ultraTramp?.all))}%`
               ]
           ),
-          ...([
-            `var(--color--ultra-progress) ` +
-            `${getPercentage(ultraComplete, item.ultraTramp?.all)}%`,
-            `transparent ` +
-            `${getPercentage(ultraComplete, item.ultraTramp?.all)}%`
-          ])
+          ...(
+            item.score < 2
+              ? []
+              : [
+                (item.score < 2 ? "transparent " : `var(--color--ultra-progress) `) +
+                `${getPercentage(ultraComplete, item.ultraTramp?.all)}%`,
+                `transparent ` +
+                `${getPercentage(ultraComplete, item.ultraTramp?.all)}%`
+              ])
         ];
       };
       const stopsBackground = [
@@ -95,78 +106,75 @@ const LeaderboardPage = () => {
       };
       const sortStatus = (left, right) => ((item[left]?.length ?? 0) - (item[right]?.length ?? 0));
       const statusOverall = Object.keys(item.stickers).filter(checkIsComplete).sort(sortStatus).pop();
-      const dateLatest = statusOverall ? formatDate(new Date((item.stickers[statusOverall] ?? [])[0]?.updated_at)) : "";
+      const dateLatest = statusOverall ? formatDate(new Date((item.stickers[statusOverall] ?? [])[0]?.created_at)) : "";
       return (statusOverall ? (<>{t(`fields.${statusOverall}`)} {dateLatest}</>) : (<></>));
-    };
-    const sortScore = (left, right) => {
-      const scoreLeft = left.score;
-      const scoreRight = right.score;
-      const latestLeft = new Date([...(left.stickers?.all || [])].pop()?.updated_at).valueOf();
-      const latestRight = new Date([...(right.stickers?.all || [])].pop()?.updated_at).valueOf();
-      return (((scoreLeft - scoreRight) * 1000) + (latestLeft - latestRight)) * (colSorted.isSortedDescending ? -1 : 1);
     };
     return [
       {
         ariaLabel: t("fields.given_name"),
         fieldName: "given_name",
         isPadded: true,
-        isSorted: colSorted?.name === "given_name",
-        isSortedDescending: (colSorted?.name === "given_name") && colSorted.isSortedDescending,
+        isSorted: false,
+        isSortedDescending: false,
         key: "given_name",
         maxWidth: 8 * 9.6,
         minWidth: 8 * 7.2,
         name: t("fields.given_name"),
         sortedAscendingAriaLabel: t("sorted.string.asc"),
         sortedDescendingAriaLabel: t("sorted.string.desc"),
-        sortFunc: (left, right) => (left.localeCompare(right) * (colSorted.isSortedDescending ? -1 : 1))
+        sortFuncDefault: sortString("given_name"),
+        sortFunc: sortString("given_name")
       },
       {
         ariaLabel: t("fields.family_name"),
         fieldName: "family_name",
         isPadded: true,
-        isSorted: colSorted?.name === "family_name",
-        isSortedDescending: (colSorted?.name === "family_name") && colSorted.isSortedDescending,
+        isSorted: false,
+        isSortedDescending: false,
         key: "family_name",
         maxWidth: 8 * 9.6,
         minWidth: 8 * 7.2,
         name: t("fields.family_name"),
         sortedAscendingAriaLabel: t("sorted.string.asc"),
         sortedDescendingAriaLabel: t("sorted.string.desc"),
-        sortFunc: (left, right) => (left.localeCompare(right) * (colSorted.isSortedDescending ? -1 : 1))
+        sortFuncDefault: sortString("family_name"),
+        sortFunc: sortString("family_name")
       },
       {
         ariaLabel: t("fields.voice_part"),
         fieldName: "voice_part",
         isPadded: true,
-        isSorted: colSorted?.name === "voice_part",
-        isSortedDescending: (colSorted?.name === "voice_part") && colSorted.isSortedDescending,
+        isSorted: false,
+        isSortedDescending: false,
         key: "voice_part",
         maxWidth: 4 * 9.6,
         minWidth: 4 * 7.2,
         name: t("fields.voice_part"),
         sortedAscendingAriaLabel: t("sorted.string.asc"),
         sortedDescendingAriaLabel: t("sorted.string.desc"),
-        sortFunc: (left, right) => (left.localeCompare(right) * (colSorted.isSortedDescending ? -1 : 1))
+        sortFuncDefault: sortString("voice_part"),
+        sortFunc: sortString("voice_part")
       },
       {
         ariaLabel: t("fields.score"),
         fieldName: "score",
         isPadded: true,
-        isSorted: colSorted?.name === "score",
-        isSortedDescending: (colSorted?.name === "score") && colSorted.isSortedDescending,
+        isSorted: true,
+        isSortedDescending: true,
         key: "score",
         name: t("fields.score"),
         onRender: renderProgressBar,
         sortedAscendingAriaLabel: t("sorted.score.asc"),
         sortedDescendingAriaLabel: t("sorted.score.desc"),
-        sortFunc: sortScore
+        sortFuncDefault: sortScore,
+        sortFunc: (left, right) => (sortScore(left, right) * -1) // Default sort desc
       },
       {
         ariaLabel: t("fields.status"),
         fieldName: "status",
         isPadded: true,
-        isSorted: colSorted?.name === "status",
-        isSortedDescending: (colSorted?.name === "status") && colSorted.isSortedDescending,
+        isSorted: false,
+        isSortedDescending: false,
         key: "status",
         maxWidth: 20 * 9.6,
         minWidth: 20 * 7.2,
@@ -174,26 +182,29 @@ const LeaderboardPage = () => {
         onRender: renderTrampStatus,
         sortedAscendingAriaLabel: t("sorted.number.asc"),
         sortedDescendingAriaLabel: t("sorted.number.desc"),
+        sortFuncDefault: sortScore,
         sortFunc: sortScore
       },
     ];
-  }, [colSorted]);
-  const updateSort = useCallback(
-    (prevState, colClicked) => {
-      const mapSort = (colTest) => (
-        (colTest.name === colClicked.name)
-          ? ({
-            ...colTest,
-            isSorted: true,
-            isSortedDescending: (prevState.name === colClicked.name) ? false : !prevState.isSortedDescending
-          })
-          : colTest
-      );
-      return columnsStatus.map(mapSort).filter(({ isSorted }) => (isSorted)).pop();
-    },
-    [columnsStatus]
-  );
-  const [colSorted, setColSorted] = useReducer(updateSort, { name: "score", isSortedDescending: true });
+  }, []);
+  const updateSort = (prevState, colClicked) => {
+    const updateColumn = ({ fieldName, isSorted, isSortedDescending, sortFuncDefault, ...column }) => {
+      const newSortedDescending = (fieldName === colClicked.fieldName)
+        ? (isSorted && !isSortedDescending)
+        : isSortedDescending;
+      let result = {
+        ...column,
+        isSorted: fieldName === colClicked.fieldName,
+        isSortedDescending: newSortedDescending,
+        fieldName: fieldName,
+        sortFunc: (left, right) => (sortFuncDefault(left, right) * (newSortedDescending ? -1 : 1)),
+        sortFuncDefault
+      };
+      return result;
+    };
+    return prevState.map(updateColumn);
+  };
+  const [columnsSorted, setColSorted] = useReducer(updateSort, columnsStatus);
   const getSingers = () => {
     const fetchSingers = async () => {
       triggerRefresh(false);
@@ -206,6 +217,9 @@ const LeaderboardPage = () => {
           voice_part
           stickers_received {
             id
+            recipient {
+              id
+            }
             sender {
               id
             }
@@ -215,6 +229,9 @@ const LeaderboardPage = () => {
           stickers_sent {
             id
             recipient {
+              id
+            }
+            sender {
               id
             }
             status
@@ -235,30 +252,37 @@ const LeaderboardPage = () => {
     refresh && fetchSingers();
   };
   useEffect(getSingers, [refresh, setSingers, triggerRefresh]);
+  const getSingerHash = () => {
+    const reduceHash = (result, { id, ...singer }) => ({ ...result, [id]: { id, ...singer } });
+    return (singers ?? []).reduce(reduceHash, {});
+  };
+  const hashSingers = useMemo(getSingerHash, [singers]);
   const getSingerStatuses = () => {
     const mapStatus = (singer) => {
       const filterByStatus = (statusTest) => ({ status }) => (status === statusTest);
       const filterHasSticker = (idsWithStickers) => ({ id }) => (~idsWithStickers.indexOf(id));
+      const filterIntersection = (arrayRight, ...arrays) => (item) =>
+        (~arrayRight.indexOf(item) && (arrays.length ? filterIntersection(...arrays)(item) : true));
       const filterNotThisSinger = ({ id: idTest }) => (idTest !== id);
       const filterNotThisVoicePart = ({ voice_part: partTest }) => (partTest !== singer.voice_part);
       const filterSticker = (singersToInclude) => (sticker) =>
         (~singersToInclude.map(mapId).indexOf(mapOtherParty(sticker)));
       const filterTramp = ({ voice_part: partTest }) => (~CONSTANTS.partsTramp.indexOf(partTest));
-      const getScore = () => {
+      const getScore = ({ superTramp, tramp, ultraTramp }) => {
         const accepted = {
-          super: singer?.superTramp?.accepted || [],
-          tramp: singer?.tramp?.accepted || [],
-          ultra: singer?.ultraTramp?.accepted || []
+          super: superTramp?.accepted || [],
+          tramp: tramp?.accepted || [],
+          ultra: ultraTramp?.accepted || []
         };
         const count = {
-          super: (singer?.superTramp?.all || []).length,
-          tramp: (singer?.tramp?.all || []).length,
-          ultra: (singer?.ultraTramp?.all || []).length
+          super: (superTramp?.all || []).length,
+          tramp: (tramp?.all || []).length,
+          ultra: (ultraTramp?.all || []).length
         };
         const pending = {
-          super: singer?.superTramp?.pending || [],
-          tramp: singer?.tramp?.pending || [],
-          ultra: singer?.ultraTramp?.pending || []
+          super: superTramp?.pending || [],
+          tramp: tramp?.pending || [],
+          ultra: ultraTramp?.pending || []
         };
         let result;
         if (count.ultra === 0) {
@@ -278,6 +302,7 @@ const LeaderboardPage = () => {
       const mapId = ({ id }) => (id);
       const mapOtherParty = ({ recipient, sender }) =>
         ([recipient?.id, sender?.id].filter((idTest) => (idTest !== id))[0]);
+      const mapSingerFromId = (id) => (hashSingers[id]);
       const sortByTimestamp = (left, right) =>
         (new Date(right.updated_at).valueOf() - new Date(left.updated_at).valueOf());
       const { id, stickers_received, stickers_sent } = singer;
@@ -287,12 +312,30 @@ const LeaderboardPage = () => {
       const singersUltraTramp = singers.filter(filterNotThisSinger);
       const singersSuperTramp = singersUltraTramp.filter(filterTramp);
       const singersTramp = singersSuperTramp.filter(filterNotThisVoicePart);
-      const idsAccepted = stickersAccepted.map(mapOtherParty);
-      const idsPending = stickersPending.map(mapOtherParty);
+      const idsAccepted = [...new Set(stickersAccepted.map(mapOtherParty))];
+      const idsPending = [...new Set(stickersPending.map(mapOtherParty))];
+      const categories = {
+        superTramp: {
+          accepted: idsAccepted.filter(filterIntersection(singersSuperTramp.map(mapId))).map(mapSingerFromId),
+          all: singersSuperTramp,
+          pending: idsPending.filter(filterIntersection(singersSuperTramp.map(mapId))).map(mapSingerFromId)
+        },
+        tramp: {
+          accepted: idsAccepted.filter(filterIntersection(singersTramp.map(mapId))).map(mapSingerFromId),
+          all: singersTramp,
+          pending: idsPending.filter(filterIntersection(singersTramp.map(mapId))).map(mapSingerFromId)
+        },
+        ultraTramp: {
+          accepted: idsAccepted.filter(filterIntersection(singersUltraTramp.map(mapId))).map(mapSingerFromId),
+          all: singersUltraTramp,
+          pending: idsPending.filter(filterIntersection(singersUltraTramp.map(mapId))).map(mapSingerFromId)
+        }
+      };
       return {
+        ...categories,
         family_name: singer.family_name,
         given_name: singer.given_name,
-        score: getScore(),
+        score: getScore(categories),
         singer,
         stickers: {
           all: [...stickersAccepted, ...stickersPending].sort(sortByTimestamp),
@@ -306,27 +349,14 @@ const LeaderboardPage = () => {
             .sort(sortByTimestamp)
             .filter(filterSticker(singersUltraTramp)),
         },
-        superTramp: {
-          accepted: singersSuperTramp.filter(filterHasSticker(idsAccepted)),
-          all: singersSuperTramp,
-          pending: singersSuperTramp.filter(filterHasSticker(idsPending))
-        },
-        tramp: {
-          accepted: singersTramp.filter(filterHasSticker(idsAccepted)),
-          all: singersTramp,
-          pending: singersTramp.filter(filterHasSticker(idsPending))
-        },
-        ultraTramp: {
-          accepted: singersUltraTramp.filter(filterHasSticker(idsAccepted)),
-          all: singersUltraTramp,
-          pending: singersUltraTramp.filter(filterHasSticker(idsPending))
-        },
         voice_part: singer.voice_part
       };
     };
+    const colSorted = columnsSorted.filter(({ isSorted }) => (isSorted))[0];
     setStatuses((singers ?? []).map(mapStatus).sort(colSorted?.sortFunc));
   };
-  useEffect(getSingerStatuses, [colSorted, singers]);
+  useEffect(getSingerStatuses, [columnsSorted, hashSingers, singers]);
+  const onColumnHeaderClick = (_, colClicked) => (setColSorted(colClicked));
   const requestRefresh = useCallback(() => (triggerRefresh(true)), [triggerRefresh]);
   useInterval(requestRefresh, CONSTANTS.pollInterval);
   return (
@@ -334,10 +364,10 @@ const LeaderboardPage = () => {
       <h1 style={{ textAlign: "center" }}>{t("title")}</h1>
       <DetailsList
         checkboxVisibility={CheckboxVisibility.hidden}
-        columns={columnsStatus}
+        columns={columnsSorted}
         compact={false}
         items={statuses}
-        onColumnHeaderClick={setColSorted}
+        onColumnHeaderClick={onColumnHeaderClick}
         selectionMode={SelectionMode.none} />
     </main>
   );
