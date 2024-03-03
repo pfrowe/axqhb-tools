@@ -93,8 +93,13 @@ const LeaderboardPage = () => {
       );
     };
     const renderTrampStatus = (item) => {
-      const checkIsComplete = (milestone) =>
-        (item[milestone]?.all && (item.stickers[milestone]?.length ?? 0) >= (item[milestone].all?.length ?? 0));
+      const checkIsComplete = (milestone) => {
+        let result = false;
+        if ((item[milestone]?.accepted?.length || item[milestone]?.pending?.length) && item[milestone]?.all?.length) {
+          result = item[milestone].accepted.length + item[milestone].pending.length >= item[milestone].all.length;
+        }
+        return result;
+      };
       const formatDate = (date) => {
         const formatter = new Intl.DateTimeFormat(
           "en-US",
@@ -216,6 +221,7 @@ const LeaderboardPage = () => {
           unique_id
           voice_part
           stickers_received {
+            created_at
             id
             recipient {
               id
@@ -224,9 +230,9 @@ const LeaderboardPage = () => {
               id
             }
             status
-            updated_at
           }
           stickers_sent {
+            created_at
             id
             recipient {
               id
@@ -235,7 +241,6 @@ const LeaderboardPage = () => {
               id
             }
             status
-            updated_at
           }
         }
       }`;
@@ -260,7 +265,6 @@ const LeaderboardPage = () => {
   const getSingerStatuses = () => {
     const mapStatus = (singer) => {
       const filterByStatus = (statusTest) => ({ status }) => (status === statusTest);
-      const filterHasSticker = (idsWithStickers) => ({ id }) => (~idsWithStickers.indexOf(id));
       const filterIntersection = (arrayRight, ...arrays) => (item) =>
         (~arrayRight.indexOf(item) && (arrays.length ? filterIntersection(...arrays)(item) : true));
       const filterNotThisSinger = ({ id: idTest }) => (idTest !== id);
