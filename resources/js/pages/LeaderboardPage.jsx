@@ -125,6 +125,7 @@ const LeaderboardPage = () => {
         maxWidth: 8 * 9.6,
         minWidth: 8 * 7.2,
         name: t("fields.given_name"),
+        onRender: (item) => (item.preferred_name ?? item.given_name),
         sortedAscendingAriaLabel: t("sorted.string.asc"),
         sortedDescendingAriaLabel: t("sorted.string.desc"),
         sortFuncDefault: sortString("given_name"),
@@ -218,6 +219,8 @@ const LeaderboardPage = () => {
           family_name
           given_name
           id
+          is_guest_singer
+          preferred_name
           unique_id
           voice_part
           stickers_received {
@@ -271,7 +274,8 @@ const LeaderboardPage = () => {
       const filterNotThisVoicePart = ({ voice_part: partTest }) => (partTest !== singer.voice_part);
       const filterSticker = (singersToInclude) => (sticker) =>
         (~singersToInclude.map(mapId).indexOf(mapOtherParty(sticker)));
-      const filterTramp = ({ voice_part: partTest }) => (~CONSTANTS.partsTramp.indexOf(partTest));
+      const filterTramp = ({ is_guest_singer, voice_part: partTest }) =>
+        (~CONSTANTS.partsTramp.indexOf(partTest) && !is_guest_singer);
       const getScore = ({ superTramp, tramp, ultraTramp }) => {
         const accepted = {
           super: superTramp?.accepted || [],
@@ -339,6 +343,7 @@ const LeaderboardPage = () => {
         ...categories,
         family_name: singer.family_name,
         given_name: singer.given_name,
+        preferred_name: singer.preferred_name,
         score: getScore(categories),
         singer,
         stickers: {

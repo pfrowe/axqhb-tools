@@ -23,11 +23,15 @@
     background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.15);
   }
 
+  25% {
+    background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.40);
+  }
+
   50% {
     background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.40);
   }
 
-  90% {
+  75% {
     background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.15);
   }
 
@@ -41,11 +45,15 @@
     background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.15);
   }
 
+  25% {
+    background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.40);
+  }
+
   50% {
     background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.40);
   }
 
-  90% {
+  75% {
     background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.15);
   }
 
@@ -59,11 +67,15 @@
     background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.15);
   }
 
+  25% {
+    background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.40);
+  }
+
   50% {
     background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.40);
   }
 
-  90% {
+  75% {
     background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.15);
   }
 
@@ -77,11 +89,15 @@
     background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.15);
   }
 
+  25% {
+    background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.40);
+  }
+
   50% {
     background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.40);
   }
 
-  90% {
+  75% {
     background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.15);
   }
 
@@ -95,11 +111,15 @@
     background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.15);
   }
 
+  25% {
+    background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.40);
+  }
+
   50% {
     background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.40);
   }
 
-  90% {
+  75% {
     background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.15);
   }
 

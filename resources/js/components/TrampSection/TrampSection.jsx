@@ -1,8 +1,10 @@
 import StickerCard from "../StickerCard";
+import CONSTANTS from "../../app.constants";
 
 const TrampSection = ({ onClick, singer, singers, voice_part }) => {
-  const filterSticker = ({ voice_part: partTest }) => (partTest === voice_part);
-  const mapStickerCard = ({ unique_id, voice_part, ...singerOther }) => {
+  const filterSticker = ({ is_guest_singer, voice_part: partTest }) =>
+    (voice_part === (is_guest_singer ? CONSTANTS.partGuest : partTest));
+  const mapStickerCard = ({ is_guest_singer, unique_id, voice_part, ...singerOther }) => {
     const filterOthers = ({ recipient, sender }) =>
       (~[recipient?.unique_id, sender?.unique_id].indexOf(unique_id));
     const handleClick = (sticker) => () => {
@@ -24,8 +26,8 @@ const TrampSection = ({ onClick, singer, singers, voice_part }) => {
     }
     return (
       <StickerCard
-        {...{ ...singerOther, voice_part }}
-        className={`${stickerLatest?.status} ${voice_part}`}
+        {...{ ...singerOther, is_guest_singer, voice_part }}
+        className={`${stickerLatest?.status} ${is_guest_singer ? CONSTANTS.partGuest : voice_part}`}
         key={`singer-card--${unique_id}`}
         onClick={handleClick(stickerLatest)}
         status={stickerLatest?.status} />

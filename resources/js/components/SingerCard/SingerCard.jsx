@@ -1,6 +1,6 @@
-import { DocumentCard, DocumentCardTitle, DocumentCardType, merge } from "@fluentui/react";
+import { DocumentCard, DocumentCardTitle, DocumentCardType } from "@fluentui/react";
 
-const SingerCard = ({ family_name, given_name, href, onClick, ...props }) => {
+const SingerCard = ({ family_name, given_name, href, onClick, preferred_name, ...props }) => {
   return (
     <DocumentCard
       {...props}
@@ -8,7 +8,7 @@ const SingerCard = ({ family_name, given_name, href, onClick, ...props }) => {
       onClick={onClick}
       onClickHref={href}
       type={DocumentCardType.compact}>
-      <DocumentCardTitle title={`${given_name} ${family_name}`} />
+      <DocumentCardTitle title={`${preferred_name ?? given_name} ${family_name}`} />
     </DocumentCard>
   );
 };

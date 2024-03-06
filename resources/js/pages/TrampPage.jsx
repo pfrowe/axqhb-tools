@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { DefaultButton, Dialog, DialogFooter, PrimaryButton } from "@fluentui/react";
 import { useParams } from "react-router-dom";
 import CONSTANTS from "../app.constants";
@@ -20,6 +20,8 @@ const TrampPage = () => {
           family_name
           given_name
           id
+          is_guest_singer
+          preferred_name
           unique_id
           voice_part
           stickers_received {
@@ -64,15 +66,19 @@ const TrampPage = () => {
     const fetchSingers = async () => {
       const filterNotThisSinger = (unique_id) => ({ unique_id: idTest }) => (idTest !== unique_id);
       const sortSingers = (left, right) => {
-        return (CONSTANTS.parts.indexOf(left.voice_part) - CONSTANTS.parts.indexOf(right.voice_part)) ||
+        const partLeft = left.is_guest_singer ? CONSTANTS.partGuest : left.voice_part;
+        const partRight = right.is_guest_singer ? CONSTANTS.partGuest : right.voice_part;
+        return (CONSTANTS.parts.indexOf(partLeft) - CONSTANTS.parts.indexOf(partRight)) ||
           left.family_name.localeCompare(right.family_name) ||
-          left.given_name.localeCompare(right.given_name);
+          (left.preferred_name ?? left.given_name).localeCompare(right.preferred_name ?? right.given_name);
       };
       const bodyText = `query {
         singers {
           family_name
           given_name
           id
+          is_guest_singer
+          preferred_name
           unique_id
           voice_part
         }
@@ -155,7 +161,7 @@ const TrampPage = () => {
     };
     const { unique_id } = routerParams;
     const singerOther = recipient.unique_id === unique_id ? sender : recipient;
-    const nameOther = `${singerOther.given_name} ${singerOther.family_name}`;
+    const nameOther = `${singerOther.preferred_name ?? singerOther.given_name} ${singerOther.family_name}`;
     const title = {
       "accepted": t("dialog.accepted", { other: nameOther }),
       "respond": t("dialog.respond", { sender: nameOther }),
@@ -182,7 +188,7 @@ const TrampPage = () => {
   useInterval(requestRefresh, CONSTANTS.pollInterval);
   return (<main id="main">
     <h1 style={{ textAlign: "center" }}>{t("welcome")}</h1>
-    <h2 style={{ textAlign: "center" }}>{singer?.given_name} {singer?.family_name}</h2>
+    <h2 style={{ textAlign: "center" }}>{singer?.preferred_name ?? singer?.given_name} {singer?.family_name}</h2>
     {CONSTANTS.parts.map(mapSection)}
     <Dialog {...(dialogProps ?? {})}>
       <DialogFooter styles={{ actionsRight: { display: dialogProps.hiddenButtons ? "none" : "block" } }}>

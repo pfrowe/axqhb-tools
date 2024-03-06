@@ -9,15 +9,19 @@ const SingersPage = () => {
   const getSingers = () => {
     const fetchSingers = async () => {
       const sortSingers = (left, right) => {
-        return (CONSTANTS.parts.indexOf(left.voice_part) - CONSTANTS.parts.indexOf(right.voice_part)) ||
+        const partLeft = left.is_guest_singer ? CONSTANTS.partGuest : left.voice_part;
+        const partRight = right.is_guest_singer ? CONSTANTS.partGuest : right.voice_part;
+        return (CONSTANTS.parts.indexOf(partLeft) - CONSTANTS.parts.indexOf(partRight)) ||
           left.family_name.localeCompare(right.family_name) ||
-          left.given_name.localeCompare(right.given_name);
+          (left.preferred_name ?? left.given_name).localeCompare(right.preferred_name ?? right.given_name);
       };
       const bodyText = `query {
         singers {
           family_name
           given_name
           id
+          is_guest_singer
+          preferred_name
           unique_id
           voice_part
         }
@@ -35,10 +39,10 @@ const SingersPage = () => {
     fetchSingers();
   };
   useEffect(getSingers, [setSingers]);
-  const mapSingerCard = ({ unique_id, voice_part, ...singer }) => (
+  const mapSingerCard = ({ is_guest_singer, unique_id, voice_part, ...singer }) => (
     <SingerCard
-      {...{ ...singer, voice_part }}
-      className={voice_part}
+      {...{ ...singer, is_guest_singer, voice_part }}
+      className={is_guest_singer ? CONSTANTS.partGuest : voice_part}
       href={`/card/${unique_id}`}
       key={`singer-card--${unique_id}`} />
   );

@@ -55,11 +55,17 @@ type Singer {
   "Phone number for this singer."
   phone: String!
   
+  "Preferred name--i.e., nickname--for this singer."
+  preferred_name: String
+  
   "Voice part for this singer."
   voice_part: String!
   
   "Can this singer receive text messages at the phone number provided?"
   can_receive_texts: Boolean!
+
+  "Is this singer a guest singer (not required for someone to claim tramp)?"
+  is_guest_singer: Boolean!
   
   "URL of the profile picture for this singer."
   image: String

@@ -2,7 +2,7 @@ import { DocumentCard, DocumentCardPreview, DocumentCardStatus, DocumentCardTitl
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-const StickerCard = ({ family_name, given_name, onClick, status, ...props }) => {
+const StickerCard = ({ family_name, given_name, onClick, preferred_name, status, ...props }) => {
   const iconNames = useMemo(() => ({
     "accepted": "Emoji",
     "declined": "SchoolDataSyncLogo",
@@ -29,7 +29,7 @@ const StickerCard = ({ family_name, given_name, onClick, status, ...props }) => 
       type={DocumentCardType.compact}>
       <DocumentCardPreview {...propsPreview}></DocumentCardPreview>
       <div className="flex--vertical">
-        <DocumentCardTitle title={`${given_name} ${family_name}`} />
+        <DocumentCardTitle title={`${preferred_name ?? given_name} ${family_name}`} />
         <DocumentCardStatus status={t(`status.${status}`)} styles={{ root: { background: "transparent" } }} />
       </div>
     </DocumentCard>
