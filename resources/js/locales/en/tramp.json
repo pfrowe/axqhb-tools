@@ -12,5 +12,6 @@
     "sent": "You sent a sticker.",
     "undefined": "No sticker yet."
   },
+  "name": "{{ given_name }} {{ family_name }}",
   "welcome": "Welcome to Your Tramp Card"
 }

@@ -6,6 +6,29 @@ const HomePage = () => {
   const { t } = useTranslation("app");
   const cards = useMemo(() => ([
     {
+      key: "rallies",
+      onClickHref: "/rallies",
+      previewProps: {
+        previewImages: [
+          {
+            linkProps: { href: "/rallies" },
+            name: <Trans i18nKey="app:homepage.cards.preview.rallies.name" t={t}>Rallies</Trans>,
+            previewImageSrc: "/images/main-street.jpg",
+          },
+        ],
+      },
+      titleProps: {
+        styles: {
+          root: {
+            height: "3.5em",
+            textAlign: "center"
+          },
+        },
+        title: (
+          <Trans i18nKey="app:homepage.cards.title.rallies.name" t={t} />),
+      },
+    },
+    {
       key: "singers",
       onClickHref: "/singers",
       previewProps: {

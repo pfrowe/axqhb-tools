@@ -1,16 +1,33 @@
 "A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
 "Indicates what fields are available at the top level of a query operation."
 type Query {
+  "Get a dance card based on id or unique_id."
+  card(
+    id: ID @eq @rules(apply: ["prohibits:unique_id", "required_without:unique_id"])
+
+    unique_id: String @eq @rules(apply: ["prohibits:id", "required_without:id"])
+  ): RallySinger @find
+
+  "Get all the singers at a specified rally."
+  cards(rally_id: ID): [RallySinger] @all
+
+  "Get all the rallies."
+  rallies: [Rally!]! @all
+
+  "Get a rally based on id."
+  rally(id: ID @eq): Rally @find
+
+  "Get a singer based on id or email address."
   singer(
-    id: ID @eq @rules(apply: ["prohibits:email", "prohibits:unique_id", "required_without_all:email,unique_id"])
+    id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"])
 
-    email: ID @eq @rules(apply: ["prohibits:id", "prohibits:unique_id", "required_without_all:id,unique_id"])
-
-    unique_id: String @eq @rules(apply: ["prohibits:id", "prohibits:email", "required_without_all:id,email"])
+    email: String @eq @rules(apply: ["prohibits:id", "required_without:id"])
   ): Singer @find
 
+  "Get all the singers in the system, regardless of rally."
   singers: [Singer!]! @all
 
   "Find a single user by an identifying attribute."
@@ -29,13 +46,31 @@ type Query {
   ): [User!]! @paginate(defaultCount: 10)
 }
 
+"Brigade rally."
+type Rally {
+  "Unique primary key."
+  id: ID!
+
+  "User-friendly identifier for this rally."
+  name: String!
+
+  "URL to the logo for this rally."
+  image_url: String
+
+  "Start date for this rally."
+  start_date: Date!
+
+  "Stop date for this rally."
+  stop_date: Date!
+
+  "Singers at this rally."
+  singers: [RallySinger]
+}
+
 "Singer at a rally."
 type Singer {
   "Unique primary key."
   id: ID!
-  
-  "GUID for this singer."
-  unique_id: String!
   
   "Unique primary key for associated user account."
   user_id: ID
@@ -88,11 +123,31 @@ type Singer {
   "Country of the mailing address for this singer."
   country: String
 
-  "Stickers sent to this singer."
-  stickers_received: [Sticker!] @hasMany(relation: "stickers_received")
+  "Rallies at which this singer is a participant."
+  rallies: [RallySinger]
+}
 
-  "Stickers sent by this singer."
-  stickers_sent: [Sticker!] @hasMany(relation: "stickers_sent")
+type RallySinger {
+  "Internal unique identifier for this singer at a rally."
+  id: ID!
+
+  "Internal unique identifier for the rally with which this dance card is associated."
+  rally_id: ID!
+
+  "Associated rally."
+  rally: Rally!
+
+  "Associated singer."
+  singer: Singer!
+
+  "Stickers received by this dance card."
+  stickers_received: [Sticker!] @hasMany
+
+  "Stickers sent from this dance card."
+  stickers_sent: [Sticker!] @hasMany
+
+  "GUID for the singer's dance card at this rally."
+  unique_id: String!
 }
 
 "Sticker sent from one singer to another to indicate they have sung together."
@@ -103,20 +158,20 @@ type Sticker {
   "When the sticker was sent."
   created_at: DateTime!
 
-  "Recipient singer."
-  recipient: Singer! @hasOne(relation: "recipient")
+  "Recipient's dance card'."
+  recipient: RallySinger! @belongsTo
 
-  "Unique id of recipient singer."
+  "Unique id of recipient's dance card'."
   recipient_id: ID!
 
-  "Sender singer."
-  sender: Singer! @hasOne(relation: "sender")
+  "Sender's dance card'."
+  sender: RallySinger! @belongsTo
 
-  "Unique id of sender singer."
+  "Unique id of sender's dance card'."
   sender_id: ID!
 
   "Both singers."
-  singers: [Singer!] @hasMany(defaultCount: 2, maxCount: 2, relation: "singers")
+  singers: [RallySinger!] @hasMany(defaultCount: 2, maxCount: 2, relation: "rally_singer")
 
   "Status of the sticker: pending, accepted, denied."
   status: String!

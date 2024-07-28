@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Singer;
+use App\Models\RallySinger;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,7 +18,7 @@ class Sticker extends Model
 
   protected function bothSingersQuery()
   {
-    return Singer::where(
+    return RallySinger::where(
       function ($query)
       {
         $query->where("id", $this->sender_id)
@@ -29,12 +29,12 @@ class Sticker extends Model
 
   public function recipient()
   {
-    return $this->hasOne(Singer::class, "id", "recipient_id");
+    return $this->hasOne(RallySinger::class, "id", "recipient_id");
   }
 
   public function sender()
   {
-    return $this->hasOne(Singer::class, "id", "sender_id");
+    return $this->hasOne(RallySinger::class, "id", "sender_id");
   }
 
   public function singers()

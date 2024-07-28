@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import { I18nContext, useTranslation } from "react-i18next";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ThemePicker from "./components/ThemePicker";
-import { HomePage, LeaderboardPage, SingersPage, TrampPage } from "./pages";
+import { HomePage, LeaderboardPage, RalliesPage, RallyPage, SingersPage, TrampPage } from "./pages";
 import "./i18n";
 
 const container = document.getElementById("app");
@@ -27,6 +27,8 @@ const HomepageRouter = () => {
               <Routes>
                 <Route exact path="/" element={<HomePage />} />
                 <Route path="/leaderboard/*" element={<LeaderboardPage />} />
+                <Route path="/rallies/*" element={<RalliesPage />} />
+                <Route path="/rally/:id" element={<RallyPage />} />
                 <Route path="/singers/*" element={<SingersPage />} />
                 <Route path="/card/:unique_id" element={<TrampPage />} />
               </Routes>

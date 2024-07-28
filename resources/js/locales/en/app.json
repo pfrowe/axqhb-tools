@@ -8,6 +8,9 @@
         "leaderboard": {
           "name": "Leaderboard"
         },
+        "rallies": {
+          "name": "Rallies"
+        },
         "singers": {
           "name": "Singers"
         }
@@ -15,6 +18,9 @@
       "title": {
         "leaderboard": {
           "name": "Leaderboard"
+        },
+        "rallies": {
+          "name": "Rallies"
         },
         "singers": {
           "name": "Singers"
