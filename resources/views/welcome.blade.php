@@ -110,8 +110,6 @@
       font-weight: inherit;
       line-height: inherit;
       color: inherit;
-      margin: 0;
-      padding: 0
     }
 
     button,
@@ -125,8 +123,6 @@
     button {
       -webkit-appearance: button;
       appearance: button;
-      background-color: transparent;
-      background-image: none
     }
 
     :-moz-focusring {
@@ -179,15 +175,6 @@
     p,
     pre {
       margin: 0
-    }
-
-    fieldset {
-      margin: 0;
-      padding: 0
-    }
-
-    legend {
-      padding: 0
     }
 
     menu,

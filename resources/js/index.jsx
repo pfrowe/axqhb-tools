@@ -2,10 +2,12 @@ import { initializeIcons, ThemeProvider } from "@fluentui/react";
 import { StrictMode, useCallback, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { I18nContext, useTranslation } from "react-i18next";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import ThemePicker from "./components/ThemePicker";
-import { HomePage, LeaderboardPage, RalliesPage, RallyPage, SingersPage, TrampPage } from "./pages";
+import { AuthContext } from "./contexts";
+import IndexRouter from "./IndexRouter";
 import "./i18n";
+import PageHeader from "./components/PageHeader/PageHeader";
 
 const container = document.getElementById("app");
 
@@ -17,24 +19,15 @@ const HomepageRouter = () => {
   return (
     <StrictMode>
       <div className={`App theme--${theme.name}`}>
-        <ThemeProvider applyTo="body" theme={theme}>
-          <I18nContext.Provider value={i18nContextValue}>
-            <a className="accessibility" href="#main">{t("app:skipToContent")}</a>
-            <header className="div--columns flex-justify--end" style={{ paddingRight: "1rem" }}>
-              <ThemePicker onChange={setTheme} theme={theme} />
-            </header>
-            <Router>
-              <Routes>
-                <Route exact path="/" element={<HomePage />} />
-                <Route path="/leaderboard/*" element={<LeaderboardPage />} />
-                <Route path="/rallies/*" element={<RalliesPage />} />
-                <Route path="/rally/:id" element={<RallyPage />} />
-                <Route path="/singers/*" element={<SingersPage />} />
-                <Route path="/card/:unique_id" element={<TrampPage />} />
-              </Routes>
-            </Router>
-          </I18nContext.Provider>
-        </ThemeProvider>
+        <AuthContext.AuthProvider>
+          <ThemeProvider applyTo="body" theme={theme}>
+            <I18nContext.Provider value={i18nContextValue}>
+              <a className="accessibility" href="#main">{t("app:skipToContent")}</a>
+              <PageHeader setTheme={setTheme} theme={theme} />
+              <Router><IndexRouter /></Router>
+            </I18nContext.Provider>
+          </ThemeProvider>
+        </AuthContext.AuthProvider>
       </div>
     </StrictMode>
   );

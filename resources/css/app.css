@@ -163,6 +163,20 @@ main {
   margin-right: auto;
 }
 
+.div--form-buttons {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  gap: 1em;
+}
+
+.div--rows {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+}
+
 .flex--horizontal {
   display: flex;
   flex-flow: row wrap;
@@ -173,12 +187,36 @@ main {
   align-items: center;
 }
 
+.flex-grow {
+  flex-grow: 1;
+}
+
 .flex-justify--center {
   justify-content: center;
 }
 
 .flex-justify--end {
   justify-content: end;
+}
+
+.flex-justify--space-between {
+  justify-content: space-between;
+}
+
+.gap--1em {
+  gap: 1em;
+}
+
+.margin--0_5em {
+  margin: 0.5em;
+}
+
+.margin--2em {
+  margin: 2em;
+}
+
+.max-height--2em {
+  max-height: 2em;
 }
 
 .ms-DocumentCard--compact {
@@ -278,6 +316,20 @@ main {
 .ms-DocumentCard--compact.sticker .ms-DocumentCardPreview {
   flex-shrink: 0;
   width: calc(min(24pt, 5vw) + 1em);
+}
+
+.width--100pct {
+  width: 100%;
+}
+
+label input {
+  display: block;
+}
+
+label input[type=checkbox],
+label input[type=radio] {
+  display: inline-block;
+  margin-right: 1em;
 }
 
 @media only screen and (max-width: 767px) {

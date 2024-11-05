@@ -1,0 +1,39 @@
+{
+  "label": {
+    "email": "Email address",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "menu": "User Menu",
+    "password": "Password",
+    "password_confirmation": "Confirm password",
+    "preferred_name": "Preferred name / Nickname",
+    "reveal_password": "Show or hide password",
+    "token": "Password reset token"
+  },
+  "link": {
+    "forgot": "Forgot Password?",
+    "login": "Log In",
+    "logout": "Log Out",
+    "profile": "View Profile",
+    "register": "Create New Account",
+    "reset": "Reset Password"
+  },
+  "message": {
+    "profile_updated": "Profile updated successfully."
+  },
+  "submit": {
+    "forgot": "Request Verification Code",
+    "login": "Log In",
+    "profile": "Update Profile",
+    "register": "Register",
+    "reset": "Reset Password"
+  },
+  "title": {
+    "forgot": "Forgot Password",
+    "login": "Log In",
+    "logout": "Log Out",
+    "profile": "User Profile",
+    "register": "Create New Account",
+    "reset": "Reset Password"
+  }
+}
