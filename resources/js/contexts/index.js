@@ -1,3 +1,4 @@
+import AppContext from "./AppContext";
 import * as AuthContext from "./AuthContext";
 
-export { AuthContext };
+export { AppContext, AuthContext };

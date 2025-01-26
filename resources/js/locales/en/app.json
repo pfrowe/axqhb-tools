@@ -32,6 +32,7 @@
       "dark": "Dark theme",
       "light": "Light theme"
     },
+    "title": "Tramp Card",
     "welcome": "Welcome to the LSHB Tramp Card App"
   },
   "skipToContent": "Skip to Content"

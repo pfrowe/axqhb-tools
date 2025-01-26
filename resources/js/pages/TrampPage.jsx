@@ -1,157 +1,19 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { DefaultButton, Dialog, DialogFooter, PrimaryButton } from "@fluentui/react";
 import { useInterval } from "@react-hooks-library/core";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import { assign, fromPromise, setup } from "xstate";
 import { useMachine } from "@xstate/react";
+import { TrampPage as machineDefinition } from "./Machines";
 import CONSTANTS from "../app.constants";
 import TrampSection from "../components/TrampSection";
+import { AppContext } from "../contexts";
 
 const TrampPage = () => {
+  const { setTitle } = useContext(AppContext);
   const { unique_id } = useParams();
-  const getCard = useCallback(
-    async () => {
-      const query = `query ($unique_id: String) {
-        card(unique_id: $unique_id) {
-          rally_id
-          singer {
-            family_name
-            given_name
-            id
-            is_guest_singer
-            preferred_name
-            voice_part
-          }
-          stickers_received {
-            id
-            recipient {
-              unique_id
-            }
-            sender {
-              unique_id
-            }
-            status
-            updated_at
-          }
-          stickers_sent {
-            id
-            recipient {
-              unique_id
-            }
-            sender {
-              unique_id
-            }
-            status
-            updated_at
-          }
-        }
-      }`;
-      const variables = { unique_id };
-      const optionsFetch = {
-        body: JSON.stringify({ query, variables }),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        method: "POST"
-      };
-      const urlFetch = CONSTANTS.urlGraphQL;
-      return (await (await fetch(urlFetch, optionsFetch)).json()).data.card;
-    },
-    [unique_id]
-  );
-  const getSingers = useCallback(
-    async (rally_id) => {
-      const filterNotThisSinger = (unique_id) => ({ unique_id: idTest }) => (idTest !== unique_id);
-      const sortSingers = (left, right) => {
-        const nameLeft = left.singer.preferred_name ?? left.singer.given_name;
-        const nameRight = right.singer.preferred_name ?? right.singer.given_name;
-        const partLeft = left.singer.is_guest_singer ? CONSTANTS.partGuest : left.singer.voice_part;
-        const partRight = right.singer.is_guest_singer ? CONSTANTS.partGuest : right.singer.voice_part;
-        return (CONSTANTS.parts.indexOf(partLeft) - CONSTANTS.parts.indexOf(partRight)) ||
-          left.singer.family_name.localeCompare(right.singer.family_name) ||
-          (nameLeft).localeCompare(nameRight);
-      };
-      const query = `query($rally: ID) {
-        rally(id: $rally) {
-          singers {
-            unique_id
-            singer {
-              family_name
-              given_name
-              id
-              is_guest_singer
-              preferred_name
-              voice_part
-            }
-          }
-        }
-      }`;
-      const variables = { rally: rally_id }
-      const optionsFetch = {
-        body: JSON.stringify({ query, variables }),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        method: "POST"
-      };
-      return (await (await fetch(CONSTANTS.urlGraphQL, optionsFetch)).json()).data.rally.singers
-        .filter(filterNotThisSinger(unique_id))
-        .sort(sortSingers);
-    },
-    [unique_id]
-  );
-  const machineDefinition = useMemo(
-    () => (setup({
-      actors: {
-        getCard: fromPromise(getCard),
-        getSingers: fromPromise((input) => (getSingers(input.rally_id)))
-      }
-    }).createMachine({
-      context: {
-        data: {
-          card: {},
-          singers: []
-        },
-        show: { card: false }
-      },
-      initial: "loadingCard",
-      states: {
-        loadingCard: {
-          invoke: {
-            id: "getCard",
-            src: "getCard",
-            onDone: {
-              actions: [assign(({ context, event }) => ({ data: { ...context.data, card: event.output } }))],
-              target: "loadingSingers"
-            }
-          }
-        },
-        loadingSingers: {
-          invoke: {
-            id: "getSingers",
-            input: ({ context }) => (context.data.card),
-            src: "getSingers",
-            onDone: {
-              actions: [assign(({ context, event }) => ({ data: { ...context.data, singers: event.output } }))],
-              target: "ready"
-            }
-          }
-        },
-        ready: {
-          entry: [assign({ show: { card: true } })],
-          on: {
-            refresh: "loadingCard"
-          }
-        }
-      }
-    })
-    ),
-    [getCard, getSingers]
-  );
   const [{ context }, send] = useMachine(machineDefinition);
+  useEffect(() => (send({ type: "INIT", unique_id }) && undefined), [send, unique_id]);
   const requestRefresh = useCallback(() => (send({ type: "refresh" })), [send]);
   useInterval(requestRefresh, CONSTANTS.pollInterval);
   const { t } = useTranslation("tramp");
@@ -260,6 +122,7 @@ const TrampPage = () => {
     },
     [context.data.card?.singer]
   );
+  useEffect(() => (setTitle(t("name", nameParts)) && undefined), [nameParts, setTitle, t]);
   return (<main id="main">
     <h1 style={{ textAlign: "center" }}>{t("welcome")}</h1>
     <h2 style={{ textAlign: "center" }}>{t("name", nameParts)}</h2>

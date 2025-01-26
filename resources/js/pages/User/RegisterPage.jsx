@@ -3,15 +3,17 @@ import { MessageBar, MessageBarType, PrimaryButton, TextField } from "@fluentui/
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
+import { AppContext, AuthContext } from "../../contexts";
 
 const RegisterPage = () => {
-  const { csrfToken, setUser } = useAuth();
+  const { setTitle } = React.useContext(AppContext);
+  const { csrfToken, setUser } = AuthContext.useAuth();
   const [errors, setErrors] = React.useState({});
   const navigate = useNavigate();
   const { t } = useTranslation("user");
   const mergeValues = (oldValues, newValues) => ({ ...oldValues, ...newValues });
   const [values, setValue] = React.useReducer(mergeValues, {});
+  React.useEffect(() => (setTitle(t("title.register")) && undefined), [setTitle, t]);
   const getErrors = React.useCallback(
     (fieldName) => {
       const mapLine = (line, index) => (<div key={`${fieldName}-error--${index}`}>{line}</div>);

@@ -3,15 +3,17 @@ import { MessageBar, MessageBarType, PrimaryButton, TextField } from "@fluentui/
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../axios";
-import { useAuth } from "../../contexts/AuthContext";
+import { AppContext, AuthContext } from "../../contexts";
 
 const LoginPage = () => {
-  const { csrfToken, setUser } = useAuth();
+  const { setTitle } = React.useContext(AppContext);
+  const { csrfToken, setUser } = AuthContext.useAuth();
   const [errors, setErrors] = React.useState({});
   const navigate = useNavigate();
   const { t } = useTranslation("user");
   const mergeValues = (oldValues, newValues) => ({ ...oldValues, ...newValues });
   const [values, setValue] = React.useReducer(mergeValues, {});
+  React.useEffect(() => (setTitle(t("title.login")) && undefined), [setTitle, t]);
   const onChange_text = React.useCallback(
     (fieldName) => (_, newValue) => (setValue({ [fieldName]: newValue })),
     [setValue]

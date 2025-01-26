@@ -1,14 +1,17 @@
+import { CheckboxVisibility, DetailsList, SelectionMode } from "@fluentui/react";
 import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
+import { useInterval } from "@react-hooks-library/core";
 import { useTranslation } from "react-i18next";
 import CONSTANTS from "../app.constants";
-import { useInterval } from "@react-hooks-library/core";
-import { CheckboxVisibility, DetailsList, SelectionMode } from "@fluentui/react";
+import { AppContext } from "../contexts";
 
 const LeaderboardPage = () => {
+  const { setTitle } = useContext(AppContext);
   const { t } = useTranslation("leaderboard");
   const [refresh, triggerRefresh] = useState(true);
   const [singers, setSingers] = useState([]);
   const [statuses, setStatuses] = useState([]);
+  useEffect(() => (setTitle(t("title")) && undefined), [setTitle, t]);
   const sortScore = useCallback((left, right) => {
     const resultScore = left.score - right.score;
     const latestLeft = new Date([...(left.stickers?.all || [])].pop()?.created_at).valueOf();

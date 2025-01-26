@@ -2,15 +2,17 @@ import * as React from "react";
 import { MessageBar, MessageBarType, PrimaryButton, TextField } from "@fluentui/react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../contexts/AuthContext";
+import { AppContext, AuthContext } from "../../contexts";
 
 const ProfilePage = () => {
-  const { csrfToken, setUser, user } = useAuth();
+  const { setTitle } = React.useContext(AppContext);
+  const { csrfToken, setUser, user } = AuthContext.useAuth();
   const [errors, setErrors] = React.useState({});
   const [messages, setMessages] = React.useState({});
   const { t } = useTranslation("user");
   const mergeValues = (oldValues, newValues) => ({ ...oldValues, ...newValues });
   const [values, setValue] = React.useReducer(mergeValues, { prev_email: user.email, ...user });
+  React.useEffect(() => (setTitle(t("title.profile")) && undefined), [setTitle, t]);
   const getErrors = React.useCallback(
     (fieldName) => {
       const mapLine = (line, index) => (<div key={`${fieldName}-error--${index}`}>{line}</div>);
