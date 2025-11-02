@@ -52,7 +52,7 @@ const ProfilePage = () => {
   );
   return (
     <form>
-      <section className="div--rows gap--1em margin--2em" id="main">
+      <div className="div--rows gap--1em margin--2em" id="main">
         <h1>{t("title.profile")}</h1>
         {errors["*"]
           ? (<MessageBar isMultiline={false} messageBarType={MessageBarType.error}>{errors["*"]}</MessageBar>)
@@ -133,7 +133,7 @@ const ProfilePage = () => {
         <div className="div--form-buttons">
           <PrimaryButton onClick={onSubmit} type="submit">{t("submit.profile")}</PrimaryButton>
         </div>
-      </section>
+      </div>
     </form>
   );
 };
