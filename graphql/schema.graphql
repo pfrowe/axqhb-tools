@@ -93,14 +93,8 @@ type Singer {
   "Preferred name--i.e., nickname--for this singer."
   preferred_name: String
   
-  "Voice part for this singer."
-  voice_part: String!
-  
   "Can this singer receive text messages at the phone number provided?"
   can_receive_texts: Boolean!
-
-  "Is this singer a guest singer (not required for someone to claim tramp)?"
-  is_guest_singer: Boolean!
   
   "URL of the profile picture for this singer."
   image: String
@@ -140,6 +134,9 @@ type RallySinger {
   "Associated singer."
   singer: Singer!
 
+  "Is this singer a guest singer (not required for someone to claim tramp)?"
+  is_guest_singer: Boolean!
+
   "Stickers received by this dance card."
   stickers_received: [Sticker!] @hasMany
 
@@ -148,6 +145,9 @@ type RallySinger {
 
   "GUID for the singer's dance card at this rally."
   unique_id: String!
+  
+  "Voice part for this singer."
+  voice_part: String!
 }
 
 "Sticker sent from one singer to another to indicate they have sung together."

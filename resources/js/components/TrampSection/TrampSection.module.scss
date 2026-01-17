@@ -1,0 +1,77 @@
+.trampPanel {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
+  transition: max-height 0.5s ease-in-out;
+
+  &.collapsed {
+    margin-bottom: 0;
+    margin-top: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  &.expanded {
+    margin-bottom: 2em;
+    margin-top: 1em;
+    max-height: 100vh;
+    overflow: visible;
+  }
+}
+
+.trampSection {
+  border-style: solid;
+  border-width: 1px;
+  padding: 0.5em;
+  position: relative;
+  width: 100%;
+
+  &>h2 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+
+    &::after {
+      font-size: 150%;
+      right: 0.25em;
+      position: absolute;
+      top: 0;
+    }
+
+    &.collapsed::after {
+      content: "▸";
+    }
+
+    &.expanded::after {
+      content: "▾";
+    }
+  }
+
+  &.bass {
+    border-color: hsla(var(--hue-voice--bass), 100%, 25%, 1.0);
+    background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.15);
+  }
+
+  &.bari {
+    border-color: hsla(var(--hue-voice--bari), 100%, 25%, 1.0);
+    background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.15);
+  }
+
+  &.guest {
+    border-color: hsla(var(--hue-voice--guest), 100%, 25%, 1.0);
+    background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.15);
+  }
+
+  &.lead {
+    border-color: hsla(var(--hue-voice--lead), 100%, 25%, 1.0);
+    background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.15);
+  }
+
+  &.tenor {
+    border-color: hsla(var(--hue-voice--tenor), 100%, 25%, 1.0);
+    background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.15);
+  }
+}

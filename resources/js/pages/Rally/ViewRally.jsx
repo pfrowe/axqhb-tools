@@ -11,7 +11,7 @@ const ViewRally = () => {
   const { setTitle } = useContext(AppContext);
   const { id } = useParams();
   const { t } = useTranslation("rally");
-  const [{ context }, send] = useMachine(machineDefinition);
+  const [{ context }, send] = useMachine(machineDefinition, { devTools: true });
   useEffect(
     () => (setTitle(t("title.view", { rally: context.rally?.name })) && undefined),
     [context.rally?.name, setTitle, t]

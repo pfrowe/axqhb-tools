@@ -4,14 +4,14 @@ import CONSTANTS from "../../app.constants";
 const getCard = async ({ input: { unique_id }}) => {
   const query = `query ($unique_id: String) {
     card(unique_id: $unique_id) {
+      is_guest_singer
       rally_id
+      voice_part
       singer {
         family_name
         given_name
         id
-        is_guest_singer
         preferred_name
-        voice_part
       }
       stickers_received {
         id
@@ -65,14 +65,14 @@ const getSingers = async ({ input: { rally_id, unique_id } }) => {
   const query = `query($rally: ID) {
     rally(id: $rally) {
       singers {
+        is_guest_singer
         unique_id
+        voice_part
         singer {
           family_name
           given_name
           id
-          is_guest_singer
           preferred_name
-          voice_part
         }
       }
     }

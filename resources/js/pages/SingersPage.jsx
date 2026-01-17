@@ -11,13 +11,8 @@ const SingersPage = () => {
   const { t } = useTranslation("singers");
   const [{ context }] = useMachine(machineDefinition);
   useEffect(() => (setTitle(t("title")) && undefined), [setTitle, t]);
-  const mapSingerCard = ({ id, is_guest_singer, voice_part, ...singer }) => (
-    <SingerCard
-      {...{ ...singer, is_guest_singer, voice_part }}
-      className={is_guest_singer ? CONSTANTS.partGuest : voice_part}
-      href={`/singer/${id}`}
-      key={`singer-card--${id}`} />
-  );
+  const mapSingerCard = ({ id, ...singer }) =>
+    (<SingerCard {...singer} href={`/singer/${id}`} key={`singer--${id}`} />);
   return (<main id="main">
     <h1 style={{ textAlign: "center" }}>{t("title")}</h1>
     <h2 style={{ textAlign: "center" }}>{t("subtitle")}</h2>

@@ -3,10 +3,7 @@ import CONSTANTS from "../../app.constants";
 
 const getSingers = async () => {
   const sortSingers = (left, right) => {
-    const partLeft = left.is_guest_singer ? CONSTANTS.partGuest : left.voice_part;
-    const partRight = right.is_guest_singer ? CONSTANTS.partGuest : right.voice_part;
-    return (CONSTANTS.parts.indexOf(partLeft) - CONSTANTS.parts.indexOf(partRight)) ||
-      left.family_name.localeCompare(right.family_name) ||
+    return left.family_name.localeCompare(right.family_name) ||
       (left.preferred_name ?? left.given_name).localeCompare(right.preferred_name ?? right.given_name);
   };
   const bodyText = `query {
@@ -14,9 +11,7 @@ const getSingers = async () => {
       family_name
       given_name
       id
-      is_guest_singer
       preferred_name
-      voice_part
     }
   }`;
   const optionsFetch = {

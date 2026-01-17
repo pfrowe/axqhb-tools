@@ -10,6 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 class RallySinger extends Model
 {
   use HasFactory;
+  protected $table = "rally_singers";
+  protected $fillable = [
+    "rally_id",
+    "singer_id",
+    "is_guest_singer",
+    "voice_part"
+  ];
 
   public function rally()
   {

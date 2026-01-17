@@ -218,35 +218,37 @@ const LeaderboardPage = () => {
     const fetchSingers = async () => {
       triggerRefresh(false);
       const bodyText = `query {
-        singers {
-          family_name
-          given_name
-          id
-          is_guest_singer
-          preferred_name
-          unique_id
-          voice_part
-          stickers_received {
-            created_at
+        rally(id: $id) {
+          singers {
+            family_name
+            given_name
             id
-            recipient {
+            is_guest_singer
+            preferred_name
+            unique_id
+            voice_part
+            stickers_received {
+              created_at
               id
+              recipient {
+                id
+              }
+              sender {
+                id
+              }
+              status
             }
-            sender {
+            stickers_sent {
+              created_at
               id
+              recipient {
+                id
+              }
+              sender {
+                id
+              }
+              status
             }
-            status
-          }
-          stickers_sent {
-            created_at
-            id
-            recipient {
-              id
-            }
-            sender {
-              id
-            }
-            status
           }
         }
       }`;
@@ -258,7 +260,7 @@ const LeaderboardPage = () => {
         },
         method: "POST"
       };
-      setSingers((await (await fetch(CONSTANTS.urlGraphQL, optionsFetch)).json()).data?.singers);
+      setSingers((await (await fetch(CONSTANTS.urlGraphQL, optionsFetch)).json()).data?.rally?.singers);
     }
     refresh && fetchSingers();
   };
@@ -346,6 +348,7 @@ const LeaderboardPage = () => {
         ...categories,
         family_name: singer.family_name,
         given_name: singer.given_name,
+        is_guest_singer: singer.is_guest_singer,
         preferred_name: singer.preferred_name,
         score: getScore(categories),
         singer,

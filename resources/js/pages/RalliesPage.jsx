@@ -13,11 +13,7 @@ const RalliesPage = () => {
   useEffect(() => (setTitle(t("title")) && undefined), [setTitle, t]);
   const [{ context }] = useMachine(machineDefinition);
   const mapRallyCard = ({ id, ...rally }) =>
-  (<RallyCard
-    {...rally}
-    href={(id > 0) ? `/rally/${id}` : `/rally/edit/0`}
-    key={`rally-card--${id}`}
-  />);
+    (<RallyCard {...rally} href={(id > 0) ? `/rally/view/${id}` : `/rally/edit/0`} key={`rally-card--${id}`} />);
   return (<main id="main">
     <h1 style={{ textAlign: "center" }}>{t("title")}</h1>
     <h2 style={{ textAlign: "center" }}>{t("subtitle")}</h2>

@@ -19,15 +19,13 @@ class Singer extends Model
     "geo_division_1",
     "given_name",
     "image",
-    "is_guest_singer",
     "phone",
     "postal_code",
     "preferred_name",
     "street_line_1",
     "street_line_2",
     "user_id",
-    "user",
-    "voice_part"
+    "user"
   ];
 
   public function rallies()
