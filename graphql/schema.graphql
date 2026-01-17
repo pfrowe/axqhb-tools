@@ -194,6 +194,8 @@ type User {
   "When the email was verified."
   email_verified_at: DateTime
 
+  permissions: [String!]!
+
   "When the account was created."
   created_at: DateTime!
 
@@ -202,6 +204,8 @@ type User {
 }
 
 type Mutation {
+  createRally(name: String!, image_url: String, start_date: Date, stop_date: Date): Rally
+  updateRally(id: ID!, name: String, image_url: String, start_date: Date, stop_date: Date): Rally
   createSticker(recipient_id: ID!, sender_id: ID!, status: String): Sticker
   updateSticker(id: ID! @where(operator: "="), recipient_id: ID, sender_id: ID, status: String): Sticker
 }

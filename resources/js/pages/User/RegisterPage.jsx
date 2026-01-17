@@ -37,7 +37,7 @@ const RegisterPage = () => {
       event.stopPropagation();
       await csrfToken();
       try {
-        const response = await axios.post("/register", values);
+        const response = await axios.post("/api/register", values);
         if (response.status === 200) {
           setUser(response.data.user);
           navigate("/");
@@ -59,30 +59,10 @@ const RegisterPage = () => {
           : (<></>)
         }
         <label>
-          {t("label.first_name")}
+          {t("label.name")}
           <TextField
-            errorMessage={getErrors("first_name")}
-            onChange={onChange_text("first_name")}
-            required={true}
-            size={64}
-            type="text"
-          />
-        </label>
-        <label>
-          {t("label.preferred_name")}
-          <TextField
-            errorMessage={getErrors("preferred_name")}
-            onChange={onChange_text("preferred_name")}
-            required={false}
-            size={64}
-            type="text"
-          />
-        </label>
-        <label>
-          {t("label.last_name")}
-          <TextField
-            errorMessage={getErrors("last_name")}
-            onChange={onChange_text("last_name")}
+            errorMessage={getErrors("name")}
+            onChange={onChange_text("name")}
             required={true}
             size={64}
             type="text"

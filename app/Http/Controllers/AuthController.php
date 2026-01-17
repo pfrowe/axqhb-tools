@@ -69,9 +69,7 @@ class AuthController extends Controller
     }
     $updates = [
       'email' => $data['email'],
-      'first_name' => $data['first_name'],
-      'last_name' => $data['last_name'],
-      'preferred_name' => $data['preferred_name']
+      'name' => $data['name']
     ];
     if (isset($data['password']))
     {
@@ -87,10 +85,8 @@ class AuthController extends Controller
     $data = $request->validated();
     $user = User::create([
       'email' => $data['email'],
-      'first_name' => $data['first_name'],
-      'last_name' => $data['last_name'],
+      'name' => $data['name'],
       'password' => Hash::make($data['password']),
-      'preferred_name' => isset($data['preferred_name']) ? $data['preferred_name'] : null,
     ]);
     $token = $user->createToken('auth_token')->plainTextToken;
     $cookie = cookie('token', $token, $this->COOKIE_TIMEOUT);

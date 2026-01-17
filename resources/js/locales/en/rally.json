@@ -1,4 +1,22 @@
 {
-  "subtitle": "Click on a name to see that singer's tramp card for this rally.",
-  "title": "Rally — {{rally}}"
+  "button": {
+    "cancel": "Cancel Changes",
+    "save": "Save Changes"
+  },
+  "label": {
+    "image_url": "What is the URL for the rally logo?",
+    "name": "What is the name of the rally (include the year)?",
+    "start_date": "On what date does the rally start?",
+    "stop_date": "On what date does the rally end?"
+  },
+  "placeholderNew": "(New Rally)",
+  "subtitle": {
+    "update": "Provide the information for {{rally}}.",
+    "view": "Click on a name to see that singer's tramp card for this rally."
+  },
+  "title": {
+    "create": "Create Rally",
+    "update": "Update Rally",
+    "view": "Rally — {{rally}}"
+  }
 }

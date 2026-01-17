@@ -1,6 +1,7 @@
+import EditRally from "./EditRally.machine";
 import RalliesPage from "./RalliesPage.machine";
-import RallyPage from "./RallyPage.machine";
 import SingersPage from "./SingersPage.machine";
 import TrampPage from "./TrampPage.machine";
+import ViewRally from "./ViewRally.machine";
 
-export { RalliesPage, RallyPage, SingersPage, TrampPage };
+export { EditRally, RalliesPage, SingersPage, TrampPage, ViewRally };

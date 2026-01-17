@@ -1,0 +1,8 @@
+#main.div--columns>* {
+  flex: 1 1 30em;
+}
+
+img {
+  margin-left: auto;
+  margin-right: auto;
+}

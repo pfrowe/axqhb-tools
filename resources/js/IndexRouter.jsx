@@ -10,7 +10,7 @@ const IndexRouter = () => {
       <Route exact path="/" element={<HomePage />} />
       <Route path="/leaderboard/*" element={<LeaderboardPage />} />
       <Route path="/rallies/*" element={<RalliesPage />} />
-      <Route path="/rally/:id" element={<RallyPage />} />
+      <Route path="/rally/*" element={<RallyPage />} />
       <Route path="/singers/*" element={<SingersPage />} />
       <Route path="/card/:unique_id" element={<TrampPage />} />
       <Route path="/user/*" element={<UserPage />} />

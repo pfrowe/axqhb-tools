@@ -26,16 +26,14 @@ class RegisterRequest extends FormRequest
   {
     return [
       'email' => 'required|email|unique:users,email|max:191',
-      'first_name' => 'required|string|max:191',
-      'last_name' => 'required|string|max:191',
+      'name' => 'required|string|max:191',
       'password' => [
         'required',
         'string',
         'max:191',
         Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised(),
         'confirmed'
-      ],
-      'preferred_name' => 'string|max:191'
+      ]
     ];
   }
 }

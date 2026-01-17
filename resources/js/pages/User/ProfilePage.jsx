@@ -63,33 +63,11 @@ const ProfilePage = () => {
           : (<></>)
         }
         <label>
-          {t("label.first_name")}
+          {t("label.name")}
           <TextField
-            defaultValue={values.first_name}
-            errorMessage={getErrors("first_name")}
-            onChange={onChange_text("first_name")}
-            required={true}
-            size={64}
-            type="text"
-          />
-        </label>
-        <label>
-          {t("label.preferred_name")}
-          <TextField
-            defaultValue={values.preferred_name}
-            errorMessage={getErrors("preferred_name")}
-            onChange={onChange_text("preferred_name")}
-            required={false}
-            size={64}
-            type="text"
-          />
-        </label>
-        <label>
-          {t("label.last_name")}
-          <TextField
-            defaultValue={values.last_name}
-            errorMessage={getErrors("last_name")}
-            onChange={onChange_text("last_name")}
+            defaultValue={values.name}
+            errorMessage={getErrors("name")}
+            onChange={onChange_text("name")}
             required={true}
             size={64}
             type="text"
