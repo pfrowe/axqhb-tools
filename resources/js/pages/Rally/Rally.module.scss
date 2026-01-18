@@ -1,0 +1,39 @@
+.buttonLink {
+  background-color: var(--button--background);
+  border-color: var(--button--foreground);
+  border-style: solid;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  color: var(--button--foreground);
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+
+  &:focus,
+  &:hover {
+    background-color: var(--button--background-hover);
+  }
+}
+
+.danceCardContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.flex-align--right {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 1rem 0 0;
+}
+
+.text-align--center {
+  text-align: center;
+}

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import * as RallyPages from "./Rally";
 

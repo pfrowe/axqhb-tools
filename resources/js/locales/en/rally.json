@@ -9,6 +9,9 @@
     "start_date": "On what date does the rally start?",
     "stop_date": "On what date does the rally end?"
   },
+  "links": {
+    "leaderboard": "View Leaderboard"
+  },
   "placeholderNew": "(New Rally)",
   "subtitle": {
     "update": "Provide the information for {{rally}}.",

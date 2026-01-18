@@ -9,6 +9,7 @@
     "ultraTramp": "Ultra Tramp",
     "voice_part": "Part"
   },
+  "loading": "Loading leaderboard...",
   "sorted": {
     "number": {
       "asc": "Smallest to Largest",
@@ -23,5 +24,6 @@
       "desc": "Z to A"
     }
   },
+  "subtitle": "Rally: {{rally}}",
   "title": "Leaderboard"
 }

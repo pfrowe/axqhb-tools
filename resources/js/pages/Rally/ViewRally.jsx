@@ -1,11 +1,13 @@
 import { useMachine } from "@xstate/react";
 import { useCallback, useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ViewRally as machineDefinition } from "../Machines";
 import CONSTANTS from "../../app.constants";
 import SingerCard from "../../components/SingerCard/SingerCard";
 import { AppContext } from "../../contexts";
+
+import styles from "./Rally.module.scss";
 
 const ViewRally = () => {
   const { setTitle } = useContext(AppContext);
@@ -37,13 +39,14 @@ const ViewRally = () => {
     []
   );
   return (<main id="main">
-    <h1 style={{ textAlign: "center" }}>{t("title.view", { rally: context.rally?.name })}</h1>
-    <h2 style={{ textAlign: "center" }}>{t("subtitle.view")}</h2>
+    <h1 className={styles["text-align--center"]}>{t("title.view", { rally: context.rally?.name })}</h1>
+    <h2 className={styles["text-align--center"]}>{t("subtitle.view")}</h2>
+    <div className={styles["flex-align--right"]}>
+      <Link className={styles.buttonLink} to={`/leaderboard/view/${id}`}>{t("links.leaderboard")}</Link>
+    </div>
     {context.show?.rally
       ? (
-        <div
-          className="display--flex flex--horizontal flex-align--center"
-          style={{ marginTop: "2em", paddingLeft: "1em" }}>
+        <div className={styles["danceCardContainer"]}>
           {(context.rally?.singers ?? []).sort(sortSingers).map(mapDanceCard)}
         </div>
       ) : (<></>)

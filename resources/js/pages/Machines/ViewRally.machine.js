@@ -9,13 +9,13 @@ const getRally = async ({ input: { id } }) => {
       start_date
       stop_date
       singers {
+        is_guest_singer
         unique_id
+        voice_part
         singer {
           family_name
           given_name
-          is_guest_singer
           preferred_name
-          voice_part
         }
       }
     }

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import { HomePage, LeaderboardPage, RalliesPage, RallyPage, SingersPage, TrampPage, UserPage } from "./pages";
