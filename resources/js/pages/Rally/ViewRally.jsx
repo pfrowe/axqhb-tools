@@ -19,10 +19,10 @@ const ViewRally = () => {
     [context.rally?.name, setTitle, t]
   );
   useEffect(() => (send({ type: "INIT", id }) && undefined), [id]);
-  const mapDanceCard = ({ unique_id, singer }) => (
+  const mapDanceCard = ({ is_guest_singer, singer, unique_id, voice_part }) => (
     <SingerCard
       {...singer}
-      className={singer.is_guest_singer ? CONSTANTS.partGuest : singer.voice_part}
+      className={is_guest_singer ? CONSTANTS.partGuest : voice_part}
       href={`/card/${unique_id}`}
       key={`singer-card--${unique_id}`} />
   );

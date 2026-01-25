@@ -207,5 +207,6 @@ type Mutation {
   createRally(name: String!, image_url: String, start_date: Date, stop_date: Date): Rally
   updateRally(id: ID!, name: String, image_url: String, start_date: Date, stop_date: Date): Rally
   createSticker(recipient_id: ID!, sender_id: ID!, status: String): Sticker
+  deleteSticker(id: ID! @where(operator: "=")): Sticker
   updateSticker(id: ID! @where(operator: "="), recipient_id: ID, sender_id: ID, status: String): Sticker
 }

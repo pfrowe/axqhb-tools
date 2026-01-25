@@ -4,6 +4,7 @@ import CONSTANTS from "../../app.constants";
 const getCard = async ({ input: { unique_id }}) => {
   const query = `query ($unique_id: String) {
     card(unique_id: $unique_id) {
+      id
       is_guest_singer
       rally_id
       voice_part
@@ -65,6 +66,7 @@ const getSingers = async ({ input: { rally_id, unique_id } }) => {
   const query = `query($rally: ID) {
     rally(id: $rally) {
       singers {
+        id
         is_guest_singer
         unique_id
         voice_part
@@ -138,9 +140,10 @@ const machineDefinition = setup({
       }
     },
     ready: {
+      after: { [CONSTANTS.pollInterval]: "loadingCard" },
       entry: [assign({ show: { card: true } })],
       on: {
-        refresh: "loadingCard"
+        REFRESH: "loadingCard"
       }
     }
   }

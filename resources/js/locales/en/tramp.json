@@ -1,16 +1,30 @@
 {
+  "buttons": {
+    "received": {
+      "yes": "Accept Sticker",
+      "no": "Decline Sticker"
+    },
+    "send": {
+      "yes": "Send Sticker",
+      "no": "Cancel"
+    },
+    "sent": {
+      "yes": "Yes, Delete Sticker",
+      "no": "No, Keep Sticker"
+    }
+  },
   "dialog": {
     "accepted": "You have a sticker with {{other}}.",
-    "respond": "{{sender}} sent you a sticker. Do you accept?",
-    "send": "You just sent a sticker to {{recipient}}.",
-    "status": "You have sent a sticker to {{recipient}}. We’re still waiting on a response."
+    "received": "{{other}} sent you a sticker. Do you accept?",
+    "send": "Would you like to send a sticker to {{other}}?",
+    "sent": "You sent a sticker to {{other}}. Would you like to delete it?"
   },
   "status": {
     "accepted": "You have a sticker!",
     "declined": "This sticker was declined.",
     "received": "You received a sticker!",
-    "sent": "You sent a sticker.",
-    "undefined": "No sticker yet."
+    "send": "No sticker yet.",
+    "sent": "You sent a sticker."
   },
   "name": "{{ given_name }} {{ family_name }}",
   "welcome": "Welcome to Your Tramp Card"
