@@ -2,6 +2,11 @@ import { assign, fromPromise, setup } from "xstate";
 import CONSTANTS from "../../app.constants";
 
 const getRally = async ({ input: { id } }) => {
+  const saveData = ({ start_date, stop_date, ...rally }) => ({
+    ...rally,
+    start_date: (start_date != null) ? new Date(start_date + "T12:00Z") : null,
+    stop_date: (stop_date != null) ? new Date(stop_date + "T12:00Z") : null
+  });
   const query = `query($id: ID) {
     rally(id: $id) {
       image_url
@@ -29,7 +34,7 @@ const getRally = async ({ input: { id } }) => {
     },
     method: "POST"
   };
-  return (await (await fetch(CONSTANTS.urlGraphQL, optionsFetch)).json()).data.rally;
+  return saveData((await (await fetch(CONSTANTS.urlGraphQL, optionsFetch)).json()).data.rally);
 };
 
 const machineDefinition = setup({ actors: { getRally: fromPromise(getRally) } })

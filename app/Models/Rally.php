@@ -10,6 +10,7 @@ class Rally extends Model
 {
   use HasFactory;
   protected $fillable = [
+    "image_url",
     "name",
     "start_date",
     "stop_date"

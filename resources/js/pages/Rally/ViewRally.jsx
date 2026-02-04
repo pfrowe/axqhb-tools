@@ -1,3 +1,4 @@
+import { Icon } from "@fluentui/react";
 import { useMachine } from "@xstate/react";
 import { useCallback, useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -41,8 +42,19 @@ const ViewRally = () => {
   return (<main id="main">
     <h1 className={styles["text-align--center"]}>{t("title.view", { rally: context.rally?.name })}</h1>
     <h2 className={styles["text-align--center"]}>{t("subtitle.view")}</h2>
-    <div className={styles["flex-align--right"]}>
-      <Link className={styles.buttonLink} to={`/leaderboard/view/${id}`}>{t("links.leaderboard")}</Link>
+    <div className={styles["actionBar"]}>
+      <Link className={styles.buttonLink} to={`/rally/edit/${id}`}>
+        <Icon className={styles["margin-right--1em"]} iconName="Edit" />
+        {t("links.editRally")}
+      </Link>
+      <Link className={styles.buttonLink} to={`/rally/populate/${id}`}>
+        <Icon className={styles["margin-right--1em"]} iconName="AddGroup" />
+        {t("links.populateSingers")}
+      </Link>
+      <Link className={styles.buttonLink} to={`/leaderboard/view/${id}`}>
+        <Icon className={styles["margin-right--1em"]} iconName="Trophy" />
+        {t("links.leaderboard")}
+      </Link>
     </div>
     {context.show?.rally
       ? (

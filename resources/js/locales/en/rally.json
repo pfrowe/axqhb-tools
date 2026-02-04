@@ -10,7 +10,15 @@
     "stop_date": "On what date does the rally end?"
   },
   "links": {
+    "editRally": "Edit Rally",
+    "populateSingers": "Populate Singers",
     "leaderboard": "View Leaderboard"
+  },
+  "message": {
+    "createError": "There was an error creating the rally. Please try again.",
+    "createSuccess": "Rally created successfully.",
+    "updateError": "There was an error updating the rally. Please try again.",
+    "updateSuccess": "Rally updated successfully."
   },
   "placeholderNew": "(New Rally)",
   "subtitle": {
