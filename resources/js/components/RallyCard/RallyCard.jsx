@@ -1,4 +1,4 @@
-import { DocumentCard, DocumentCardImage, DocumentCardTitle, DocumentCardType } from "@fluentui/react";
+import { DocumentCard, DocumentCardImage, DocumentCardTitle } from "@fluentui/react";
 
 const RallyCard = ({ href, id, image_url, name, onClick, ...props }) => {
   return (
