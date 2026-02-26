@@ -78,20 +78,41 @@ const EditRally = () => {
   );
   const onSubmit = useCallback(
     async (event: any) => {
+      const onUpdate_success = (responseData: any) => {
+        setErrors({});
+        setMessages({ "*": ((id as any) > 0) ? t("message.updateSuccess") : t("message.createSuccess") });
+        setTimeout(
+          () => (window.location.href = `/rally/view/${responseData.data[Object.keys(responseData.data)[0]].id}`),
+          2000
+        );
+      }
       event.preventDefault();
       event.stopPropagation();
       await csrfToken();
       try {
         const { image_url, name, start_date, stop_date } = values as any;
-        const query = `mutation($id: ID!, $name: String!, $image_url: String, $start_date: Date, $stop_date: Date) {
-          updateRally(id: $id, name: $name, image_url: $image_url, start_date: $start_date, stop_date: $stop_date) {
-            id
-            name
-            image_url
-            start_date
-            stop_date
-          }
-        }`;
+        let query: string;
+        if ((id as any) > 0) {
+          query = `mutation($id: ID!, $name: String!, $image_url: String, $start_date: Date, $stop_date: Date) {
+            updateRally(id: $id, name: $name, image_url: $image_url, start_date: $start_date, stop_date: $stop_date) {
+              id
+              name
+              image_url
+              start_date
+              stop_date
+            }
+          }`;
+        } else {
+          query = `mutation($name: String!, $image_url: String, $start_date: Date, $stop_date: Date) {
+            createRally(name: $name, image_url: $image_url, start_date: $start_date, stop_date: $stop_date) {
+              id
+              name
+              image_url
+              start_date
+              stop_date
+            }
+          }`;
+        }
         const variables = {
           id: (id as any) * 1,
           image_url,
@@ -99,6 +120,9 @@ const EditRally = () => {
           start_date: formatDatePostValue(start_date),
           stop_date: formatDatePostValue(stop_date)
         };
+        if ((id as any) === 0) {
+          delete variables.id;
+        }
         const optionsFetch = {
           body: JSON.stringify({ query, variables }),
           headers: {
@@ -113,8 +137,7 @@ const EditRally = () => {
           if ((responseData.errors ?? []).length > 0) {
             setErrors({ "*": responseData.errors.map((error: any) => (error.message)) });
           } else {
-            setErrors({});
-            setMessages({ "*": ((id as any) > 0) ? t("message.updateSuccess") : t("message.createSuccess") });
+            onUpdate_success(responseData);
           }
         }).catch(async (response: any) => {
           let errorData = {};

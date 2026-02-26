@@ -1,6 +1,8 @@
 {
   "dependencies": {
-    "@react-hooks-library/core": "^0.6.0"
+    "@react-hooks-library/core": "^0.6.0",
+    "react-phone-number-input": "^3.4.14",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.23.3",

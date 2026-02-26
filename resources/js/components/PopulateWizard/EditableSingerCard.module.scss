@@ -1,0 +1,100 @@
+.editable__form {
+  --form--found-background: rgb(255, 255, 0, 0.15);
+  --form--found-border: rgb(255, 255, 0, 0.3);
+  --form--neutral-background: rgb(255, 255, 255, 0.15);
+  --form--neutral-border: rgb(255, 255, 255, 0.3);
+  --form--registered-background: rgb(0, 128, 0, 0.15);
+  --form--registered-border: rgb(0, 128, 0, 0.3);
+  border: 1px solid #e1e1e1;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  padding: 12px;
+
+  &.found {
+    background: var(--form--found-background);
+    border: var(--form--found-border);
+  }
+
+  &.neutral {
+    background: var(--form--neutral-background);
+    border-color: var(--form--neutral-border);
+  }
+
+  &.registered {
+    background: var(--form--registered-background);
+    border-color: var(--form--registered-border);
+  }
+
+  & input::placeholder {
+    color: var(--color--placeholder);
+  }
+
+  .phone {
+    background: var(--input--background);
+    border: 1px solid var(--input--border);
+    padding: 0.25em;
+
+    &:focus-within {
+      border: 1px solid var(--input--focus-border);
+      outline: 1px solid var(--input--border);
+    }
+
+    & input {
+      background: transparent;
+      border: none;
+      color: var(--color--text);
+      width: 100%;
+
+      &:focus,
+      &:focus-visible {
+        outline: none;
+      }
+
+      &::placeholder {
+        color: var(--color--placeholder);
+      }
+    }
+
+    & select {
+      background: var(--input--background);
+      border: 1px solid var(--input--border);
+    }
+  }
+}
+
+.mergeField {
+  border-top: 1px solid var(--border--subtle);
+  padding-bottom: 0;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  padding-top: 0;
+
+  & .fieldName {
+    font-weight: 600;
+    margin-bottom: 0.25em;
+  }
+
+  & .layout {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+
+    &>div {
+      flex: 1;
+    }
+  }
+}
+
+.registration {
+  &--positive {
+    color: var(--color--positive);
+  }
+
+  &--negative {
+    color: var(--color--negative);
+  }
+
+  &--neutral {
+    color: var(--color--neutral);
+  }
+}

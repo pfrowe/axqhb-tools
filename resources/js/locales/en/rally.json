@@ -3,6 +3,21 @@
     "cancel": "Cancel Changes",
     "save": "Save Changes"
   },
+  "fields": {
+    "city": "City",
+    "country": "Country",
+    "email": "Email",
+    "family_name": "Last Name",
+    "geo_division_1": "State/Province",
+    "given_name": "First Name",
+    "is_guest_singer": "Is Guest Singer",
+    "phone": "Phone",
+    "postal_code": "Postal Code",
+    "preferred_name": "Preferred Name",
+    "street_line_1": "Street Line 1",
+    "street_line_2": "Street Line 2",
+    "voice_part": "Voice Part"
+  },
   "label": {
     "image_url": "What is the URL for the rally logo?",
     "name": "What is the name of the rally (include the year)?",
@@ -11,8 +26,8 @@
   },
   "links": {
     "editRally": "Edit Rally",
-    "populateSingers": "Populate Singers",
-    "leaderboard": "View Leaderboard"
+    "leaderboard": "View Leaderboard",
+    "populateSingers": "Populate Singers"
   },
   "message": {
     "createError": "There was an error creating the rally. Please try again.",
@@ -27,7 +42,67 @@
   },
   "title": {
     "create": "Create Rally",
+    "populateSingers": "Populate Singers",
     "update": "Update Rally",
     "view": "Rally — {{rally}}"
+  },
+  "voice_parts": {
+    "bari": "Baritone",
+    "bass": "Bass",
+    "lead": "Lead",
+    "tenor": "Tenor"
+  },
+  "wizard": {
+    "action": {
+      "finish": "Finish",
+      "mapFields": "Map Fields",
+      "next": "Next",
+      "previous": "Previous",
+      "selectFile": "Select Excel File"
+    },
+    "page1": {
+      "description": "Choose an Excel file containing singer information. The first worksheet will be read and imported.",
+      "title": "Select an Excel File"
+    },
+    "page2": {
+      "description": "Map the columns from your Excel file to the corresponding fields in our system.",
+      "dropdownPlaceholder": "Select a target field…",
+      "fieldsFound": "Found {{count}} field(s) in the Excel file:",
+      "info": "Map each imported field to a corresponding singer database field. Fields left unmapped will be ignored.",
+      "noFields": "No fields found in the Excel file.",
+      "title": "Map Fields"
+    },
+    "page3": {
+      "description": "Review the data that will be imported based on your field mappings. Make sure everything looks correct before proceeding.",
+      "enterValue": "Enter value",
+      "nextSinger": "Next Singer",
+      "noMatch": "No match found in database.",
+      "matched": "Matched with {{score}}% confidence.",
+      "noSingers": "No singers to review.",
+      "notRegistered": "New Registration",
+      "previousSinger": "Previous Singer",
+      "registered": "Already Registered",
+      "source": {
+        "custom": "Custom",
+        "db": "Database",
+        "imported": "Imported"
+      },
+      "title": "Review Data"
+    },
+    "page4": {
+      "completed": "Import completed!",
+      "currentOperation": "Current: {{operation}}",
+      "description": "Finally, confirm that you want to import the data. Once you proceed, the system will process your Excel file and populate the singers accordingly.",
+      "failed": "Import failed. Please try again.",
+      "genericError": "An error occurred during import. Please try again.",
+      "processing": "Processing your data. This may take a few moments…",
+      "success": "All {{count}} operations completed successfully!",
+      "title": "Import Data"
+    },
+    "page5": {
+      "description": "The singers have been successfully imported! Click the “Finish” button to view the rally.",
+      "title": "Import Complete"
+    },
+    "step": "Step {{current}} of {{total}}"
   }
 }

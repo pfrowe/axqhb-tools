@@ -1,5 +1,6 @@
 export { default as EditRally } from "./EditRally.machine";
 export { default as LeaderboardRoute } from "./LeaderboardRoute.machine";
+export { default as PopulateSingers } from "./PopulateSingers.machine";
 export { default as RalliesPage } from "./RalliesPage.machine";
 export { default as SingersPage } from "./SingersPage.machine";
 export { default as TrampPage } from "./TrampPage.machine";

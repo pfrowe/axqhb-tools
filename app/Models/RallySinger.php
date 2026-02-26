@@ -15,7 +15,8 @@ class RallySinger extends Model
     "rally_id",
     "singer_id",
     "is_guest_singer",
-    "voice_part"
+    "voice_part",
+    "unique_id"
   ];
 
   public function rally()

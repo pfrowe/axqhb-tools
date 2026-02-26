@@ -1,3 +1,12 @@
+export interface IRally {
+  id: number;
+  image_url: string;
+  name: string;
+  singers: IRallySinger[];
+  start_date: Date | string | null;
+  stop_date: Date | string | null;
+}
+
 export interface IRallySinger {
   id: number;
   is_guest_singer: boolean;

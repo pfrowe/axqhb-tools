@@ -203,9 +203,59 @@ type User {
   updated_at: DateTime!
 }
 
+input CreateRallySingerInput {
+  rally_id: ID!
+  singer_id: ID!
+  is_guest_singer: Boolean!
+  voice_part: String!
+}
+
+input UpdateRallySingerInput {
+  rally_id: ID
+  singer_id: ID
+  is_guest_singer: Boolean
+  voice_part: String
+}
+
+input CreateSingerInput {
+  given_name: String!
+  family_name: String!
+  email: String!
+  phone: String!
+  preferred_name: String
+  can_receive_texts: Boolean
+  image: String
+  street_line_1: String
+  street_line_2: String
+  city: String
+  geo_division_1: String
+  postal_code: String
+  country: String
+}
+
+input UpdateSingerInput {
+  given_name: String
+  family_name: String
+  email: String
+  phone: String
+  preferred_name: String
+  can_receive_texts: Boolean
+  image: String
+  street_line_1: String
+  street_line_2: String
+  city: String
+  geo_division_1: String
+  postal_code: String
+  country: String
+}
+
 type Mutation {
   createRally(name: String!, image_url: String, start_date: Date, stop_date: Date): Rally
   updateRally(id: ID!, name: String, image_url: String, start_date: Date, stop_date: Date): Rally
+  createRallySinger(input: CreateRallySingerInput!): RallySinger
+  updateRallySinger(id: ID!, input: UpdateRallySingerInput!): RallySinger
+  createSinger(input: CreateSingerInput!): Singer
+  updateSinger(id: ID!, input: UpdateSingerInput!): Singer
   createSticker(recipient_id: ID!, sender_id: ID!, status: String): Sticker
   deleteSticker(id: ID! @where(operator: "=")): Sticker
   updateSticker(id: ID! @where(operator: "="), recipient_id: ID, sender_id: ID, status: String): Sticker
