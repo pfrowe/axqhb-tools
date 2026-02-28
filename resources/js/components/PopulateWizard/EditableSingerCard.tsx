@@ -1,4 +1,4 @@
-import { Dropdown, Stack, StackItem, Text, Toggle } from "@fluentui/react";
+import { DefaultButton, Dropdown, Stack, StackItem, Text, Toggle } from "@fluentui/react";
 import React, { useCallback, useEffect, useMemo, useReducer } from "react";
 import { useTranslation } from "react-i18next";
 import { MergePhoneNumber, MergeTextField } from "./MergeFields";
@@ -68,7 +68,13 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
     [registered, t]
   );
   const scoreText = useMemo(
-    () => (score > 0 ? t("wizard.page3.matched", { score: Math.round((score / 600) * 100) }) : t("wizard.page3.noMatch")),
+    () => {
+      const interpolations = {
+        score: Math.round((score / 600) * 100),
+        singer: `${dbSinger?.given_name} ${dbSinger?.family_name}`
+      };
+      return (score > 0 ? t("wizard.page3.matched", interpolations) : t("wizard.page3.noMatch"));
+    },
     [score, t]
   );
   const singerName = useMemo(
@@ -119,6 +125,18 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
   );
   const onChangeIsGuest = useCallback((newState: IFieldState) => (updateState({ is_guest_singer: newState })), []);
   const onChangeVoicePart = useCallback((newState: IFieldState) => (updateState({ voice_part: newState })), []);
+  const onClickUnlink = useCallback(() => (updateState({ id: { customValue: "-1", source: "custom" } })), [updateState]);
+  const unlinkButton = useMemo(
+    () => (
+      initialState?.id?.source === "db"
+        ? (
+          <DefaultButton iconProps={{ iconName: "RemoveLink" }} onClick={onClickUnlink}>
+            {t("wizard.actios.unlink", "Unlink")}
+          </DefaultButton>
+        ) : (<></>)
+    ),
+    [initialState?.id, onClickUnlink]
+  );
   const defaultValue = useCallback(
     (fieldName: string): string => {
       let result: string;
@@ -156,7 +174,10 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
             <Text variant="mediumPlus" block>{singerName}</Text>
             <Text variant="small" block>{scoreText}</Text>
           </StackItem>
-          <StackItem>{registrationText}</StackItem>
+          <StackItem>
+            <Text variant="small">{registrationText}</Text>
+            {unlinkButton}
+          </StackItem>
         </Stack>
         {getTextField("given_name")}
         {getTextField("preferred_name")}

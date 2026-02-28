@@ -128,7 +128,7 @@ const calculateRequiredOperations = (
     const matched = matchedSingers[i];
     const edits = cardEdits?.[i] || {};
 
-    if (matched.matchScore === 0) {
+    if ((matched.matchScore === 0) || ((edits.id?.source === "custom") && (parseInt(edits.id.customValue) < 0))) {
       // New singer - needs creation and rally singer registration
       operations.push({
         type: "createSinger",

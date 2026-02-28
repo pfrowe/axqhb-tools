@@ -58,7 +58,8 @@
       "mapFields": "Map Fields",
       "next": "Next",
       "previous": "Previous",
-      "selectFile": "Select Excel File"
+      "selectFile": "Select Excel File",
+      "unlink": "Unlink"
     },
     "page1": {
       "description": "Choose an Excel file containing singer information. The first worksheet will be read and imported.",
@@ -77,7 +78,7 @@
       "enterValue": "Enter value",
       "nextSinger": "Next Singer",
       "noMatch": "No match found in database.",
-      "matched": "Matched with {{score}}% confidence.",
+      "matched": "Matched with {{score}}% confidence to {{singer}}.",
       "noSingers": "No singers to review.",
       "notRegistered": "New Registration",
       "previousSinger": "Previous Singer",

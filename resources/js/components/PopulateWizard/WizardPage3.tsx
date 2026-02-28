@@ -49,7 +49,7 @@ const WizardPage3: React.FC<IWizardPage3Props> = ({ onNext, onPrevious }) => {
           {t("wizard.page3.title", "Review Data")}
         </Text>
         <Text block>
-          {t("wizard.page3.description", "Map the columns from your Excel file to the singer database fields.")}
+          {t("wizard.page3.description", "Review the data that will be imported based on your field mappings. Make sure everything looks correct before proceeding.")}
         </Text>
         <Stack horizontal tokens={{ childrenGap: 20 }}>
           <StackItem grow>
