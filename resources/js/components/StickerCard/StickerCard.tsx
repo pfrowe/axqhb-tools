@@ -52,7 +52,7 @@ const StickerCard = ({ other, sticker, ...props }: IStickerCardProps) => {
   const onDismiss = useCallback(() => (setDialogOpen(false)), [setDialogOpen]);
   const handleButtonClick = useCallback(
     (action: string) => () => (onClick[action]?.({ id: sticker_id, recipient, sender }), onDismiss()),
-    [onClick, onDismiss]
+    [onClick, onDismiss, recipient, sender, sticker_id]
   );
   const handleCardClick = useCallback(() => (setDialogOpen(true)), [setDialogOpen]);
   const { t } = useTranslation("tramp");
