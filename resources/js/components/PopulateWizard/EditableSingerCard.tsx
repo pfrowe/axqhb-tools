@@ -122,7 +122,7 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
   const defaultValue = useCallback(
     (fieldName: string): string => {
       let result: string;
-      const { customValue, source } = initialState?.[fieldName] ?? { customValue: "", source: "custom" };
+      const { customValue, source } = initialState?.[fieldName] ?? { source: "custom" };
       switch (source) {
         case "db": result = dbSinger?.[fieldName] ?? customValue ?? ""; break;
         case "imported": result = imported?.[fieldName] ?? customValue ?? ""; break;
@@ -131,6 +131,13 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
       return result;
     },
     [dbSinger, imported, initialState]
+  );
+  const defaultVoicePart = useMemo(
+    () => {
+      let result = defaultValue("voice_part").toLocaleLowerCase();
+      return (result === "baritone") ? "bari" : result;
+    },
+    [defaultValue]
   );
   const voiceOptions = useMemo(
     () => ([
@@ -161,7 +168,7 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
             <StackItem>
               <Text className={styles.fieldName} variant="small" block>{t("fields.voice_part", "Voice Part")}</Text>
               <Dropdown
-                defaultSelectedKey={defaultValue("voice_part")}
+                defaultSelectedKey={defaultVoicePart}
                 onChange={(_, option) => (onChangeVoicePart({ source: "custom", customValue: option?.key as string }))}
                 options={voiceOptions}
                 placeholder={t("fields.voice_part", "Voice Part")}
