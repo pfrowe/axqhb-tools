@@ -119,6 +119,19 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
   );
   const onChangeIsGuest = useCallback((newState: IFieldState) => (updateState({ is_guest_singer: newState })), []);
   const onChangeVoicePart = useCallback((newState: IFieldState) => (updateState({ voice_part: newState })), []);
+  const defaultValue = useCallback(
+    (fieldName: string): string => {
+      let result: string;
+      const { customValue, source } = initialState?.[fieldName] ?? { customValue: "", source: "custom" };
+      switch (source) {
+        case "db": result = dbSinger?.[fieldName] ?? customValue ?? ""; break;
+        case "imported": result = imported?.[fieldName] ?? customValue ?? ""; break;
+        default: result = customValue ?? ""; break;
+      }
+      return result;
+    },
+    [dbSinger, imported, initialState]
+  );
   const voiceOptions = useMemo(
     () => ([
       { key: "tenor", text: t("voice_parts.tenor") },
@@ -148,7 +161,7 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
             <StackItem>
               <Text className={styles.fieldName} variant="small" block>{t("fields.voice_part", "Voice Part")}</Text>
               <Dropdown
-                defaultSelectedKey={imported?.voice_part ?? dbSinger?.voice_part ?? null}
+                defaultSelectedKey={defaultValue("voice_part")}
                 onChange={(_, option) => (onChangeVoicePart({ source: "custom", customValue: option?.key as string }))}
                 options={voiceOptions}
                 placeholder={t("fields.voice_part", "Voice Part")}
@@ -156,7 +169,7 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
             </StackItem>
             <StackItem>
               <Toggle
-                defaultChecked={imported?.is_guest_singer ?? dbSinger?.is_guest_singer ?? false}
+                defaultChecked={defaultValue("is_guest_singer") === "true"}
                 onChange={(_, checked) => (onChangeIsGuest({ source: "custom", customValue: checked.toString() }))}
                 label={t("fields.is_guest_singer", "Is Guest Singer")}
               />
