@@ -259,11 +259,11 @@ const ViewLeaderboard = () => {
       const isComplete = ({ accepted, all, pending }: any) => (accepted.length + pending.length >= all.length);
       const mapId = ({ id }: any) => (id);
       const mapOtherParty = ({ recipient, sender }: any) =>
-        ([recipient?.id, sender?.id].filter((idTest: any) => (idTest !== id))[0]);
+        ([recipient?.id, sender?.id].filter((idTest: any) => (idTest !== card.id))[0]);
       const mapSingerFromId = (id: any) => (hashSingers[id]);
       const sortByTimestamp = (left: any, right: any) =>
         (new Date(right.updated_at).valueOf() - new Date(left.updated_at).valueOf());
-      const { singer, stickers_received, stickers_sent } = card;
+      const { stickers_received, stickers_sent } = card;
       const stickers = [...(stickers_received ?? []), ...(stickers_sent ?? [])];
       const stickersAccepted = stickers.filter(filterByStatus("accepted"));
       const stickersPending = stickers.filter(filterByStatus("pending"));
