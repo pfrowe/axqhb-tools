@@ -215,9 +215,14 @@ const processImportMutation = async (
         ? operation.matched.matched?.is_guest_singer
         : operation.matched.imported?.is_guest_singer
     ));
-    const voicePart = operation.edits.voice_part?.customValue ??
-      (operation.edits.voice_part?.source === "db" ? operation.matched.matched?.voice_part : operation.matched.imported?.voice_part) ??
-      "";
+    const voicePart = (
+      (operation.edits.voice_part?.source === "custom")
+        ? operation.edits.voice_part.customValue
+        : (operation.edits.voice_part?.source === "db"
+          ? operation.matched.matched?.voice_part
+          : operation.matched.imported?.voice_part
+        ) ?? operation.matched.imported?.voice_part ?? ""
+    ).toLocaleLowerCase();
     if (operation.type === "createSinger") {
       const singerData = {};
       ["given_name", "family_name", "email", "phone", "street_line_1", "street_line_2", "postal_code", "city", "geo_division_1", "country", "preferred_name"].forEach(field => {

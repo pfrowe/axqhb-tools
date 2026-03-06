@@ -137,25 +137,28 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
     ),
     [initialState?.id, onClickUnlink]
   );
-  const defaultValue = useCallback(
-    (fieldName: string): string => {
-      let result: string;
-      const { customValue, source } = initialState?.[fieldName] ?? { source: "custom" };
-      switch (source) {
-        case "db": result = dbSinger?.[fieldName] ?? customValue ?? ""; break;
-        case "imported": result = imported?.[fieldName] ?? customValue ?? ""; break;
-        default: result = customValue ?? ""; break;
-      }
-      return result;
+  const hashDefaultValue = useMemo(
+    (): Record<string, string> => {
+      const getDefaultValue = ([key, value]: [string, IFieldState]): [string, string] => {
+        const { customValue, source } = value ?? { source: "imported" };
+        let result: string;
+        switch (source) {
+          case "db": result = dbSinger?.[key] ?? customValue ?? ""; break;
+          case "imported": result = imported?.[key] ?? customValue ?? ""; break;
+          default: result = customValue ?? ""; break;
+        }
+        return [key, result];
+      };
+      return Object.fromEntries(Object.entries(initialState).map(getDefaultValue));
     },
     [dbSinger, imported, initialState]
   );
   const defaultVoicePart = useMemo(
     () => {
-      let result = defaultValue("voice_part").toLocaleLowerCase();
+      let result = hashDefaultValue.voice_part?.toLocaleLowerCase?.() ?? "";
       return (result === "baritone") ? "bari" : result;
     },
-    [defaultValue]
+    [hashDefaultValue]
   );
   const voiceOptions = useMemo(
     () => ([
@@ -197,7 +200,7 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
             </StackItem>
             <StackItem>
               <Toggle
-                defaultChecked={defaultValue("is_guest_singer") === "true"}
+                defaultChecked={hashDefaultValue.is_guest_singer === "true"}
                 onChange={(_, checked) => (onChangeIsGuest({ source: "custom", customValue: checked.toString() }))}
                 label={t("fields.is_guest_singer", "Is Guest Singer")}
               />
