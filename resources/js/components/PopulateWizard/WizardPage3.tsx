@@ -60,7 +60,7 @@ const WizardPage3: React.FC<IWizardPage3Props> = ({ onNext, onPrevious }) => {
               dbSinger={currentSinger?.matched ?? {}}
               score={score}
               registered={registered}
-              initialState={cardEdits[currentCardIndex]}
+              initialState={cardEdits[currentCardIndex] ?? {}}
               onChange={onChange}
             />
           </StackItem>

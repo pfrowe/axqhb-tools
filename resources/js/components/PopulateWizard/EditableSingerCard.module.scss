@@ -12,7 +12,7 @@
 
   &.found {
     background: var(--form--found-background);
-    border: var(--form--found-border);
+    border-color: var(--form--found-border);
   }
 
   &.neutral {

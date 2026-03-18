@@ -128,12 +128,13 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
   const onClickUnlink = useCallback(() => (updateState({ id: { customValue: "-1", source: "custom" } })), [updateState]);
   const unlinkButton = useMemo(
     () => (
-      initialState?.id?.source === "db"
-        ? (
-          <DefaultButton iconProps={{ iconName: "RemoveLink" }} onClick={onClickUnlink}>
-            {t("wizard.actios.unlink", "Unlink")}
-          </DefaultButton>
-        ) : (<></>)
+      <DefaultButton
+        disabled={initialState?.id?.source !== "db"}
+        iconProps={{ iconName: "RemoveLink" }}
+        onClick={onClickUnlink}
+      >
+        {t("wizard.action.unlink", "Unlink")}
+      </DefaultButton>
     ),
     [initialState?.id, onClickUnlink]
   );
