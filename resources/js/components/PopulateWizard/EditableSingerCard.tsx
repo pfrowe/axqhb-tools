@@ -1,4 +1,5 @@
-import { DefaultButton, Dropdown, Stack, StackItem, Text, Toggle } from "@fluentui/react";
+import { Button, Dropdown, Option, OptionOnSelectData, Switch, SwitchOnChangeData, Text } from "@fluentui/react-components";
+import { LinkDismissRegular } from "@fluentui/react-icons";
 import React, { useCallback, useEffect, useMemo, useReducer } from "react";
 import { useTranslation } from "react-i18next";
 import { MergePhoneNumber, MergeTextField } from "./MergeFields";
@@ -7,17 +8,17 @@ import { IFieldState } from "../../contexts/PopulateSingersContext";
 import styles from "./EditableSingerCard.module.scss";
 
 interface IEditableSingerCardProps {
-  index: number;
-  imported: Record<string, any>;
   dbSinger: Record<string, any>;
-  score: number;
-  registered: boolean;
+  imported: Record<string, any>;
+  index: number;
   initialState?: Record<string, IFieldState>;
   onChange?: (idx: number, state: Record<string, IFieldState>) => void;
+  registered: boolean;
+  score: number;
 }
 
 const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
-  index, imported = {}, dbSinger = {}, score = 0, registered = false, initialState, onChange
+  dbSinger = {}, index, imported = {}, initialState, onChange, score = 0, registered = false
 }) => {
   const { t } = useTranslation("rally");
   const fields = useMemo(
@@ -61,7 +62,7 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
   const registrationText = useMemo(
     () => {
       const classRegistered = registered ? styles["registration--positive"] : styles["registration--neutral"];
-      return (<Text variant="small" block className={classRegistered}>
+      return (<Text block className={classRegistered} size={200}>
         {registered ? t("wizard.page3.registered") : t("wizard.page3.notRegistered")
         }</Text>);
     },
@@ -123,18 +124,27 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
     },
     [imported, dbSinger, score, state, index]
   );
-  const onChangeIsGuest = useCallback((newState: IFieldState) => (updateState({ is_guest_singer: newState })), []);
-  const onChangeVoicePart = useCallback((newState: IFieldState) => (updateState({ voice_part: newState })), []);
+  const onChangeIsGuest = useCallback(
+    (_: React.ChangeEvent<HTMLInputElement>, { checked }: SwitchOnChangeData) =>
+      (updateState({ is_guest_singer: { source: "custom", customValue: checked.toString() } })),
+    []
+  );
+  const onChangeVoicePart = useCallback(
+    (_: React.ChangeEvent<HTMLInputElement>, { optionValue }: OptionOnSelectData) =>
+      (updateState({ voice_part: { source: "custom", customValue: optionValue } })),
+    []
+  );
   const onClickUnlink = useCallback(() => (updateState({ id: { customValue: "-1", source: "custom" } })), [updateState]);
   const unlinkButton = useMemo(
     () => (
-      <DefaultButton
+      <Button
+        appearance="secondary"
         disabled={initialState?.id?.source !== "db"}
-        iconProps={{ iconName: "RemoveLink" }}
         onClick={onClickUnlink}
       >
+        <LinkDismissRegular />
         {t("wizard.action.unlink", "Unlink")}
-      </DefaultButton>
+      </Button>
     ),
     [initialState?.id, onClickUnlink]
   );
@@ -162,51 +172,48 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
     [hashDefaultValue]
   );
   const voiceOptions = useMemo(
-    () => ([
-      { key: "tenor", text: t("voice_parts.tenor") },
-      { key: "lead", text: t("voice_parts.lead") },
-      { key: "bari", text: t("voice_parts.bari") },
-      { key: "bass", text: t("voice_parts.bass") }
-    ]),
+    () => (<>
+      <Option key="tenor">{t("voice_parts.tenor")}</Option>
+      <Option key="lead">{t("voice_parts.lead")}</Option>
+      <Option key="bari">{t("voice_parts.bari")}</Option>
+      <Option key="bass">{t("voice_parts.bass")}</Option>
+    </>),
     []
   );
   return (
     <div className={formClass}>
-      <Stack tokens={{ childrenGap: 8 }}>
-        <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: 8 }}>
-          <StackItem>
-            <Text variant="mediumPlus" block>{singerName}</Text>
-            <Text variant="small" block>{scoreText}</Text>
-          </StackItem>
-          <StackItem>
-            <Text variant="small">{registrationText}</Text>
-            {unlinkButton}
-          </StackItem>
-        </Stack>
+      <div className={styles["flex--vertical"]}>
+        <div className={[styles["flex--horizontal"], styles["flex--justify-content--space-between"]].join(" ")}>
+          <Text size={400} block>{singerName}</Text>
+          {registrationText}
+        </div>
+        <div className={[styles["flex--horizontal"], styles["flex--justify-content--space-between"]].join(" ")}>
+          <Text size={200} block>{scoreText}</Text>
+          {unlinkButton}
+        </div>
         {getTextField("given_name")}
         {getTextField("preferred_name")}
         {getTextField("family_name")}
         {getTextField("email")}
         {getPhoneField("phone")}
         <div className={styles.mergeField}>
-          <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: 8 }}>
-            <StackItem>
-              <Text className={styles.fieldName} variant="small" block>{t("fields.voice_part", "Voice Part")}</Text>
+          <div className={styles["flex--horizontal"]}>
+            <div>
+              <Text block className={styles.fieldName} size={200}>{t("fields.voice_part", "Voice Part")}</Text>
               <Dropdown
-                defaultSelectedKey={defaultVoicePart}
-                onChange={(_, option) => (onChangeVoicePart({ source: "custom", customValue: option?.key as string }))}
-                options={voiceOptions}
+                defaultSelectedOptions={[defaultVoicePart]}
+                onOptionSelect={onChangeVoicePart}
                 placeholder={t("fields.voice_part", "Voice Part")}
-              />
-            </StackItem>
-            <StackItem>
-              <Toggle
+              >{voiceOptions}</Dropdown>
+            </div>
+            <div>
+              <Switch
                 defaultChecked={hashDefaultValue.is_guest_singer === "true"}
-                onChange={(_, checked) => (onChangeIsGuest({ source: "custom", customValue: checked.toString() }))}
+                onChange={onChangeIsGuest}
                 label={t("fields.is_guest_singer", "Is Guest Singer")}
               />
-            </StackItem>
-          </Stack>
+            </div>
+          </div>
         </div>
         {getTextField("street_line_1")}
         {getTextField("street_line_2")}
@@ -214,7 +221,7 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
         {getTextField("geo_division_1")}
         {getTextField("postal_code")}
         {getTextField("country")}
-      </Stack>
+      </div>
     </div>
   );
 };

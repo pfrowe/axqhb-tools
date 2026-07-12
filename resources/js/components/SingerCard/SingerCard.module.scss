@@ -1,0 +1,137 @@
+.singer-card {
+  align-items: center;
+  border-style: solid;
+  border-width: 1px;
+  height: 6rem;
+  justify-content: center;
+  width: 12rem;
+
+  &.bari {
+    background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.15);
+    border-color: hsla(var(--hue-voice--bari), 100%, 25%, 1.0);
+
+    &.accepted {
+      background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.5);
+    }
+
+    &.received {
+      animation: blink--bari 1.0s linear infinite;
+    }
+
+    &.sent {
+      animation: blink--bari 3.0s linear infinite;
+    }
+  }
+
+  &.bass {
+    background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.15);
+    border-color: hsla(var(--hue-voice--bass), 100%, 25%, 1.0);
+
+    &.accepted {
+      background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.5);
+    }
+
+    &.received {
+      animation: blink--bass 1.0s linear infinite;
+    }
+
+    &.sent {
+      animation: blink--bass 3.0s linear infinite;
+    }
+  }
+
+  &.guest {
+    background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.15);
+    border-color: hsla(var(--hue-voice--guest), 100%, 25%, 1.0);
+
+    &.accepted {
+      background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.5);
+    }
+
+    &.received {
+      animation: blink--guest 1.0s linear infinite;
+    }
+
+    &.sent {
+      animation: blink--guest 3.0s linear infinite;
+    }
+  }
+
+  &.lead {
+    background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.15);
+    border-color: hsla(var(--hue-voice--lead), 100%, 25%, 1.0);
+
+    &.accepted {
+      background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.5);
+    }
+
+    &.received {
+      animation: blink--lead 1.0s linear infinite;
+    }
+
+    &.sent {
+      animation: blink--lead 3.0s linear infinite;
+    }
+  }
+
+  &.tenor {
+    background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.15);
+    border-color: hsla(var(--hue-voice--tenor), 100%, 25%, 1.0);
+
+    &.accepted {
+      background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.5);
+    }
+
+    &.received {
+      animation: blink--tenor 1.0s linear infinite;
+    }
+
+    &.sent {
+      animation: blink--tenor 3.0s linear infinite;
+    }
+  }
+
+  &.sticker {
+    & i[data-icon-name] {
+      font-size: min(24pt, 5vw);
+    }
+
+    & .preview {
+      flex-shrink: 0;
+      width: calc(min(24pt, 5vw) + 1em);
+    }
+  }
+}
+
+.width--100pct {
+  width: 100%;
+}
+
+label input {
+  display: block;
+}
+
+label input[type=checkbox],
+label input[type=radio] {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+@media only screen and (max-width: 767px) {
+
+  div#app,
+  main {
+    margin: 0;
+    max-width: 100vw;
+    padding: 0;
+  }
+
+  main * {
+    max-width: 100vw;
+  }
+
+  div.singer-card {
+    max-width: calc(50vw - 2em);
+    min-width: calc(50vw - 2em);
+  }
+}

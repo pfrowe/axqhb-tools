@@ -1,20 +1,24 @@
 import { useMemo } from "react";
 import {
-  DocumentCard, DocumentCardPreview, DocumentCardTitle, ImageFit,
-} from "@fluentui/react";
+  Card, CardHeader, CardHeaderProps, CardPreview, CardPreviewProps, CardProps
+} from "@fluentui/react-components";
 
-const PersonaCard = ({ previewProps, titleProps, ...props }: any) => {
+interface IPersonaCardProps extends CardProps {
+  previewProps: CardPreviewProps;
+  titleProps: CardHeaderProps;
+}
+
+const PersonaCard = ({ previewProps, titleProps, ...props }: IPersonaCardProps) => {
   const propsPreview = useMemo(() => ({
     height: 240,
-    imageFit: ImageFit.cover,
     width: 320,
     ...previewProps,
   }), [previewProps]);
   return (
-    <DocumentCard {...props}>
-      <DocumentCardPreview {...propsPreview} />
-      <DocumentCardTitle {...titleProps} />
-    </DocumentCard>
+    <Card {...props}>
+      <CardPreview {...propsPreview} />
+      <CardHeader {...titleProps} />
+    </Card>
   );
 };
 

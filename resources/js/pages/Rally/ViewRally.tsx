@@ -1,11 +1,11 @@
-import { Icon } from "@fluentui/react";
+import { Edit20Regular, PeopleAdd20Regular, Trophy20Regular } from "@fluentui/react-icons";
 import { useMachine } from "@xstate/react";
 import { useCallback, useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
 import { ViewRally as machineDefinition } from "../Machines";
 import CONSTANTS from "../../app.constants";
-import SingerCard from "../../components/SingerCard/SingerCard";
+import SingerCard from "../../components/SingerCard";
 import { AppContext } from "../../contexts";
 
 import styles from "./Rally.module.scss";
@@ -23,9 +23,9 @@ const ViewRally = () => {
   const mapDanceCard = ({ is_guest_singer, singer, unique_id, voice_part }: any) => (
     <SingerCard
       {...singer}
-      className={is_guest_singer ? CONSTANTS.partGuest : voice_part}
       href={`/card/${unique_id}`}
-      key={`singer-card--${unique_id}`} />
+      key={`singer-card--${unique_id}`}
+      voice_part={is_guest_singer ? CONSTANTS.partGuest : voice_part} />
   );
   const sortSingers = useCallback(
     (left: any, right: any) => {
@@ -40,19 +40,23 @@ const ViewRally = () => {
     []
   );
   return (<main id="main">
-    <h1 className={styles["text-align--center"]}>{t("title.view", { rally: context.rally?.name })}</h1>
-    <h2 className={styles["text-align--center"]}>{t("subtitle.view")}</h2>
+    <h1 className={[styles["text-align--center"], styles["margin--revert"]].join(" ")}>
+      {t("title.view", { rally: context.rally?.name })}
+    </h1>
+    <h2 className={[styles["text-align--center"], styles["margin--revert"]].join(" ")}>
+      {t("subtitle.view")}
+    </h2>
     <div className={styles["actionBar"]}>
       <Link className={styles.buttonLink} to={`/rally/edit/${id}`}>
-        <Icon className={styles["margin-right--1em"]} iconName="Edit" />
+        <Edit20Regular className={styles["margin-right--1em"]} />
         {t("links.editRally")}
       </Link>
       <Link className={styles.buttonLink} to={`/rally/populate/${id}`}>
-        <Icon className={styles["margin-right--1em"]} iconName="AddGroup" />
+        <PeopleAdd20Regular className={styles["margin-right--1em"]} />
         {t("links.populateSingers")}
       </Link>
       <Link className={styles.buttonLink} to={`/leaderboard/view/${id}`}>
-        <Icon className={styles["margin-right--1em"]} iconName="Trophy" />
+        <Trophy20Regular className={styles["margin-right--1em"]} />
         {t("links.leaderboard")}
       </Link>
     </div>

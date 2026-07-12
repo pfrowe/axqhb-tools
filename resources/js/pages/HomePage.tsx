@@ -1,83 +1,64 @@
 import { useMemo } from "react";
-import { Trans, useTranslation } from "react-i18next";
-import PersonaCard from "../components/PersonaCard";
+import { useTranslation } from "react-i18next";
+import { Card, CardHeader, CardPreview, Image, Text } from "@fluentui/react-components";
+
+interface ICardProps {
+  key: string;
+  onClickHref: string;
+  previewProps: {
+    previewImages: string[];
+  }
+  titleProps: {
+    title: string;
+  }
+}
 
 const HomePage = () => {
   const { t } = useTranslation("app");
-  const cards = useMemo(() => ([
+  const cards = useMemo<ICardProps[]>(() => ([
     {
       key: "rallies",
       onClickHref: "/rallies",
       previewProps: {
-        previewImages: [
-          {
-            linkProps: { href: "/rallies" },
-            name: <Trans i18nKey="app:homepage.cards.preview.rallies.name" t={t}>Rallies</Trans>,
-            previewImageSrc: "/images/main-street.jpg",
-          },
-        ],
+        previewImages: ["/images/main-street.jpg"],
       },
       titleProps: {
-        styles: {
-          root: {
-            height: "3.5em",
-            textAlign: "center"
-          },
-        },
-        title: (
-          <Trans i18nKey="app:homepage.cards.title.rallies.name" t={t} />),
+        title: t("homepage.cards.title.rallies.name"),
       },
     },
     {
       key: "singers",
       onClickHref: "/singers",
       previewProps: {
-        previewImages: [
-          {
-            linkProps: { href: "/singers" },
-            name: <Trans i18nKey="app:homepage.cards.preview.singers.name" t={t}>Singers</Trans>,
-            previewImageSrc: "/images/after-hours.jpg",
-          },
-        ],
+        previewImages: ["/images/after-hours.jpg"],
       },
       titleProps: {
-        styles: {
-          root: {
-            height: "3.5em",
-            textAlign: "center"
-          },
-        },
-        title: (
-          <Trans i18nKey="app:homepage.cards.title.singers.name" t={t} />),
+        title: t("homepage.cards.title.singers.name"),
       },
     },
     {
       key: "leaderboard",
       onClickHref: "/leaderboard",
       previewProps: {
-        previewImages: [
-          {
-            linkProps: { href: "/leaderboard" },
-            name: <Trans i18nKey="app:homepage.cards.preview.leaderboard.name" t={t}>Leaderboard</Trans>,
-            previewImageSrc: "/images/forefront.jpg",
-          },
-        ],
+        previewImages: ["/images/forefront.jpg"],
       },
       titleProps: {
-        styles: {
-          root: {
-            height: "3.5em",
-            textAlign: "center"
-          },
-        },
-        title: (
-          <Trans i18nKey="app:homepage.cards.title.leaderboard.name" t={t} />),
+        title: t("homepage.cards.title.leaderboard.name"),
       },
     },
   ]), []);
-  const mapCard = (card: any, index: number) => {
+  const mapCard = (card: ICardProps, index: number) => {
     const key = ("00" + index).slice(-2);
-    return (<PersonaCard key={key} {...card} />);
+    const onClickHref = () => (window.location.href = card.onClickHref);
+    return (<Card key={key} onClick={onClickHref}>
+      <CardPreview>
+        <Image
+          alt={card.titleProps.title}
+          srcSet={card.previewProps.previewImages.join(", ")}
+        />
+      </CardPreview>
+      <CardHeader header={<Text size={500}>{card.titleProps.title}</Text>} />
+    </Card>);
   };
   return (
     <main className="flex--horizontal flex-justify--center" id="main">

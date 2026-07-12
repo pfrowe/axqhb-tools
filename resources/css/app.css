@@ -5,10 +5,17 @@
   --bgcolor--super-status: rgba(0, 0, 136, 0.5);
   --bgcolor--tramp-status: rgba(0, 136, 0, 0.5);
   --bgcolor--ultra-status: rgba(136, 0, 136, 0.5);
+  --body--bgcolor--dark: rgb(17, 17, 17);
+  --body--bgcolor--light: rgb(221, 221, 221);
+  --body--color--dark: rgb(221, 221, 221);
+  --body--color--light: rgb(17, 17, 17);
   --color--error: rgb(164, 38, 44);
   --color--super-progress: rgba(0, 0, 192, 0.5);
   --color--tramp-progress: rgba(0, 192, 0, 0.5);
   --color--ultra-progress: rgba(192, 0, 192, 0.5);
+  --body--font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+  --body-font-weight: 400;
+  --body-font-size: 14px;
   --hue-voice--bari: 120;
   --hue-voice--bass: 240;
   --hue-voice--guest: 300;
@@ -123,6 +130,23 @@
 
   100% {
     background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.15);
+  }
+}
+
+body {
+  font-family: var(--body--font-family);
+  font-size: var(--body-font-size);
+  font-weight: var(--body-font-weight);
+  margin: 0;
+
+  &.dark {
+    background-color: var(--body--bgcolor--dark);
+    color: var(--body--color--dark);
+  }
+
+  &.light {
+    background-color: var(--body--bgcolor--light);
+    color: var(--body--color--light);
   }
 }
 
@@ -245,152 +269,20 @@ main {
   max-height: 2em;
 }
 
-.ms-DocumentCard--compact {
-  border-style: solid;
-  border-width: 1px;
-}
-
-.ms-DocumentCard--compact.bari {
-  background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.15);
-  border-color: hsla(var(--hue-voice--bari), 100%, 25%, 1.0);
-}
-
-.ms-DocumentCard--compact.bari.accepted {
-  background-color: hsla(var(--hue-voice--bari), 100%, 50%, 0.5);
-}
-
-.ms-DocumentCard--compact.bari.received {
-  animation: blink--bari 1.0s linear infinite;
-}
-
-.ms-DocumentCard--compact.bari.sent {
-  animation: blink--bari 3.0s linear infinite;
-}
-
-.ms-DocumentCard--compact.bass {
-  background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.15);
-  border-color: hsla(var(--hue-voice--bass), 100%, 25%, 1.0);
-}
-
-.ms-DocumentCard--compact.bass.accepted {
-  background-color: hsla(var(--hue-voice--bass), 100%, 50%, 0.5);
-}
-
-.ms-DocumentCard--compact.bass.received {
-  animation: blink--bass 1.0s linear infinite;
-}
-
-.ms-DocumentCard--compact.bass.sent {
-  animation: blink--bass 3.0s linear infinite;
-}
-
-.ms-DocumentCard--compact.guest {
-  background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.15);
-  border-color: hsla(var(--hue-voice--guest), 100%, 25%, 1.0);
-}
-
-.ms-DocumentCard--compact.guest.accepted {
-  background-color: hsla(var(--hue-voice--guest), 100%, 50%, 0.5);
-}
-
-.ms-DocumentCard--compact.guest.received {
-  animation: blink--guest 1.0s linear infinite;
-}
-
-.ms-DocumentCard--compact.guest.sent {
-  animation: blink--guest 3.0s linear infinite;
-}
-
-.ms-DocumentCard--compact.lead {
-  background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.15);
-  border-color: hsla(var(--hue-voice--lead), 100%, 25%, 1.0);
-}
-
-.ms-DocumentCard--compact.lead.accepted {
-  background-color: hsla(var(--hue-voice--lead), 100%, 50%, 0.5);
-}
-
-.ms-DocumentCard--compact.lead.received {
-  animation: blink--lead 1.0s linear infinite;
-}
-
-.ms-DocumentCard--compact.lead.sent {
-  animation: blink--lead 3.0s linear infinite;
-}
-
-.ms-DocumentCard--compact.tenor {
-  background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.15);
-  border-color: hsla(var(--hue-voice--tenor), 100%, 25%, 1.0);
-}
-
-.ms-DocumentCard--compact.tenor.accepted {
-  background-color: hsla(var(--hue-voice--tenor), 100%, 50%, 0.5);
-}
-
-.ms-DocumentCard--compact.tenor.received {
-  animation: blink--tenor 1.0s linear infinite;
-}
-
-.ms-DocumentCard--compact.tenor.sent {
-  animation: blink--tenor 3.0s linear infinite;
-}
-
-.ms-DocumentCard--compact.sticker i[data-icon-name] {
-  font-size: min(24pt, 5vw);
-}
-
-.ms-DocumentCard--compact.sticker .ms-DocumentCardPreview {
-  flex-shrink: 0;
-  width: calc(min(24pt, 5vw) + 1em);
-}
-
-.width--100pct {
-  width: 100%;
-}
-
-label input {
-  display: block;
-}
-
-label input[type=checkbox],
-label input[type=radio] {
-  display: inline-block;
-  margin-right: 1em;
-}
-
-@media only screen and (max-width: 767px) {
-
-  div#app,
-  main {
-    margin: 0;
-    max-width: 100vw;
-    padding: 0;
-  }
-
-  main * {
-    max-width: 100vw;
-  }
-
-  div.ms-DocumentCard--compact {
-    max-width: calc(50vw - 2em);
-    min-width: calc(50vw - 2em);
-  }
-}
-
 @media only screen and (min-width: 768px) {
-  div.ms-DocumentCard--compact {
+  div.singer-card {
     max-width: calc(256px - 0.75em);
   }
 }
 
 @media only screen and (min-width: 1024px) {
-  div.ms-DocumentCard--compact {
+  div.singer-card {
     max-width: calc(256px - 1em);
   }
 }
 
 @media only screen and (min-width: 1280px) {
-  div.ms-DocumentCard--compact {
+  div.singer-card {
     max-width: calc(256px - 1.2em);
   }
 }

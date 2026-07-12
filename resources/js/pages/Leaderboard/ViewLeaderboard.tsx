@@ -1,6 +1,6 @@
 import { CheckboxVisibility, DetailsList, SelectionMode } from "@fluentui/react";
 import { useMachine } from "@xstate/react";
-import { useCallback, useContext, useEffect, useMemo, useReducer, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useReducer } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { ViewLeaderboard as machineDefinition } from "../Machines";

@@ -1,16 +1,18 @@
-import { MessageBar, MessageBarType, ProgressIndicator, Stack, Text } from "@fluentui/react";
+import { MessageBar, ProgressBar, Text } from "@fluentui/react-components";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { usePopulateSingersContext } from "../../contexts/PopulateSingersContext";
+
+import styles from "./Wizard.module.scss";
 
 const WizardPage4 = () => {
   const { t } = useTranslation("rally");
   const { operationProgress: { completed, currentOperation, error, status, total } } = usePopulateSingersContext();
   const completion = useMemo(() => total > 0 ? completed / total : 0, [completed, total]);
   return (
-    <Stack tokens={{ childrenGap: 20 }}>
-      <Stack tokens={{ childrenGap: 10 }}>
-        <Text variant="large" block>
+    <div className={styles["flex-vertical"]}>
+      <div className={styles["flex-vertical"]}>
+        <Text block size={500}>
           {status === "completed"
             ? t("wizard.page4.completed", "Import completed!")
             : status === "error"
@@ -24,16 +26,16 @@ const WizardPage4 = () => {
             </Text>
           ) : (<></>)
         }
-        <ProgressIndicator
-          percentComplete={completion}
-          label={total
+        <ProgressBar
+          content={total
             ? `${Math.round(completion * 100)}% - ${completed || 0} / ${total || 0}`
             : undefined
           }
+          value={completion}
         />
         {status === "completed"
           ? (
-            <MessageBar messageBarType={MessageBarType.success}>
+            <MessageBar intent="success">
               {t("wizard.page4.success", "All {{count}} operations completed successfully!",
                 { count: completed || 0 })}
             </MessageBar>
@@ -41,13 +43,13 @@ const WizardPage4 = () => {
         }
         {status === "error"
           ? (
-            <MessageBar messageBarType={MessageBarType.error}>
+            <MessageBar intent="error">
               {error || t("wizard.page4.genericError", "An error occurred during import")}
             </MessageBar>
           ) : (<></>)
         }
-      </Stack>
-    </Stack>
+      </div>
+    </div>
   );
 };
 WizardPage4.displayName = "WizardPage4";

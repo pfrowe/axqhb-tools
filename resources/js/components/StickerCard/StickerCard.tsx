@@ -1,18 +1,13 @@
-import {
-  DefaultButton, Dialog, DialogContent, DialogFooter, DocumentCard, DocumentCardPreview, DocumentCardStatus,
-  DocumentCardTitle, DocumentCardType,
-  IDialogContentProps,
-  IDocumentCardPreviewProps,
-  IDocumentCardProps
-} from "@fluentui/react";
+import * as Fluent from "@fluentui/react-components";
 import { useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TrampContext } from "../../contexts";
 import { ISinger, ISticker, StickerStatus } from "../../helpers/GraphQL";
 
-interface IStickerCardProps extends IDocumentCardProps {
+interface IStickerCardProps {
   other: ISinger;
   sticker: ISticker;
+  [key: string]: any;
 }
 
 const StickerCard = ({ other, sticker, ...props }: IStickerCardProps) => {
@@ -38,11 +33,11 @@ const StickerCard = ({ other, sticker, ...props }: IStickerCardProps) => {
     () => ({ "received": "decline", "send": "cancel", "sent": "cancel" }),
     []
   );
-  const dialogContentProps = useMemo<IDialogContentProps>(
+  const dialogContentProps = useMemo<Fluent.DialogContentProps>(
     () => ({ title: `${preferred_name ?? given_name} ${family_name}` }),
     [family_name, given_name, preferred_name]
   );
-  const propsPreview = useMemo<IDocumentCardPreviewProps>(
+  const propsPreview = useMemo<any>(
     () => ({
       previewImages: [{ previewIconProps: { iconName: iconNames[status] ?? iconNames["undefined"], } }],
       styles: { root: { background: "transparent" } }
@@ -57,35 +52,43 @@ const StickerCard = ({ other, sticker, ...props }: IStickerCardProps) => {
   const handleCardClick = useCallback(() => (setDialogOpen(true)), [setDialogOpen]);
   const { t } = useTranslation("tramp");
   return (<>
-    <DocumentCard
+    <Fluent.Card
       {...props}
       className={`flex-align--center flex-justify--center sticker ${props?.className}`}
       onClick={handleCardClick}
-      type={DocumentCardType.compact}>
-      <DocumentCardPreview {...propsPreview}></DocumentCardPreview>
+      size="small"
+    >
+      <Fluent.CardPreview {...propsPreview}></Fluent.CardPreview>
       <div className="flex--vertical">
-        <DocumentCardTitle title={`${preferred_name ?? given_name} ${family_name}`} />
-        <DocumentCardStatus status={t(`status.${status}`)} styles={{ root: { background: "transparent" } }} />
+        <Fluent.CardHeader title={`${preferred_name ?? given_name} ${family_name}`} />
+        <Fluent.CardFooter style={{ background: "transparent" }}>{t(`status.${status}`)}</Fluent.CardFooter>
       </div>
-    </DocumentCard>
-    <Dialog dialogContentProps={dialogContentProps} hidden={!isDialogOpen} onDismiss={onDismiss}>
-      <DialogContent>
-        {t(`dialog.${status}`, { other: `${preferred_name ?? given_name} ${family_name}` })}
-      </DialogContent>
-      {
-        defaultAction[status] == null
-          ? (<></>)
-          : (<DialogFooter>
-            <DefaultButton
-              text={t(`buttons.${status}.no`)}
-              onClick={handleButtonClick(secondaryAction[status])} />
-            <DefaultButton
-              primary
-              text={t(`buttons.${status}.yes`)}
-              onClick={handleButtonClick(defaultAction[status])} />
-          </DialogFooter>)
-      }
-    </Dialog>
+    </Fluent.Card>
+    <Fluent.Dialog open={isDialogOpen} onOpenChange={(_, { open }) => setDialogOpen(open)}>
+      <Fluent.DialogSurface>
+        <Fluent.DialogContent {...dialogContentProps}>
+          {t(`dialog.${status}`, { other: `${preferred_name ?? given_name} ${family_name}` })}
+        </Fluent.DialogContent>
+        {
+          defaultAction[status] == null
+            ? (<></>)
+            : (<Fluent.DialogActions>
+              <Fluent.Button
+                appearance="secondary"
+                onClick={handleButtonClick(secondaryAction[status])}
+              >
+                {t(`buttons.${status}.no`)}
+              </Fluent.Button>
+              <Fluent.Button
+                appearance="primary"
+                onClick={handleButtonClick(defaultAction[status])}
+              >
+                {t(`buttons.${status}.yes`)}
+              </Fluent.Button>
+            </Fluent.DialogActions>)
+        }
+      </Fluent.DialogSurface>
+    </Fluent.Dialog>
   </>);
 };
 StickerCard.displayName = "StickerCard";

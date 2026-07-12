@@ -68,6 +68,7 @@
     "page2": {
       "description": "Map the columns from your Excel file to the corresponding fields in our system.",
       "dropdownPlaceholder": "Select a target field…",
+      "example": "Example",
       "fieldsFound": "Found {{count}} field(s) in the Excel file:",
       "info": "Map each imported field to a corresponding singer database field. Fields left unmapped will be ignored.",
       "noFields": "No fields found in the Excel file.",

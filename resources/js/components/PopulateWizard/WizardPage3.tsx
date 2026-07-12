@@ -1,4 +1,5 @@
-import { DefaultButton, IconButton, PrimaryButton, Stack, StackItem, Text } from "@fluentui/react";
+import { Button, Text } from "@fluentui/react-components";
+import { ChevronDownRegular, ChevronUpRegular } from "@fluentui/react-icons";
 import { useCallback, useMemo, useReducer, useState } from "react";
 import { useTranslation } from "react-i18next";
 import EditableSingerCard from "./EditableSingerCard";
@@ -44,70 +45,65 @@ const WizardPage3: React.FC<IWizardPage3Props> = ({ onNext, onPrevious }) => {
   );
   return (totalCards > 0)
     ? (
-      <Stack tokens={{ childrenGap: 20 }}>
-        <Text variant="large" block>
+      <div className={styles["flex--vertical"]}>
+        <Text block size={500}>
           {t("wizard.page3.title", "Review Data")}
         </Text>
         <Text block>
           {t("wizard.page3.description", "Review the data that will be imported based on your field mappings. Make sure everything looks correct before proceeding.")}
         </Text>
-        <Stack horizontal tokens={{ childrenGap: 20 }}>
-          <StackItem grow>
+        <div className={styles["flex--horizontal"]}>
+          <div style={{ flex: 1 }}>
             <EditableSingerCard
-              key={currentCardIndex}
-              index={currentCardIndex}
-              imported={currentSinger?.imported ?? {}}
               dbSinger={currentSinger?.matched ?? {}}
-              score={score}
-              registered={registered}
+              imported={currentSinger?.imported ?? {}}
+              index={currentCardIndex}
               initialState={cardEdits[currentCardIndex] ?? {}}
+              key={`singer--${currentCardIndex}`}
               onChange={onChange}
+              registered={registered}
+              score={score}
             />
-          </StackItem>
-
-          <StackItem>
-            <Stack className={styles.navigation} horizontalAlign="center" verticalAlign="center" tokens={{ childrenGap: 10 }}>
-              <IconButton
-                iconProps={{ iconName: "ChevronUp" }}
-                onClick={onNavigate("previous")}
+          </div>
+          <div>
+            <div className={styles["vertical-navigation"]}>
+              <Button
                 disabled={isFirstCard}
+                onClick={onNavigate("previous")}
                 title={t("wizard.page3.previousSinger", "Previous Singer")}
-              />
+              ><ChevronUpRegular /></Button>
               <Text className={styles.position} block>
                 {currentCardIndex + 1} / {totalCards}
               </Text>
-              <IconButton
-                iconProps={{ iconName: "ChevronDown" }}
-                onClick={onNavigate("next")}
+              <Button
                 disabled={isLastCard}
+                onClick={onNavigate("next")}
                 title={t("wizard.page3.nextSinger", "Next Singer")}
-              />
-            </Stack>
-          </StackItem>
-        </Stack>
+              ><ChevronDownRegular /></Button>
+            </div>
+          </div>
+        </div>
 
-        <Stack horizontal tokens={{ childrenGap: 10 }} horizontalAlign="space-between">
-          <StackItem>
-            <DefaultButton
-              text={t("wizard.action.previous", "Previous")}
-              onClick={onPrevious}
-            />
-          </StackItem>
-          <StackItem>
-            <PrimaryButton
-              text={t("wizard.action.next", "Next")}
-              onClick={() => (onNext(cardEdits))}
-            />
-          </StackItem>
-        </Stack>
-      </Stack>
+        <div className={styles["horizontal-navigation"]}>
+          <Button
+            appearance="secondary"
+            onClick={onPrevious}
+          >
+            {t("wizard.action.previous", "Previous")}
+          </Button>
+          <Button
+            appearance="primary"
+            onClick={() => (onNext(cardEdits))}
+          >
+            {t("wizard.action.next", "Next")}
+          </Button>
+        </div>
+      </div>
     ) : (
-      <Stack tokens={{ childrenGap: 20 }}>
-        <Text variant="large" block>
-          {t("wizard.page3.title", "Review Data")}
-        </Text>
+      <div className={styles["vertical-navigation"]}>
+        <Text size={500} block>{t("wizard.page3.title", "Review Data")}</Text>
         <Text block>{t("wizard.page3.noSingers", "No singers to review.")}</Text>
-      </Stack>
+      </div>
     );
 };
 

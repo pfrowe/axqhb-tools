@@ -1,3 +1,5 @@
+@use "./Wizard.module.scss";
+
 .editable__form {
   --form--found-background: rgb(255, 255, 0, 0.15);
   --form--found-border: rgb(255, 255, 0, 0.3);
@@ -68,6 +70,10 @@
   padding-left: 0.5em;
   padding-right: 0.5em;
   padding-top: 0;
+
+  & input {
+    width: 50ex;
+  }
 
   & .fieldName {
     font-weight: 600;

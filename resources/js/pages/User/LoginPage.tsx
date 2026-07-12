@@ -1,5 +1,5 @@
 import * as React from "react";
-import { MessageBar, MessageBarType, PrimaryButton, TextField } from "@fluentui/react";
+import { MessageBar, Button, Input } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../axios";
@@ -42,32 +42,27 @@ const LoginPage = () => {
       <section className="div--rows gap--1em margin--2em" id="main">
         <h1>{t("title.login")}</h1>
         {(errors as any)["*"]
-          ? (<MessageBar isMultiline={false} messageBarType={MessageBarType.error}>{(errors as any)["*"]}</MessageBar>)
+          ? (<MessageBar intent="error">{(errors as any)["*"]}</MessageBar>)
           : (<></>)
         }
         <label>
           {t("label.email")}
-          <TextField
-            errorMessage={(errors as any).email}
+          <Input
+            type="email"
             onChange={onChange_text("email")}
             required={true}
-            size={64}
-            type="email"
           />
         </label>
         <label>
           {t("label.password")}
-          <TextField
-            canRevealPassword={true}
-            errorMessage={(errors as any).password}
+          <Input
+            type="password"
             onChange={onChange_text("password")}
             required={true}
-            revealPasswordAriaLabel={t("label.reveal_password")}
-            type="password"
           />
         </label>
         <div className="div--form-buttons">
-          <PrimaryButton onClick={onSubmit} type="submit">{t("submit.login")}</PrimaryButton>
+          <Button appearance="primary" onClick={onSubmit} type="submit">{t("submit.login")}</Button>
         </div>
         <div className="div--columns flex-justify--space-between width--100pct">
           <Link to="/user/forgot">{t("link.forgot")}</Link>

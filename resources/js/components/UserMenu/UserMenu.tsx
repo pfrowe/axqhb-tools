@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DefaultButton, IContextualMenuItem } from "@fluentui/react";
+import { Button } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 import axios from "../../axios";
 import { useAuth } from "../../contexts/AuthContext";
@@ -21,25 +21,29 @@ const UserMenu = () => {
     },
     [setUser]
   );
-  const menuItems = React.useMemo<IContextualMenuItem[]>(
-    () => (
-      user
-        ? [
-          { key: "logout", onClick: onClick_logout, text: t("link.logout") },
-          { key: "profile", onClick: onClick_link("profile"), text: t("link.profile") }
-        ] : [
-          { key: "login", onClick: onClick_link("login"), text: t("link.login") },
-          { key: "register", onClick: onClick_link("register"), text: t("link.register") },
-          { key: "forgot", onClick: onClick_link("forgot"), text: t("link.forgot") },
-          { key: "reset", onClick: onClick_link("reset"), text: t("link.reset") }
-        ]
-    ),
-    [onClick_link, onClick_logout]
-  );
+
   return (
-    <DefaultButton iconProps={{ iconName: "Contact" }} menuProps={{ items: menuItems }}>
-      {t("label.menu")}
-    </DefaultButton>
+    <div style={{ display: "flex", gap: "10px" }}>
+      {user ? (
+        <>
+          <Button appearance="secondary" onClick={onClick_link("profile")}>
+            {t("link.profile")}
+          </Button>
+          <Button appearance="secondary" onClick={onClick_logout}>
+            {t("link.logout")}
+          </Button>
+        </>
+      ) : (
+        <>
+          <Button appearance="secondary" onClick={onClick_link("login")}>
+            {t("link.login")}
+          </Button>
+          <Button appearance="secondary" onClick={onClick_link("register")}>
+            {t("link.register")}
+          </Button>
+        </>
+      )}
+    </div>
   );
 };
 UserMenu.displayName = "UserMenu";

@@ -1,0 +1,12 @@
+.preview {
+  display: flex;
+  flex-direction: column;
+  height: 15rem;
+  justify-content: center;
+
+  & img {
+    max-height: 15rem;
+    max-width: 15rem;
+    object-fit: contain;
+  }
+}

@@ -1,3 +1,5 @@
+import { Button, MessageBar, Input, Text, Image } from "@fluentui/react-components";
+import { DatePicker } from "@fluentui/react-datepicker-compat";
 import { useMachine } from "@xstate/react";
 import { useCallback, useContext, useEffect, useReducer, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -5,60 +7,55 @@ import { useParams } from "react-router-dom";
 import { EditRally as machineDefinition } from "../Machines";
 import CONSTANTS from "../../app.constants";
 import { AppContext, AuthContext } from "../../contexts";
-import { DatePicker, DefaultButton, MessageBar, MessageBarType, PrimaryButton, TextField } from "@fluentui/react";
+import { IRally } from "../../helpers/GraphQL";
 
-import "../../../css/rally.css";
 import styles from "./Rally.module.scss";
+
+interface ITimestampedRally extends IRally {
+  timestamp: number;
+}
 
 const EditRally = () => {
   const { setTitle } = useContext(AppContext);
   const { csrfToken } = AuthContext.useAuth();
   const [errors, setErrors] = useState({});
   const [messages, setMessages] = useState({});
-  const { id } = useParams();
+  const { id } = useParams() as Record<string, string>;
   const { t } = useTranslation("rally");
   const [timestamp, setTimestamp] = useReducer(() => (Date.now()), Date.now());
-  const mergeValues = (oldValues: any, newValues: any) => ({ ...oldValues, ...newValues, timestamp });
-  const [values, setValue] = useReducer(mergeValues, {});
+  const mergeValues = (oldValues: ITimestampedRally, newValues: Partial<IRally>): ITimestampedRally =>
+    ({ ...oldValues, ...newValues, timestamp });
+  const [values, setValue] = useReducer(mergeValues, { timestamp } as ITimestampedRally);
   const [{ context }, send] = useMachine(machineDefinition);
   useEffect(
     () => (setTitle(`✏ ${context.rally?.name ?? t("placeholderNew")}`), undefined),
     [context.rally?.name, setTitle, t]
   );
-  useEffect(() => (send({ type: "INIT", id: (id as any) * 1 }), undefined), [id, send]);
+  useEffect(() => (send({ type: "INIT", id: parseInt(id) }), undefined), [id, send]);
   useEffect(() => (setTimestamp(), setValue(context.rally ?? {}), undefined), [context.rally, setTimestamp]);
   const formatDatePostValue = useCallback(
-    (date: any) => ((date != null) ? new Date(date).toISOString().split("T")[0] : null),
+    (date: Date | null) => ((date != null) ? new Date(date).toISOString().split("T")[0] : null),
+    []
+  );
+  const getDateFromValue = useCallback(
+    (date: Date | string | null) => ((date != null) ? new Date(date) : null),
     []
   );
   const displayMessages = useCallback(
-    (messages: any, type = MessageBarType.info) => {
+    (messages: any, intent: "error" | "warning" | "success" | "info" = "info") => {
       const mapMessage = (message: any, index: number) => (<div key={`message--${index}`}>{message}</div>);
       return (messages == null)
         ? null
         : (
-          <MessageBar isMultiline={Array.isArray(messages)} messageBarType={type}>
+          <MessageBar intent={intent}>
             {Array.isArray(messages) ? messages.map(mapMessage) : mapMessage(messages, 0)}
           </MessageBar>
         );
     },
     []
   );
-  const getErrors = useCallback(
-    (fieldName: string) => {
-      const mapLine = (line: any, index: number) => (<div key={`${fieldName}-error--${index}`}>{line}</div>);
-      return ((errors as any)[fieldName] == null)
-        ? null
-        : (
-          (typeof (errors as any)[fieldName] === "string")
-            ? (errors as any)[fieldName]
-            : (<div className="div--rows">{(errors as any)[fieldName].map(mapLine)}</div>)
-        );
-    },
-    [errors]
-  );
   const onChange_date = useCallback(
-    (fieldName: string) => (newDate: any) => (setValue({ [fieldName]: newDate })),
+    (fieldName: string) => (newDate: Date | null) => (setValue({ [fieldName]: newDate })),
     [setValue]
   );
   const onChange_text = useCallback(
@@ -66,8 +63,8 @@ const EditRally = () => {
     [setValue]
   );
   const onFormat_date = useCallback(
-    (date: any) => {
-      const formatDate = (date: any) => {
+    (date: Date | null) => {
+      const formatDate = (date: Date) => {
         const options = [{ day: "numeric" }, { month: "short" }, { year: "numeric" }];
         const parts = options.map((option: any) => (new Intl.DateTimeFormat("en-US", option).format(new Date(date))));
         return parts.join(" ");
@@ -80,7 +77,7 @@ const EditRally = () => {
     async (event: any) => {
       const onUpdate_success = (responseData: any) => {
         setErrors({});
-        setMessages({ "*": ((id as any) > 0) ? t("message.updateSuccess") : t("message.createSuccess") });
+        setMessages({ "*": (parseInt(id) > 0) ? t("message.updateSuccess") : t("message.createSuccess") });
         setTimeout(
           () => (window.location.href = `/rally/view/${responseData.data[Object.keys(responseData.data)[0]].id}`),
           2000
@@ -92,7 +89,7 @@ const EditRally = () => {
       try {
         const { image_url, name, start_date, stop_date } = values as any;
         let query: string;
-        if ((id as any) > 0) {
+        if (parseInt(id) > 0) {
           query = `mutation($id: ID!, $name: String!, $image_url: String, $start_date: Date, $stop_date: Date) {
             updateRally(id: $id, name: $name, image_url: $image_url, start_date: $start_date, stop_date: $stop_date) {
               id
@@ -114,13 +111,13 @@ const EditRally = () => {
           }`;
         }
         const variables = {
-          id: (id as any) * 1,
+          id: parseInt(id),
           image_url,
           name,
           start_date: formatDatePostValue(start_date),
           stop_date: formatDatePostValue(stop_date)
         };
-        if ((id as any) === 0) {
+        if (parseInt(id) === 0) {
           delete variables.id;
         }
         const optionsFetch = {
@@ -156,69 +153,59 @@ const EditRally = () => {
   );
   return context.show.form
     ? (
-      <form>
-        <div className="div--rows gap--1em margin--2em">
-          <div className="div--columns gap--1em" id="main">
-            <div className="div--rows gap--1em">
-              <h1 style={{ textAlign: "center" }}>{t(((id as any) > 0) ? "title.update" : "title.create")}</h1>
-              <h2 style={{ textAlign: "center" }}>
-                {t("subtitle.update", { rally: context.rally?.name ?? t("placeholderNew") })}
-              </h2>
-              {(errors as any)["*"] != null ? displayMessages((errors as any)["*"], MessageBarType.error) : (<></>)}
-              {(messages as any)["*"] != null ? displayMessages((messages as any)["*"], MessageBarType.success) : (<></>)}
-              <label>
-                {t("label.name")}
-                <TextField
-                  defaultValue={(values as any).name}
-                  errorMessage={getErrors("name")}
-                  key={`rally-name--${timestamp}`}
-                  onChange={onChange_text("name")}
-                  required={true}
-                  size={64}
-                  type="text"
-                />
-              </label>
-              <label>
-                <div>
-                  {t("label.image_url")}
-                  <TextField
-                    defaultValue={(values as any).image_url}
-                    errorMessage={getErrors("image_url")}
-                    key={`rally-image_url--${timestamp}`}
-                    onChange={onChange_text("image_url")}
-                    required={false}
-                    size={256}
-                    type="url"
-                  />
-                </div>
-              </label>
-              <label>
-                {t("label.start_date")}
-                <DatePicker
-                  formatDate={onFormat_date}
-                  key={`rally-start_date--${timestamp}`}
-                  onSelectDate={onChange_date("start_date")}
-                  value={(values as any).start_date}
-                />
-              </label>
-              <label>
-                {t("label.stop_date")}
-                <DatePicker
-                  formatDate={onFormat_date}
-                  key={`rally-stop_date--${timestamp}`}
-                  onSelectDate={onChange_date("stop_date")}
-                  value={(values as any).stop_date}
-                />
-              </label>
-            </div>
-            <div>
-              <img src={(values as any).image_url} />
-            </div>
+      <form className={styles.form}>
+        <h1 style={{ textAlign: "center" }}>{t((parseInt(id) > 0) ? "title.update" : "title.create")}</h1>
+        <h2 style={{ textAlign: "center" }}>
+          {t("subtitle.update", { rally: context.rally?.name ?? t("placeholderNew") })}
+        </h2>
+        {(errors as any)["*"] != null ? displayMessages((errors as any)["*"], "error") : (<></>)}
+        {(messages as any)["*"] != null ? displayMessages((messages as any)["*"], "success") : (<></>)}
+        <div className={[styles["flex--horizontal"], styles["gap--1em"]].join(" ")} id="main">
+          <div className={[styles["flex--vertical"], styles["gap--1em"]].join(" ")}>
+            <label className={[styles["flex--vertical"], styles["gap--0_5em"]].join(" ")}>
+              <Text>{t("label.name")}</Text>
+              <Input
+                defaultValue={values.name}
+                key={`rally-name--${timestamp}`}
+                onChange={onChange_text("name")}
+                required={true}
+                type="text"
+              />
+            </label>
+            <label className={[styles["flex--vertical"], styles["gap--0_5em"]].join(" ")}>
+              <Text>{t("label.image_url")}</Text>
+              <Input
+                defaultValue={values.image_url}
+                key={`rally-image_url--${timestamp}`}
+                onChange={onChange_text("image_url")}
+                required={false}
+                type="url"
+              />
+            </label>
+            <label className={[styles["flex--vertical"], styles["gap--0_5em"]].join(" ")}>
+              <Text>{t("label.start_date")}</Text>
+              <DatePicker
+                formatDate={onFormat_date}
+                key={`rally-start_date--${timestamp}`}
+                onSelectDate={onChange_date("start_date")}
+                value={getDateFromValue(values.start_date)}
+              />
+            </label>
+            <label className={[styles["flex--vertical"], styles["gap--0_5em"]].join(" ")}>
+              <Text>{t("label.stop_date")}</Text>
+              <DatePicker
+                formatDate={onFormat_date}
+                key={`rally-stop_date--${timestamp}`}
+                onSelectDate={onChange_date("stop_date")}
+                value={getDateFromValue(values.stop_date)}
+              />
+            </label>
           </div>
-          <div className={styles.actionBar}>
-            <DefaultButton onClick={() => (window.history.back())} type="button">{t("button.cancel")}</DefaultButton>
-            <PrimaryButton onClick={onSubmit} type="submit">{t("button.save")}</PrimaryButton>
-          </div>
+          <div className={styles["image-container"]}><Image src={values.image_url} /></div>
+        </div>
+        <div className={styles.actionBar}>
+          <Button appearance="secondary" onClick={() => (window.history.back())} type="button">{t("button.cancel")}</Button>
+          <Button appearance="primary" onClick={onSubmit} type="submit">{t("button.save")}</Button>
         </div>
       </form>
     ) : (<></>);

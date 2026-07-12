@@ -1,5 +1,5 @@
 import * as React from "react";
-import { MessageBar, MessageBarType, PrimaryButton, TextField } from "@fluentui/react";
+import { MessageBar, Button, Input } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import axios from "../../axios";
@@ -39,21 +39,19 @@ const ForgotPage = () => {
       <section className="div--rows gap--1em margin--2em" id="main">
         <h1>{t("title.forgot")}</h1>
         {(errors as any)["*"]
-          ? (<MessageBar isMultiline={false} messageBarType={MessageBarType.error}>{(errors as any)["*"]}</MessageBar>)
+          ? (<MessageBar intent="error">{(errors as any)["*"]}</MessageBar>)
           : (<></>)
         }
         <label>
           {t("label.email")}
-          <TextField
-            errorMessage={(errors as any).email}
+          <Input
+            type="email"
             onChange={onChange_text("email")}
             required={true}
-            size={64}
-            type="email"
           />
         </label>
         <div className="div--form-buttons">
-          <PrimaryButton onClick={onSubmit} type="submit">{t("submit.forgot")}</PrimaryButton>
+          <Button appearance="primary" onClick={onSubmit} type="submit">{t("submit.forgot")}</Button>
         </div>
       </section>
     </form>

@@ -1,7 +1,9 @@
-import { DefaultButton, MessageBar, MessageBarType, PrimaryButton, Stack, StackItem, Text } from "@fluentui/react";
+import { Button, MessageBar, Text } from "@fluentui/react-components";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { usePopulateSingersContext } from "../../contexts/PopulateSingersContext";
+
+import styles from "./Wizard.module.scss";
 
 interface IWizardPage1Props {
   onFileSelected: (file: File) => void;
@@ -23,20 +25,16 @@ const WizardPage1 = ({ onFileSelected, onNext }: IWizardPage1Props) => {
     }
   };
   return (
-    <Stack tokens={{ childrenGap: 20 }}>
-      <Text variant="large" block>
-        {t("wizard.page1.title", "Select an Excel File")}
-      </Text>
+    <div className={styles["flex--vertical"]}>
+      <Text block size={500}>{t("wizard.page1.title", "Select an Excel File")}</Text>
       <Text block>
         {t("wizard.page1.description", "Choose an Excel file containing singer information. The first worksheet will be read and imported.")}
       </Text>
-
       {context.parseError && (
-        <MessageBar messageBarType={MessageBarType.error}>
+        <MessageBar intent="error">
           {context.parseError}
         </MessageBar>
       )}
-
       <input
         ref={fileInputRef}
         type="file"
@@ -44,31 +42,22 @@ const WizardPage1 = ({ onFileSelected, onNext }: IWizardPage1Props) => {
         onChange={handleFileInputChange}
         style={{ display: "none" }}
       />
-
-      <Stack horizontal tokens={{ childrenGap: 10 }}>
-        <StackItem>
-          <DefaultButton
-            text={t("wizard.action.selectFile", "Select File")}
-            onClick={() => fileInputRef.current?.click()}
-          />
-        </StackItem>
-        {context.excelFile && (
-          <StackItem>
-            <Text>{context.excelFile.name}</Text>
-          </StackItem>
-        )}
-      </Stack>
-
-      <Stack horizontal tokens={{ childrenGap: 10 }} horizontalAlign="end">
-        <StackItem>
-          <PrimaryButton
-            text={t("wizard.action.next", "Next")}
-            onClick={handleSubmitFile}
-            disabled={!context.excelFile}
-          />
-        </StackItem>
-      </Stack>
-    </Stack>
+      <div className={styles["flex--horizontal"]}>
+        <Button appearance="secondary" onClick={() => fileInputRef.current?.click()}>
+          {t("wizard.action.selectFile", "Select File")}
+        </Button>
+        {context.excelFile && (<Text>{context.excelFile.name}</Text>)}
+      </div>
+      <div className={[styles["flex--horizontal"], styles["flex--justify-content--flex-end"]].join(" ")}>
+        <Button
+          appearance="primary"
+          onClick={handleSubmitFile}
+          disabled={!context.excelFile}
+        >
+          {t("wizard.action.next", "Next")}
+        </Button>
+      </div>
+    </div>
   );
 };
 WizardPage1.displayName = "WizardPage1";

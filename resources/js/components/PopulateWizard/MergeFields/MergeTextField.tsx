@@ -1,5 +1,5 @@
-import { Dropdown, Text, TextField } from "@fluentui/react";
-import { useCallback, useMemo, useState } from "react";
+import { Dropdown, Input, Option, OptionOnSelectData, Text } from "@fluentui/react-components";
+import { useCallback, useMemo, useReducer } from "react";
 import { useTranslation } from "react-i18next";
 import { IFieldState } from "../../../contexts/PopulateSingersContext";
 
@@ -13,10 +13,18 @@ interface IMergeTextFieldProps {
   onChange: (state: IFieldState) => void;
 }
 
+interface IOptionProps {
+  display: JSX.Element;
+  key: string;
+  text: string;
+  value: string;
+}
+
 const MergeTextField: React.FC<IMergeTextFieldProps> = (props: IMergeTextFieldProps) => {
   const { databaseValue, fieldName, importedValue, initialState, onChange } = props;
   const { t } = useTranslation("rally");
-  const [state, setState] = useState<IFieldState>(initialState);
+  const mergeState = useCallback((prev: IFieldState, next: Partial<IFieldState>) => ({ ...prev, ...next }), []);
+  const [state, setState] = useReducer(mergeState, initialState);
   const handleChange = useCallback(
     (newState: IFieldState) => {
       setState(newState);
@@ -24,16 +32,40 @@ const MergeTextField: React.FC<IMergeTextFieldProps> = (props: IMergeTextFieldPr
     },
     [onChange]
   );
+  const onChangeSource = useCallback(
+    (_: React.ChangeEvent<HTMLInputElement>, { optionValue }: OptionOnSelectData) =>
+      (handleChange({ source: optionValue as IFieldState["source"] })),
+    [handleChange]
+  );
   const options = useMemo(
-    () => ([
-      { key: "imported", text: `${t("wizard.page3.source.imported")}: ${importedValue ?? ""}` },
-      { key: "db", text: `${t("wizard.page3.source.db")}: ${databaseValue ?? ""}` },
-      { key: "custom", text: t("wizard.page3.source.custom") }
+    (): IOptionProps[] => ([
+      {
+        display: <>{`${t("wizard.page3.source.imported")}: ${importedValue}`}</>,
+        key: "imported",
+        text: `${t("wizard.page3.source.imported")}: ${importedValue}`,
+        value: "imported"
+      },
+      {
+        display: <>{`${t("wizard.page3.source.db")}: ${databaseValue}`}</>,
+        key: "db",
+        text: `${t("wizard.page3.source.db")}: ${databaseValue}`,
+        value: "db"
+      },
+      {
+        display: <>{t("wizard.page3.source.custom")}</>,
+        key: "custom",
+        text: t("wizard.page3.source.custom"),
+        value: "custom"
+      },
     ]),
     [importedValue, databaseValue, t]
   );
+  const mapOption = useCallback(
+    ({ display, key, text, value }: IOptionProps) => (<Option key={key} text={text} value={value}>{display}</Option>),
+    []
+  );
   return (<div className={styles.mergeField}>
-    <Text className={styles.fieldName} variant="small" block>
+    <Text className={styles.fieldName} size={200} block>
       {t(`fields.${fieldName}`, fieldName)}
     </Text>
     {databaseValue != null
@@ -41,26 +73,26 @@ const MergeTextField: React.FC<IMergeTextFieldProps> = (props: IMergeTextFieldPr
         <div className={styles.layout}>
           <div>
             <Dropdown
-              defaultSelectedKey={state.source}
-              options={options}
-              onChange={(_, option) => (handleChange({ ...state, source: option?.key as IFieldState["source"] }))}
-            />
+              defaultSelectedOptions={[state.source]}
+              defaultValue={options.find((o) => (o.value === state.source))?.text}
+              onOptionSelect={onChangeSource}
+            >{options.map(mapOption)}</Dropdown>
           </div>
           {state.source === "custom" && (
             <div>
-              <TextField
+              <Input
                 defaultValue={state.customValue ?? ""}
                 placeholder={t("wizard.page3.enterValue", "Enter value")}
-                onChange={(_, value) => (handleChange({ ...state, customValue: value }))}
+                onChange={(_, data) => (handleChange({ ...state, customValue: data.value }))}
               />
             </div>
           )}
         </div>
       ) : (
-        <TextField
+        <Input
           defaultValue={state.customValue ?? ""}
           placeholder={t("wizard.page3.enterValue", "Enter value")}
-          onChange={(_, value) => (handleChange({ ...state, customValue: value }))}
+          onChange={(_, data) => (handleChange({ ...state, customValue: data.value }))}
         />
       )
     }

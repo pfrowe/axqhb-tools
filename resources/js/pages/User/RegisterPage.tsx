@@ -1,5 +1,5 @@
 import * as React from "react";
-import { MessageBar, MessageBarType, PrimaryButton, TextField } from "@fluentui/react";
+import { MessageBar, Button, Input } from "@fluentui/react-components";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -55,55 +55,43 @@ const RegisterPage = () => {
       <section className="div--rows gap--1em margin--2em" id="main">
         <h1>{t("title.register")}</h1>
         {(errors as any)["*"]
-          ? (<MessageBar isMultiline={false} messageBarType={MessageBarType.error}>{(errors as any)["*"]}</MessageBar>)
+          ? (<MessageBar intent="error">{(errors as any)["*"]}</MessageBar>)
           : (<></>)
         }
         <label>
           {t("label.name")}
-          <TextField
-            errorMessage={getErrors("name")}
+          <Input
             onChange={onChange_text("name")}
             required={true}
-            size={64}
             type="text"
           />
         </label>
         <label>
           {t("label.email")}
-          <TextField
-            errorMessage={getErrors("email")}
+          <Input
             onChange={onChange_text("email")}
             required={true}
-            size={64}
             type="email"
           />
         </label>
         <label>
           {t("label.password")}
-          <TextField
-            canRevealPassword={true}
-            errorMessage={getErrors("password")}
+          <Input
             onChange={onChange_text("password")}
             required={true}
-            revealPasswordAriaLabel={t("label.reveal_password")}
-            size={64}
             type="password"
           />
         </label>
         <label>
           {t("label.password_confirmation")}
-          <TextField
-            canRevealPassword={true}
-            errorMessage={getErrors("password_confirmation")}
+          <Input
             onChange={onChange_text("password_confirmation")}
             required={true}
-            revealPasswordAriaLabel={t("label.reveal_password")}
-            size={64}
             type="password"
           />
         </label>
         <div className="div--form-buttons">
-          <PrimaryButton onClick={onSubmit} type="submit">{t("submit.register")}</PrimaryButton>
+          <Button appearance="primary" onClick={onSubmit} type="submit">{t("submit.register")}</Button>
         </div>
       </section>
     </form>

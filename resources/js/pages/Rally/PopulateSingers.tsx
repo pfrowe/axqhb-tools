@@ -1,4 +1,4 @@
-import { PrimaryButton, Stack, Text, ProgressIndicator } from "@fluentui/react";
+import { Button, ProgressBar, Text } from "@fluentui/react-components";
 import { useMachine } from "@xstate/react";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -7,6 +7,7 @@ import { PopulateSingers as machineDefinition } from "../Machines";
 import { AppContext } from "../../contexts";
 import { WizardPage1, WizardPage2, WizardPage3, WizardPage4 } from "../../components/PopulateWizard";
 import PopulateSingersContext, { IFieldState, MappedField } from "../../contexts/PopulateSingersContext";
+
 import styles from "./Rally.module.scss";
 
 const WIZARD_PAGES = ["requestExcel", "mapFields", "reviewMatches", "writing", "completed"];
@@ -76,18 +77,16 @@ const PopulateSingers = () => {
 
   const renderPage5 = useCallback(
     () => (
-      <Stack tokens={{ childrenGap: 20 }} horizontalAlign="center">
-        <Text variant="large" block>
-          {t("wizard.page5.title", "Import Completed")}
-        </Text>
-        <Text block>
+      <div className={styles["flex-vertical"]}>
+        <Text align="center" block size={500}>{t("wizard.page5.title", "Import Completed")}</Text>
+        <Text align="center" block>
           {t("wizard.page5.description", "The singers have been successfully imported.")}
         </Text>
-        <PrimaryButton
-          text={t("wizard.action.finish", "Finish")}
+        <Button
+          appearance="primary"
           onClick={() => (navigate(`/rally/view/${id}`), undefined)}
-        />
-      </Stack>
+        >{t("wizard.action.finish", "Finish")}</Button>
+      </div>
     ),
     [send, t]
   );
@@ -109,9 +108,7 @@ const PopulateSingers = () => {
       const renderPage = renderPages[pageIndex];
       if (currentPage.startsWith("parsingFile")) {
         return (
-          <Stack tokens={{ childrenGap: 20 }} horizontalAlign="center">
-            <Text>{t("wizard.loading", "Parsing Excel file...")}</Text>
-          </Stack>
+          <div className={styles["flex-vertical"]}><Text>{t("wizard.loading", "Parsing Excel file...")}</Text></div>
         );
       }
       return renderPage();
@@ -121,20 +118,19 @@ const PopulateSingers = () => {
 
   return (
     <main id="main">
-      <h1 className={styles["text-align--center"]}>{t("title.populateSingers")}</h1>
-      <h2 className={styles["text-align--center"]}>{context.rally?.name}</h2>
-
+      <h1 className={[styles["margin--revert"], styles["text-align--center"]].join(" ")}>
+        {t("title.populateSingers")}
+      </h1>
+      <h2 className={[styles["margin--revert"], styles["text-align--center"]].join(" ")}>{context.rally?.name}</h2>
       {isOnWizardPage() && (
         <PopulateSingersContext.Provider value={context}>
-          <Stack className={styles.stack} tokens={{ childrenGap: 20 }}>
-            <Text variant="small" block>
+          <div className={styles["flex-vertical"]}>
+            <Text block size={300}>
               {t("wizard.step", "Step {{current}} of {{total}}", { current: getPageNumber(), total: WIZARD_PAGES.length })}
             </Text>
-            <ProgressIndicator
-              percentComplete={getPageNumber() / WIZARD_PAGES.length}
-            />
+            <ProgressBar value={getPageNumber() / WIZARD_PAGES.length} />
             {renderWizardContent()}
-          </Stack>
+          </div>
         </PopulateSingersContext.Provider>
       )}
     </main>
