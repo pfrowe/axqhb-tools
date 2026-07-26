@@ -1,4 +1,4 @@
-import { Button, MessageBar, Input, Text, Image } from "@fluentui/react-components";
+import { Button, Image, Input, InputOnChangeData, MessageBar, Text } from "@fluentui/react-components";
 import { DatePicker } from "@fluentui/react-datepicker-compat";
 import { useMachine } from "@xstate/react";
 import { useCallback, useContext, useEffect, useReducer, useState } from "react";
@@ -59,7 +59,7 @@ const EditRally = () => {
     [setValue]
   );
   const onChange_text = useCallback(
-    (fieldName: string) => (_: any, newValue: any) => (setValue({ [fieldName]: newValue })),
+    (fieldName: string) => (_: any, { value }: InputOnChangeData) => (setValue({ [fieldName]: value })),
     [setValue]
   );
   const onFormat_date = useCallback(
