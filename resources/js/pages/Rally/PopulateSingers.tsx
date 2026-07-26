@@ -1,12 +1,12 @@
 import { Button, ProgressBar, Text } from "@fluentui/react-components";
 import { useMachine } from "@xstate/react";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useReducer, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { PopulateSingers as machineDefinition } from "../Machines";
 import { AppContext } from "../../contexts";
 import { WizardPage1, WizardPage2, WizardPage3, WizardPage4 } from "../../components/PopulateWizard";
-import PopulateSingersContext, { IFieldState, MappedField } from "../../contexts/PopulateSingersContext";
+import PopulateSingersContext, { IFieldState, MappedField, MappedValue } from "../../contexts/PopulateSingersContext";
 
 import styles from "./Rally.module.scss";
 
@@ -19,7 +19,23 @@ const PopulateSingers = () => {
   const { t } = useTranslation("rally");
   const [{ context, value: state }, send] = useMachine(machineDefinition);
   const [localFieldMapping, setLocalFieldMapping] = useState<Record<string, MappedField>>({});
-
+  interface ValueMappingMerge {
+    action: "reset" | "update";
+    field: string;
+    value: MappedValue;
+  }
+  const mergeValueMapping = (
+    prev: Record<string, MappedValue>, { action, field, value }: ValueMappingMerge
+  ): Record<string, MappedValue> => {
+    const valueNext = { ...prev };
+    if (action === "reset") {
+      delete valueNext[field];
+    } else {
+      valueNext[field] = { ...valueNext[field], ...value };
+    }
+    return valueNext;
+  };
+  const [localValueMapping, setLocalValueMapping] = useReducer(mergeValueMapping, {});
   useEffect(() => (setTitle(t("title.populateSingers")), undefined), [setTitle, t]);
   useEffect(() => (send({ type: "INIT", params: { id } }), undefined), []);
 
@@ -28,16 +44,27 @@ const PopulateSingers = () => {
     [send]
   );
 
-  const handleFieldMappingChange = useCallback(
+  const handleSubmitFile = useCallback(
+    () => { context.excelFile && send({ type: "SUBMIT_FILE" }) },
+    [context.excelFile, send]
+  );
+
+  const onFieldMappingChange = useCallback(
     (importedField: string, targetField: MappedField) => {
       setLocalFieldMapping(prev => ({ ...prev, [importedField]: targetField }));
     },
     [setLocalFieldMapping]
   );
 
-  const handleSubmitFile = useCallback(
-    () => { context.excelFile && send({ type: "SUBMIT_FILE" }) },
-    [context.excelFile, send]
+  const onValueMappingChange = useCallback(
+    (importedField: string, update: MappedValue) => {
+      setLocalValueMapping({
+        action: Object.keys(update).length > 0 ? "update" : "reset",
+        field: importedField,
+        value: update
+      })
+    },
+    [setLocalValueMapping]
   );
 
   const getCurrentStateName = (): string => {
@@ -55,11 +82,21 @@ const PopulateSingers = () => {
 
   const renderPage2 = useCallback(
     () => {
-      const onNext = () => { send({ type: "NEXT", params: { fieldMapping: localFieldMapping } }); }
+      const onNext = () => {
+        send({ type: "NEXT", params: { fieldMapping: localFieldMapping, valueMapping: localValueMapping } });
+      }
       const onPrevious = () => { send({ type: "PREVIOUS" }); }
-      return (<WizardPage2 {...{ handleFieldMappingChange, localFieldMapping, onNext, onPrevious }} />);
+      const props = {
+        localFieldMapping,
+        onFieldMappingChange,
+        onValueMappingChange,
+        localValueMapping,
+        onNext,
+        onPrevious
+      };
+      return (<WizardPage2 {...props} />);
     },
-    [handleFieldMappingChange, localFieldMapping, send]
+    [onFieldMappingChange, localFieldMapping, onValueMappingChange, localValueMapping, send]
   );
 
   const renderPage3 = useCallback(

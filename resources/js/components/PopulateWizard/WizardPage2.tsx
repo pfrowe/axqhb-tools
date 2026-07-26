@@ -1,58 +1,59 @@
 import React, { useCallback, useMemo } from "react";
-import { Dropdown, Button, MessageBar, Text, OptionOnSelectData, Option } from "@fluentui/react-components";
-import { MAPPED_FIELDS, MappedField, usePopulateSingersContext } from "../../contexts/PopulateSingersContext";
+import { Button, MessageBar, OptionOnSelectData, Text } from "@fluentui/react-components";
+import { MappedField, MappedValue, usePopulateSingersContext } from "../../contexts/PopulateSingersContext";
 import { useTranslation } from "react-i18next";
 import styles from "./Wizard.module.scss";
-
+import FieldMapping from "./FieldMapping";
 interface IWizardPage2Props {
-  handleFieldMappingChange: (importedField: string, targetField: MappedField) => void;
   localFieldMapping: Record<string, MappedField>;
+  localValueMapping: Record<string, MappedValue>;
+  onFieldMappingChange: (importedField: string, targetField: MappedField) => void;
   onNext: () => void;
   onPrevious: () => void;
+  onValueMappingChange: (importedField: string, update: MappedValue) => void;
 }
-const WizardPage2 = ({ handleFieldMappingChange, localFieldMapping, onNext, onPrevious }: IWizardPage2Props) => {
+const WizardPage2 = ({
+  localFieldMapping, localValueMapping, onFieldMappingChange, onNext, onPrevious, onValueMappingChange
+}: IWizardPage2Props) => {
   const context = usePopulateSingersContext();
   const { t } = useTranslation("rally");
-  // Extract field names from the first row of parsed data
   const importedFields = useMemo(
     () => (context.parsedData?.[0] ? Object.keys(context.parsedData[0]) : []),
     [context.parsedData]
   );
-  const mapImportField = useCallback(
-    (importedField: string) => {
-      interface IOption { key: string; text: string }
-      const mapField = (field: MappedField): IOption => (
-        { key: field, text: t(`fields.${field}`, field.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())) }
-      );
-      const mapOption = (field: IOption) => (<Option key={field.key} value={field.key}>{field.text}</Option>);
-      const onChangeDestination = (_: React.ChangeEvent<HTMLInputElement>, { optionValue }: OptionOnSelectData) =>
-        handleFieldMappingChange(importedField, optionValue as MappedField);
-      const sortOption = (left: IOption, right: IOption) => (left.text.localeCompare(right.text));
-      return (<div key={importedField} className={styles["imported-field-cell"]}>
-        <Text>{importedField}</Text>
-        <Dropdown
-          defaultSelectedOptions={[localFieldMapping?.[importedField] || ""]}
-          placeholder={t("wizard.page2.dropdownPlaceholder", "Select a target field...")}
-          onOptionSelect={onChangeDestination}
-          style={{ maxWidth: "300px" }}
-        >{MAPPED_FIELDS.map(mapField).sort(sortOption).map(mapOption)}</Dropdown>
-        {(context.parsedData && context.parsedData.length > 0)
-          ? (
-            <Text className={styles.hint} size={200}>
-              {t("wizard.page2.example", "Example")}: {String(context.parsedData[0][importedField]).substring(0, 50)}
-            </Text>
-          )
-          : (<></>)
-        }
-      </div>);
+  const handleChangeDestination = useCallback(
+    (importedField: string) => (_: React.ChangeEvent<HTMLInputElement>, { optionValue }: OptionOnSelectData) => {
+      onFieldMappingChange(importedField, optionValue as MappedField);
     },
-    [context.parsedData, handleFieldMappingChange, importedFields, localFieldMapping, t]
+    [onFieldMappingChange]
+  );
+  const handleChangeValueMapping = useCallback(
+    (importedField: string, update: MappedValue) => { onValueMappingChange(importedField, update); },
+    []
+  );
+  const mapImportField = useCallback(
+    (importedField: string) => (
+      <FieldMapping
+        defaultValue={localFieldMapping[importedField]}
+        importedField={importedField}
+        key={`fieldMapping--${importedField}`}
+        localValueMapping={localValueMapping}
+        onChangeFieldMapping={handleChangeDestination}
+        onChangeValueMapping={handleChangeValueMapping}
+      />
+    ),
+    [handleChangeDestination, handleChangeValueMapping, localFieldMapping, localValueMapping]
   );
   return (
     <div className={styles["flex--vertical"]}>
-      <Text block size={500}>{t("wizard.page2.title", "Map Fields")}</Text>
+      <Text block size={500}>
+        {t("wizard.page2.title", "Map Fields")}
+      </Text>
       <Text block>
-        {t("wizard.page2.description", "Map the columns from your Excel file to the singer database fields.")}
+        {t(
+          "wizard.page2.description",
+          "Map the columns from your Excel file to the singer database fields."
+        )}
       </Text>
       {importedFields.length > 0 ? (
         <>
@@ -65,7 +66,10 @@ const WizardPage2 = ({ handleFieldMappingChange, localFieldMapping, onNext, onPr
           </Text>
           <div className={styles["imported-fields-grid"]}>{importedFields.map(mapImportField)}</div>
           <MessageBar intent="info">
-            {t("wizard.page2.info", "Map each imported field to a corresponding singer database field. Fields left unmapped will be ignored.")}
+            {t(
+              "wizard.page2.info",
+              "Map each imported field to a corresponding singer database field. Fields left unmapped will be ignored."
+            )}
           </MessageBar>
         </>
       ) : (

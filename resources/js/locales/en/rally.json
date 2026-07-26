@@ -66,13 +66,16 @@
       "title": "Select an Excel File"
     },
     "page2": {
+      "close": "Close",
       "description": "Map the columns from your Excel file to the corresponding fields in our system.",
       "dropdownPlaceholder": "Select a target field…",
       "example": "Example",
       "fieldsFound": "Found {{count}} field(s) in the Excel file:",
       "info": "Map each imported field to a corresponding singer database field. Fields left unmapped will be ignored.",
+      "mapValues": "Map Values",
       "noFields": "No fields found in the Excel file.",
-      "title": "Map Fields"
+      "title": "Map Fields",
+      "valueMappingPlaceholder": "Select mapped value…"
     },
     "page3": {
       "description": "Review the data that will be imported based on your field mappings. Make sure everything looks correct before proceeding.",
@@ -105,6 +108,13 @@
       "description": "The singers have been successfully imported! Click the “Finish” button to view the rally.",
       "title": "Import Complete"
     },
-    "step": "Step {{current}} of {{total}}"
+    "step": "Step {{current}} of {{total}}",
+    "voice_part": {
+      "bari": "Baritone",
+      "bass": "Bass",
+      "lead": "Lead",
+      "none": "None",
+      "tenor": "Tenor"
+    }
   }
 }

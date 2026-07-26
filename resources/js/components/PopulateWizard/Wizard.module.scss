@@ -29,6 +29,12 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+
+  & .imported-field-inputs {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
 }
 
 .imported-fields-grid {
@@ -44,6 +50,23 @@
   justify-content: space-between;
 }
 
+.mapped-value-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  & .mapped-value-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+  }
+}
+
+.position {
+  font-weight: bold;
+  text-align: center;
+}
+
 .vertical-navigation {
   align-items: center;
   display: flex;
@@ -51,9 +74,4 @@
   gap: 1rem;
   justify-content: center;
   min-width: 6em;
-}
-
-.position {
-  font-weight: bold;
-  text-align: center;
 }

@@ -442,7 +442,8 @@ const machineDefinition = setup({
       operationProgress: { total: 0, completed: 0, status: "idle" },
       rally: null,
       singers: [],
-      show: { singers: false, wizard: false }
+      show: { singers: false, wizard: false },
+      valueMapping: {}
     },
     initial: "init",
     states: {
@@ -495,7 +496,9 @@ const machineDefinition = setup({
         entry: [assign({ show: ({ context }) => ({ ...context.show, wizard: true }) })],
         on: {
           NEXT: {
-            actions: [assign(({ event: { params: { fieldMapping } } }) => ({ fieldMapping }))],
+            actions: [
+              assign(({ event: { params: { fieldMapping, valueMapping } } }) => ({ fieldMapping, valueMapping }))
+            ],
             target: "matchSingers"
           },
           PREVIOUS: {

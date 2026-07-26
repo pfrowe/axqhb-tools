@@ -3,7 +3,7 @@ import { LinkDismissRegular } from "@fluentui/react-icons";
 import React, { useCallback, useEffect, useMemo, useReducer } from "react";
 import { useTranslation } from "react-i18next";
 import { MergePhoneNumber, MergeTextField } from "./MergeFields";
-import { IFieldState } from "../../contexts/PopulateSingersContext";
+import PopulateSingersContext, { IFieldState } from "../../contexts/PopulateSingersContext";
 
 import styles from "./EditableSingerCard.module.scss";
 
@@ -20,6 +20,7 @@ interface IEditableSingerCardProps {
 const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
   dbSinger = {}, index, imported = {}, initialState, onChange, score = 0, registered = false
 }) => {
+  const { valueMapping } = React.useContext(PopulateSingersContext);
   const { t } = useTranslation("rally");
   const fields = useMemo(
     () => Array.from(new Set([...Object.keys(imported || {}), ...Object.keys(dbSinger || {})])),
@@ -165,11 +166,8 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
     [dbSinger, imported, initialState]
   );
   const defaultVoicePart = useMemo(
-    () => {
-      let result = hashDefaultValue.voice_part?.toLocaleLowerCase?.() ?? "";
-      return (result === "baritone") ? "bari" : result;
-    },
-    [hashDefaultValue]
+    () => (valueMapping.voice_part?.[hashDefaultValue.voice_part] ?? ""),
+    [hashDefaultValue, valueMapping]
   );
   const voiceOptions = useMemo(
     () => (<>

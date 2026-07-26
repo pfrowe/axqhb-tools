@@ -18,6 +18,12 @@ export const MAPPED_FIELDS: MappedField[] = [
 
 export type MappedRecord = Record<MappedField, string>;
 
+export type MappedValue = Record<string, string>; // Maps imported values to target values for a specific field
+
+export const fieldsToMap: Record<string, string[]> = {
+  voice_part: ["tenor", "lead", "bari", "bass", "none"]
+};
+
 interface IMatchedRecord {
   id: number;
   matchScore: number;
@@ -89,6 +95,7 @@ export interface IPopulateSingersContext {
   rally: IRally | null;
   singers: any[];
   show: Record<ShowElements, boolean>;
+  valueMapping?: Record<string, MappedValue>; // Maps imported values to target values for specific fields
 }
 
 const PopulateSingersContext = React.createContext<IPopulateSingersContext>({
@@ -96,7 +103,8 @@ const PopulateSingersContext = React.createContext<IPopulateSingersContext>({
   loaded: { excel: false, rally: false, singers: false },
   rally: null,
   singers: [],
-  show: { singers: false, wizard: false }
+  show: { singers: false, wizard: false },
+  valueMapping: {}
 });
 
 export const usePopulateSingersContext = () => React.useContext(PopulateSingersContext);
