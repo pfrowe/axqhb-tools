@@ -336,7 +336,7 @@ const normalizePhone = (phone: string): string => {
 
 // Match imported singers with database singers
 const matchImportedSingers = async (
-  { input: { parsedData, rally, singers, fieldMapping } }: { input: Partial<IPopulateSingersContext> }
+  { input: { fieldMapping, parsedData, rally, singers, valueMapping } }: { input: Partial<IPopulateSingersContext> }
 ) => {
   const matchImportWithSinger = (importedRow: Record<string, string>): IMatchedSinger => {
     const getMatchRanks = (mappedImported: Record<string, string>) => {
@@ -402,7 +402,11 @@ const matchImportedSingers = async (
     const mapImportToSingerFields = (importedRow: Record<string, string>): Record<string, string> => {
       const reduceSinger = (acc: Record<string, string>, [originalField, mappedField]: [string, string]) => {
         if (importedRow.hasOwnProperty(originalField)) {
-          acc[mappedField] = importedRow[originalField];
+          if (valueMapping[originalField] !== undefined) {
+            acc[mappedField] = valueMapping[originalField][importedRow[originalField]];
+          } else {
+            acc[mappedField] = importedRow[originalField];
+          }
         }
         return acc;
       };

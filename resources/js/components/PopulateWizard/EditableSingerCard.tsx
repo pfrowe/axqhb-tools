@@ -3,7 +3,7 @@ import { LinkDismissRegular } from "@fluentui/react-icons";
 import React, { useCallback, useEffect, useMemo, useReducer } from "react";
 import { useTranslation } from "react-i18next";
 import { MergePhoneNumber, MergeTextField } from "./MergeFields";
-import PopulateSingersContext, { IFieldState } from "../../contexts/PopulateSingersContext";
+import { IFieldState } from "../../contexts/PopulateSingersContext";
 
 import styles from "./EditableSingerCard.module.scss";
 
@@ -20,7 +20,6 @@ interface IEditableSingerCardProps {
 const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
   dbSinger = {}, index, imported = {}, initialState, onChange, score = 0, registered = false
 }) => {
-  const { valueMapping } = React.useContext(PopulateSingersContext);
   const { t } = useTranslation("rally");
   const fields = useMemo(
     () => Array.from(new Set([...Object.keys(imported || {}), ...Object.keys(dbSinger || {})])),
@@ -161,22 +160,22 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
         }
         return [key, result];
       };
-      return Object.fromEntries(Object.entries(initialState).map(getDefaultValue));
+      return {
+        __timestamp: new Date().toISOString(),
+        ...Object.fromEntries(Object.entries(initialState).map(getDefaultValue))
+      };
     },
     [dbSinger, imported, initialState]
   );
-  const defaultVoicePart = useMemo(
-    () => (valueMapping.voice_part?.[hashDefaultValue.voice_part] ?? ""),
-    [hashDefaultValue, valueMapping]
-  );
   const voiceOptions = useMemo(
     () => (<>
-      <Option key="tenor">{t("voice_parts.tenor")}</Option>
-      <Option key="lead">{t("voice_parts.lead")}</Option>
-      <Option key="bari">{t("voice_parts.bari")}</Option>
-      <Option key="bass">{t("voice_parts.bass")}</Option>
+      <Option key="tenor" value="tenor">{t("wizard.voice_part.tenor")}</Option>
+      <Option key="lead" value="lead">{t("wizard.voice_part.lead")}</Option>
+      <Option key="bari" value="bari">{t("wizard.voice_part.bari")}</Option>
+      <Option key="bass" value="bass">{t("wizard.voice_part.bass")}</Option>
+      <Option key="none" value="none">{t("wizard.voice_part.none")}</Option>
     </>),
-    []
+    [t]
   );
   return (
     <div className={formClass}>
@@ -199,7 +198,9 @@ const EditableSingerCard: React.FC<IEditableSingerCardProps> = ({
             <div>
               <Text block className={styles.fieldName} size={200}>{t("fields.voice_part", "Voice Part")}</Text>
               <Dropdown
-                defaultSelectedOptions={[defaultVoicePart]}
+                defaultSelectedOptions={[hashDefaultValue.voice_part]}
+                defaultValue={t(`wizard.voice_part.${hashDefaultValue.voice_part}`)}
+                key={`voice_part--${hashDefaultValue.__timestamp}`}
                 onOptionSelect={onChangeVoicePart}
                 placeholder={t("fields.voice_part", "Voice Part")}
               >{voiceOptions}</Dropdown>

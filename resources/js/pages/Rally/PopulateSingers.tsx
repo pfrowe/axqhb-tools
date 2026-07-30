@@ -18,7 +18,11 @@ const PopulateSingers = () => {
   const { id } = useParams();
   const { t } = useTranslation("rally");
   const [{ context, value: state }, send] = useMachine(machineDefinition);
-  const [localFieldMapping, setLocalFieldMapping] = useState<Record<string, MappedField>>({});
+  const mergeFieldMapping = useCallback(
+    (prev, update: Record<string, MappedField>): Record<string, MappedField> => ({ ...prev, ...update }),
+    []
+  );
+  const [localFieldMapping, setLocalFieldMapping] = useReducer(mergeFieldMapping, {});
   interface ValueMappingMerge {
     action: "reset" | "update";
     field: string;
@@ -50,9 +54,7 @@ const PopulateSingers = () => {
   );
 
   const onFieldMappingChange = useCallback(
-    (importedField: string, targetField: MappedField) => {
-      setLocalFieldMapping(prev => ({ ...prev, [importedField]: targetField }));
-    },
+    (importedField: string, targetField: MappedField) => (setLocalFieldMapping({ [importedField]: targetField })),
     [setLocalFieldMapping]
   );
 

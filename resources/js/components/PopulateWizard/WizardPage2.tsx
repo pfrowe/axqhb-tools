@@ -21,10 +21,8 @@ const WizardPage2 = ({
     () => (context.parsedData?.[0] ? Object.keys(context.parsedData[0]) : []),
     [context.parsedData]
   );
-  const handleChangeDestination = useCallback(
-    (importedField: string) => (_: React.ChangeEvent<HTMLInputElement>, { optionValue }: OptionOnSelectData) => {
-      onFieldMappingChange(importedField, optionValue as MappedField);
-    },
+  const handleChangeFieldMapping = useCallback(
+    (importedField: string, optionValue: MappedField) => (onFieldMappingChange(importedField, optionValue)),
     [onFieldMappingChange]
   );
   const handleChangeValueMapping = useCallback(
@@ -38,11 +36,11 @@ const WizardPage2 = ({
         importedField={importedField}
         key={`fieldMapping--${importedField}`}
         localValueMapping={localValueMapping}
-        onChangeFieldMapping={handleChangeDestination}
+        onChangeFieldMapping={handleChangeFieldMapping}
         onChangeValueMapping={handleChangeValueMapping}
       />
     ),
-    [handleChangeDestination, handleChangeValueMapping, localFieldMapping, localValueMapping]
+    [handleChangeFieldMapping, handleChangeValueMapping, localFieldMapping, localValueMapping]
   );
   return (
     <div className={styles["flex--vertical"]}>
