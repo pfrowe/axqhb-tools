@@ -18,7 +18,9 @@ const SingerCard = ({ family_name, given_name, href, preferred_name, voice_part 
       onClick={onClick}
       size="small"
     >
-      <CardHeader header={<Text size={500}>{`${preferred_name ?? given_name} ${family_name}`}</Text>} />
+      <CardHeader
+        header={<Text size={500}>{`${preferred_name ?? given_name} ${family_name}`}</Text>}
+      />
     </Card>
   );
 };

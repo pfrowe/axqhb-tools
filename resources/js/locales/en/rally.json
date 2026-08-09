@@ -26,6 +26,7 @@
   },
   "links": {
     "editRally": "Edit Rally",
+    "exportSingers": "Export Singers",
     "leaderboard": "View Leaderboard",
     "populateSingers": "Populate Singers"
   },
